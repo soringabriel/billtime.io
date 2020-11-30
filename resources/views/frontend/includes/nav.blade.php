@@ -72,10 +72,18 @@
 
                             @if ($logged_in_user->isUser())
                                 <x-utils.link
-                                    :href="route('frontend.user.dashboard')"
-                                    :active="activeClass(Route::is('frontend.user.dashboard'))"
-                                    :text="__('Dashboard')"
+                                    :href="route('frontend.user.time')"
+                                    :active="activeClass(Route::is('frontend.user.time'))"
+                                    :text="__('Track Time')"
                                     class="dropdown-item"/>
+
+                                @if ($logged_in_user->isParent())
+                                    <x-utils.link
+                                        :href="route('frontend.user.subuser.index')"
+                                        :active="activeClass(Route::is('frontend.user.subuser.index'))"
+                                        :text="__('Users')"
+                                        class="dropdown-item"/>
+                                @endif
                             @endif
 
                             <x-utils.link

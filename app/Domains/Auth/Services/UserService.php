@@ -121,6 +121,7 @@ class UserService extends BaseService
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
+                'parent_user_id' => ($data['parent_user_id'] ?? null),
             ]);
 
             $user->syncRoles($data['roles'] ?? []);
@@ -331,6 +332,7 @@ class UserService extends BaseService
             'provider_id' => $data['provider_id'] ?? null,
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
+            'parent_user_id' => $data['parent_user_id'] ?? null,
         ]);
     }
 }

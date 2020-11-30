@@ -59,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'to_be_logged_out',
         'provider',
         'provider_id',
+        'parent_user_id',
     ];
 
     /**

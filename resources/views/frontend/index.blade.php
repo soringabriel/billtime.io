@@ -77,7 +77,7 @@
             <div class="top-right links">
                 @auth
                     @if ($logged_in_user->isUser())
-                        <a href="{{ route('frontend.user.dashboard') }}">@lang('Dashboard')</a>
+                        <a href="{{ route('frontend.user.time') }}">@lang('Track Time')</a>
                     @endif
 
                     <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
