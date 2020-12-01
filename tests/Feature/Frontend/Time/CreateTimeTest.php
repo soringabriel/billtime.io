@@ -52,14 +52,14 @@ class CreateTimeTest extends TestCase
         $this->post('/time', [
             'start_time' => '2020-12-01 00:00:00',
             'end_time' => '2020-12-01 01:00:00',
-            'task' => 'task',
+            'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         $this->assertDatabaseHas('time', [
             'start_time' => '2020-12-01 00:00:00',
             'end_time' => '2020-12-01 01:00:00',
-            'task' => 'task',
+            'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 

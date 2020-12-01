@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Domains\Auth\Models\Time;
+use App\Models\Time;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 /**
  * Class TimeFactory.

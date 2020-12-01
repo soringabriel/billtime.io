@@ -7,6 +7,7 @@ use App\Models\Time;
 Route::group([
     'prefix' => 'time',
     'as' => 'time.',
+    'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [TimeController::class, 'index'])
         ->name('index')
