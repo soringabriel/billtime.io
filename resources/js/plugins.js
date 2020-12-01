@@ -1,6 +1,9 @@
 /**
  * Place any jQuery/helper plugins in here.
  */
+
+import 'jquery-datetimepicker'
+
 $(function () {
     /**
      * Checkbox tree for permission selecting
@@ -116,4 +119,11 @@ $(function () {
 
     // Enable tooltips everywhere
     $('[data-toggle="tooltip"]').tooltip();
+
+    $('.datetimepicker').each(function(){
+        $(this).datetimepicker({
+            step: 5,
+            format: 'Y-m-d H:i:s'
+        });
+    })
 });
