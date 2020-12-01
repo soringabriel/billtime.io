@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Relationship\TimeRelationship;
 use Database\Factories\TimeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Time extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        TimeRelationship;
 
     /**
      * The table associated with the model.
@@ -30,8 +32,9 @@ class Time extends Model
      * @var array
      */
     protected $fillable = [
-        'start',
-        'end',
+        'user_id',
+        'start_time',
+        'end_time',
         'task',
         'details',
     ];
@@ -40,6 +43,7 @@ class Time extends Model
      * @var string[]
      */
     protected $with = [
+        'user',
         'tags',
     ];
                 

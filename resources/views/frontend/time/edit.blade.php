@@ -21,18 +21,18 @@
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="start" class="col-md-2 col-form-label">@lang('Start Time')</label>
+                                    <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" name="start" class="form-control" placeholder="{{ __('Start Time') }}" value="{{ old('start') ?? $time->start }}" required />
+                                        <input type="datetime" name="start_time" class="form-control" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? $time->start_time }}" required />
                                     </div>
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="end" class="col-md-2 col-form-label">@lang('End Time')</label>
+                                    <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" name="end" class="form-control" placeholder="{{ __('End Time') }}" value="{{ old('end') ?? $time->end }}" required />
+                                        <input type="datetime" name="end_time" class="form-control" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? $time->end_time }}" required />
                                     </div>
                                 </div><!--form-group-->
 

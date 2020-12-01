@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Relationship\TagRelationship;
 use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        TagRelationship;
 
     /**
      * The table associated with the model.
@@ -31,7 +33,6 @@ class Tag extends Model
      */
     protected $fillable = [
         'name',
-        'time_id',
     ];
                 
     /**

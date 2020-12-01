@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\User;
+namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Time\StoreTimeRequest;
 use App\Http\Requests\Frontend\Time\EditTimeRequest;
@@ -58,7 +57,7 @@ class TimeController extends Controller
     {
         $this->timeService->store($request->validated());
 
-        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time was added.'));
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was added.'));
     }
     
     /**
@@ -85,7 +84,7 @@ class TimeController extends Controller
     {
         $this->timeService->update($time, $request->validated());
 
-        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time was successfully updated.'));
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
     }
 
     /**
@@ -99,6 +98,6 @@ class TimeController extends Controller
     {
         $this->timeService->destroy($time);
 
-        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time was successfully deleted.'));
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully deleted.'));
     }
 }

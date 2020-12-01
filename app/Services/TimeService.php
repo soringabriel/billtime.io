@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Collection;
-use App\Domains\Auth\Models\User;
 
 /**
  * Class TimeService.
@@ -43,8 +42,9 @@ class TimeService extends BaseService
         try {
             $time = $this->model::create(
                 [
-                    'start' => $data['start'],
-                    'end' => $data['end'],
+                    'user_id' => auth()->id(),
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
                     'task' => $data['task'],
                     'details' => $data['details'],
                 ]
@@ -52,7 +52,7 @@ class TimeService extends BaseService
             $time->tags()->sync($data['tags'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem creating the Time.'));
+            throw new GeneralException(__($e->getMessage() . 'There was a problem creating the Time record.'));
         }
 
         event(new TimeCreated($time));
@@ -77,8 +77,9 @@ class TimeService extends BaseService
         try {
             $time->update(
                 [
-                    'start' => $data['start'],
-                    'end' => $data['end'],
+                    'user_id' => auth()->id(),
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
                     'task' => $data['task'],
                     'details' => $data['details'],
                 ]
@@ -86,7 +87,7 @@ class TimeService extends BaseService
             $time->tags()->sync($data['tags'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem updating the Time.'));
+            throw new GeneralException(__('There was a problem updating the Time record.'));
         }
 
         event(new TimeUpdated($time));
@@ -110,6 +111,6 @@ class TimeService extends BaseService
             return true;
         }
 
-        throw new GeneralException(__('There was a problem deleting the Time.'));
+        throw new GeneralException(__('There was a problem deleting the Time record.'));
     }
 }

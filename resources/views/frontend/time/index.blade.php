@@ -1,4 +1,4 @@
-@extends('backend.layouts.app')
+@extends('frontend.layouts.app')
 
 @section('title', __('Time Records'))
 
@@ -21,7 +21,7 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <livewire:time-table />
+                        <livewire:frontend.time-table />
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

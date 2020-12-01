@@ -86,6 +86,7 @@ class Kernel extends HttpKernel
         'type' => \App\Domains\Auth\Http\Middleware\UserTypeCheck::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'subuser' => \App\Http\Middleware\SubuserMiddleware::class,
+        'time' => \App\Http\Middleware\TimeMiddleware::class,
         'parent_user' => \App\Http\Middleware\ParentUserMiddleware::class,
     ];
 

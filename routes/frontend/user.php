@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Frontend\User\AccountController;
-use App\Http\Controllers\Frontend\User\TimeController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DeactivatedSubuserController;
 use App\Http\Controllers\Frontend\User\SubuserController;
@@ -14,14 +13,6 @@ use Tabuna\Breadcrumbs\Trail;
  * These routes can not be hit if the user has not confirmed their email
  */
 Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')]], function () {
-    Route::get('time', [TimeController::class, 'index'])
-        ->middleware('is_user')
-        ->name('time')
-        ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
-                ->push(__('Track Time'), route('frontend.user.time'));
-        });
-
     Route::get('account', [AccountController::class, 'index'])
         ->name('account')
         ->breadcrumbs(function (Trail $trail) {

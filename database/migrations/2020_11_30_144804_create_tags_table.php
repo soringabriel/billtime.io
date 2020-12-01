@@ -17,21 +17,21 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+        });
 
-            Schema::create('time_has_tags', function (Blueprint $table) {
-                $table->unsignedBigInteger('tag_id');
-                $table->unsignedBigInteger('time_id');
-    
-                $table->foreign('tag_id')
-                    ->references('id')
-                    ->on('tags');
+        Schema::create('time_has_tags', function (Blueprint $table) {
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('time_id');
 
-                $table->foreign('time_id')
-                    ->references('id')
-                    ->on('time');
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags');
 
-                $table->primary(['tag_id', 'time_id'], 'time_has_tags_tag_id_time_id_primary');
-            });
+            $table->foreign('time_id')
+                ->references('id')
+                ->on('time');
+
+            $table->primary(['tag_id', 'time_id'], 'time_has_tags_tag_id_time_id_primary');
         });
     }
 
@@ -42,6 +42,7 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('time_has_tags');
         Schema::dropIfExists('tags');
     }
 }

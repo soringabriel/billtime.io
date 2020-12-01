@@ -8,7 +8,7 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <x-forms.post :action="route('admin.Time.store')">
+                <x-forms.post :action="route('frontend.time.store')">
                     <x-frontend.card>
                         <x-slot name="header">
                             @lang('Add Time')
@@ -21,18 +21,18 @@
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="start" class="col-md-2 col-form-label">@lang('Start Time')</label>
+                                    <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" name="start" class="form-control" placeholder="{{ __('Start Time') }}" required />
+                                        <input type="datetime" name="start_time" class="form-control" placeholder="{{ __('Start Time') }}" required />
                                     </div>
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="end" class="col-md-2 col-form-label">@lang('End Time')</label>
+                                    <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" name="end" class="form-control" placeholder="{{ __('End Time') }}" required />
+                                        <input type="datetime" name="end_time" class="form-control" placeholder="{{ __('End Time') }}" required />
                                     </div>
                                 </div><!--form-group-->
 

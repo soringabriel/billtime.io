@@ -15,11 +15,17 @@ class CreateTimeTable extends Migration
     {
         Schema::create('time', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->unsignedBigInteger('user_id');
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->string('task')->nullable();
             $table->string('details');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');;
         });
     }
 

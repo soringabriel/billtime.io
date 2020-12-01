@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Frontend\Time;
 
 use App\Models\Time;
-use App\Models\TimeService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -20,9 +19,9 @@ class StoreTimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'start' => ['required', 'date_format:Y-m-d h:i:s'],
-            'end' => ['required', 'date_format:Y-m-d h:i:s'],
-            'task' => ['max:255'],
+            'start_time' => ['required', 'date_format:Y-m-d H:i:s'],
+            'end_time' => ['required', 'date_format:Y-m-d H:i:s'],
+            'task' => ['max:255', 'url'],
             'details' => ['required', 'max:255'],
         ];
     }
