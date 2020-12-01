@@ -52,7 +52,7 @@ class TimeService extends BaseService
             $time->tags()->sync($data['tags'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__($e->getMessage() . 'There was a problem creating the Time record.'));
+            throw new GeneralException(__('There was a problem creating the Time record.'));
         }
 
         event(new TimeCreated($time));
