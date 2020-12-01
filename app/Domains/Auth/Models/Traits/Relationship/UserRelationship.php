@@ -4,6 +4,7 @@ namespace App\Domains\Auth\Models\Traits\Relationship;
 
 use App\Domains\Auth\Models\PasswordHistory;
 use App\Domains\Auth\Models\User;
+use App\Models\Time;
 
 /**
  * Class UserRelationship.
@@ -32,5 +33,13 @@ trait UserRelationship
     public function subUsers()
     {
         return $this->hasMany(User::class, 'parent_user_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function times()
+    {
+        return $this->hasMany(Time::class, 'user_id');
     }
 }

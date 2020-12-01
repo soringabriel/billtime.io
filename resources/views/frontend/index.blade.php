@@ -77,7 +77,7 @@
             <div class="top-right links">
                 @auth
                     @if ($logged_in_user->isUser())
-                        <a href="{{ route('frontend.user.time') }}">@lang('Track Time')</a>
+                        <a href="{{ route('frontend.time.index') }}">@lang('Track Time')</a>
                     @endif
 
                     <a href="{{ route('frontend.user.account') }}">@lang('Account')</a>
@@ -94,7 +94,7 @@
                 @include('includes.partials.messages')
 
                 <div class="title m-b-md">
-                    <example-component></example-component>
+                    {{ appName() }}
                 </div><!--title-->
 
                 <div class="links">

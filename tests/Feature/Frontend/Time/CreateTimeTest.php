@@ -1,0 +1,68 @@
+<?php
+
+namespace Tests\Feature\Frontend\Time;
+
+use App\Events\Time\TimeCreated;
+use App\Domains\Auth\Models\User;
+use App\Models\Time;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Tests\TestCase;
+
+/**
+ * Class CreateTimeTest.
+ */
+class CreateTimeTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function only_an_user_can_access_the_create_a_time_page()
+    {
+        $user = User::factory()->user()->create();
+        
+        $this->get('/time/create')->assertRedirect('/login');
+
+        $this->actingAs($user);
+
+        $this->get('/time/create')->assertOk();
+    }
+
+    /** @test */
+    public function creating_a_time_requires_validation()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+        
+        $response = $this->post('/time');
+
+        $response->assertSessionHasErrors(['start_time', 'end_time', 'details']);
+    }
+
+    /** @test */
+    public function a_time_can_be_created()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $this->post('/time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        Event::assertDispatched(TimeCreated::class);
+    }
+}

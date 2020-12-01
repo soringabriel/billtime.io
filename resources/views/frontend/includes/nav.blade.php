@@ -72,8 +72,8 @@
 
                             @if ($logged_in_user->isUser())
                                 <x-utils.link
-                                    :href="route('frontend.user.time')"
-                                    :active="activeClass(Route::is('frontend.user.time'))"
+                                    :href="route('frontend.time.index')"
+                                    :active="activeClass(Route::is('frontend.time.index'))"
                                     :text="__('Track Time')"
                                     class="dropdown-item"/>
 

@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 
 /**
- * Class ParentUserMiddleware.
+ * Class TimeMiddleware.
  */
-class ParentUserMiddleware
+class TimeMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,10 +22,10 @@ class ParentUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isParent()) {
+        if ($request->user()->id == $request->route('time')->user()->first()->id) {
             return $next($request);
         }
         
-        return redirect()->route('frontend.index')->withFlashDanger(__("You don't have access to this page."));
+        return redirect()->route('frontend.time.index')->withFlashDanger(__("You don't have access to this Time record."));
     }
 }
