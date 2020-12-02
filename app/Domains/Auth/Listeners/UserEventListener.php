@@ -9,6 +9,7 @@ use App\Domains\Auth\Events\User\UserLoggedIn;
 use App\Domains\Auth\Events\User\UserRestored;
 use App\Domains\Auth\Events\User\UserStatusChanged;
 use App\Domains\Auth\Events\User\UserUpdated;
+use App\Domains\Auth\Events\User\UserRegistered;
 use App\Services\ProjectService;
 use Illuminate\Auth\Events\PasswordReset;
 

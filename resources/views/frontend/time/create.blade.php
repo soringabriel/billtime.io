@@ -37,10 +37,10 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="project" class="col-md-2 col-form-label">@lang('Project')</label>
+                                    <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
 
                                     <div class="col-md-10">
-                                        <select name="project" class="form-control select2-project">
+                                        <select name="project_id" class="form-control select2-project">
                                             @foreach ($projects as $project) 
                                                 <option value="{{ $project->id }}">{{ $project->name }}</option>    
                                             @endforeach

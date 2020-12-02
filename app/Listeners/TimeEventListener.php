@@ -35,7 +35,7 @@ class TimeEventListener
     public function onUpdated($event)
     {
         activity('time')
-            ->performedOn($event->Time)
+            ->performedOn($event->time)
             ->withProperties([
                 'time' => [
                     'start' => $event->time->start,

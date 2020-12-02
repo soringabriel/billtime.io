@@ -46,6 +46,7 @@ class Time extends Model
     protected $with = [
         'user',
         'tags',
+        'project',
     ];
                 
     /**

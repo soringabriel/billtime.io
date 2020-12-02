@@ -43,6 +43,8 @@ class TimeTable extends TableComponent
     {
         return [
             Column::make(__('User'))
+                ->searchable()
+                ->sortable()
                 ->format(function (Time $model) {
                     return $model->user->name;
                 }),
@@ -52,6 +54,12 @@ class TimeTable extends TableComponent
             Column::make(__('End Time'))
                 ->searchable()
                 ->sortable(),
+            Column::make(__('Project'))
+                ->searchable()
+                ->sortable()
+                ->format(function (Time $model) {
+                    return $model->project->name;
+                }),
             Column::make(__('Task'))
                 ->searchable()
                 ->sortable(),
