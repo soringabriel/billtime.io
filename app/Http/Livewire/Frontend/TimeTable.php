@@ -23,6 +23,16 @@ class TimeTable extends TableComponent
     /**
      * @var array
      */
+    public $exportFileName = "time_records";
+
+    /**
+     * @var array
+     */
+    public $exports = ['csv', 'xls', 'xlsx'];
+
+    /**
+     * @var array
+     */
     protected $options = [
         'bootstrap.container' => false,
         'bootstrap.classes.table' => 'table table-striped',
@@ -65,11 +75,13 @@ class TimeTable extends TableComponent
                 ->sortable(),
             Column::make(__('Details'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->exportOnly(),
             Column::make(__('Actions'))
                 ->format(function (Time $model) {
                     return view('frontend.time.includes.actions', ['model' => $model]);
-                }),
+                })
+                ->excludeFromExport(),
         ];
     }
 }
