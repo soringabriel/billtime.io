@@ -7,9 +7,9 @@ use App\Events\Project\ProjectDeleted;
 use App\Events\Project\ProjectUpdated;
 
 /**
- * Class ProjectListener.
+ * Class ProjectEventListener.
  */
-class ProjectListener
+class ProjectEventListener
 {
     /**
      * @param $event
@@ -68,17 +68,17 @@ class ProjectListener
     {
         $events->listen(
             ProjectCreated::class,
-            'App\Listeners\ProjectListener@onCreated'
+            'App\Listeners\ProjectEventListener@onCreated'
         );
 
         $events->listen(
             ProjectUpdated::class,
-            'App\Listeners\ProjectListener@onUpdated'
+            'App\Listeners\ProjectEventListener@onUpdated'
         );
 
         $events->listen(
             ProjectDeleted::class,
-            'App\Listeners\ProjectListener@onDeleted'
+            'App\Listeners\ProjectEventListener@onDeleted'
         );
     }
 }

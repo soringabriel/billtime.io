@@ -8,6 +8,7 @@ use App\Domains\Auth\Events\User\UserDestroyed;
 use App\Domains\Auth\Events\User\UserRestored;
 use App\Domains\Auth\Events\User\UserStatusChanged;
 use App\Domains\Auth\Events\User\UserUpdated;
+use App\Domains\Auth\Events\User\UserRegistered;
 use App\Domains\Auth\Models\User;
 use App\Exceptions\GeneralException;
 use App\Services\BaseService;
@@ -62,6 +63,8 @@ class UserService extends BaseService
 
             throw new GeneralException(__('There was a problem creating your account.'));
         }
+
+        event(new UserRegistered($user));
 
         DB::commit();
 

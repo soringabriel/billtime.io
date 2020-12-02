@@ -7,9 +7,9 @@ use App\Events\Time\TimeDeleted;
 use App\Events\Time\TimeUpdated;
 
 /**
- * Class TimeListener.
+ * Class TimeEventListener.
  */
-class TimeListener
+class TimeEventListener
 {
     /**
      * @param $event
@@ -66,17 +66,17 @@ class TimeListener
     {
         $events->listen(
             TimeCreated::class,
-            'App\Listeners\TimeListener@onCreated'
+            'App\Listeners\TimeEventListener@onCreated'
         );
 
         $events->listen(
             TimeUpdated::class,
-            'App\Listeners\TimeListener@onUpdated'
+            'App\Listeners\TimeEventListener@onUpdated'
         );
 
         $events->listen(
             TimeDeleted::class,
-            'App\Listeners\TimeListener@onDeleted'
+            'App\Listeners\TimeEventListener@onDeleted'
         );
     }
 }

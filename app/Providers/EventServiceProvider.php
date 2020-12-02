@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Domains\Auth\Listeners\RoleEventListener;
 use App\Domains\Auth\Listeners\UserEventListener;
+use App\Listeners\ProjectEventListener;
+use App\Listeners\TagEventListener;
+use App\Listeners\TimeEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -32,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         RoleEventListener::class,
         UserEventListener::class,
+        ProjectEventListener::class,
+        TagEventListener::class,
+        TimeEventListener::class,
     ];
 
     /**
