@@ -59,7 +59,7 @@ class ProjectsTable extends TableComponent
                 ->sortable(),
             Column::make(__('Actions'))
                 ->format(function (Project $model) {
-                    return view('frontend.project.includes.actions', ['model' => $model]);
+                    return view('frontend.projects.includes.actions', ['model' => $model]);
                 }),
         ];
     }

@@ -15,7 +15,7 @@
                         <x-utils.link
                             icon="c-icon cil-plus"
                             class="card-header-action"
-                            :href="route('frontend.project.create')"
+                            :href="route('frontend.projects.create')"
                             :text="__('Add Project')"
                         />
                     </x-slot>

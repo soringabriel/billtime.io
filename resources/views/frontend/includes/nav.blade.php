@@ -79,6 +79,12 @@
 
                                 @if ($logged_in_user->isParent())
                                     <x-utils.link
+                                        :href="route('frontend.projects.index')"
+                                        :active="activeClass(Route::is('frontend.projects.index'))"
+                                        :text="__('Projects')"
+                                        class="dropdown-item"/>
+
+                                    <x-utils.link
                                         :href="route('frontend.user.subuser.index')"
                                         :active="activeClass(Route::is('frontend.user.subuser.index'))"
                                         :text="__('Users')"

@@ -26,6 +26,6 @@ class ProjectMiddleware
             return $next($request);
         }
         
-        return redirect()->route('frontend.project.index')->withFlashDanger(__("You don't have access to this Project record."));
+        return redirect()->route('frontend.project.index')->withFlashDanger(__("You don't have access to this Project."));
     }
 }

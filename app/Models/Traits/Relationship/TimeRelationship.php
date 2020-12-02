@@ -3,6 +3,7 @@
 namespace App\Models\Traits\Relationship;
 
 use App\Models\Tag;
+use App\Models\Project;
 use App\Domains\Auth\Models\User;
 
 /**
@@ -16,6 +17,14 @@ trait TimeRelationship
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
     /**

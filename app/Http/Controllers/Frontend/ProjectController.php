@@ -35,7 +35,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('frontend.project.index');
+        return view('frontend.projects.index');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('frontend.project.create');
+        return view('frontend.projects.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class ProjectController extends Controller
     {
         $this->projectService->store($request->validated());
 
-        return redirect()->route('frontend.project.index')->withFlashSuccess(__('The project was added.'));
+        return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was added.'));
     }
     
     /**
@@ -68,7 +68,7 @@ class ProjectController extends Controller
      */
     public function edit(EditProjectRequest $request, Project $project)
     {
-        return view('frontend.project.edit')
+        return view('frontend.projects.edit')
             ->withProject($project);
     }
 
@@ -84,7 +84,7 @@ class ProjectController extends Controller
     {
         $this->projectService->update($project, $request->validated());
 
-        return redirect()->route('frontend.project.index')->withFlashSuccess(__('The project was successfully updated.'));
+        return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully updated.'));
     }
 
     /**
@@ -98,6 +98,6 @@ class ProjectController extends Controller
     {
         $this->projectService->destroy($project);
 
-        return redirect()->route('frontend.project.index')->withFlashSuccess(__('The project was successfully deleted.'));
+        return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully deleted.'));
     }
 }

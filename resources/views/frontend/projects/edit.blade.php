@@ -8,14 +8,14 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <x-forms.patch :action="route('frontend.project.update', $project)">
+                <x-forms.patch :action="route('frontend.projects.update', $project)">
                     <x-frontend.card>
                         <x-slot name="header">
                             @lang('Update Project')
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.project.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.projects.index')" :text="__('Cancel')" />
                         </x-slot>
 
                         <x-slot name="body">
