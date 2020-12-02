@@ -11,7 +11,7 @@
                 <x-forms.patch :action="route('frontend.time.update', $time)">
                     <x-frontend.card>
                         <x-slot name="header">
-                            @lang('Update Plan')
+                            @lang('Update Time Record')
                         </x-slot>
 
                         <x-slot name="headerActions">

@@ -17,7 +17,7 @@ class DeleteTimeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_Time_can_be_deleted()
+    public function a_time_can_be_deleted()
     {
         Event::fake();
 

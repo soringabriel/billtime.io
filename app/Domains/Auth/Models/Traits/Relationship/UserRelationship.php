@@ -5,6 +5,7 @@ namespace App\Domains\Auth\Models\Traits\Relationship;
 use App\Domains\Auth\Models\PasswordHistory;
 use App\Domains\Auth\Models\User;
 use App\Models\Time;
+use App\Models\Project;
 
 /**
  * Class UserRelationship.
@@ -41,5 +42,13 @@ trait UserRelationship
     public function times()
     {
         return $this->hasMany(Time::class, 'user_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'user_id');
     }
 }
