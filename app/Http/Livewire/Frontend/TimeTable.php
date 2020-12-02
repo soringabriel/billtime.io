@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\TableComponent;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Carbon\Carbon;
 
 /**
  * Class TimeTable.
@@ -53,8 +54,6 @@ class TimeTable extends TableComponent
     {
         return [
             Column::make(__('User'))
-                ->searchable()
-                ->sortable()
                 ->format(function (Time $model) {
                     return $model->user->name;
                 }),
@@ -65,8 +64,6 @@ class TimeTable extends TableComponent
                 ->searchable()
                 ->sortable(),
             Column::make(__('Project'))
-                ->searchable()
-                ->sortable()
                 ->format(function (Time $model) {
                     return $model->project->name;
                 }),
@@ -77,6 +74,10 @@ class TimeTable extends TableComponent
                 ->searchable()
                 ->sortable()
                 ->exportOnly(),
+            Column::make(__('Time'))
+                ->format(function (Time $model) {
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time));
+                }),
             Column::make(__('Actions'))
                 ->format(function (Time $model) {
                     return view('frontend.time.includes.actions', ['model' => $model]);
