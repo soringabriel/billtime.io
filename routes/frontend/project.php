@@ -12,7 +12,8 @@ Route::group([
     Route::get('/', [ProjectController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Project Managment'), route('frontend.projects.index'));
+            $trail->parent('frontend.index')
+                ->push(__('Project Managment'), route('frontend.projects.index'));
     });
 
     Route::get('create', [ProjectController::class, 'create'])

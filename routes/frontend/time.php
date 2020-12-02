@@ -12,7 +12,8 @@ Route::group([
     Route::get('/', [TimeController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->push(__('Time Managment'), route('frontend.time.index'));
+            $trail->parent('frontend.index')
+                ->push(__('Time Managment'), route('frontend.time.index'));
     });
 
     Route::get('create', [TimeController::class, 'create'])
