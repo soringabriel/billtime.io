@@ -56,7 +56,7 @@ class ProjectEventListener
     {
         activity('project')
             ->performedOn($event->project)
-            ->log(':causer.name deleted project');
+            ->log(':causer.name deleted project :subject.name');
     }
 
     /**
