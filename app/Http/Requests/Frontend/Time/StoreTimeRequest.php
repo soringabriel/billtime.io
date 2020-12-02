@@ -21,6 +21,7 @@ class StoreTimeRequest extends FormRequest
         return [
             'start_time' => ['required', 'date_format:Y-m-d H:i:s'],
             'end_time' => ['required', 'date_format:Y-m-d H:i:s'],
+            'project_id' => ['required', Rule::exists('projects', 'id')->where('user_id', auth()->user()->id)],
             'task' => ['max:255', 'url'],
             'details' => ['required', 'max:255'],
         ];

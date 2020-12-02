@@ -21,11 +21,11 @@ class CreateProjectTest extends TestCase
     {
         $user = User::factory()->user()->create();
         
-        $this->get('/project/create')->assertRedirect('/login');
+        $this->get('/projects/create')->assertRedirect('/login');
 
         $this->actingAs($user);
 
-        $this->get('/project/create')->assertOk();
+        $this->get('/projects/create')->assertOk();
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class CreateProjectTest extends TestCase
 
         $this->actingAs($user);
         
-        $response = $this->post('/project');
+        $response = $this->post('/projects');
 
         $response->assertSessionHasErrors(['name']);
     }
@@ -49,7 +49,7 @@ class CreateProjectTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->post('/project', [
+        $this->post('/projects', [
             'name' => 'name',
             'company_name' => 'company',
             'tax_number' => 'tax',

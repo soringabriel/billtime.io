@@ -29,8 +29,8 @@ class ProjectFactory extends Factory
         return [
             'name' => $this->faker->name,
             'company_name' => $this->faker->company,
-            'tax_number' => $this->faker->taxpayerIdentificationNumber,
-            'vat_number' =>  $this->faker->vat,
+            'tax_number' => $this->faker->asciify('********'),
+            'vat_number' =>  $this->faker->asciify('********'),
             'address' =>  $this->faker->address,
         ];
     }

@@ -23,11 +23,11 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $user->id]);
         
-        $this->get("/project/{$project->id}/edit")->assertRedirect('/login');
+        $this->get("/projects/{$project->id}/edit")->assertRedirect('/login');
 
         $this->actingAs($user);
 
-        $this->get("/project/{$project->id}/edit")->assertOk();
+        $this->get("/projects/{$project->id}/edit")->assertOk();
     }
 
     /** @test */
@@ -41,7 +41,7 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $another_user->id]);
         
-        $this->get("/project/{$project->id}/edit")->assertRedirect('/project');
+        $this->get("/projects/{$project->id}/edit")->assertRedirect('/projects');
     }
 
     /** @test */
@@ -53,7 +53,7 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $user->id]);
 
-        $response = $this->patch("/project/{$project->id}");
+        $response = $this->patch("/projects/{$project->id}");
 
         $response->assertSessionHasErrors(['name']);
     }
@@ -69,7 +69,7 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $user->id]);
 
-        $this->patch("/project/{$project->id}", [
+        $this->patch("/projects/{$project->id}", [
             'name' => 'name',
             'company_name' => 'company',
             'tax_number' => 'tax',
@@ -77,7 +77,7 @@ class UpdateProjectTest extends TestCase
             'address' => 'address',
         ]);
 
-        $this->assertDatabaseHas('project', [
+        $this->assertDatabaseHas('projects', [
             'name' => 'name',
             'company_name' => 'company',
             'tax_number' => 'tax',
@@ -99,7 +99,7 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $another_user->id]);
 
-        $response = $this->patch("/project/{$project->id}", [
+        $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',
             'company_name' => 'company',
             'tax_number' => 'tax',
@@ -107,9 +107,9 @@ class UpdateProjectTest extends TestCase
             'address' => 'address',
         ]);
 
-        $response->assertSessionHas('flash_danger', __("You don't have access to this Project record."));
+        $response->assertSessionHas('flash_danger', __("You don't have access to this Project."));
 
-        $this->assertDatabaseHas('project', [
+        $this->assertDatabaseHas('projects', [
             'name' => $project->name,
             'company_name' => $project->company_name,
             'tax_number' => $project->tax_number,

@@ -9,6 +9,7 @@ use App\Domains\Auth\Events\User\UserLoggedIn;
 use App\Domains\Auth\Events\User\UserRestored;
 use App\Domains\Auth\Events\User\UserStatusChanged;
 use App\Domains\Auth\Events\User\UserUpdated;
+use App\Services\ProjectService;
 use Illuminate\Auth\Events\PasswordReset;
 
 /**
@@ -16,6 +17,16 @@ use Illuminate\Auth\Events\PasswordReset;
  */
 class UserEventListener
 {
+    /**
+     * UserEventListener constructor.
+     *
+     * @param  ProjectService  $projectService
+     */
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
+
     /**
      * @param $event
      */
@@ -43,6 +54,14 @@ class UserEventListener
      */
     public function onCreated($event)
     {
+        $this->projectService->store([
+            'user_id' => $event->user->id,
+            'name' => 'Demo Project',
+            'company_name' => 'Company',
+            'tax_number' => 'Company Tax Number',
+            'vat_number' => 'Company Vat Number',
+            'address' => 'Company Address',
+        ]);
         activity('user')
             ->performedOn($event->user)
             ->withProperties([

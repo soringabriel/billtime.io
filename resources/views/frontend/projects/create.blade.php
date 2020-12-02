@@ -32,7 +32,7 @@
                                     <label for="company_name" class="col-md-2 col-form-label">@lang('Company Name')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                        <input type="text" name="company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" />
                                     </div>
                                 </div><!--form-group-->
 
@@ -40,7 +40,7 @@
                                     <label for="tax_number" class="col-md-2 col-form-label">@lang('Tax Number')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                        <input type="text" name="tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" />
                                     </div>
                                 </div><!--form-group-->
 
@@ -48,7 +48,7 @@
                                     <label for="vat_number" class="col-md-2 col-form-label">@lang('Vat Number')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                        <input type="text" name="vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" />
                                     </div>
                                 </div><!--form-group-->
 

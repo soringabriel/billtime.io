@@ -35,6 +35,7 @@ class Time extends Model
         'user_id',
         'start_time',
         'end_time',
+        'project_id',
         'task',
         'details',
     ];

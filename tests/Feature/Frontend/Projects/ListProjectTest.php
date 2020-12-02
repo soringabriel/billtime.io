@@ -18,10 +18,10 @@ class ListProjectTest extends TestCase
     {
         $user = User::factory()->user()->create();
 
-        $this->get('/project')->assertRedirect('/login');
+        $this->get('/projects')->assertRedirect('/login');
 
         $this->actingAs($user);
 
-        $this->get('/project')->assertOk();
+        $this->get('/projects')->assertOk();
     }
 }

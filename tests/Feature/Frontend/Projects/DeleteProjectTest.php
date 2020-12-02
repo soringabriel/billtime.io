@@ -27,11 +27,11 @@ class DeleteProjectTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->assertDatabaseHas('project', ['id' => $project->id]);
+        $this->assertDatabaseHas('projects', ['id' => $project->id]);
 
-        $this->delete("/project/{$project->id}");
+        $this->delete("/projects/{$project->id}");
 
-        $this->assertDatabaseMissing('project', ['id' => $project->id]);
+        $this->assertDatabaseMissing('projects', ['id' => $project->id]);
 
         Event::assertDispatched(ProjectDeleted::class);
     }
@@ -47,10 +47,10 @@ class DeleteProjectTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->assertDatabaseHas('project', ['id' => $project->id]);
+        $this->assertDatabaseHas('projects', ['id' => $project->id]);
 
-        $this->delete("/project/{$project->id}");
+        $this->delete("/projects/{$project->id}");
 
-        $this->assertDatabaseHas('project', ['id' => $project->id]);
+        $this->assertDatabaseHas('projects', ['id' => $project->id]);
     }
 }
