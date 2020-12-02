@@ -43,7 +43,7 @@ class TimeController extends Controller
      */
     public function create()
     {
-        return view('frontend.time.create')->withProjects(auth()->user()->projects()->get());
+        return view('frontend.time.create')->withProjects(auth()->user()->getProjects());
     }
 
     /**
@@ -70,7 +70,7 @@ class TimeController extends Controller
     {
         return view('frontend.time.edit')
             ->withTime($time)
-            ->withProjects(auth()->user()->projects()->get());
+            ->withProjects(auth()->user()->getProjects());
     }
 
     /**

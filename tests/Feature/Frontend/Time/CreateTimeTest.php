@@ -72,6 +72,38 @@ class CreateTimeTest extends TestCase
     }
 
     /** @test */
+    public function a_time_with_a_parent_project_can_be_created()
+    {
+        Event::fake();
+
+        $parent = User::factory()->user()->create();
+
+        $user = User::factory()->user()->create(['parent_user_id' => $parent->id]);
+
+        $project = Project::factory()->create(['user_id' => $parent->id]);
+
+        $this->actingAs($user);
+
+        $this->post('/time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        Event::assertDispatched(TimeCreated::class);
+    }
+
+    /** @test */
     public function a_time_with_another_user_project_can_not_be_created()
     {
         $user = User::factory()->user()->create();

@@ -109,4 +109,20 @@ trait UserMethod
     {
         return is_null($this->parent_user_id);
     }
+
+    /**
+     * @return int
+     */
+    public function getParentId(): int
+    {
+        return ($this->isParent() ? $this->id : $this->parent()->first()->id);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getProjects(): Collection
+    {
+        return ($this->isParent() ? $this->projects()->get() : $this->parent()->first()->projects()->get());
+    }
 }
