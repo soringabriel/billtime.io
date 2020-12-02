@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Frontend;
 
+use App\Domains\Auth\Events\User\UserRegistered;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Services\UserService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 /**
@@ -77,6 +79,8 @@ class RegistrationTest extends TestCase
     /** @test */
     public function a_user_can_register_an_account()
     {
+        Event::fake();
+
         $this->post('/register', [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -91,6 +95,8 @@ class RegistrationTest extends TestCase
 
         $this->assertSame($user->name, 'John Doe');
         $this->assertTrue(Hash::check('OC4Nzu270N!QBVi%U%qX', $user->password));
+
+        Event::assertDispatched(UserRegistered::class);
     }
 
     /** @test */

@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Time;
 
 use App\Events\Time\TimeUpdated;
 use App\Models\Time;
+use App\Models\Project;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -21,7 +22,12 @@ class UpdateTimeTest extends TestCase
     {
         $user = User::factory()->user()->create();
 
-        $time = Time::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
         
         $this->get("/time/{$time->id}/edit")->assertRedirect('/login');
 
@@ -39,7 +45,12 @@ class UpdateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $time = Time::factory()->create(['user_id' => $another_user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $another_user->id, 
+            'project_id' => $project->id
+        ]);
         
         $this->get("/time/{$time->id}/edit")->assertRedirect('/time');
     }
@@ -51,7 +62,12 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $time = Time::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
 
         $response = $this->patch("/time/{$time->id}");
 
@@ -67,11 +83,19 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $time = Time::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $new_project = Project::factory()->create(['user_id' => $user->id]);
 
         $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00:00',
             'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
@@ -79,11 +103,96 @@ class UpdateTimeTest extends TestCase
         $this->assertDatabaseHas('time', [
             'start_time' => '2020-12-01 00:00:00',
             'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         Event::assertDispatched(TimeUpdated::class);
+    }
+
+    /** @test */
+    public function a_time_with_a_parent_project_can_be_updated()
+    {
+        Event::fake();
+
+        $parent = User::factory()->user()->create();
+
+        $user = User::factory()->user()->create(['parent_user_id' => $parent->id]);
+
+        $this->actingAs($user);
+
+        $project = Project::factory()->create(['user_id' => $parent->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $new_project = Project::factory()->create(['user_id' => $parent->id]);
+
+        $this->patch("/time/{$time->id}", [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        Event::assertDispatched(TimeUpdated::class);
+    }
+
+    /** @test */
+    public function a_time_with_another_user_project_can_not_be_updated()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $another_user = User::factory()->user()->create();
+
+        $new_project = Project::factory()->create(['user_id' => $another_user->id]);
+
+        $response = $this->patch("/time/{$time->id}", [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        $response->assertSessionHasErrors(['project_id']);
+
+        $this->assertDatabaseMissing('time', [
+            'start_time' => '2020-12-01 00:00:00',
+            'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => $time->start_time,
+            'end_time' => $time->end_time,
+            'project_id' => $time->project_id,
+            'task' => $time->task,
+            'details' => $time->details,
+        ]);
     }
 
     /** @test */
@@ -95,11 +204,19 @@ class UpdateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $time = Time::factory()->create(['user_id' => $another_user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $another_user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $new_project = Project::factory()->create(['user_id' => $user->id]);
 
         $response = $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00:00',
             'end_time' => '2020-12-01 01:00:00',
+            'project_id' => $new_project->id,
             'task' => 'task',
             'details' => 'details',
         ]);
@@ -109,6 +226,7 @@ class UpdateTimeTest extends TestCase
         $this->assertDatabaseHas('time', [
             'start_time' => $time->start_time,
             'end_time' => $time->end_time,
+            'project_id' => $time->project_id,
             'task' => $time->task,
             'details' => $time->details,
         ]);

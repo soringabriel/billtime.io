@@ -88,6 +88,7 @@ class Kernel extends HttpKernel
         'subuser' => \App\Http\Middleware\SubuserMiddleware::class,
         'time' => \App\Http\Middleware\TimeMiddleware::class,
         'parent_user' => \App\Http\Middleware\ParentUserMiddleware::class,
+        'project' => \App\Http\Middleware\ProjectMiddleware::class,
     ];
 
     /**

@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Time;
 
 use App\Events\Time\TimeDeleted;
 use App\Models\Time;
+use App\Models\Project;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -17,13 +18,18 @@ class DeleteTimeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_Time_can_be_deleted()
+    public function a_time_can_be_deleted()
     {
         Event::fake();
 
         $user = User::factory()->user()->create();
 
-        $time = Time::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
 
         $this->actingAs($user);
 
@@ -43,7 +49,12 @@ class DeleteTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $time = Time::factory()->create(['user_id' => $another_user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $another_user->id, 
+            'project_id' => $project->id
+        ]);
 
         $this->actingAs($user);
 

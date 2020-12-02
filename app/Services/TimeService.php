@@ -45,6 +45,7 @@ class TimeService extends BaseService
                     'user_id' => auth()->id(),
                     'start_time' => $data['start_time'],
                     'end_time' => $data['end_time'],
+                    'project_id' => $data['project_id'],
                     'task' => $data['task'],
                     'details' => $data['details'],
                 ]
@@ -80,6 +81,7 @@ class TimeService extends BaseService
                     'user_id' => auth()->id(),
                     'start_time' => $data['start_time'],
                     'end_time' => $data['end_time'],
+                    'project_id' => $data['project_id'],
                     'task' => $data['task'],
                     'details' => $data['details'],
                 ]

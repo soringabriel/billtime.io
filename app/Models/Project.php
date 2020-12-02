@@ -3,21 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Relationship\TimeRelationship;
-use Database\Factories\TimeFactory;
+use App\Models\Traits\Relationship\ProjectRelationship;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Time extends Model
+class Project extends Model
 {
     use HasFactory,
-        TimeRelationship;
+        ProjectRelationship;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'time';
+    protected $table = 'projects';
 
     /**
      * The primary key associated with the table.
@@ -33,11 +33,11 @@ class Time extends Model
      */
     protected $fillable = [
         'user_id',
-        'start_time',
-        'end_time',
-        'project_id',
-        'task',
-        'details',
+        'name',
+        'company_name',
+        'tax_number',
+        'vat_number',
+        'address',
     ];
 
     /**
@@ -45,8 +45,6 @@ class Time extends Model
      */
     protected $with = [
         'user',
-        'tags',
-        'project',
     ];
                 
     /**
@@ -56,6 +54,6 @@ class Time extends Model
      */
     protected static function newFactory()
     {
-        return TimeFactory::new();
+        return ProjectFactory::new();
     }
 }

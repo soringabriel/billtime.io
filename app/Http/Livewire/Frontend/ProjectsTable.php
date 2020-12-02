@@ -2,23 +2,23 @@
 
 namespace App\Http\Livewire\Frontend;
 
-use App\Models\Time;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\TableComponent;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
 /**
- * Class TimeTable.
+ * Class ProjectsTable.
  */
-class TimeTable extends TableComponent
+class ProjectsTable extends TableComponent
 {
     use HtmlComponents;
 
     /**
      * @var string
      */
-    public $sortField = 'start_time';
+    public $sortField = 'name';
 
     /**
      * @var array
@@ -33,7 +33,7 @@ class TimeTable extends TableComponent
      */
     public function query(): Builder
     {
-        return Time::query()->whereIn('user_id', array_merge([auth()->user()->id], auth()->user()->subUsers()->pluck('id')->toArray()));
+        return Project::query()->where('user_id', auth()->user()->id);
     }
 
     /**
@@ -42,33 +42,24 @@ class TimeTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('User'))
-                ->searchable()
-                ->sortable()
-                ->format(function (Time $model) {
-                    return $model->user->name;
-                }),
-            Column::make(__('Start Time'))
+            Column::make(__('Name'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('End Time'))
+            Column::make(__('Company Name'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project'))
-                ->searchable()
-                ->sortable()
-                ->format(function (Time $model) {
-                    return $model->project->name;
-                }),
-            Column::make(__('Task'))
+            Column::make(__('Tax Number'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Details'))
+            Column::make(__('Vat Number'))
+                ->searchable()
+                ->sortable(),
+            Column::make(__('Address'))
                 ->searchable()
                 ->sortable(),
             Column::make(__('Actions'))
-                ->format(function (Time $model) {
-                    return view('frontend.time.includes.actions', ['model' => $model]);
+                ->format(function (Project $model) {
+                    return view('frontend.projects.includes.actions', ['model' => $model]);
                 }),
         ];
     }

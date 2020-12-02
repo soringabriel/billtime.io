@@ -9,6 +9,8 @@ use App\Domains\Auth\Events\User\UserLoggedIn;
 use App\Domains\Auth\Events\User\UserRestored;
 use App\Domains\Auth\Events\User\UserStatusChanged;
 use App\Domains\Auth\Events\User\UserUpdated;
+use App\Domains\Auth\Events\User\UserRegistered;
+use App\Services\ProjectService;
 use Illuminate\Auth\Events\PasswordReset;
 
 /**
@@ -16,6 +18,16 @@ use Illuminate\Auth\Events\PasswordReset;
  */
 class UserEventListener
 {
+    /**
+     * UserEventListener constructor.
+     *
+     * @param  ProjectService  $projectService
+     */
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
+
     /**
      * @param $event
      */
@@ -119,6 +131,37 @@ class UserEventListener
     }
 
     /**
+     * @param $event
+     */
+    public function onRegister($event)
+    {
+        if ($event->user->isParent()) {
+            $this->projectService->store([
+                'user_id' => $event->user->id,
+                'name' => 'Demo Project',
+                'company_name' => 'Company',
+                'tax_number' => 'Company Tax Number',
+                'vat_number' => 'Company Vat Number',
+                'address' => 'Company Address',
+            ]);
+        }
+        activity('user')
+            ->performedOn($event->user)
+            ->withProperties([
+                'user' => [
+                    'type' => $event->user->type,
+                    'name' => $event->user->name,
+                    'email' => $event->user->email,
+                    'active' => $event->user->active,
+                    'email_verified_at' => $event->user->email_verified_at,
+                ],
+                'roles' => $event->user->roles->count() ? $event->user->roles->pluck('name')->implode(', ') : 'None',
+                'permissions' => $event->user->permissions ? $event->user->permissions->pluck('description')->implode(', ') : 'None',
+            ])
+            ->log('new user registered :subject.name with roles: :properties.roles and permissions: :properties.permissions');
+    }
+
+    /**
      * Register the listeners for the subscriber.
      *
      * @param \Illuminate\Events\Dispatcher $events
@@ -163,6 +206,11 @@ class UserEventListener
         $events->listen(
             UserStatusChanged::class,
             'App\Domains\Auth\Listeners\UserEventListener@onStatusChanged'
+        );
+
+        $events->listen(
+            UserRegistered::class,
+            'App\Domains\Auth\Listeners\UserEventListener@onRegister'
         );
     }
 }

@@ -11,7 +11,7 @@
                 <x-forms.patch :action="route('frontend.time.update', $time)">
                     <x-frontend.card>
                         <x-slot name="header">
-                            @lang('Update Plan')
+                            @lang('Update Time Record')
                         </x-slot>
 
                         <x-slot name="headerActions">
@@ -33,6 +33,18 @@
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? $time->end_time }}" required />
+                                    </div>
+                                </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
+
+                                    <div class="col-md-10">
+                                        <select name="project_id" class="form-control select2-project">
+                                            @foreach ($projects as $project) 
+                                                <option value="{{ $project->id }}" {{ ($project->id == $time->project_id ? 'selected' : '') }}>{{ $project->name }}</option>    
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div><!--form-group-->
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTimeTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateTimeTable extends Migration
      */
     public function up()
     {
-        Schema::create('time', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
-            $table->string('task')->nullable();
-            $table->string('details');
+            $table->string('name');
+            $table->string('company_name')->nullable();
+            $table->string('tax_number')->nullable();
+            $table->string('vat_number')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
-
+            
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -36,6 +37,6 @@ class CreateTimeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time');
+        Schema::dropIfExists('projects');
     }
 }

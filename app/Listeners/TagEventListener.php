@@ -7,9 +7,9 @@ use App\Events\Tag\TagDeleted;
 use App\Events\Tag\TagUpdated;
 
 /**
- * Class TagListener.
+ * Class TagEventListener.
  */
-class TagListener
+class TagEventListener
 {
     /**
      * @param $event
@@ -60,17 +60,17 @@ class TagListener
     {
         $events->listen(
             TagCreated::class,
-            'App\Listeners\TagListener@onCreated'
+            'App\Listeners\TagEventListener@onCreated'
         );
 
         $events->listen(
             TagUpdated::class,
-            'App\Listeners\TagListener@onUpdated'
+            'App\Listeners\TagEventListener@onUpdated'
         );
 
         $events->listen(
             TagDeleted::class,
-            'App\Listeners\TagListener@onDeleted'
+            'App\Listeners\TagEventListener@onDeleted'
         );
     }
 }
