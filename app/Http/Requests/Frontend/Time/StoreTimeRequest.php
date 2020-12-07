@@ -19,8 +19,8 @@ class StoreTimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_time' => ['required', 'date_format:Y-m-d H:i:s'],
-            'end_time' => ['required', 'date_format:Y-m-d H:i:s'],
+            'start_time' => ['required', 'date_format:Y-m-d H:i:s', 'before:now', 'before:' . FormRequest::input('end_time')],
+            'end_time' => ['required', 'date_format:Y-m-d H:i:s', 'before:now'],
             'project_id' => ['required', Rule::exists('projects', 'id')->where('user_id', auth()->user()->getParentId())],
             'task' => ['max:255', 'url'],
             'details' => ['required', 'max:255'],

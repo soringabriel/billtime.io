@@ -123,7 +123,8 @@ $(function () {
     $('.datetimepicker').each(function(){
         $(this).datetimepicker({
             step: 5,
-            format: 'Y-m-d H:i:s'
+            format: 'Y-m-d H:i',
+            maxDate: new Date()
         });
     })
 });

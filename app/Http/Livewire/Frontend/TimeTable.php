@@ -59,10 +59,16 @@ class TimeTable extends TableComponent
                 }),
             Column::make(__('Start Time'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->format(function (Time $model) {
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS F Y H:i');
+                }),
             Column::make(__('End Time'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->format(function (Time $model) {
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS F Y H:i');
+                }),
             Column::make(__('Project'))
                 ->format(function (Time $model) {
                     return $model->project->name;
