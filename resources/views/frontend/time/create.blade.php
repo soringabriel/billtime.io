@@ -24,7 +24,7 @@
                                     <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
@@ -32,7 +32,7 @@
                                     <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 

@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Frontend;
 
 use App\Models\Time;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Rappasoft\LaravelLivewireTables\TableComponent;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 /**
  * Class TimeTable.
@@ -15,6 +17,11 @@ use Carbon\Carbon;
 class TimeTable extends TableComponent
 {
     use HtmlComponents;
+
+    /**
+     * @var bool
+     */
+    public $total = true;
 
     /**
      * @var string
@@ -90,5 +97,22 @@ class TimeTable extends TableComponent
                 })
                 ->excludeFromExport(),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function totalTime(): string
+    {
+        CarbonInterval::setCascadeFactors([
+            'minute' => [60, 'seconds'],
+            'hour' => [60, 'minutes'],
+        ]);        
+        $models = $this->query()->get();
+        $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
+        foreach ($models as $model) {
+            $total->add(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)));
+        }
+        return $total->cascade()->forHumans();
     }
 }
