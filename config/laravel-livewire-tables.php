@@ -5,7 +5,7 @@ return [
     /*
      * The class to use to handle the export functionality
      */
-    'exports' => \App\Helpers\Export::class,
+    'exports' => \App\Custom\LaravelLivewireTables\Exports\Export::class,
 
     /*
      * Which library you want to use for PDF generation

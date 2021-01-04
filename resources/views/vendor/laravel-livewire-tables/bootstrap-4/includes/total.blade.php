@@ -1,11 +1,9 @@
-@if ($total)
-    <div class="row">
-        <div class="col">
-            {{ $models->links() }}
+@foreach($columns as $column)
+    @if ($column->isTotalable())
+        <div class="row">
+            <div class="col text-right text-muted total-time">
+                @lang('Total') {{ $column->getText() }} {{ $column->totalFormatted($column) }}
+            </div>
         </div>
-
-        <div class="col text-right text-muted total-time">
-            @lang('Total Time') {{ $this->totalTime() }}
-        </div>
-    </div>
-@endif
+    @endif
+@endforeach
