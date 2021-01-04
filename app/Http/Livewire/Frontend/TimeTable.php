@@ -49,7 +49,7 @@ class TimeTable extends TableComponentExtended
      */
     public $exportCustomCells = [
         'I3' => 'Total time',
-        'J3' => '=sum(G2:G100)',
+        'J3' => '=sum(G2:G1000)',
     ];
 
     /**

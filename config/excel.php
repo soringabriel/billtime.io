@@ -21,7 +21,7 @@ return [
         | Pre-calculate formulas during export
         |--------------------------------------------------------------------------
         */
-        'pre_calculate_formulas' => true,
+        'pre_calculate_formulas' => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
         |
         */
         'properties'             => [
-            'creator'        => '',
+            'creator'        => config('app.name', 'Laravel Boilerplate'),
             'lastModifiedBy' => '',
             'title'          => '',
             'description'    => '',
