@@ -14,9 +14,9 @@
             @csrf
             @method($method)
 
-            @if (isset($hiddenData))
-                @foreach (json_decode($hiddenData) as $data)
-                    <input type="hidden" name="{{ $data['name'] }}" class="{{ $data['class'] }}">
+            @if (isset($attributes['hiddenData']))
+                @foreach (json_decode($attributes['hiddenData']) as $data)
+                    <input type="hidden" name="{{ $data->name }}" class="{{ $data->class }}">
                 @endforeach
             @endif
 
@@ -30,9 +30,9 @@
         @csrf
         @method($method)
 
-        @if (isset($hiddenData))
-            @foreach (json_decode($hiddenData) as $data)
-                <input type="hidden" name="{{ $data['name'] }}" class="{{ $data['class'] }}">
+        @if (isset($attributes['hiddenData']))
+            @foreach (json_decode($attributes['hiddenData']) as $data)
+                <input type="hidden" name="{{ $data->name }}" class="{{ $data->class }}">
             @endforeach
         @endif
 

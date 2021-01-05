@@ -50,9 +50,9 @@ class TimeTable extends TableComponentExtended
     public $bulkActions = true;
 
     /**
-     * @var bool
+     * @var string
      */
-    public $bulkDelete = "#";
+    public $bulkDelete = 'frontend.time.bulkDestroy';
 
     /**
      * @var bool

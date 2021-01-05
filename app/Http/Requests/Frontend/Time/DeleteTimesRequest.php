@@ -18,7 +18,7 @@ class DeleteTimesRequest extends FormRequest
     public function rules()
     {
         return [
-            'times' => ['required', 'array'],
+            'times' => ['required', 'json'],
         ];
     }
 }

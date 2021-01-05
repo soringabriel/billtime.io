@@ -111,7 +111,7 @@ class TimeController extends Controller
      */
     public function bulkDestroy(DeleteTimesRequest $request)
     {
-        $times = $request->validated()['times'];
+        $times = json_decode($request->validated()['times']);
         foreach ($times as $time) {
             $time = Time::find($time);
             if (!is_null($time)) {

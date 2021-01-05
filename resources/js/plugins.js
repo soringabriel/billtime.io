@@ -131,7 +131,7 @@ $(function () {
         });
     })
 
-    $(".bulk-checkbox").on('click', function(){
+    $(".bulk-checkbox").on('change', function(){
         let checked = [];
         $(".bulk-checkbox").each(function(){
             if ($(this).is(":checked")) {

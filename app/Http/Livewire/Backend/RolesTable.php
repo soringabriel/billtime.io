@@ -5,14 +5,14 @@ namespace App\Http\Livewire\Backend;
 use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Rappasoft\LaravelLivewireTables\TableComponent;
+use App\Custom\LaravelLivewireTables\TableComponentExtended;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
-use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Custom\LaravelLivewireTables\Views\ColumnExtended;
 
 /**
  * Class RolesTable.
  */
-class RolesTable extends TableComponent
+class RolesTable extends TableComponentExtended
 {
     use HtmlComponents;
 
@@ -44,7 +44,7 @@ class RolesTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Type'), 'type')
+            ColumnExtended::make(__('Type'), 'type')
                 ->sortable()
                 ->format(function (Role $model) {
                     if ($model->type === User::TYPE_ADMIN) {
@@ -57,10 +57,10 @@ class RolesTable extends TableComponent
 
                     return 'N/A';
                 }),
-            Column::make(__('Name'), 'name')
+            ColumnExtended::make(__('Name'), 'name')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Permissions'), 'permissions_label')
+            ColumnExtended::make(__('Permissions'), 'permissions_label')
                 ->searchable(function ($builder, $term) {
                     return $builder->orWhereHas('permissions', function ($query) use ($term) {
                         return $query->where('name', 'like', '%'.$term.'%');
@@ -69,9 +69,9 @@ class RolesTable extends TableComponent
                 ->format(function (Role $model) {
                     return $this->html($model->permissions_label);
                 }),
-            Column::make(__('Number of Users'), 'users_count')
+            ColumnExtended::make(__('Number of Users'), 'users_count')
                 ->sortable(),
-            Column::make(__('Actions'))
+            ColumnExtended::make(__('Actions'))
                 ->format(function (Role $model) {
                     return view('backend.auth.role.includes.actions', ['model' => $model]);
                 }),

@@ -1,7 +1,9 @@
 <div
     class="{{ $this->getOption('bootstrap.container') ? 'container-fluid' : '' }}"
     @if (is_numeric($refresh)) wire:poll.{{ $refresh }}.ms @elseif(is_string($refresh)) wire:poll="{{ $refresh }}" @endif
+    @if (isset($this->bulkActions) && $this->bulkActions) x-data="init()" @endif
 >
+
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.offline')
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.options')
 
@@ -29,3 +31,10 @@
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.total')
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.pagination')
 </div>
+<script>
+    function init(){
+        return {
+            selected: 0,
+        };
+    }
+</script>

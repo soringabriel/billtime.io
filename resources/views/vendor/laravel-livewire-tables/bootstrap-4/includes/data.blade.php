@@ -12,7 +12,7 @@
     >
         @if (isset($this->bulkActions) && $this->bulkActions)
             <td>
-                <input type="checkbox" class="bulk-checkbox" value="{{ $model->id }}">
+                <input type="checkbox" x-ref="checkRow{{ $model->id }}" class="bulk-checkbox" value="{{ $model->id }}" x-on:change="$refs.checkRow{{ $model->id }}.checked ? selected++ : selected--">
             </td>
         @endif
 
