@@ -56,8 +56,9 @@ class TimeTable extends TableComponentExtended
      * @var array
      */
     public $exportColumnFormats = [
-        'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+        'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+        'B' => NumberFormat::FORMAT_DATE_TIME3,
+        'c' => NumberFormat::FORMAT_DATE_TIME3,
         'G' => NumberFormat::FORMAT_DATE_TIME3,
         'J' => NumberFormat::FORMAT_DATE_TIME3,
     ];
@@ -113,6 +114,15 @@ class TimeTable extends TableComponentExtended
                 })
                 ->format(function (Time $model) {
                     return $model->user->name;
+                })
+                ->excludeFromExport(),
+            ColumnExtended::make(__('Date'))
+                ->exportOnly()
+                ->format(function (Time $model) {
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('d-m-Y');
+                })
+                ->exportFormat(function (Time $model) {
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('d-m-Y');
                 }),
             ColumnExtended::make(__('Start Time'))
                 ->searchable()
@@ -121,7 +131,7 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS F Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
-                    return $model->start_time;
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('H:i');
                 }),
             ColumnExtended::make(__('End Time'))
                 ->searchable()
@@ -130,7 +140,7 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS F Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
-                    return $model->end_time;
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('H:i');
                 }),
             ColumnExtended::make(__('Project'))
                 ->searchable(function ($builder, $term) {
@@ -144,7 +154,6 @@ class TimeTable extends TableComponentExtended
                 ->searchable()
                 ->sortable(),
             ColumnExtended::make(__('Details'))
-                ->sortable()
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
                 ->totalable(function() use ($timeTable) {
@@ -163,12 +172,7 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time));
                 })
                 ->exportFormat(function (Time $model) {
-                    CarbonInterval::setCascadeFactors([
-                        'minute' => [60, 'seconds'],
-                        'hour' => [60, 'minutes'],
-                    ]);        
-                    $interval = Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time))->cascade();
-                    return $interval->hours . ':' . $interval->minutes;
+                    return '=INDIRECT("C" & ROW()) - INDIRECT("B" & ROW())';
                 }),
             ColumnExtended::make(__('Actions'))
                 ->format(function (Time $model) {
