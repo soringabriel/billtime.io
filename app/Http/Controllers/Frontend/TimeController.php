@@ -101,4 +101,23 @@ class TimeController extends Controller
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully deleted.'));
     }
+
+    /**
+     * @param  DeleteTimeRequest  $request
+     * @param  array  $times
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function bulkDestroy(DeleteTimeRequest $request, array $times)
+    {
+        foreach ($times as $time) {
+            $time = Time::find($time);
+            if (!is_null($time)) {
+                $this->timeService->destroy($time);
+            }
+        }
+
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time records were successfully deleted.'));
+    }
 }

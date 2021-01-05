@@ -127,8 +127,7 @@ $(function () {
             step: 5,
             format: 'Y-m-d H:i',
             defaultDate: utcDate,
-            maxDate: utcDate,
-            maxTime: utcDate.getTime()
+            maxDate: utcDate
         });
     })
 });
