@@ -130,4 +130,16 @@ $(function () {
             maxDate: utcDate
         });
     })
+
+    $(".bulk-checkbox").on('click', function(){
+        let checked = [];
+        $(".bulk-checkbox").each(function(){
+            if ($(this).is(":checked")) {
+                checked.push($(this).val());
+            }
+        })
+        $(".bulk-checkbox-values").each(function(){
+            $(this).val(JSON.stringify(checked));
+        })
+    })
 });

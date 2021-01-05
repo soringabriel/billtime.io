@@ -10,6 +10,12 @@
             style="cursor:pointer"
         @endif
     >
+        @if (isset($this->bulkActions) && $this->bulkActions)
+            <td>
+                <input type="checkbox" class="bulk-checkbox" value="{{ $model->id }}">
+            </td>
+        @endif
+
         @foreach($columns as $column)
             @if ($column->isVisible())
                 <td

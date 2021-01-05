@@ -45,6 +45,26 @@ class TimeTable extends TableComponentExtended
     public $exports = ['csv', 'xls', 'xlsx'];
 
     /**
+     * @var bool
+     */
+    public $bulkActions = true;
+
+    /**
+     * @var bool
+     */
+    public $bulkDelete = "#";
+
+    /**
+     * @var bool
+     */
+    public $hiddenDataDelete = [
+        [
+            'name' => 'times',
+            'class' => 'bulk-checkbox-values',
+        ]
+    ];
+
+    /**
      * @var array
      */
     public $exportCustomCells = [
@@ -148,10 +168,6 @@ class TimeTable extends TableComponentExtended
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
                 ->totalable(function() use ($timeTable) {
-                    CarbonInterval::setCascadeFactors([
-                        'minute' => [60, 'seconds'],
-                        'hour' => [60, 'minutes'],
-                    ]);        
                     $models = $timeTable->models()->get();
                     $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
                     foreach ($models as $model) {

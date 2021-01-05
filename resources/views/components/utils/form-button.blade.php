@@ -14,6 +14,12 @@
             @csrf
             @method($method)
 
+            @if (isset($hiddenData))
+                @foreach (json_decode($hiddenData) as $data)
+                    <input type="hidden" name="{{ $data['name'] }}" class="{{ $data['class'] }}">
+                @endforeach
+            @endif
+
             <button type="submit" class="{{ $buttonClass }}">
                 @if ($icon)<i class="{{ $icon }}"></i> @endif{{ $slot }}
             </button>
@@ -23,6 +29,12 @@
     <form method="POST" action="{{ $action }}" name="{{ $name }}" class="{{ $formClass }}">
         @csrf
         @method($method)
+
+        @if (isset($hiddenData))
+            @foreach (json_decode($hiddenData) as $data)
+                <input type="hidden" name="{{ $data['name'] }}" class="{{ $data['class'] }}">
+            @endforeach
+        @endif
 
         <button type="submit" class="{{ $buttonClass }}">
             @if ($icon)<i class="{{ $icon }}"></i> @endif{{ $slot }}

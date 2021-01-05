@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Time\StoreTimeRequest;
 use App\Http\Requests\Frontend\Time\EditTimeRequest;
 use App\Http\Requests\Frontend\Time\UpdateTimeRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimeRequest;
+use App\Http\Requests\Frontend\Time\DeleteTimesRequest;
 use App\Services\TimeService;
 use App\Models\Time;
 
@@ -103,14 +104,14 @@ class TimeController extends Controller
     }
 
     /**
-     * @param  DeleteTimeRequest  $request
-     * @param  array  $times
+     * @param  DeleteTimesRequest  $request
      *
      * @return mixed
      * @throws \Exception
      */
-    public function bulkDestroy(DeleteTimeRequest $request, array $times)
+    public function bulkDestroy(DeleteTimesRequest $request)
     {
+        $times = $request->validated()['times'];
         foreach ($times as $time) {
             $time = Time::find($time);
             if (!is_null($time)) {

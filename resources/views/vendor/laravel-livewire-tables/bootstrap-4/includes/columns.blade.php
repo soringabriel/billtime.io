@@ -1,4 +1,7 @@
 <tr>
+    @if (isset($this->bulkActions) && $this->bulkActions)
+        <th>@lang('Select')</th>
+    @endif
     @foreach($columns as $column)
         @if ($column->isVisible())
             @if($column->isSortable())
