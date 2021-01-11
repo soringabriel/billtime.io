@@ -120,14 +120,13 @@ $(function () {
     // Enable tooltips everywhere
     $('[data-toggle="tooltip"]').tooltip();
     let date = new Date(); 
-    let utcDate = new Date(date.toLocaleString('en-US', {timeZone: 'UTC'}));
 
     $('.datetimepicker').each(function(){
         $(this).datetimepicker({
             step: 5,
             format: 'Y-m-d H:i',
-            defaultDate: utcDate,
-            maxDate: utcDate
+            defaultDate: date,
+            maxDate: date
         });
     })
 
