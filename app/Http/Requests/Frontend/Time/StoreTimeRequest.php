@@ -20,7 +20,13 @@ class StoreTimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_time' => ['required', 'date_format:Y-m-d H:i', 'before:' . Carbon::now()->timezone(auth()->user()->timezone), 'before:' . FormRequest::input('end_time'), 'after:' . Carbon::createFromFormat('Y-m-d H:i', FormRequest::input('end_time'))->subDay()],
+            'start_time' => [
+                'required', 
+                'date_format:Y-m-d H:i', 
+                'before:' . Carbon::now()->timezone(auth()->user()->timezone), 
+                'before:' . FormRequest::input('end_time'), 
+                (!empty(FormRequest::input('end_time')) ? 'after:' . Carbon::createFromFormat('Y-m-d H:i', FormRequest::input('end_time'))->subDay() : '')
+            ],
             'end_time' => ['required', 'date_format:Y-m-d H:i', 'before:' . Carbon::now()->timezone(auth()->user()->timezone)],
             'project_id' => ['required', Rule::exists('projects', 'id')->where('user_id', auth()->user()->getParentId())],
             'task' => ['max:255'],
