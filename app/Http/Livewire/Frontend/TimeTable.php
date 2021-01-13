@@ -83,8 +83,8 @@ class TimeTable extends TableComponentExtended
     public $exportColumnFormats = [
         'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        'F' => NumberFormat::FORMAT_DATE_TIME3,
-        'J' => NumberFormat::FORMAT_DATE_TIME3,
+        'F' => "[h]:mm",
+        'J' => "[h]:mm",
     ];
 
     /**
