@@ -44,7 +44,10 @@ class TimeController extends Controller
      */
     public function create()
     {
-        return view('frontend.time.create')->withProjects(auth()->user()->getProjects());
+        $last_time = auth()->user()->times()->orderBy('created_at', 'desc')->first();
+        return view('frontend.time.create')
+            ->withLastTime($last_time)
+            ->withProjects(auth()->user()->getProjects());
     }
 
     /**

@@ -32,7 +32,12 @@ class TimeTable extends TableComponentExtended
     /**
      * @var string
      */
-    public $sortField = 'start_time';
+    public $sortField = 'end_time';
+
+    /**
+     * @var string
+     */
+    public $sortDirection = 'desc';
 
     /**
      * @var array
@@ -163,7 +168,15 @@ class TimeTable extends TableComponentExtended
                 }),
             ColumnExtended::make(__('Task'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->format(function (Time $model) {
+                    $task_array = explode("/", $model->task);
+                    $task_title = end($task_array);
+                    return $this->html('<a href="' . $model->task . '" target="_blank">' . $task_title . '</a>');
+                })
+                ->exportFormat(function (Time $model) {
+                    return $model->task;
+                }),
             ColumnExtended::make(__('Details'))
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
