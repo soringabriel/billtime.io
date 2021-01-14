@@ -24,7 +24,7 @@
                                     <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') }}" autocomplete="off" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? ($lastTime ? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') : '') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
