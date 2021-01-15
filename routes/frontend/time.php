@@ -36,5 +36,5 @@ Route::group([
         Route::delete('/', [TimeController::class, 'destroy'])->name('destroy');
     });
 
-    Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy');
+    Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware('times');
 });
