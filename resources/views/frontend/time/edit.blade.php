@@ -24,7 +24,7 @@
                                     <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? $time->start_time }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? stringDateFormat($time->start_time, 'Y-m-d H:i') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
@@ -32,7 +32,7 @@
                                     <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? $time->end_time }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? stringDateFormat($time->end_time, 'Y-m-d H:i') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
@@ -52,7 +52,7 @@
                                     <label for="task" class="col-md-2 col-form-label">@lang('Task')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" value="{{ old('task') ?? $time->task }}" maxlength="255" required />
+                                        <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" value="{{ old('task') ?? $time->task }}" maxlength="255" />
                                     </div>
                                 </div><!--form-group-->
 

@@ -24,7 +24,7 @@
                                     <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? ($lastTime ? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') : '') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
@@ -32,7 +32,7 @@
                                     <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') }}" autocomplete="off" required />
                                     </div>
                                 </div><!--form-group-->
 
@@ -42,7 +42,7 @@
                                     <div class="col-md-10">
                                         <select name="project_id" class="form-control select2-project">
                                             @foreach ($projects as $project) 
-                                                <option value="{{ $project->id }}">{{ $project->name }}</option>    
+                                                <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                             @endforeach
                                         </select>
                                     </div>
@@ -52,7 +52,7 @@
                                     <label for="task" class="col-md-2 col-form-label">@lang('Task')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" maxlength="255" required />
+                                        <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" maxlength="255" value="{{ old('task') }}" />
                                     </div>
                                 </div><!--form-group-->
 
@@ -60,7 +60,7 @@
                                     <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
 
                                     <div class="col-md-10">
-                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" /></textarea>
+                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') }}</textarea>
                                     </div>
                                 </div><!--form-group-->
                             </div>

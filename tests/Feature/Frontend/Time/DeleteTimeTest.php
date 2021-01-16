@@ -64,4 +64,78 @@ class DeleteTimeTest extends TestCase
 
         $this->assertDatabaseHas('time', ['id' => $time->id]);
     }
+        
+    /** @test */
+    public function multiple_times_can_be_deleted_in_bulk()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $time2 = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $this->actingAs($user);
+
+        $this->assertDatabaseHas('time', ['id' => $time->id]);
+
+        $this->assertDatabaseHas('time', ['id' => $time2->id]);
+
+        $result = $this->delete("/time", [
+            'times' => json_encode([$time->id, $time2->id]),
+        ]);
+
+        $this->assertDatabaseMissing('time', ['id' => $time->id]);
+
+        $this->assertDatabaseMissing('time', ['id' => $time2->id]);
+
+        Event::assertDispatched(TimeDeleted::class);
+    }
+
+        
+    /** @test */
+    public function a_user_cannot_delete_in_bulk_a_time_that_belongs_to_another_user()
+    {
+        $user = User::factory()->user()->create();
+
+        $another_user = User::factory()->user()->create();
+
+        $project = Project::factory()->create(['user_id' => $user->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $another_user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $time2 = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $this->actingAs($user);
+
+        $this->assertDatabaseHas('time', ['id' => $time->id]);
+
+        $this->assertDatabaseHas('time', ['id' => $time2->id]);
+
+        $this->delete("/time", [
+            'times' => [
+                $time->id,
+                $time2->id,
+            ],
+        ]);
+
+        $this->assertDatabaseHas('time', ['id' => $time->id]);
+
+        $this->assertDatabaseHas('time', ['id' => $time2->id]);
+    }
 }

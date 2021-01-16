@@ -119,11 +119,26 @@ $(function () {
 
     // Enable tooltips everywhere
     $('[data-toggle="tooltip"]').tooltip();
+    let date = new Date(); 
 
     $('.datetimepicker').each(function(){
         $(this).datetimepicker({
             step: 5,
-            format: 'Y-m-d H:i:s'
+            format: 'Y-m-d H:i',
+            defaultDate: date,
+            maxDate: date
         });
+    })
+
+    $(".bulk-checkbox").on('change', function(){
+        let checked = [];
+        $(".bulk-checkbox").each(function(){
+            if ($(this).is(":checked")) {
+                checked.push($(this).val());
+            }
+        })
+        $(".bulk-checkbox-values").each(function(){
+            $(this).val(JSON.stringify(checked));
+        })
     })
 });

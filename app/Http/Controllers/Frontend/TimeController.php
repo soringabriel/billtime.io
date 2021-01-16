@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Time\StoreTimeRequest;
 use App\Http\Requests\Frontend\Time\EditTimeRequest;
 use App\Http\Requests\Frontend\Time\UpdateTimeRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimeRequest;
+use App\Http\Requests\Frontend\Time\DeleteTimesRequest;
 use App\Services\TimeService;
 use App\Models\Time;
 
@@ -43,7 +44,10 @@ class TimeController extends Controller
      */
     public function create()
     {
-        return view('frontend.time.create')->withProjects(auth()->user()->getProjects());
+        $last_time = auth()->user()->times()->orderBy('created_at', 'desc')->first();
+        return view('frontend.time.create')
+            ->withLastTime($last_time)
+            ->withProjects(auth()->user()->getProjects());
     }
 
     /**
@@ -100,5 +104,24 @@ class TimeController extends Controller
         $this->timeService->destroy($time);
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully deleted.'));
+    }
+
+    /**
+     * @param  DeleteTimesRequest  $request
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function bulkDestroy(DeleteTimesRequest $request)
+    {
+        $times = json_decode($request->validated()['times']);
+        foreach ($times as $time) {
+            $time = Time::find($time);
+            if (!is_null($time)) {
+                $this->timeService->destroy($time);
+            }
+        }
+
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time records were successfully deleted.'));
     }
 }

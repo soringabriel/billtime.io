@@ -4,14 +4,14 @@ namespace App\Http\Livewire\Frontend;
 
 use App\Domains\Auth\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Rappasoft\LaravelLivewireTables\TableComponent;
+use App\Custom\LaravelLivewireTables\TableComponentExtended;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
-use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Custom\LaravelLivewireTables\Views\ColumnExtended;
 
 /**
  * Class SubusersTable.
  */
-class SubusersTable extends TableComponent
+class SubusersTable extends TableComponentExtended
 {
     use HtmlComponents;
 
@@ -67,33 +67,33 @@ class SubusersTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Type'), 'type')
+            ColumnExtended::make(__('Type'), 'type')
                 ->sortable()
                 ->format(function (User $model) {
                     return view('frontend.user.subuser.includes.type', ['user' => $model]);
                 }),
-            Column::make(__('Name'), 'name')
+            ColumnExtended::make(__('Name'), 'name')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('E-mail'), 'email')
+            ColumnExtended::make(__('E-mail'), 'email')
                 ->searchable()
                 ->sortable()
                 ->format(function (User $model) {
                     return $this->mailto($model->email);
                 }),
-            Column::make(__('Verified'), 'email_verified_at')
+            ColumnExtended::make(__('Verified'), 'email_verified_at')
                 ->sortable()
                 ->format(function (User $model) {
                     return view('frontend.user.subuser.includes.verified', ['user' => $model]);
                 }),
-            Column::make(__('2FA'))
+            ColumnExtended::make(__('2FA'))
                 ->sortable(function ($builder, $direction) {
                     return $builder->orderBy('two_factor_auth_count', $direction);
                 })
                 ->format(function (User $model) {
                     return view('frontend.user.subuser.includes.2fa', ['user' => $model]);
                 }),
-            Column::make(__('Roles'), 'roles_label')
+            ColumnExtended::make(__('Roles'), 'roles_label')
                 ->searchable(function ($builder, $term) {
                     return $builder->orWhereHas('roles', function ($query) use ($term) {
                         return $query->where('name', 'like', '%'.$term.'%');
@@ -102,7 +102,7 @@ class SubusersTable extends TableComponent
                 ->format(function (User $model) {
                     return $this->html($model->roles_label);
                 }),
-            Column::make(__('Additional Permissions'), 'permissions_label')
+            ColumnExtended::make(__('Additional Permissions'), 'permissions_label')
                 ->searchable(function ($builder, $term) {
                     return $builder->orWhereHas('permissions', function ($query) use ($term) {
                         return $query->where('name', 'like', '%'.$term.'%');
@@ -111,7 +111,7 @@ class SubusersTable extends TableComponent
                 ->format(function (User $model) {
                     return $this->html($model->permissions_label);
                 }),
-            Column::make(__('Actions'))
+            ColumnExtended::make(__('Actions'))
                 ->format(function (User $model) {
                     return view('frontend.user.subuser.includes.actions', ['user' => $model]);
                 }),

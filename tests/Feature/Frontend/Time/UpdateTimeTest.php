@@ -93,16 +93,16 @@ class UpdateTimeTest extends TestCase
         $new_project = Project::factory()->create(['user_id' => $user->id]);
 
         $this->patch("/time/{$time->id}", [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         $this->assertDatabaseHas('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -132,16 +132,16 @@ class UpdateTimeTest extends TestCase
         $new_project = Project::factory()->create(['user_id' => $parent->id]);
 
         $this->patch("/time/{$time->id}", [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         $this->assertDatabaseHas('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -169,8 +169,8 @@ class UpdateTimeTest extends TestCase
         $new_project = Project::factory()->create(['user_id' => $another_user->id]);
 
         $response = $this->patch("/time/{$time->id}", [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -179,8 +179,8 @@ class UpdateTimeTest extends TestCase
         $response->assertSessionHasErrors(['project_id']);
 
         $this->assertDatabaseMissing('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -214,8 +214,8 @@ class UpdateTimeTest extends TestCase
         $new_project = Project::factory()->create(['user_id' => $user->id]);
 
         $response = $this->patch("/time/{$time->id}", [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $new_project->id,
             'task' => 'task',
             'details' => 'details',

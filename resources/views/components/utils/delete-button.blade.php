@@ -6,6 +6,7 @@
     name="delete-item"
     button-class="btn btn-danger btn-sm"
     permission="{{ $permission }}"
+    hiddenData="{!! ($attributes['hiddenData'] ?? '[]') !!}"
 >
     <i class="fas fa-trash"></i> {{ $text }}
 </x-utils.form-button>

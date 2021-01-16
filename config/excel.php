@@ -59,7 +59,7 @@ return [
         |
         */
         'properties'             => [
-            'creator'        => '',
+            'creator'        => config('app.name', 'Laravel Boilerplate'),
             'lastModifiedBy' => '',
             'title'          => '',
             'description'    => '',

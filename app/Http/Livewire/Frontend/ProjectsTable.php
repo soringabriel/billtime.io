@@ -4,14 +4,14 @@ namespace App\Http\Livewire\Frontend;
 
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Builder;
-use Rappasoft\LaravelLivewireTables\TableComponent;
+use App\Custom\LaravelLivewireTables\TableComponentExtended;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
-use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Custom\LaravelLivewireTables\Views\ColumnExtended;
 
 /**
  * Class ProjectsTable.
  */
-class ProjectsTable extends TableComponent
+class ProjectsTable extends TableComponentExtended
 {
     use HtmlComponents;
 
@@ -42,22 +42,22 @@ class ProjectsTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Name'))
+            ColumnExtended::make(__('Name'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Company Name'))
+            ColumnExtended::make(__('Company Name'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Tax Number'))
+            ColumnExtended::make(__('Tax Number'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Vat Number'))
+            ColumnExtended::make(__('Vat Number'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Address'))
+            ColumnExtended::make(__('Address'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Actions'))
+            ColumnExtended::make(__('Actions'))
                 ->format(function (Project $model) {
                     return view('frontend.projects.includes.actions', ['model' => $model]);
                 }),

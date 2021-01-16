@@ -53,16 +53,16 @@ class CreateTimeTest extends TestCase
         $this->actingAs($user);
 
         $this->post('/time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         $this->assertDatabaseHas('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -85,16 +85,16 @@ class CreateTimeTest extends TestCase
         $this->actingAs($user);
 
         $this->post('/time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
         ]);
 
         $this->assertDatabaseHas('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -115,8 +115,8 @@ class CreateTimeTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->post('/time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',
@@ -125,8 +125,8 @@ class CreateTimeTest extends TestCase
         $response->assertSessionHasErrors(['project_id']);
 
         $this->assertDatabaseMissing('time', [
-            'start_time' => '2020-12-01 00:00:00',
-            'end_time' => '2020-12-01 01:00:00',
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
             'project_id' => $project->id,
             'task' => 'https://task.ro',
             'details' => 'details',

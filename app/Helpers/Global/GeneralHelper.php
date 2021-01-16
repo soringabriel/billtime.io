@@ -50,3 +50,19 @@ if (! function_exists('homeRoute')) {
         return 'frontend.index';
     }
 }
+
+if (! function_exists('stringDateFormat')) {
+    /**
+     * Returns a string with a new format for a given string that it's a date
+     *
+     * @param $time
+     * @param $format
+     *
+     * @return string
+     * @throws Exception
+     */
+    function stringDateFormat($time, $format)
+    {
+        return carbon($time)->format($format);
+    }
+}
