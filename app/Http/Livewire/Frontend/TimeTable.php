@@ -148,8 +148,7 @@ class TimeTable extends TableComponentExtended
                 })
                 ->format(function (Time $model) {
                     return $model->user->name;
-                })
-                ->excludeFromExport(),
+                }),
             ColumnExtended::make(__('Start Time'))
                 ->sortable()
                 ->withFilter()
