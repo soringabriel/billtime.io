@@ -55,6 +55,16 @@ class TimeTable extends TableComponentExtended
     public $bulkActions = true;
 
     /**
+     * @var bool
+     */
+    public $searchEnabled = false;
+
+    /**
+     * @var bool
+     */
+    public $filtersEnabled = true;
+
+    /**
      * @var string
      */
     public $bulkDelete = 'frontend.time.bulkDestroy';
@@ -132,17 +142,17 @@ class TimeTable extends TableComponentExtended
         $timeTable = $this;
         return [
             ColumnExtended::make(__('User'))
-                ->searchable(function ($builder, $term) {
+                ->withFilter(function ($builder, $term) {
                     $users = User::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
-                    return $builder->orWhereIn('user_id', $users);
+                    return $builder->whereIn('user_id', $users);
                 })
                 ->format(function (Time $model) {
                     return $model->user->name;
                 })
                 ->excludeFromExport(),
             ColumnExtended::make(__('Start Time'))
-                ->searchable()
                 ->sortable()
+                ->withFilter()
                 ->format(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS F Y H:i');
                 })
@@ -150,8 +160,8 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('m-d-Y H:i');
                 }),
             ColumnExtended::make(__('End Time'))
-                ->searchable()
                 ->sortable()
+                ->withFilter()
                 ->format(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS F Y H:i');
                 })
@@ -159,16 +169,16 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('m-d-Y H:i');
                 }),
             ColumnExtended::make(__('Project'))
-                ->searchable(function ($builder, $term) {
+                ->withFilter(function ($builder, $term) {
                     $projects = Project::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
-                    return $builder->orWhereIn('project_id', $projects);
+                    return $builder->whereIn('project_id', $projects);
                 })
                 ->format(function (Time $model) {
                     return $model->project->name;
                 }),
             ColumnExtended::make(__('Task'))
-                ->searchable()
                 ->sortable()
+                ->withFilter()
                 ->format(function (Time $model) {
                     $task_array = explode("/", $model->task);
                     $task_title = end($task_array);

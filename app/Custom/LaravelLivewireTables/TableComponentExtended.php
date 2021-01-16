@@ -3,13 +3,18 @@
 namespace App\Custom\LaravelLivewireTables;
 
 use Rappasoft\LaravelLivewireTables\TableComponent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
+use App\Custom\LaravelLivewireTables\Traits\Filter;
 
 /**
  * Class TableComponentExtended.
  */
 abstract class TableComponentExtended extends TableComponent
 {
+    use Filter;
+
     /**
      * @var array
      */
@@ -103,5 +108,60 @@ abstract class TableComponentExtended extends TableComponent
             $this->exportColumnFormats(),
             $this->exportStyles(),
         ))->download($this->exportFileName.'.'.$type, $writer);
+    }
+    
+    /**
+     * @return Builder
+     */
+    public function models(): Builder
+    {
+        $builder = $this->query();
+
+        if ($this->searchEnabled && trim($this->search) !== '') {
+            $builder->where(function (Builder $builder) {
+                foreach ($this->columns() as $column) {
+                    if ($column->isSearchable()) {
+                        if (is_callable($column->getSearchCallback())) {
+                            $builder = app()->call($column->getSearchCallback(), ['builder' => $builder, 'term' => trim($this->search)]);
+                        } elseif (Str::contains($column->getAttribute(), '.')) {
+                            $relationship = $this->relationship($column->getAttribute());
+
+                            $builder->orWhereHas($relationship->name, function (Builder $builder) use ($relationship) {
+                                $builder->where($relationship->attribute, 'like', '%'.trim($this->search).'%');
+                            });
+                        } else {
+                            $builder->orWhere($builder->getModel()->getTable().'.'.$column->getAttribute(), 'like', '%'.trim($this->search).'%');
+                        }
+                    }
+                }
+            });
+        }
+
+        if ($this->filtersEnabled && !empty($this->filters)) {
+            $builder->where(function (Builder $builder) {
+                $filters_keys = array_keys($this->filters);
+                foreach ($this->columns() as $column) {
+                    if (in_array($column->getText(), $filters_keys)) {
+                        if (is_callable($column->getFilterCallback())) {
+                            $builder = app()->call($column->getFilterCallback(), ['builder' => $builder, 'term' => trim($this->filters[$column->getText()])]);
+                        } elseif (Str::contains($column->getAttribute(), '.')) {
+                            $relationship = $this->relationship($column->getAttribute());
+
+                            $builder->whereHas($relationship->name, function (Builder $builder) use ($relationship) {
+                                $builder->where($relationship->attribute, 'like', '%'.trim($this->filters[$column->getText()]).'%');
+                            });
+                        } else {
+                            $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), 'like', '%'.trim($this->filters[$column->getText()]).'%');
+                        }
+                    }
+                }
+            });
+        }
+
+        if (($column = $this->getColumnByAttribute($this->sortField)) !== false && is_callable($column->getSortCallback())) {
+            return app()->call($column->getSortCallback(), ['builder' => $builder, 'direction' => $this->sortDirection]);
+        }
+
+        return $builder->orderBy($this->getSortField($builder), $this->sortDirection);
     }
 }

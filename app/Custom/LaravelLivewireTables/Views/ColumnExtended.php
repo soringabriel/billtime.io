@@ -15,9 +15,40 @@ class ColumnExtended extends Column
     protected $totalable = false;
 
     /**
+     * @var bool
+     */
+    protected $hasFilter = false;
+
+    /**
      * @var
      */
     protected $totalableCallback;
+
+    /**
+     * @var null
+     */
+    protected $filterCallback;
+
+    /**
+     * @return bool
+     */
+    public function hasFilter(): bool
+    {
+        return $this->hasFilter === true;
+    }
+
+    /**
+     * @param  callable|null  $callable
+     *
+     * @return $this
+     */
+    public function withFilter(callable $callable = null): self
+    {
+        $this->filterCallback = $callable;
+        $this->hasFilter = true;
+
+        return $this;
+    }
 
     /**
      * @return bool
@@ -49,5 +80,13 @@ class ColumnExtended extends Column
         $this->totalable = true;
 
         return $this;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getFilterCallback()
+    {
+        return $this->filterCallback;
     }
 }
