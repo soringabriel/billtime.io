@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use App\Custom\LaravelLivewireTables\Traits\Filter;
+use App\Custom\LaravelLivewireTables\Traits\CustomFilters;
 
 /**
  * Class TableComponentExtended.
  */
 abstract class TableComponentExtended extends TableComponent
 {
-    use Filter;
+    use Filter,
+        CustomFilters;
 
     /**
      * @var array

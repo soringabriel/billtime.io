@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Illuminate\Support\HtmlString;
 
 /**
  * Class TimeTable.
@@ -68,6 +69,11 @@ class TimeTable extends TableComponentExtended
      * @var string
      */
     public $bulkDelete = 'frontend.time.bulkDestroy';
+
+    /**
+     * @var bool
+     */
+    public $customFiltersEnabled = true;
 
     /**
      * @var bool
@@ -125,6 +131,31 @@ class TimeTable extends TableComponentExtended
         'bootstrap.container' => false,
         'bootstrap.classes.table' => 'table table-striped',
     ];
+
+    /**
+     * @return string
+     */
+    public function customFilters()
+    {
+        return $this->html('
+        <div class="col">
+            <div class="input-group">
+                <input class="form-control" type="date"
+                    wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.start"
+                    wire:model.lazy="customFilters.start"
+                    wire:loading.attr="disabled"
+                    placeholder="Start Time"
+                />
+                <input class="form-control" type="date" 
+                    wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.end"
+                    wire:model.lazy="customFilters.end"
+                    wire:loading.attr="disabled"
+                    placeholder="End Time"
+                />
+            </div>
+        </div>
+        ');
+    }
 
     /**
      * @return Builder
@@ -209,5 +240,27 @@ class TimeTable extends TableComponentExtended
                 })
                 ->excludeFromExport(),
         ];
+    }
+
+        
+    /**
+     * @return Builder
+     */
+    public function models(): Builder
+    {
+        $builder = parent::models();
+
+        foreach ($this->columns() as $column) {
+            if ($column->getText() == __('End Time')) {
+                if (isset($this->customFilters['start'])) {
+                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));
+                }
+                if (isset($this->customFilters['end'])) {
+                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '<=', Carbon::parse($this->customFilters['end'])->format('Y-m-d'));
+                }
+            }
+        }
+
+        return $builder;
     }
 }

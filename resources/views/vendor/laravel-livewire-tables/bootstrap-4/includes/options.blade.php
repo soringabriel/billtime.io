@@ -12,6 +12,10 @@
             </div><!--col-->
         @endif
 
+        @if ($customFiltersEnabled)
+            {{ $this->customFilters() }}
+        @endif
+
         @if ($searchEnabled)
             <div class="col">
                 @if ($clearSearchButton)
