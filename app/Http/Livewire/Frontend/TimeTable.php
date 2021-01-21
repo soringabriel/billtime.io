@@ -90,7 +90,7 @@ class TimeTable extends TableComponentExtended
      */
     public $exportCustomCells = [
         'I3' => 'Total time',
-        'J3' => '=sum(F2:F1000)',
+        'J3' => '=sum(G2:G1000)',
     ];
 
     /**
@@ -99,7 +99,7 @@ class TimeTable extends TableComponentExtended
     public $exportColumnFormats = [
         'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        'F' => "[h]:mm",
+        'G' => "[h]:mm",
         'J' => "[h]:mm",
     ];
 
@@ -172,14 +172,6 @@ class TimeTable extends TableComponentExtended
     {
         $timeTable = $this;
         return [
-            ColumnExtended::make(__('User'))
-                ->withFilter(function ($builder, $term) {
-                    $users = User::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
-                    return $builder->whereIn('user_id', $users);
-                })
-                ->format(function (Time $model) {
-                    return $model->user->name;
-                }),
             ColumnExtended::make(__('Start Time'))
                 ->sortable()
                 ->withFilter()
@@ -197,6 +189,14 @@ class TimeTable extends TableComponentExtended
                 })
                 ->exportFormat(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('m-d-Y H:i');
+                }),
+            ColumnExtended::make(__('User'))
+                ->withFilter(function ($builder, $term) {
+                    $users = User::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
+                    return $builder->whereIn('user_id', $users);
+                })
+                ->format(function (Time $model) {
+                    return $model->user->name;
                 }),
             ColumnExtended::make(__('Project'))
                 ->withFilter(function ($builder, $term) {
