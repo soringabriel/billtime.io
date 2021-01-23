@@ -52,7 +52,7 @@ class UpdateTimeTest extends TestCase
             'project_id' => $project->id
         ]);
         
-        $this->get("/time/{$time->id}/edit")->assertRedirect('/time');
+        $this->get("/time/{$time->id}/edit")->assertRedirect(route(homeRoute()));
     }
 
     /** @test */
@@ -221,7 +221,7 @@ class UpdateTimeTest extends TestCase
             'details' => 'details',
         ]);
 
-        $response->assertSessionHas('flash_danger', __("You don't have access to this Time record."));
+        $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
 
         $this->assertDatabaseHas('time', [
             'start_time' => $time->start_time,

@@ -15,14 +15,13 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('number');
             $table->unsignedBigInteger('user_id');
-            $table->string('buyer_name');
-            $table->string('buyer_company_name')->nullable();
+            $table->string('buyer_company_name');
             $table->string('buyer_tax_number')->nullable();
             $table->string('buyer_vat_number')->nullable();
             $table->string('buyer_address')->nullable();
-            $table->string('seller_name');
-            $table->string('seller_company_name')->nullable();
+            $table->string('seller_company_name');
             $table->string('seller_tax_number')->nullable();
             $table->string('seller_vat_number')->nullable();
             $table->string('seller_address')->nullable();

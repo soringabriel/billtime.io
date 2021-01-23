@@ -25,7 +25,7 @@ Route::group([
 
     Route::post('/', [TimeController::class, 'store'])->name('store');
 
-    Route::group(['prefix' => '{time}', 'middleware' => 'time'], function () {
+    Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user:time'], function () {
         Route::get('edit', [TimeController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, Time $time) {

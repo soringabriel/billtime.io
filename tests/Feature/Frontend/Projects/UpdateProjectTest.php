@@ -41,7 +41,7 @@ class UpdateProjectTest extends TestCase
 
         $project = Project::factory()->create(['user_id' => $another_user->id]);
         
-        $this->get("/projects/{$project->id}/edit")->assertRedirect('/projects');
+        $this->get("/projects/{$project->id}/edit")->assertRedirect(route(homeRoute()));
     }
 
     /** @test */
@@ -107,7 +107,7 @@ class UpdateProjectTest extends TestCase
             'address' => 'address',
         ]);
 
-        $response->assertSessionHas('flash_danger', __("You don't have access to this Project."));
+        $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
 
         $this->assertDatabaseHas('projects', [
             'name' => $project->name,

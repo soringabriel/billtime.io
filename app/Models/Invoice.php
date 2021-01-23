@@ -33,12 +33,11 @@ class Invoice extends Model
      */
     protected $fillable = [
         'user_id',
-        'buyer_name',
+        'number',
         'buyer_company_name',
         'buyer_tax_number',
         'buyer_vat_number',
         'buyer_address',
-        'seller_name',
         'seller_company_name',
         'seller_tax_number',
         'seller_vat_number',

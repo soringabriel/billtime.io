@@ -27,12 +27,11 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         return [
-            'buyer_name' => $this->faker->name,
+            'number' => $this->faker->asciify('****'),
             'buyer_company_name' => $this->faker->company,
             'buyer_tax_number' => $this->faker->asciify('********'),
             'buyer_vat_number' => $this->faker->asciify('********'),
             'buyer_address' => $this->faker->address,
-            'seller_name' => $this->faker->name,
             'seller_company_name' => $this->faker->company,
             'seller_tax_number' => $this->faker->asciify('********'),
             'seller_vat_number' => $this->faker->asciify('********'),
