@@ -66,3 +66,44 @@ if (! function_exists('stringDateFormat')) {
         return carbon($time)->format($format);
     }
 }
+
+if (! function_exists('currencyToSymbol')) {
+    /**
+     * Converts currency code to currency symbol
+     *
+     * @param $currency_code
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    function currencyToSymbol($currency_code) 
+    {
+		$currencies = array(
+            'USD'=>'$', // US Dollar
+            'EUR'=> '€', // Euro
+            'CRC'=> '₡', // Costa Rican Colón
+            'GBP'=> '£', // British Pound Sterling
+            'ILS'=> '₪', // Israeli New Sheqel
+            'INR'=> '₹', // Indian Rupee
+            'JPY'=> '¥', // Japanese Yen
+            'KRW'=> '₩', // South Korean Won
+            'NGN'=> '₦', // Nigerian Naira
+            'PHP'=> '₱', // Philippine Peso
+            'PLN'=> 'zł', // Polish Zloty
+            'PYG'=> '₲', // Paraguayan Guarani
+            'THB'=> '฿', // Thai Baht
+            'UAH'=> '₴', // Ukrainian Hryvnia
+            'VND'=> '₫', // Vietnamese Dong)
+        );
+        
+        if (!$currency_code) {
+            return $currencies
+        }
+
+        if (array_key_exists($currency_code, $currencies)) {
+            return $currencies[$currency_code];
+        } else {
+            return $currency_code;
+        }
+    }
+}
