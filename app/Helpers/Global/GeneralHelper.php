@@ -97,7 +97,7 @@ if (! function_exists('currencyToSymbol')) {
         );
         
         if (!$currency_code) {
-            return $currencies
+            return $currencies;
         }
 
         if (array_key_exists($currency_code, $currencies)) {
