@@ -30,6 +30,7 @@ class StoreInvoiceRequest extends FormRequest
             'seller_address' => [],
             'services' => ['required', 'json'],
             'tax' => ['required', 'integer', 'between:0,100'],
+            'shipping' => ['required', 'min:0'],
             'currency' => ['required', 'max:3'],
             'date' => ['required', 'date_format:Y-m-d'],
             'due_date' => ['required', 'date_format:Y-m-d'],

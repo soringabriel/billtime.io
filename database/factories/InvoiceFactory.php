@@ -38,6 +38,7 @@ class InvoiceFactory extends Factory
             'seller_address' => $this->faker->address,
             'services' => '[]',
             'tax' => $this->faker->numberBetween(0, 100),
+            'shipping' => $this->faker->randomFloat(2, 1, 100),
             'currency' => $this->faker->currency,
             'price' => $this->faker->randomFloat(2, 1, 100),
             'date' => $this->faker->date(),

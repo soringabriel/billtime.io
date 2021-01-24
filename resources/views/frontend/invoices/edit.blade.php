@@ -1,69 +1,104 @@
-@inject('model', '\App\Models\Project')
+@inject('model', '\App\Models\Invoice')
 
 @extends('frontend.layouts.app')
 
-@section('title', __('Update Project Record'))
+@section('title', __('Update Invoice Record'))
 
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <x-forms.patch :action="route('frontend.projects.update', $project)">
+                <x-forms.patch :action="route('frontend.invoices.update', $invoice)">
                     <x-frontend.card>
                         <x-slot name="header">
-                            @lang('Update Project')
+                            @lang('Update Invoice')
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.projects.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.invoices.index')" :text="__('Cancel')" />
                         </x-slot>
 
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label">@lang('Name')</label>
+                                    <label for="name" class="col-form-label">@lang('Date')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="name" class="form-control" value="{{ old('name') ?? $project->name }}" placeholder="{{ __('Name') }}" maxlength="255" required />
+                                        <input type="date" class="form-control" name="date">
                                     </div>
-                                </div><!--form-group-->
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-form-label">@lang('Due Date')</label>
+
+                                    <div class="col-md-10">
+                                        <input type="date" class="form-control" name="due_date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <h2>@lang('Seller Information')</h2>
+
+                                        <div class="field-group field-group-required">
+                                            <label for="sellerCompanyName" class="col-form-label">@lang('Company Name')</label>
+                                            <input id="sellerCompanyName" type="text" name="seller_company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="sellerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
+                                            <input id="sellerTaxNumber" type="text" name="seller_tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="sellerVatNumber" class="col-form-label">@lang('Vat Number')</label>
+                                            <input id="sellerVatNumber" type="text" name="seller_vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="sellerAddress" class="col-form-label">@lang('Address')</label>
+                                            <input id="sellerAddress" type="text" name="seller_address" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h2>@lang('Buyer Information')</h2>
+
+                                        <div class="field-group field-group-required">
+                                            <label for="buyerCompanyName" class="col-form-label">@lang('Company Name')</label>
+                                            <input id="buyerCompanyName" type="text" name="buyer_company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="buyerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
+                                            <input id="buyerTaxNumber" type="text" name="buyer_tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="buyerVatNumber" class="col-form-label">@lang('Vat Number')</label>
+                                            <input id="buyerVatNumber" type="text" name="buyer_vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                        </div>
+                                        
+                                        <div class="field-group">
+                                            <label for="buyerAddress" class="col-form-label">@lang('Address')</label>
+                                            <input id="buyerAddress" type="text" name="buyer_address" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @include('frontend.invoices.includes.services-info')
 
                                 <div class="form-group row">
-                                    <label for="company_name" class="col-md-2 col-form-label">@lang('Company Name')</label>
+                                    <label for="notes" class="col-md-2 col-form-label">@lang('Notes')</label>
 
-                                    <div class="col-md-10">
-                                        <input type="text" name="company_name" class="form-control" value="{{ old('company_name') ?? $project->company_name }}" placeholder="{{ __('Company Name') }}" maxlength="255" />
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" name="notes"></textarea>
                                     </div>
-                                </div><!--form-group-->
+                                </div>
 
-                                <div class="form-group row">
-                                    <label for="tax_number" class="col-md-2 col-form-label">@lang('Tax Number')</label>
-
-                                    <div class="col-md-10">
-                                        <input type="text" name="tax_number" class="form-control" value="{{ old('tax_number') ?? $project->tax_number }}" placeholder="{{ __('Tax Number') }}" maxlength="255" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
-                                    <label for="vat_number" class="col-md-2 col-form-label">@lang('Vat Number')</label>
-
-                                    <div class="col-md-10">
-                                        <input type="text" name="vat_number" class="form-control" value="{{ old('vat_number') ?? $project->vat_number }}" placeholder="{{ __('Vat Number') }}" maxlength="255" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
-                                    <label for="address" class="col-md-2 col-form-label">@lang('Address')</label>
-
-                                    <div class="col-md-10">
-                                        <textarea name="address" class="form-control" placeholder="{{ __('Address') }}" />{{ old('address') ?? $project->address }}</textarea>
-                                    </div>
-                                </div><!--form-group-->
                             </div>
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update Project')</button>
+                            <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update Invoice')</button>
                         </x-slot>
                     </x-frontend.card>
                 </x-forms.patch>

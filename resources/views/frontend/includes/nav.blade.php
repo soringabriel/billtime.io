@@ -79,6 +79,12 @@
 
                                 @if ($logged_in_user->isParent())
                                     <x-utils.link
+                                        :href="route('frontend.invoices.index')"
+                                        :active="activeClass(Route::is('frontend.invoices.index'))"
+                                        :text="__('Invoices')"
+                                        class="dropdown-item"/>
+
+                                    <x-utils.link
                                         :href="route('frontend.projects.index')"
                                         :active="activeClass(Route::is('frontend.projects.index'))"
                                         :text="__('Projects')"

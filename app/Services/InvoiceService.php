@@ -58,6 +58,7 @@ class InvoiceService extends BaseService
                     'seller_address' => $data['seller_address'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
+                    'shipping' => $data['shipping'],
                     'currency' => $data['currency'],
                     'price' => $data['price'],
                     'date' => $data['date'],
@@ -105,6 +106,7 @@ class InvoiceService extends BaseService
                     'seller_address' => $data['seller_address'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
+                    'shipping' => $data['shipping'],
                     'currency' => $data['currency'],
                     'price' => $data['price'],
                     'date' => $data['date'],
@@ -197,6 +199,8 @@ class InvoiceService extends BaseService
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
+            ->taxRate($data['tax'])
+            ->shipping($data['shipping'])
             ->addItems($items)
             ->notes($notes);
     }

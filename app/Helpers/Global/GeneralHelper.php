@@ -76,7 +76,7 @@ if (! function_exists('currencyToSymbol')) {
      * @return mixed
      * @throws Exception
      */
-    function currencyToSymbol($currency_code) 
+    function currencyToSymbol($currency_code = false) 
     {
 		$currencies = array(
             'USD'=>'$', // US Dollar

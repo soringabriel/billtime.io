@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Projects'))
+@section('title', __('Invoices'))
 
 @section('content')
     <div class="container py-4">
@@ -8,20 +8,20 @@
             <div class="col-md-12">
                 <x-frontend.card>
                     <x-slot name="header">
-                        @lang('Projects')
+                        @lang('Invoices')
                     </x-slot>
 
                     <x-slot name="headerActions">
                         <x-utils.link
                             icon="c-icon cil-plus"
                             class="card-header-action"
-                            :href="route('frontend.projects.create')"
-                            :text="__('Add Project')"
+                            :href="route('frontend.invoices.create')"
+                            :text="__('Add Invoice')"
                         />
                     </x-slot>
 
                     <x-slot name="body">
-                        <livewire:frontend.projects-table />
+                        <livewire:frontend.invoices-table />
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

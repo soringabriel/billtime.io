@@ -17,7 +17,7 @@ class Invoice extends Model
      *
      * @var string
      */
-    protected $table = 'time';
+    protected $table = 'invoices';
 
     /**
      * The primary key associated with the table.
@@ -44,6 +44,7 @@ class Invoice extends Model
         'seller_address',
         'services',
         'tax',
+        'shipping',
         'currency',
         'price',
         'date',

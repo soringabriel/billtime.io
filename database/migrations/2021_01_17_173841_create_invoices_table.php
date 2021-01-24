@@ -27,6 +27,7 @@ class CreateInvoicesTable extends Migration
             $table->string('seller_address')->nullable();
             $table->json('services');
             $table->double('tax');
+            $table->double('shipping');
             $table->string('currency');
             $table->double('price');
             $table->timestamp('date');
