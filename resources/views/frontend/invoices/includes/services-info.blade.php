@@ -102,7 +102,7 @@
         </div>
         <div class="field-group field-group-required">
             <label for="totalTax" class="col-form-label">@lang('Total Amount')</label>
-            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="totalAmount"></span>
+            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="totalAmount"></span><input type="hidden" id="totalAmountValue" name="price">
         </div>
     </div>
 </div>
@@ -112,16 +112,16 @@
         var services = [];
         $(".service-row").each(function(){
             var service = {
-                name: $(this).children(".service-name").first().val(),
-                units: $(this).children(".service-units").first().val(),
-                quantity: $(this).children(".service-quantity").first().val(),
-                price: $(this).children(".service-price").first().val(),
-                discount: $(this).children(".service-discount").first().val(),
-                total: $(this).children(".service-sub-total").first().html(),
+                name: $(this).find(".service-name").first().val(),
+                units: $(this).find(".service-units").first().val(),
+                quantity: $(this).find(".service-quantity").first().val(),
+                price: $(this).find(".service-price").first().val(),
+                discount: $(this).find(".service-discount").first().val(),
+                total: $(this).find(".service-sub-total").first().html(),
             };
-            services.append(service);
+            services.push(service);
         })
-        $("#servicesValue").val(services);
+        $("#servicesValue").val(JSON.stringify(services));
     }
 
     function calculateTotal() {
@@ -130,20 +130,29 @@
             servicesSum += parseFloat($(this).html());
         })
         $("#taxableAmount").html(servicesSum);
-        var taxPercentage = $("#tax").val();
-        var tax = (taxPercentage * servicesSum / 100);
-        $("#totalTax").html(tax);
-        servicesSum += tax;
-        var shipping = $("shipping").val();
-        $("#shippingVal").html(shipping);
-        servicesSum += shipping;
+        var taxPercentage = parseFloat($("#tax").val());
+        if (!isNaN(taxPercentage)) {
+            var tax = (taxPercentage * servicesSum / 100);
+            $("#totalTax").html(tax);
+            servicesSum -= tax;
+        } else {
+            $("#totalTax").html(0);
+        }
+        var shipping = parseFloat($("#shipping").val());
+        if (!isNaN(shipping)) {
+            $("#shippingVal").html(shipping);
+            servicesSum -= shipping;
+        } else {
+            $("#shippingVal").html(0);
+        }
         $("#totalAmount").html(servicesSum);
+        $("#totalAmountValue").val(servicesSum);
         setServices();
     }
 
     function removeServiceRow(element) {
         if ($(".service-row").length > 1) {
-            element.parent(".service-row").remove();
+            element.parents(".service-row").first().remove();
         }
         if ($(".service-row").length == 1) {
             $(".remove-service-row").first().remove();
@@ -173,7 +182,7 @@
             </tr>
         `);
         if ($(".service-row").first().children(".remove-service-row").length == 0) {
-            $(".service-row").first().children("<td>").last().prepend(`
+            $(".service-row").first().children("td").last().prepend(`
                 <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
             `);
             $(".service-row").first().children("remove-service-row").on('click', function(){
@@ -181,46 +190,60 @@
             })
         }
         calculateTotal();
+        $(".remove-service-row").last().on('click', function(e){
+            e.preventDefault();
+            removeServiceRow($(this));
+        })
         $(".add-service-row").last().on('click', function(e){
             e.preventDefault();
             addServiceRow();
         })
-    }
-
-    $(document).ready(function(){
-        $(".remove-service-row").on('click', function(e){
-            e.preventDefault();
-            removeServiceRow($(this));
-        })
-
-        $(".add-service-row").on('click', function(e){
-            e.preventDefault();
-            addServiceRow();
-        })
-
-        $(".service-quantity, .service-price, .service-discount").on('change', function(){
-            var quantity = $(this).parent('.service-row').find('service-quantity').val();
-            var price = $(this).parent('.service-row').find('service-price').val();
-            var discount = $(this).parent('.service-row').find('service-discount').val();
+        $(".service-row").last().find(".service-quantity, .service-price, .service-discount").on('change', function(){
+            var quantity = parseFloat($(this).parents('.service-row').first().find('.service-quantity').first().val());
+            var price = parseFloat($(this).parents('.service-row').first().find('.service-price').first().val());
+            var discount = parseFloat($(this).parents('.service-row').first().find('.service-discount').first().val());
             var subTotal = price * quantity - discount;
 
-            $(this).parent('.service-row').find('service-sub-total').html(subTotal);
+            $(this).parents('.service-row').find('.service-sub-total').html(subTotal);
             calculateTotal();
         })
-
-        $("#tax, #shipping").on('change', function(){
-            calculateTotal();
-        })
-
-        calculateTotal();
-    })
+    }
 
     function init() {
+        function jqueryInit() {
+            $(".remove-service-row").on('click', function(e){
+                e.preventDefault();
+                removeServiceRow($(this));
+            })
+
+            $(".add-service-row").on('click', function(e){
+                e.preventDefault();
+                addServiceRow();
+            })
+
+            $(".service-quantity, .service-price, .service-discount").on('change', function(){
+                var quantity = parseFloat($(this).parents('.service-row').first().find('.service-quantity').first().val());
+                var price = parseFloat($(this).parents('.service-row').first().find('.service-price').first().val());
+                var discount = parseFloat($(this).parents('.service-row').first().find('.service-discount').first().val());
+                var subTotal = price * quantity - discount;
+
+                $(this).parents('.service-row').find('.service-sub-total').html(subTotal);
+                calculateTotal();
+            })
+
+            $("#tax, #shipping").on('change', function(){
+                calculateTotal();
+            })
+
+            calculateTotal();
+        }
+
+        jqueryInit();
         return {
-            currency: {{ isset($invoice) ? $invoice->currency : (old('currency') ?? __('USD')) }},
+            currency: "{{ isset($invoice) ? $invoice->currency : (old('currency') ?? __('USD')) }}",
             currencies: {!! json_encode($currencies) !!},
-            tax: {{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }},
-            shipping: {{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }},
+            tax: "{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}",
+            shipping: "{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}",
             currencySymbol() {
                 for (const property in this.currencies) {
                     if (this.currencies[property] == this.currency) {

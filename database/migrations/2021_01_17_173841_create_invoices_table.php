@@ -33,6 +33,7 @@ class CreateInvoicesTable extends Migration
             $table->timestamp('date');
             $table->timestamp('due_date')->nullable();
             $table->string('notes')->nullable();
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')

@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Relationship;
 
-use App\Models\Tag;
+use App\Models\Time;
 use App\Models\Project;
 use App\Domains\Auth\Models\User;
 
@@ -24,6 +24,6 @@ trait InvoiceRelationship
      */
     public function times()
     {
-        return $this->belongsToMany(Tag::class, 'invoice_has_times');
+        return $this->belongsToMany(Time::class, 'invoice_has_times');
     }
 }

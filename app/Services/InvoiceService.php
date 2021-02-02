@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
+use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use App\Events\Invoice\InvoiceCreated;
@@ -66,10 +67,10 @@ class InvoiceService extends BaseService
                     'notes' => $data['notes'],
                 ]
             );
-            $time->times()->sync($data['times'] ?? []);
+            $invoice->times()->sync($data['times'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem creating the Invoice.'));
+            throw new GeneralException($e->getMessage().__('There was a problem creating the Invoice.'));
         }
 
         event(new InvoiceCreated($invoice));
@@ -114,7 +115,7 @@ class InvoiceService extends BaseService
                     'notes' => $data['notes'],
                 ]
             );
-            $time->times()->sync($data['times'] ?? []);
+            $invoice->times()->sync($data['times'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem updating the Invoice.'));
@@ -173,17 +174,17 @@ class InvoiceService extends BaseService
         $services = json_decode($invoice_data['services']);
         foreach ($services as $service) {
             $items[] = (new InvoiceItem())
-                            ->title($service['name'])
-                            ->pricePerUnit($service['price'])
-                            ->quantity($service['quantity'])
-                            ->discount($service['discount'])
-                            ->units($service['units']);
+                            ->title($service->name)
+                            ->pricePerUnit($service->price)
+                            ->quantity($service->quantity)
+                            ->discount($service->discount)
+                            ->units($service->units);
         }
 
         $notes = implode("<br>", explode("\r\n", $invoice_data['notes']));
 
-        $sequence = (int) filter_var($data['number'], FILTER_SANITIZE_NUMBER_INT);
-        $series = str_replace($sequence, "", $data['number']);
+        $sequence = (int) filter_var($invoice_data['number'], FILTER_SANITIZE_NUMBER_INT);
+        $series = str_replace($sequence, "", $invoice_data['number']);
 
         return LaravelInvoice::make()
             ->series($series)
@@ -191,16 +192,16 @@ class InvoiceService extends BaseService
             ->serialNumberFormat('{SERIES}{SEQUENCE}')
             ->seller($seller)
             ->buyer($buyer)
-            ->date($data['date'])
+            ->date(Carbon::createFromFormat('Y-m-d', $invoice_data['date']))
             ->dateFormat('M j, Y')
-            ->payUntilDays(Carbon::createFromFormat('Y-m-d', $data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $data['date'])))
-            ->currencySymbol(currencyToSymbol($data['currency']))
-            ->currencyCode($data['currency'])
+            ->payUntilDays(Carbon::createFromFormat('Y-m-d', $invoice_data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $invoice_data['date'])))
+            ->currencySymbol(currencyToSymbol($invoice_data['currency']))
+            ->currencyCode($invoice_data['currency'])
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->taxRate($data['tax'])
-            ->shipping($data['shipping'])
+            ->taxRate($invoice_data['tax'])
+            ->shipping($invoice_data['shipping'])
             ->addItems($items)
             ->notes($notes);
     }

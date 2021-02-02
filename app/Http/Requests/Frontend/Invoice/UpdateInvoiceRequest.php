@@ -36,6 +36,7 @@ class UpdateInvoiceRequest extends FormRequest
             'date' => ['required', 'date_format:Y-m-d'],
             'due_date' => ['required', 'date_format:Y-m-d'],
             'notes' => ['max:255'],
+            'price' => ['numeric'],
         ];
     }
 }

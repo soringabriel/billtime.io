@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Invoice\StoreInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\EditInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\UpdateInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\DeleteInvoiceRequest;
+use App\Http\Requests\Frontend\Invoice\DownloadInvoiceRequest;
 use App\Services\InvoiceService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
@@ -60,8 +61,6 @@ class InvoiceController extends Controller
 
         $laravelInvoice = $this->invoiceService->generateInvoice($data);
 
-        $data['price'] = $laravelInvoice->total_amount;
-
         $this->invoiceService->store($data);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully created.'));
@@ -111,7 +110,7 @@ class InvoiceController extends Controller
      */
     public function download(DownloadInvoiceRequest $request, Invoice $invoice)
     {
-        return $this->invoiceService->generateInvoice($invoice)->download();
+        return $this->invoiceService->generateInvoice($invoice->toArray())->download();
     }
 
     /**
