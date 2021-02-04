@@ -30,8 +30,8 @@ class CreateInvoicesTable extends Migration
             $table->double('shipping');
             $table->string('currency');
             $table->double('price');
-            $table->timestamp('date');
-            $table->timestamp('due_date')->nullable();
+            $table->date('date');
+            $table->date('due_date')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
 

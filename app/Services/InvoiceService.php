@@ -186,6 +186,8 @@ class InvoiceService extends BaseService
         $sequence = (int) filter_var($invoice_data['number'], FILTER_SANITIZE_NUMBER_INT);
         $series = str_replace($sequence, "", $invoice_data['number']);
 
+        echo $invoice_data['date'];
+
         return LaravelInvoice::make()
             ->series($series)
             ->sequence($sequence)
