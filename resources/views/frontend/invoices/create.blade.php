@@ -98,6 +98,11 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <h4>@lang('Associated times')</h4>
+                                    <livewire:frontend.time-table filtersEnabled=false />
+                                </div>
+
                             </div>
                         </x-slot>
 

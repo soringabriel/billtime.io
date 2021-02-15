@@ -133,6 +133,13 @@ class TimeTable extends TableComponentExtended
     ];
 
     /**
+     * @return void
+     */
+    public function mount($filtersEnabled = true) {
+        $this->filtersEnabled = $filtersEnabled;
+    }
+
+    /**
      * @return string
      */
     public function customFilters()

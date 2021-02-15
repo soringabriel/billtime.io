@@ -1,0 +1,9 @@
+table#services {
+    .service-row {
+        td {
+            @include tablet-up {
+                padding-right: 10px;
+            }
+        }
+    }
+}

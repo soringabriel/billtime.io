@@ -1,8 +1,8 @@
 <div x-data="init()">
     <div class="form-group row">
-        <label for="name" class="col-md-2 col-form-label">@lang('Currency')</label>
+        <div class="col-md-6">
+            <label for="name" class="col-form-label">@lang('Currency')</label>
 
-        <div class="col-md-4">
             <select name="currency" class="form-control" x-model="currency" required>
                 @foreach ($currencies as $code => $symbol)
                     <option value="{{ $code }}">{{ $code }}</option>
@@ -21,7 +21,7 @@
                     <th>@lang('Price')</th>
                     <th>@lang('Discount')</th>
                     <th>@lang('Sub Total')</th>
-                    <th>@lang('Add/Remove Service')</th>
+                    <th></th>
                 </tr>
                 @if (isset($invoice) || old('services'))
                     @php
@@ -36,15 +36,9 @@
                             <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" value="{{ $service->name }}" maxlength="255" required /></td>
                             <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" value="{{ $service->units }}" maxlength="255" required /></td>
                             <td><input type="number" min="1" class="form-control service-quantity" value="{{ $service->quantity }}" required /></td>
-                            <td>
-                                <span class="currency-symbol" x-text="currencySymbol()"></span>
-                                <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" value="{{ $service->price }}" required />
-                            </td>
-                            <td>
-                                <span class="currency-symbol" x-text="currencySymbol()"></span>
-                                <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
-                            </td>
-                            <td><span class="currency-symbol" x-text="currencySymbol()"></span><span class="service-sub-total">{{ $service->total }}</span></td>
+                            <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" value="{{ $service->price }}" required /></td>
+                            <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required /></td>
+                            <td><span class="service-sub-total">{{ $service->total }}</span></td>
                             <td>
                                 <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
                                 <button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button>
@@ -56,18 +50,10 @@
                         <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
                         <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
                         <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                        <td>
-                            <span class="currency-symbol" x-text="currencySymbol()"></span>
-                            <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required />
-                        </td>
-                        <td>
-                            <span class="currency-symbol" x-text="currencySymbol()"></span>
-                            <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
-                        </td>
-                        <td><span class="currency-symbol" x-text="currencySymbol()"></span><span class="service-sub-total">0</span></td>
-                        <td>
-                            <button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button>
-                        </td>
+                        <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required /></td>
+                        <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
+                        <td><span class="service-sub-total">0</span></td>
+                        <td><button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button></td>
                     </tr>
                 @endif
             </table>
@@ -90,19 +76,19 @@
     <div class="col-md-4 offset-md-4">
         <div class="field-group field-group-required" x-show="tax > 0">
             <label for="taxableAmount" class="col-form-label">@lang('Taxable Amount')</label>
-            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="taxableAmount"></span>
+            <span id="taxableAmount"></span>
         </div>
         <div class="field-group field-group-required" x-show="tax > 0">
             <label for="totalTax" class="col-form-label">@lang('Total Taxes')</label>
-            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="totalTax"></span>
+            <span id="totalTax"></span>
         </div>
         <div class="field-group field-group-required" x-show="shipping > 0">
             <label for="totalTax" class="col-form-label">@lang('Shipping')</label>
-            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="shippingVal"></span>
+            <span id="shippingVal"></span>
         </div>
         <div class="field-group field-group-required">
             <label for="totalTax" class="col-form-label">@lang('Total Amount')</label>
-            <span class="currency-symbol" x-text="currencySymbol()"></span><span id="totalAmount"></span><input type="hidden" id="totalAmountValue" name="price">
+            <span id="totalAmount"></span><input type="hidden" id="totalAmountValue" name="price">
         </div>
     </div>
 </div>
@@ -166,15 +152,9 @@
                 <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
                 <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
                 <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                <td>
-                    <span class="currency-symbol" x-text="currencySymbol()"></span>
-                    <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required />
-                </td>
-                <td>
-                    <span class="currency-symbol" x-text="currencySymbol()"></span>
-                    <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
-                </td>
-                <td><span class="currency-symbol" x-text="currencySymbol()"></span><span class="service-sub-total">0</span></td>
+                <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required /></td>
+                <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
+                <td><span class="service-sub-total">0</span></td>
                 <td>
                     <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
                     <button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button>
@@ -244,14 +224,6 @@
             currencies: {!! json_encode($currencies) !!},
             tax: "{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}",
             shipping: "{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}",
-            currencySymbol() {
-                for (const property in this.currencies) {
-                    if (this.currencies[property] == this.currency) {
-                        return property;
-                    }
-                }
-                return this.currency;
-            },
         }
     }
 </script>
