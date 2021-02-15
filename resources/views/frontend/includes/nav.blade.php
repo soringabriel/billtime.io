@@ -85,6 +85,12 @@
                                         class="dropdown-item"/>
 
                                     <x-utils.link
+                                        :href="route('frontend.clients.index')"
+                                        :active="activeClass(Route::is('frontend.clients.index'))"
+                                        :text="__('Clients')"
+                                        class="dropdown-item"/>
+
+                                    <x-utils.link
                                         :href="route('frontend.projects.index')"
                                         :active="activeClass(Route::is('frontend.projects.index'))"
                                         :text="__('Projects')"

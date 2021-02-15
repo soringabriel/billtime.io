@@ -27,36 +27,16 @@
                                         <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" required />
                                     </div>
                                 </div><!--form-group-->
-
+                                
                                 <div class="form-group row">
-                                    <label for="company_name" class="col-md-2 col-form-label">@lang('Company Name')</label>
+                                    <label for="client_id" class="col-md-2 col-form-label">@lang('Client')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
-                                    <label for="tax_number" class="col-md-2 col-form-label">@lang('Tax Number')</label>
-
-                                    <div class="col-md-10">
-                                        <input type="text" name="tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
-                                    <label for="vat_number" class="col-md-2 col-form-label">@lang('Vat Number')</label>
-
-                                    <div class="col-md-10">
-                                        <input type="text" name="vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
-                                    <label for="address" class="col-md-2 col-form-label">@lang('Address')</label>
-
-                                    <div class="col-md-10">
-                                        <textarea name="address" class="form-control" placeholder="{{ __('Address') }}" /></textarea>
+                                        <select name="client_id" class="form-control select2">
+                                            @foreach ($clients as $client) 
+                                                <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'checked' : '' }}>{{ $client->name }}</option>    
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div><!--form-group-->
                             </div>

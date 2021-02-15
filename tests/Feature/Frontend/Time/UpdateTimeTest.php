@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Time;
 
 use App\Events\Time\TimeUpdated;
 use App\Models\Time;
+use App\Models\Client;
 use App\Models\Project;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,7 +23,9 @@ class UpdateTimeTest extends TestCase
     {
         $user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -45,7 +48,9 @@ class UpdateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
@@ -62,7 +67,9 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -83,14 +90,16 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $user->id]);
+        $new_project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -122,14 +131,16 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $parent->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $parent->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $parent->id]);
+        $new_project = Project::factory()->create(['user_id' => $parent->id, 'client_id' => $client->id]);
 
         $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -157,7 +168,9 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -166,7 +179,9 @@ class UpdateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $new_project = Project::factory()->create(['user_id' => $another_user->id]);
+        $another_client = Client::factory()->create(['user_id' => $another_user->id]);
+
+        $new_project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $another_client->id]);
 
         $response = $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -204,14 +219,16 @@ class UpdateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $user->id]);
+        $new_project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $response = $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',

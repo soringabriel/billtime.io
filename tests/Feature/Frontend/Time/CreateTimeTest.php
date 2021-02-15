@@ -6,6 +6,7 @@ use App\Events\Time\TimeCreated;
 use App\Domains\Auth\Models\User;
 use App\Models\Time;
 use App\Models\Project;
+use App\Models\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -48,7 +49,9 @@ class CreateTimeTest extends TestCase
 
         $user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $this->actingAs($user);
 
@@ -80,7 +83,9 @@ class CreateTimeTest extends TestCase
 
         $user = User::factory()->user()->create(['parent_user_id' => $parent->id]);
 
-        $project = Project::factory()->create(['user_id' => $parent->id]);
+        $client = Client::factory()->create(['user_id' => $parent->id]);
+
+        $project = Project::factory()->create(['user_id' => $parent->id, 'client_id' => $client->id]);
 
         $this->actingAs($user);
 
@@ -110,7 +115,9 @@ class CreateTimeTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['user_id' => $another_user->id]);
+
+        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
 
         $this->actingAs($user);
 

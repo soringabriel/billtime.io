@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Project;
 
 use App\Events\Project\ProjectDeleted;
 use App\Models\Project;
+use App\Models\Client;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -23,7 +24,9 @@ class DeleteProjectTest extends TestCase
 
         $user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $this->actingAs($user);
 
@@ -42,8 +45,10 @@ class DeleteProjectTest extends TestCase
         $user = User::factory()->user()->create();
 
         $another_user = User::factory()->user()->create();
+        
+        $client = Client::factory()->create(['user_id' => $another_user->id]);
 
-        $project = Project::factory()->create(['user_id' => $another_user->id]);
+        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
 
         $this->actingAs($user);
 

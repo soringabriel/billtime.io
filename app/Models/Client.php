@@ -3,21 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Relationship\ProjectRelationship;
-use Database\Factories\ProjectFactory;
+use App\Models\Traits\Relationship\ClientRelationship;
+use Database\Factories\ClientFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Project extends Model
+class Client extends Model
 {
     use HasFactory,
-        ProjectRelationship;
+        ClientRelationship;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'projects';
+    protected $table = 'clients';
 
     /**
      * The primary key associated with the table.
@@ -32,9 +32,12 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
         'user_id',
-        'client_id',
+        'name',
+        'company_name',
+        'tax_number',
+        'vat_number',
+        'address',
     ];
 
     /**
@@ -42,6 +45,7 @@ class Project extends Model
      */
     protected $with = [
         'user',
+        'projects',
     ];
                 
     /**
@@ -51,6 +55,6 @@ class Project extends Model
      */
     protected static function newFactory()
     {
-        return ProjectFactory::new();
+        return ClientFactory::new();
     }
 }

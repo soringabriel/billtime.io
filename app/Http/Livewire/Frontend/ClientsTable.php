@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Frontend;
 
-use App\Models\Project;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
 use App\Custom\LaravelLivewireTables\TableComponentExtended;
@@ -10,9 +9,9 @@ use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
 use App\Custom\LaravelLivewireTables\Views\ColumnExtended;
 
 /**
- * Class ProjectsTable.
+ * Class ClientsTable.
  */
-class ProjectsTable extends TableComponentExtended
+class ClientsTable extends TableComponentExtended
 {
     use HtmlComponents;
 
@@ -34,7 +33,7 @@ class ProjectsTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Project::query()->where('user_id', auth()->user()->id);
+        return Client::query()->where('user_id', auth()->user()->id);
     }
 
     /**
@@ -46,18 +45,21 @@ class ProjectsTable extends TableComponentExtended
             ColumnExtended::make(__('Name'))
                 ->searchable()
                 ->sortable(),
-            ColumnExtended::make(__('Client'))
-                ->searchable(function ($builder, $term){
-                    $clients = Client::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
-                    return $builder->orWhereIn('client_id', $clients);
-                })
-                ->sortable()
-                ->format(function (Project $model) {
-                    return $model->client()->first()->name;
-                }),
+            ColumnExtended::make(__('Company Name'))
+                ->searchable()
+                ->sortable(),
+            ColumnExtended::make(__('Tax Number'))
+                ->searchable()
+                ->sortable(),
+            ColumnExtended::make(__('Vat Number'))
+                ->searchable()
+                ->sortable(),
+            ColumnExtended::make(__('Address'))
+                ->searchable()
+                ->sortable(),
             ColumnExtended::make(__('Actions'))
-                ->format(function (Project $model) {
-                    return view('frontend.projects.includes.actions', ['model' => $model]);
+                ->format(function (Client $model) {
+                    return view('frontend.clients.includes.actions', ['model' => $model]);
                 }),
         ];
     }

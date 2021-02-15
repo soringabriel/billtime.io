@@ -42,17 +42,15 @@ class ProjectService extends BaseService
         try {
             $project = $this->model::create(
                 [
-                    'user_id' => ($data['user_id'] ?? auth()->id()),
+                    'user_id' => auth()->id(),
+                    'client_id' => $data['client_id'],
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
                 ]
             );
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem creating the Project.'));
+            echo 'Name is ' . $data['name'];
+            throw new GeneralException($e->getMessage() . __('There was a problem creating the Project.'));
         }
 
         event(new ProjectCreated($project));
@@ -77,12 +75,9 @@ class ProjectService extends BaseService
         try {
             $project->update(
                 [
-                    'user_id' => ($data['user_id'] ?? auth()->id()),
+                    'user_id' => auth()->id(),
+                    'client_id' => $data['client_id'],
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
                 ]
             );
         } catch (Exception $e) {
