@@ -25,6 +25,7 @@ class CreateInvoicesTable extends Migration
             $table->string('seller_tax_number')->nullable();
             $table->string('seller_vat_number')->nullable();
             $table->string('seller_address')->nullable();
+            $table->string('seller_bank_account');
             $table->json('services');
             $table->double('tax');
             $table->double('shipping');

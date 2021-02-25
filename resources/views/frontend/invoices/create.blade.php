@@ -61,6 +61,11 @@
                                             <label for="sellerAddress" class="col-form-label">@lang('Address')</label>
                                             <input id="sellerAddress" type="text" name="seller_address" value="{{ old('seller_address') }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
                                         </div>
+
+                                        <div class="field-group">
+                                            <label for="sellerBankAccount" class="col-form-label">@lang('Bank Account')</label>
+                                            <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
+                                        </div>
                                     </div>
 
                                     <div class="col-md-6">

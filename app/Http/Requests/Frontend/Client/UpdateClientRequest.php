@@ -25,6 +25,7 @@ class UpdateClientRequest extends FormRequest
             'tax_number' => ['max:255'],
             'vat_number' => ['max:255'],
             'address' => [],
+            'bank_account' => ['required'],
         ];
     }
 }

@@ -21,6 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('tax_number')->nullable();
             $table->string('vat_number')->nullable();
             $table->string('address')->nullable();
+            $table->string('bank_account');
             $table->timestamps();
             
             $table->foreign('user_id')

@@ -59,6 +59,14 @@
                                         <textarea name="address" class="form-control" placeholder="{{ __('Address') }}" /></textarea>
                                     </div>
                                 </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="bank_account" class="col-md-2 col-form-label">@lang('Bank Account')</label>
+
+                                    <div class="col-md-10">
+                                        <input type="text" name="bank_account" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" />
+                                    </div>
+                                </div><!--form-group-->
                             </div>
                         </x-slot>
 

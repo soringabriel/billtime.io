@@ -38,6 +38,7 @@ class Client extends Model
         'tax_number',
         'vat_number',
         'address',
+        'bank_account',
     ];
 
     /**

@@ -57,6 +57,7 @@ class InvoiceService extends BaseService
                     'seller_tax_number' => $data['seller_tax_number'],
                     'seller_vat_number' => $data['seller_vat_number'],
                     'seller_address' => $data['seller_address'],
+                    'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
                     'shipping' => $data['shipping'],
@@ -105,6 +106,7 @@ class InvoiceService extends BaseService
                     'seller_tax_number' => $data['seller_tax_number'],
                     'seller_vat_number' => $data['seller_vat_number'],
                     'seller_address' => $data['seller_address'],
+                    'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
                     'shipping' => $data['shipping'],
@@ -167,6 +169,7 @@ class InvoiceService extends BaseService
             'custom_fields' => [
                 'tax number' => $invoice_data['seller_tax_number'],
                 'vat number' => $invoice_data['seller_vat_number'],
+                'bank account' => $invoice_data['seller_bank_account'],
             ],
         ]);
 

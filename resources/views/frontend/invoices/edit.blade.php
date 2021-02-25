@@ -24,14 +24,14 @@
                                     <label for="name" class="col-form-label">@lang('Date')</label>
 
                                     <div class="col-md-10">
-                                        <input type="date" class="form-control" name="date">
+                                        <input type="date" class="form-control" value="{{ old('date') ?? $invoice->date }}" name="date">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="name" class="col-form-label">@lang('Due Date')</label>
 
                                     <div class="col-md-10">
-                                        <input type="date" class="form-control" name="due_date">
+                                        <input type="date" class="form-control" value="{{ old('due_date') ?? $invoice->seller_bank_account }}" name="due_date">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -40,22 +40,27 @@
 
                                         <div class="field-group field-group-required">
                                             <label for="sellerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                            <input id="sellerCompanyName" type="text" name="seller_company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                            <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $invoice->seller_company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
-                                            <input id="sellerTaxNumber" type="text" name="seller_tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                            <input id="sellerTaxNumber" type="text" name="seller_tax_number" value="{{ old('seller_tax_number') ?? $invoice->seller_tax_number }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerVatNumber" class="col-form-label">@lang('Vat Number')</label>
-                                            <input id="sellerVatNumber" type="text" name="seller_vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                            <input id="sellerVatNumber" type="text" name="seller_vat_number" value="{{ old('seller_vat_number') ?? $invoice->seller_vat_number }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerAddress" class="col-form-label">@lang('Address')</label>
-                                            <input id="sellerAddress" type="text" name="seller_address" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                            <input id="sellerAddress" type="text" name="seller_address" value="{{ old('seller_address') ?? $invoice->seller_address }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                        </div>
+
+                                        <div class="field-group">
+                                            <label for="sellerBankAccount" class="col-form-label">@lang('Bank Account')</label>
+                                            <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $invoice->seller_bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
                                         </div>
                                     </div>
 
@@ -64,22 +69,22 @@
 
                                         <div class="field-group field-group-required">
                                             <label for="buyerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                            <input id="buyerCompanyName" type="text" name="buyer_company_name" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                            <input id="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') ?? $invoice->buyer_company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
-                                            <input id="buyerTaxNumber" type="text" name="buyer_tax_number" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                            <input id="buyerTaxNumber" type="text" name="buyer_tax_number" value="{{ old('buyer_tax_number') ?? $invoice->buyer_tax_number }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerVatNumber" class="col-form-label">@lang('Vat Number')</label>
-                                            <input id="buyerVatNumber" type="text" name="buyer_vat_number" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                            <input id="buyerVatNumber" type="text" name="buyer_vat_number" value="{{ old('buyer_vat_number') ?? $invoice->buyer_vat_number }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerAddress" class="col-form-label">@lang('Address')</label>
-                                            <input id="buyerAddress" type="text" name="buyer_address" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                            <input id="buyerAddress" type="text" name="buyer_address" value="{{ old('buyer_address') ?? $invoice->buyer_address }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +95,7 @@
                                     <label for="notes" class="col-md-2 col-form-label">@lang('Notes')</label>
 
                                     <div class="col-md-12">
-                                        <textarea class="form-control" name="notes"></textarea>
+                                        <textarea class="form-control" name="notes">{{ old('notes') ?? $invoice->notes }}</textarea>
                                     </div>
                                 </div>
 
