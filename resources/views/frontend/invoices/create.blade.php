@@ -68,27 +68,36 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" x-data="initBuyer()">
                                         <h2>@lang('Buyer Information')</h2>
 
                                         <div class="field-group field-group-required">
+                                            <label for="buyerClient" class="col-form-label">@lang('Select Info From Clients')</label>
+                                            <select x-model="buyerClient" x-on:change="updateBuyer()" class="form-control">
+                                                @foreach ($clients as $client)
+                                                    <option value="{{ json_encode($client) }}">{{ $client->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="field-group field-group-required">
                                             <label for="buyerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                            <input id="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                            <input id="buyerCompanyName" x-model="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
-                                            <input id="buyerTaxNumber" type="text" name="buyer_tax_number" value="{{ old('buyer_tax_number') }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                            <input id="buyerTaxNumber" x-model="buyerTaxNumber" type="text" name="buyer_tax_number" value="{{ old('buyer_tax_number') }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerVatNumber" class="col-form-label">@lang('Vat Number')</label>
-                                            <input id="buyerVatNumber" type="text" name="buyer_vat_number" value="{{ old('buyer_vat_number') }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                            <input id="buyerVatNumber" x-model="buyerVatNumber" type="text" name="buyer_vat_number" value="{{ old('buyer_vat_number') }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="buyerAddress" class="col-form-label">@lang('Address')</label>
-                                            <input id="buyerAddress" type="text" name="buyer_address" value="{{ old('buyer_address') }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                            <input id="buyerAddress" x-model="buyerAddress" type="text" name="buyer_address" value="{{ old('buyer_address') }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
                                         </div>
                                     </div>
                                 </div>
@@ -119,4 +128,19 @@
             </div><!--col-md-10-->
         </div><!--row-->
     </div><!--container-->
+
+    <script>
+        function initBuyer() {
+            return {
+                buyerClient: [],
+                updateBuyer() {
+                    var buyerDetails = JSON.parse(this.buyerClient);
+                    this.buyerCompanyName = (buyerDetails.company_name ?? '');
+                    this.buyerTaxNumber = (buyerDetails.tax_number ?? '');
+                    this.buyerVatNumber = (buyerDetails.vat_number ?? '');
+                    this.buyerAddress = (buyerDetails.address ?? '');
+                },
+            };
+        }
+    </script>
 @endsection

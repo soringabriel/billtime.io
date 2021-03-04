@@ -64,7 +64,7 @@
                                     <label for="bank_account" class="col-md-2 col-form-label">@lang('Bank Account')</label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="bank_account" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" />
+                                        <input type="text" name="bank_account" class="form-control" value="{{ old('bank_account') ?? $client->bank_account }}" placeholder="{{ __('Bank Account') }}" maxlength="255" />
                                     </div>
                                 </div><!--form-group-->
                             </div>

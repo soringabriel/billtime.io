@@ -45,7 +45,9 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('frontend.invoices.create')->withCurrencies(currencyToSymbol());
+        return view('frontend.invoices.create')
+                    ->withCurrencies(currencyToSymbol())
+                    ->withClients(auth()->user()->clients()->get());
     }
 
     /**

@@ -91,6 +91,7 @@ if (! function_exists('currencyToSymbol')) {
             'PHP'=> '₱', // Philippine Peso
             'PLN'=> 'zł', // Polish Zloty
             'PYG'=> '₲', // Paraguayan Guarani
+            'RON' => 'RON', // Romanian Leu
             'THB'=> '฿', // Thai Baht
             'UAH'=> '₴', // Ukrainian Hryvnia
             'VND'=> '₫', // Vietnamese Dong)

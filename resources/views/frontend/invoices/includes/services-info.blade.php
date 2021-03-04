@@ -1,4 +1,4 @@
-<div x-data="init()">
+<div x-data="initServices()">
     <div class="form-group row">
         <div class="col-md-6">
             <label for="name" class="col-form-label">@lang('Currency')</label>
@@ -189,7 +189,7 @@
         })
     }
 
-    function init() {
+    function initServices() {
         function jqueryInit() {
             $(".remove-service-row").on('click', function(e){
                 e.preventDefault();
