@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\User;
 use App\Domains\Auth\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
+use App\Http\Requests\Frontend\User\UpdateCompanyDetailsRequest;
 
 /**
  * Class ProfileController.
@@ -26,5 +27,18 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('frontend.user.account', ['#information'])->withFlashSuccess(__('Profile successfully updated.'));
+    }
+
+    /**
+     * @param  UpdateCompanyDetailsRequest  $request
+     * @param  UserService  $userService
+     *
+     * @return mixed
+     */
+    public function updateCompanyDetails(UpdateCompanyDetailsRequest $request, UserService $userService)
+    {
+        $userService->updateCompanyDetails($request->user(), $request->validated());
+
+        return redirect()->route('frontend.user.account', ['#information'])->withFlashSuccess(__('Company details successfully updated.'));
     }
 }

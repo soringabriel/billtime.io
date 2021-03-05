@@ -46,6 +46,18 @@
                                         aria-selected="false" />
                                 @endif
 
+                                @if ($logged_in_user->isParent())
+                                    <x-utils.link
+                                        :text="__('Company')"
+                                        class="nav-link"
+                                        id="company-tab"
+                                        data-toggle="pill"
+                                        href="#company"
+                                        role="tab"
+                                        aria-controls="company"
+                                        aria-selected="false"/>
+                                @endif
+
                                 <x-utils.link
                                     :text="__('Two Factor Authentication')"
                                     class="nav-link"
@@ -71,6 +83,12 @@
                                 <div class="tab-pane fade pt-3" id="password" role="tabpanel" aria-labelledby="password-tab">
                                     @include('frontend.user.account.tabs.password')
                                 </div><!--tab-password-->
+                            @endif
+
+                            @if ($logged_in_user->isParent())
+                                <div class="tab-pane fade pt-3" id="company" role="tabpanel" aria-labelledby="company-tab">
+                                    @include('frontend.user.account.tabs.company')
+                                </div><!--tab-information-->
                             @endif
 
                             <div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">

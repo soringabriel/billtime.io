@@ -44,27 +44,27 @@
 
                                         <div class="field-group field-group-required">
                                             <label for="sellerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                            <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                            <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $logged_in_user->company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerTaxNumber" class="col-form-label">@lang('Tax Number')</label>
-                                            <input id="sellerTaxNumber" type="text" name="seller_tax_number" value="{{ old('seller_tax_number') }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
+                                            <input id="sellerTaxNumber" type="text" name="seller_tax_number" value="{{ old('seller_tax_number') ?? $logged_in_user->tax_number }}" class="form-control" placeholder="{{ __('Tax Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerVatNumber" class="col-form-label">@lang('Vat Number')</label>
-                                            <input id="sellerVatNumber" type="text" name="seller_vat_number" value="{{ old('seller_vat_number') }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
+                                            <input id="sellerVatNumber" type="text" name="seller_vat_number" value="{{ old('seller_vat_number') ?? $logged_in_user->vat_number }}" class="form-control" placeholder="{{ __('Vat Number') }}" maxlength="255" required />
                                         </div>
                                         
                                         <div class="field-group">
                                             <label for="sellerAddress" class="col-form-label">@lang('Address')</label>
-                                            <input id="sellerAddress" type="text" name="seller_address" value="{{ old('seller_address') }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
+                                            <input id="sellerAddress" type="text" name="seller_address" value="{{ old('seller_address') ?? $logged_in_user->address }}" class="form-control" placeholder="{{ __('Address') }}" maxlength="255" required />
                                         </div>
 
                                         <div class="field-group">
                                             <label for="sellerBankAccount" class="col-form-label">@lang('Bank Account')</label>
-                                            <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
+                                            <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $logged_in_user->bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
                                         </div>
                                     </div>
 
@@ -112,10 +112,16 @@
                                     </div>
                                 </div>
 
+                                @php 
+
+                                /*
                                 <div class="form-group">
                                     <h4>@lang('Associated times')</h4>
                                     <livewire:frontend.time-table filtersEnabled=false />
                                 </div>
+                                */
+
+                                @endphp
 
                             </div>
                         </x-slot>
@@ -133,8 +139,13 @@
         function initBuyer() {
             return {
                 buyerClient: [],
+                buyerCompanyName: "{{ old('buyer_company_name') }}",
+                buyerTaxNumber: "{{ old('buyerTaxNumber') }}",
+                buyerVatNumber: "{{ old('buyerVatNumber') }}",
+                buyerAddress: "{{ old('buyerAddress') }}",
                 updateBuyer() {
                     var buyerDetails = JSON.parse(this.buyerClient);
+                    console.log(buyerDetails);
                     this.buyerCompanyName = (buyerDetails.company_name ?? '');
                     this.buyerTaxNumber = (buyerDetails.tax_number ?? '');
                     this.buyerVatNumber = (buyerDetails.vat_number ?? '');

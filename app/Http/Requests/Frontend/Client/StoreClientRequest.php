@@ -23,8 +23,8 @@ class StoreClientRequest extends FormRequest
             'company_name' => ['max:255'],
             'tax_number' => ['max:255'],
             'vat_number' => ['max:255'],
-            'address' => [],
-            'bank_account' => ['required'],
+            'address' => ['max:255'],
+            'bank_account' => ['max:255'],
         ];
     }
 }

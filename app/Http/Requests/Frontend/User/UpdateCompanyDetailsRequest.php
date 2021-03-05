@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Frontend\Client;
+namespace App\Http\Requests\Frontend\User;
 
-use App\Models\Client;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
- * Class UpdateClientRequest.
+ * Class UpdateCompanyDetailsRequest.
  */
-class UpdateClientRequest extends FormRequest
+class UpdateCompanyDetailsRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -20,7 +18,6 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:255'],
             'company_name' => ['max:255'],
             'tax_number' => ['max:255'],
             'vat_number' => ['max:255'],
