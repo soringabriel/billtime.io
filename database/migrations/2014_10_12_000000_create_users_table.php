@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('tax_number')->nullable();
             $table->string('vat_number')->nullable();
             $table->string('address')->nullable();
+            $table->string('bank_name')->nullable();
             $table->string('bank_account')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Invoice;
 
 class CreateInvoicesTable extends Migration
 {
@@ -25,6 +26,7 @@ class CreateInvoicesTable extends Migration
             $table->string('seller_tax_number')->nullable();
             $table->string('seller_vat_number')->nullable();
             $table->string('seller_address')->nullable();
+            $table->string('seller_bank_name')->nullable();
             $table->string('seller_bank_account');
             $table->json('services');
             $table->double('tax');
@@ -34,6 +36,7 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->date('due_date')->nullable();
             $table->string('notes')->nullable();
+            $table->enum('status', Invoice::STATUSES)->default(Invoice::STATUS_PENDING);
             $table->timestamps();
 
             $table->foreign('user_id')

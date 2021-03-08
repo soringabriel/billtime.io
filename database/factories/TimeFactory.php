@@ -31,6 +31,7 @@ class TimeFactory extends Factory
             'end_time' => Carbon::instance($this->faker->dateTime())->toDateTimeString(),
             'task' => $this->faker->url,
             'details' =>  $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'billed' => false,
         ];
     }
 }

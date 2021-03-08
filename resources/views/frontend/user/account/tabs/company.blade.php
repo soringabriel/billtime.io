@@ -32,6 +32,14 @@
     </div><!--form-group-->
 
     <div class="form-group row">
+        <label for="bank_name" class="col-md-3 col-form-label text-md-right">@lang('Bank Name')</label>
+
+        <div class="col-md-9">
+            <input type="text" name="bank_name" class="form-control" placeholder="{{ __('Bank Name') }}" value="{{ old('bank_name') ?? $logged_in_user->bank_name }}" maxlength="255" />
+        </div>
+    </div><!--form-group-->
+
+    <div class="form-group row">
         <label for="bank_account" class="col-md-3 col-form-label text-md-right">@lang('Bank Account')</label>
 
         <div class="col-md-9">

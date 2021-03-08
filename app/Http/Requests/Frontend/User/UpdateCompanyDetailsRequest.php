@@ -22,6 +22,7 @@ class UpdateCompanyDetailsRequest extends FormRequest
             'tax_number' => ['max:255'],
             'vat_number' => ['max:255'],
             'address' => ['max:255'],
+            'bank_name' => ['max:255'],
             'bank_account' => ['max:255'],
         ];
     }

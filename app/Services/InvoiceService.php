@@ -169,6 +169,7 @@ class InvoiceService extends BaseService
             'custom_fields' => [
                 'tax number' => $invoice_data['seller_tax_number'],
                 'vat number' => $invoice_data['seller_vat_number'],
+                'bank name' => $invoice_data['seller_bank_name'],
                 'bank account' => $invoice_data['seller_bank_account'],
             ],
         ]);

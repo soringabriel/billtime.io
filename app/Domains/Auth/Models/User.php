@@ -64,6 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'tax_number',
         'vat_number',
         'address',
+        'bank_name',
         'bank_account',
     ];
 

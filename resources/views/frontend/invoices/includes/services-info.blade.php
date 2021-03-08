@@ -1,5 +1,5 @@
 <div x-data="initServices()">
-    <div class="form-group row">
+    <div class="form-group row invoice-row">
         <div class="col-md-6">
             <label for="name" class="col-form-label">@lang('Currency')</label>
 

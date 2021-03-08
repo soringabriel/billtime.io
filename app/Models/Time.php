@@ -38,6 +38,7 @@ class Time extends Model
         'project_id',
         'task',
         'details',
+        'billed',
     ];
 
     /**

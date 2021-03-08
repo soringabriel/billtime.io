@@ -12,6 +12,10 @@ class Invoice extends Model
     use HasFactory,
         InvoiceRelationship;
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_PAID = 'paid';
+    public const STATUSES = [Invoice::STATUS_PENDING, Invoice::STATUS_PAID];
+
     /**
      * The table associated with the model.
      *
@@ -51,6 +55,7 @@ class Invoice extends Model
         'date',
         'due_date',
         'notes',
+        'status',
     ];
 
     /**

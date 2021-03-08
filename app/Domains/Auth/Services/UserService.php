@@ -206,6 +206,7 @@ class UserService extends BaseService
                 'tax_number' => $data['tax_number'],
                 'vat_number' => $data['vat_number'],
                 'address' => $data['address'],
+                'bank_name' => $data['bank_name'],
                 'bank_account' => $data['bank_account'],
             ]);
         } catch (Exception $e) {

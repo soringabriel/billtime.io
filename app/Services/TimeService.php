@@ -115,4 +115,34 @@ class TimeService extends BaseService
 
         throw new GeneralException(__('There was a problem deleting the Time record.'));
     }
+
+    /**
+     * @param  Time  $time
+     * @param  array  $data
+     *
+     * @return Time
+     * @throws GeneralException
+     * @throws \Throwable
+     */
+    public function markAsBilled(Time $time): Time
+    {
+        DB::beginTransaction();
+
+        try {
+            $time->update(
+                [
+                    'billed' => true,
+                ]
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new GeneralException(__('There was a problem updating the Time record.'));
+        }
+
+        event(new TimeUpdated($time));
+
+        DB::commit();
+
+        return $time;
+    }
 }

@@ -36,6 +36,8 @@ class InvoiceFactory extends Factory
             'seller_tax_number' => $this->faker->asciify('********'),
             'seller_vat_number' => $this->faker->asciify('********'),
             'seller_address' => $this->faker->address,
+            'seller_bank_name' => $this->faker->asciify('********'),
+            'seller_bank_account' => $this->faker->asciify('********'),
             'services' => '[]',
             'tax' => $this->faker->numberBetween(0, 100),
             'shipping' => $this->faker->randomFloat(2, 1, 100),
@@ -44,6 +46,7 @@ class InvoiceFactory extends Factory
             'date' => $this->faker->date(),
             'due_date' => $this->faker->date(),
             'notes' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'status' => Invoice::STATUS_PENDING,
         ];
     }
 }
