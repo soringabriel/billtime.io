@@ -1,6 +1,16 @@
 <tr>
     @if (isset($this->bulkActions) && $this->bulkActions)
-        <th>@lang('Select')</th>
+        <th>
+            @lang('Select')
+            <div class="bulk-select-rows">
+                <input type="checkbox" id="checkRowsPage" x-ref="checkRowsPage" class="bulk-checkbox" x-on:change="todo">
+                <label for="checkRowsPage">@lang('Page')</label>
+            </div>
+            <div class="bulk-select-rows">
+                <input type="checkbox" id="checkAllRows" x-ref="checkAllRows" class="bulk-checkbox" x-on:change="todo">
+                <label for="checkAllRows">@lang('All')</label>
+            </div>
+        </th>
     @endif
     @foreach($columns as $column)
         @if ($column->isVisible())

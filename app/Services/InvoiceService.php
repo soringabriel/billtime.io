@@ -115,6 +115,7 @@ class InvoiceService extends BaseService
                     'date' => $data['date'],
                     'due_date' => $data['due_date'],
                     'notes' => $data['notes'],
+                    'status' => (Carbon::createFromFormat('Y-m-d', $data['due_date'])->isPast() ? Invoice::STATUS_PAST_DUE : Invoice::STATUS_PENDING),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);
@@ -145,6 +146,36 @@ class InvoiceService extends BaseService
         }
 
         throw new GeneralException(__('There was a problem deleting the Invoice.'));
+    }
+
+    /**
+     * @param  Invoice  $invoice
+     * @param  string  $status
+     *
+     * @return Invoice
+     * @throws GeneralException
+     * @throws \Throwable
+     */
+    public function setStatus(Invoice $invoice, string $status): Invoice
+    {
+        DB::beginTransaction();
+
+        try {
+            $invoice->update(
+                [
+                    'status' => $status,
+                ]
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new GeneralException(__('There was a problem updating the Invoice.'));
+        }
+
+        event(new InvoiceUpdated($invoice));
+
+        DB::commit();
+
+        return $invoice;
     }
     
     /**

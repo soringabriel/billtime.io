@@ -14,7 +14,8 @@ class Invoice extends Model
 
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
-    public const STATUSES = [Invoice::STATUS_PENDING, Invoice::STATUS_PAID];
+    public const STATUS_PAST_DUE = 'past_due';
+    public const STATUSES = [Invoice::STATUS_PENDING, Invoice::STATUS_PAID, Invoice::STATUS_PAST_DUE];
 
     /**
      * The table associated with the model.

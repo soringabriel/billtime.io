@@ -16,7 +16,7 @@
 
             @if (isset($attributes['hiddenData']))
                 @foreach (json_decode($attributes['hiddenData']) as $data)
-                    <input type="hidden" name="{{ $data->name }}" class="{{ $data->class }}">
+                    <input type="hidden" name="{{ $data->name }}" class="{{ $data->class ?? '' }}" value="{{ $data->value ?? '' }}">
                 @endforeach
             @endif
 
@@ -32,7 +32,7 @@
 
         @if (isset($attributes['hiddenData']))
             @foreach (json_decode($attributes['hiddenData']) as $data)
-                <input type="hidden" name="{{ $data->name }}" class="{{ $data->class }}">
+                <input type="hidden" name="{{ $data->name }}" class="{{ $data->class ?? '' }}" value="{{ $data->value ?? '' }}">
             @endforeach
         @endif
 

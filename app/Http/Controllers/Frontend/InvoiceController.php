@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Invoice\StoreInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\EditInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\UpdateInvoiceRequest;
+use App\Http\Requests\Frontend\Invoice\UpdateInvoiceStatusRequest;
 use App\Http\Requests\Frontend\Invoice\DeleteInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\DownloadInvoiceRequest;
 use App\Services\InvoiceService;
@@ -98,6 +99,21 @@ class InvoiceController extends Controller
         $data['price'] = $laravelInvoice->total_amount;
 
         $this->invoiceService->update($invoice, $data);
+
+        return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));
+    }
+
+    /**
+     * @param  UpdateInvoiceStatusRequest  $request
+     * @param  Invoice  $invoice
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     * @throws \Throwable
+     */
+    public function updateStatus(UpdateInvoiceStatusRequest $request, Invoice $invoice)
+    {
+        $this->invoiceService->updateStatus($invoice, $request->validated()['status']);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));
     }

@@ -34,6 +34,7 @@ Route::group([
         });
         Route::get('download', [InvoiceController::class, 'download'])->name('download');
         Route::patch('/', [InvoiceController::class, 'update'])->name('update');
+        Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->name('updateStatus');
         Route::delete('/', [InvoiceController::class, 'destroy'])->name('destroy');
     });
 });
