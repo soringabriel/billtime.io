@@ -118,13 +118,13 @@ class TimeService extends BaseService
 
     /**
      * @param  Time  $time
-     * @param  array  $data
+     * @param  object  $invoice
      *
      * @return Time
      * @throws GeneralException
      * @throws \Throwable
      */
-    public function markAsBilled(Time $time): Time
+    public function toggleBilled(Time $time, $invoice = null): Time
     {
         DB::beginTransaction();
 
@@ -134,6 +134,9 @@ class TimeService extends BaseService
                     'billed' => true,
                 ]
             );
+            if (!is_null($invoice)) {
+                $invoice->times()->syncWithoutDetaching([$time->id]);
+            }
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem updating the Time record.'));

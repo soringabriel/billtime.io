@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Time\StoreTimeRequest;
 use App\Http\Requests\Frontend\Time\EditTimeRequest;
 use App\Http\Requests\Frontend\Time\UpdateTimeRequest;
+use App\Http\Requests\Frontend\Time\ToggleBilledRequest;
+use App\Http\Requests\Frontend\Time\BulkToggleBilledRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimeRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimesRequest;
 use App\Services\TimeService;
@@ -93,6 +95,48 @@ class TimeController extends Controller
     }
 
     /**
+     * @param  ToggleBilledRequest  $request
+     * @param  Time  $time
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function toggleBilled(ToggleBilledRequest $request, Time $time)
+    {
+        $data = $request->validated();
+
+        $invoice = (isset($data['invoice_id']) ? Invoice::find($data['invoice_id']) : null);
+            
+        $this->timeService->toggleBilled($time, $invoice);
+
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
+    }
+
+    /**
+     * @param  BulkToggleBilledRequest  $request
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function bulkToggleBilled(BulkToggleBilledRequest $request)
+    {
+        $data = $request->validated();
+
+        $times = json_decode($data['times']);
+
+        $invoice = (isset($data['invoice_id']) ? Invoice::find($data['invoice_id']) : null);
+
+        foreach ($times as $time) {
+            $time = Time::find($time);
+            if (!is_null($time)) {
+                $this->timeService->toggleBilled($time, $invoice);
+            }
+        }
+
+        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time records were successfully deleted.'));
+    }
+
+    /**
      * @param  DeleteTimeRequest  $request
      * @param  Time  $time
      *
@@ -115,6 +159,7 @@ class TimeController extends Controller
     public function bulkDestroy(DeleteTimesRequest $request)
     {
         $times = json_decode($request->validated()['times']);
+
         foreach ($times as $time) {
             $time = Time::find($time);
             if (!is_null($time)) {
