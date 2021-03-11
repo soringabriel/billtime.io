@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col text-left">
-                    <x-utils.delete-button href="{{ route($this->bulkDelete) }}" hiddenData="{!! json_encode($this->hiddenDataDelete ?? []) !!}" />
+                    <x-utils.delete-button href="{{ route($this->bulkDelete) }}" hiddenData="{!! json_encode($this->hiddenDataBulk ?? []) !!}" />
                 </div>
             </div>
         </div>

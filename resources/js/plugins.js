@@ -130,6 +130,7 @@ $(function () {
         });
     })
 
+    // Livewires bulk selections
     $(".bulk-checkbox").on('change', function(){
         let checked = [];
         $(".bulk-checkbox").each(function(){
@@ -139,6 +140,37 @@ $(function () {
         })
         $(".bulk-checkbox-values").each(function(){
             $(this).val(JSON.stringify(checked));
+        })
+    })
+
+    $("#checkRowsPage").on('change', function(){
+        if ($(this).is(":checked")) {
+            $(".bulk-checkbox").each(function(){
+                $(this).attr('checked', 'checked');
+                $(this).trigger('change');
+            })
+        } else {
+            $(".bulk-checkbox").each(function(){
+                $(this).removeAttr('checked');
+                $(this).trigger('change');
+            })
+        }
+    })
+
+    $("#checkAllRows").on('change', function(){
+        if ($(this).is(":checked")) {
+            $(".bulk-checkbox").each(function(){
+                $(this).attr('checked', 'checked');
+                $(this).trigger('change');
+            })
+        } else {
+            $(".bulk-checkbox").each(function(){
+                $(this).removeAttr('checked');
+                $(this).trigger('change');
+            })
+        }
+        $(".bulk-checkbox-values").each(function(){
+            $(this).val(JSON.stringify($("#allRows").val()));
         })
     })
 });

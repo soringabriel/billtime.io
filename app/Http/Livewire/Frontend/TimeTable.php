@@ -78,7 +78,7 @@ class TimeTable extends TableComponentExtended
     /**
      * @var bool
      */
-    public $hiddenDataDelete = [
+    public $hiddenDataBulk = [
         [
             'name' => 'times',
             'class' => 'bulk-checkbox-values',
