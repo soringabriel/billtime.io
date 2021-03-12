@@ -132,10 +132,26 @@ $(function () {
 
     // Livewires bulk selections
     $(".bulk-checkbox").on('change', function(){
-        let checked = [];
+        console.log("ABC");
+        console.log($(".bulk-checkbox-values").first().val());
+        let checked;
+        try {
+            checked = JSON.parse($(".bulk-checkbox-values").first().val());
+        } catch (e) {
+            checked = [];
+        }
+        console.log(checked);
         $(".bulk-checkbox").each(function(){
+            var index = checked.indexOf($(this).val());
             if ($(this).is(":checked")) {
-                checked.push($(this).val());
+                if (index == -1) {
+                    checked.push($(this).val());
+                }
+            } else {
+                var index = checked.indexOf($(this).val());
+                if (index !== -1) {
+                    checked.splice(index, 1);
+                }
             }
         })
         $(".bulk-checkbox-values").each(function(){
@@ -161,16 +177,16 @@ $(function () {
         if ($(this).is(":checked")) {
             $(".bulk-checkbox").each(function(){
                 $(this).attr('checked', 'checked');
-                $(this).trigger('change');
+                $(this)[0].dispatchEvent(new Event('change'));
             })
         } else {
             $(".bulk-checkbox").each(function(){
                 $(this).removeAttr('checked');
-                $(this).trigger('change');
+                $(this)[0].dispatchEvent(new Event('change'));
             })
         }
         $(".bulk-checkbox-values").each(function(){
-            $(this).val(JSON.stringify($("#allRows").val()));
+            $(this).val($("#allRows").val());
         })
     })
 });
