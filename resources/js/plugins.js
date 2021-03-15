@@ -162,12 +162,12 @@ $(function () {
     $("#checkRowsPage").on('change', function(){
         if ($(this).is(":checked")) {
             $(".bulk-checkbox").each(function(){
-                $(this).attr('checked', 'checked');
+                $(this).prop('checked', true);
                 $(this).trigger('change');
             })
         } else {
             $(".bulk-checkbox").each(function(){
-                $(this).removeAttr('checked');
+                $(this).prop('checked', false);
                 $(this).trigger('change');
             })
         }
@@ -176,17 +176,20 @@ $(function () {
     $("#checkAllRows").on('change', function(){
         if ($(this).is(":checked")) {
             $(".bulk-checkbox").each(function(){
-                $(this).attr('checked', 'checked');
+                $(this).prop('checked', true);
                 $(this)[0].dispatchEvent(new Event('change'));
+            })
+            $(".bulk-checkbox-values").each(function(){
+                $(this).val($("#allRows").val());
             })
         } else {
             $(".bulk-checkbox").each(function(){
-                $(this).removeAttr('checked');
+                $(this).prop('checked', false);
                 $(this)[0].dispatchEvent(new Event('change'));
             })
+            $(".bulk-checkbox-values").each(function(){
+                $(this).val("[]");
+            })
         }
-        $(".bulk-checkbox-values").each(function(){
-            $(this).val($("#allRows").val());
-        })
     })
 });
