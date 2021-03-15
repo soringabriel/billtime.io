@@ -33,10 +33,10 @@ Route::group([
                     ->push(__('Editing :time', ['time' => $time->name]), route('frontend.time.edit', $time));
         });
         Route::patch('/', [TimeController::class, 'update'])->name('update');
-        Route::patch('/toggleBilled', [TimeController::class, 'toggleBilled'])->name('toggleBilled')->middleware('invoice_belongs_to_user');
+        Route::patch('/toggleBilled', [TimeController::class, 'toggleBilled'])->name('toggleBilled');
         Route::delete('/', [TimeController::class, 'destroy'])->name('destroy');
     });
 
-    Route::patch('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['invoice_belongs_to_user', 'times']);
+    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['times']);
     Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware('times');
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Auth\Models\Traits\Method;
+namespace App\Models\Traits\Method;
 
 /**
  * Trait InvoiceMethod.

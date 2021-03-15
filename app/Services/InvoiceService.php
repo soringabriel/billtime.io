@@ -42,6 +42,8 @@ class InvoiceService extends BaseService
      */
     public function store(array $data = []): Invoice
     {
+        $data['times'] = json_decode($data['times']);
+
         DB::beginTransaction();
 
         try {
@@ -91,6 +93,8 @@ class InvoiceService extends BaseService
      */
     public function update(Invoice $invoice, array $data = []): Invoice
     {
+        $data['times'] = json_decode($data['times']);
+
         DB::beginTransaction();
 
         try {

@@ -53,6 +53,11 @@ class TimeTable extends TableComponentExtended
     /**
      * @var bool
      */
+    public $bulk = true;
+
+    /**
+     * @var bool
+     */
     public $bulkActions = true;
 
     /**
@@ -66,9 +71,19 @@ class TimeTable extends TableComponentExtended
     public $filtersEnabled = true;
 
     /**
+     * @var bool
+     */
+    public $isInvoice = false;
+
+    /**
      * @var string
      */
     public $bulkDelete = 'frontend.time.bulkDestroy';
+
+    /**
+     * @var string
+     */
+    public $bulkBill = 'frontend.time.bulkToggleBilled';
 
     /**
      * @var bool
@@ -135,8 +150,16 @@ class TimeTable extends TableComponentExtended
     /**
      * @return void
      */
-    public function mount($filtersEnabled = true) {
+    public function mount(
+        $filtersEnabled = true, 
+        $customFiltersEnabled = true, 
+        $isInvoice = false, 
+        $bulkActions = true
+    ) {
         $this->filtersEnabled = $filtersEnabled;
+        $this->customFiltersEnabled = $customFiltersEnabled;
+        $this->isInvoice = $isInvoice;
+        $this->bulkActions = $bulkActions;
     }
 
     /**
@@ -178,7 +201,7 @@ class TimeTable extends TableComponentExtended
     public function columns(): array
     {
         $timeTable = $this;
-        return [
+        $columns = [
             ColumnExtended::make(__('Start Time'))
                 ->sortable()
                 ->withFilter()
@@ -241,12 +264,15 @@ class TimeTable extends TableComponentExtended
                 ->exportFormat(function (Time $model) {
                     return '=INDIRECT("B" & ROW()) - INDIRECT("A" & ROW())';
                 }),
-            ColumnExtended::make(__('Actions'))
-                ->format(function (Time $model) {
-                    return view('frontend.time.includes.actions', ['model' => $model]);
-                })
-                ->excludeFromExport(),
         ];
+        if (!$this->isInvoice) {
+            $columns[] = ColumnExtended::make(__('Actions'))
+                            ->format(function (Time $model) {
+                                return view('frontend.time.includes.actions', ['model' => $model]);
+                            })
+                            ->excludeFromExport();
+        }
+        return $columns;
     }
 
         

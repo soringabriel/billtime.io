@@ -38,7 +38,7 @@ class StoreInvoiceRequest extends FormRequest
             'due_date' => ['required', 'date_format:Y-m-d'],
             'notes' => ['max:255'],
             'price' => ['numeric'],
-            'times' => ['required', 'array'],
+            'times' => ['sometimes', 'nullable', 'json'],
         ];
     }
 }

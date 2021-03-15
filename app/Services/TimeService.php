@@ -131,7 +131,7 @@ class TimeService extends BaseService
         try {
             $time->update(
                 [
-                    'billed' => true,
+                    'billed' => !$time->billed,
                 ]
             );
             if (!is_null($invoice)) {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Method\InvoiceMethod;
 use App\Models\Traits\Relationship\InvoiceRelationship;
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Invoice extends Model
 {
     use HasFactory,
+        InvoiceMethod,
         InvoiceRelationship;
 
     public const STATUS_PENDING = 'pending';

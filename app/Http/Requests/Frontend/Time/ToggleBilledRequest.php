@@ -18,7 +18,7 @@ class ToggleBilledRequest extends FormRequest
     public function rules()
     {
         return [
-            'invoice_id' => ['sometimes', Rule::exists('invoices', 'id')->where('user_id', auth()->user()->getParentId())],
+            //
         ];
     }
 }

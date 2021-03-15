@@ -89,7 +89,6 @@ class Kernel extends HttpKernel
         'times' => \App\Http\Middleware\TimesMiddleware::class,
         'parent_user' => \App\Http\Middleware\ParentUserMiddleware::class,
         'model_belongs_to_user' => \App\Http\Middleware\ModelBelongsToUser::class,
-        'invoice_belongs_to_user' => \App\Http\Middleware\InvoiceBelongsToUserMiddleware::class,
     ];
 
     /**

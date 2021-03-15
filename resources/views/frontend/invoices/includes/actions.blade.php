@@ -5,7 +5,7 @@
             method="patch"
             name="set-status-past-due"
             button-class="btn btn-warning btn-sm"
-            hiddenData="{!! ['name' => 'status', 'value' => $model::STATUS_PAST_DUE] !!}"
+            hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
         >
             @lang('Mark as Past Due')
         </x-utils.form-button>
@@ -16,7 +16,7 @@
             method="patch"
             name="set-status-paid"
             button-class="btn btn-warning btn-sm"
-            hiddenData="{!! ['name' => 'status', 'value' => $model::STATUS_PAID] !!}"
+            hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
         >
             @lang('Mark as Paid')
         </x-utils.form-button>
@@ -27,7 +27,7 @@
             method="patch"
             name="set-status-pending"
             button-class="btn btn-warning btn-sm"
-            hiddenData="{!! ['name' => 'status', 'value' => $model::STATUS_PENDING] !!}"
+            hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
         >
             @lang('Mark as Pending')
         </x-utils.form-button>

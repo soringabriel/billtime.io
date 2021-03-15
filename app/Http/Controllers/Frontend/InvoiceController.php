@@ -113,7 +113,7 @@ class InvoiceController extends Controller
      */
     public function updateStatus(UpdateInvoiceStatusRequest $request, Invoice $invoice)
     {
-        $this->invoiceService->updateStatus($invoice, $request->validated()['status']);
+        $this->invoiceService->setStatus($invoice, $request->validated()['status']);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));
     }

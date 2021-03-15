@@ -104,10 +104,8 @@ class TimeController extends Controller
     public function toggleBilled(ToggleBilledRequest $request, Time $time)
     {
         $data = $request->validated();
-
-        $invoice = (isset($data['invoice_id']) ? Invoice::find($data['invoice_id']) : null);
             
-        $this->timeService->toggleBilled($time, $invoice);
+        $this->timeService->toggleBilled($time);
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
     }
@@ -124,12 +122,10 @@ class TimeController extends Controller
 
         $times = json_decode($data['times']);
 
-        $invoice = (isset($data['invoice_id']) ? Invoice::find($data['invoice_id']) : null);
-
         foreach ($times as $time) {
             $time = Time::find($time);
             if (!is_null($time)) {
-                $this->timeService->toggleBilled($time, $invoice);
+                $this->timeService->toggleBilled($time);
             }
         }
 
