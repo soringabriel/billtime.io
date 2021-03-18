@@ -24,15 +24,15 @@
                                     <div class="col-md-6">
                                         <div class="field-group field-group-required">
                                             <label for="number" class="col-form-label">@lang('Invoice Number')</label>
-                                            <input type="text" class="form-control" name="number" placeholder="IN0001" value="{{ old('number') ?? $invoice->number }}">
+                                            <input type="text" class="form-control" name="number" placeholder="IN0001" value="{{ old('number') ?? $invoice->number }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="field-group field-group-required">
                                             <label for="name" class="col-form-label">@lang('Date')</label>
-                                            <input type="date" class="form-control" name="date" value="{{ old('date') ?? $invoice->date }}">
+                                            <input type="date" class="form-control" name="date" value="{{ old('date') ?? $invoice->date }}" required>
                                         </div>
-                                        <div class="field-group field-group-required">
+                                        <div class="field-group">
                                             <label for="name" class="col-form-label">@lang('Due Date')</label>
                                             <input type="date" class="form-control" name="due_date" value="{{ old('due_date') ?? $invoice->due_date }}">
                                         </div>

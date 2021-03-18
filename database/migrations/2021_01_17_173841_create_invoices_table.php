@@ -30,7 +30,7 @@ class CreateInvoicesTable extends Migration
             $table->string('seller_bank_account');
             $table->json('services');
             $table->double('tax');
-            $table->double('shipping');
+            $table->double('shipping')->nullable();
             $table->string('currency');
             $table->double('price');
             $table->date('date');

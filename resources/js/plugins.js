@@ -130,17 +130,36 @@ $(function () {
         });
     })
 
+    $(".datetimepicker-action").on('click', function(){
+        let current_datetime = new Date();
+        let month = (current_datetime.getMonth() + 1);
+        let day = current_datetime.getDate();
+        let hour = current_datetime.getHours();
+        let minutes = current_datetime.getMinutes();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        let formatted_date = current_datetime.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + minutes;
+        $(this).prev().val(formatted_date);
+    })
+
     // Livewires bulk selections
     $(".bulk-checkbox").on('change', function(){
-        console.log("ABC");
-        console.log($(".bulk-checkbox-values").first().val());
         let checked;
         try {
             checked = JSON.parse($(".bulk-checkbox-values").first().val());
         } catch (e) {
             checked = [];
         }
-        console.log(checked);
         $(".bulk-checkbox").each(function(){
             var index = checked.indexOf($(this).val());
             if ($(this).is(":checked")) {

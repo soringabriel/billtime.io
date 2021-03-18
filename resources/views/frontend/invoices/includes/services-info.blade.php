@@ -70,7 +70,7 @@
         </div>
         <div class="field-group field-group-required">
             <label for="shipping" class="col-form-label">@lang('Shipping')</label>
-            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" required />
+            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" />
         </div>
     </div>
     <div class="col-md-4 offset-md-4">

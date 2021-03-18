@@ -62,11 +62,11 @@ class InvoiceService extends BaseService
                     'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
-                    'shipping' => $data['shipping'],
+                    'shipping' => ($data['shipping'] ?? null),
                     'currency' => $data['currency'],
                     'price' => $data['price'],
                     'date' => $data['date'],
-                    'due_date' => $data['due_date'],
+                    'due_date' => ($data['due_date'] ?? null),
                     'notes' => $data['notes'],
                 ]
             );
@@ -113,11 +113,11 @@ class InvoiceService extends BaseService
                     'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
-                    'shipping' => $data['shipping'],
+                    'shipping' => ($data['shipping'] ?? null),
                     'currency' => $data['currency'],
                     'price' => $data['price'],
                     'date' => $data['date'],
-                    'due_date' => $data['due_date'],
+                    'due_date' => ($data['due_date'] ?? null),
                     'notes' => $data['notes'],
                     'status' => (Carbon::createFromFormat('Y-m-d', $data['due_date'])->isPast() ? Invoice::STATUS_PAST_DUE : Invoice::STATUS_PENDING),
                 ]
@@ -225,25 +225,31 @@ class InvoiceService extends BaseService
         $sequence = (int) filter_var($invoice_data['number'], FILTER_SANITIZE_NUMBER_INT);
         $series = str_replace($sequence, "", $invoice_data['number']);
 
-        echo $invoice_data['date'];
+        $invoice = LaravelInvoice::make()
+                    ->series($series)
+                    ->sequence($sequence)
+                    ->serialNumberFormat('{SERIES}{SEQUENCE}')
+                    ->seller($seller)
+                    ->buyer($buyer)
+                    ->date(Carbon::createFromFormat('Y-m-d', $invoice_data['date']))
+                    ->dateFormat('M j, Y')
+                    ->currencySymbol(currencyToSymbol($invoice_data['currency']))
+                    ->currencyCode($invoice_data['currency'])
+                    ->currencyFormat('{SYMBOL}{VALUE}')
+                    ->currencyThousandsSeparator('.')
+                    ->currencyDecimalPoint(',')
+                    ->taxRate($invoice_data['tax'])
+                    ->addItems($items)
+                    ->notes($notes);
 
-        return LaravelInvoice::make()
-            ->series($series)
-            ->sequence($sequence)
-            ->serialNumberFormat('{SERIES}{SEQUENCE}')
-            ->seller($seller)
-            ->buyer($buyer)
-            ->date(Carbon::createFromFormat('Y-m-d', $invoice_data['date']))
-            ->dateFormat('M j, Y')
-            ->payUntilDays(Carbon::createFromFormat('Y-m-d', $invoice_data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $invoice_data['date'])))
-            ->currencySymbol(currencyToSymbol($invoice_data['currency']))
-            ->currencyCode($invoice_data['currency'])
-            ->currencyFormat('{SYMBOL}{VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->taxRate($invoice_data['tax'])
-            ->shipping($invoice_data['shipping'])
-            ->addItems($items)
-            ->notes($notes);
+        if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
+            $invoice->payUntilDays(Carbon::createFromFormat('Y-m-d', $invoice_data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $invoice_data['date'])));
+        }
+
+        if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
+            $invoice->shipping($invoice_data['shipping']);
+        }
+
+        return $invoice;
     }
 }
