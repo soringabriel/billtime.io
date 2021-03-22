@@ -3,13 +3,15 @@
         <th>
             @lang('Select')
             <div class="bulk-select-rows">
-                <input type="checkbox" id="checkRowsPage" x-ref="checkRowsPage" x-on:change="$refs.checkRowsPage.checked ? selected = {{ count($models) }} : selected = 0">
+                <input type="hidden" x-ref="pageRowsCount" value="{{ count($models) }}">
+                <input type="checkbox" id="checkRowsPage" x-ref="checkRowsPage" x-on:change="$refs.checkRowsPage.checked ? selected = $refs.pageRowsCount.value : selected = 0">
                 <label for="checkRowsPage">@lang('Page')</label>
             </div>
             <div class="bulk-select-rows">
-                <input type="checkbox" id="checkAllRows" x-ref="checkAllRows" x-on:change="$refs.checkAllRows.checked ? selected = {{ count($this->query()->pluck('id')->toArray()) }} : selected = 0">
+                <input type="hidden" x-ref="allRowsCount" value="{{ count($this->models()->pluck('id')->toArray()) }}">
+                <input type="checkbox" id="checkAllRows" x-ref="checkAllRows" x-on:change="$refs.checkAllRows.checked ? selected = $refs.allRowsCount.value : selected = 0">
                 <label for="checkAllRows">@lang('All')</label>
-                <input type="hidden" id="allRows" value="{{ json_encode($this->query()->pluck('id')->toArray()) }}">
+                <input type="hidden" id="allRows" value="{{ json_encode($this->models()->pluck('id')->toArray()) }}">
             </div>
         </th>
     @endif

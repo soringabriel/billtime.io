@@ -170,6 +170,23 @@ class TimeTable extends TableComponentExtended
         return $this->html('
         <div class="col">
             <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">' . __('Billed') . '</label>
+                </div>
+                <select class="form-control"
+                    wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.billed"
+                    wire:model.lazy="customFilters.billed"
+                    wire:loading.attr="disabled"
+                    placeholder="' . __("Billed") . '"
+                >
+                    <option value="">' . __("Any") . '</option>
+                    <option value="1">' . __("Billed") . '</option>
+                    <option value="0">' . __("Non Billed") . '</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group">
                 <input class="form-control" type="date"
                     wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.start"
                     wire:model.lazy="customFilters.start"
@@ -283,15 +300,16 @@ class TimeTable extends TableComponentExtended
     {
         $builder = parent::models();
 
-        foreach ($this->columns() as $column) {
-            if ($column->getText() == __('End Time')) {
-                if (isset($this->customFilters['start'])) {
-                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));
-                }
-                if (isset($this->customFilters['end'])) {
-                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '<=', Carbon::parse($this->customFilters['end'])->format('Y-m-d'));
-                }
-            }
+        if (isset($this->customFilters['start']) && $this->customFilters['start'] != "") {
+            $builder->where('end_time', '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));
+        }
+
+        if (isset($this->customFilters['end']) && $this->customFilters['end'] != "") {
+            $builder->where('end_time', '<=', Carbon::parse($this->customFilters['end'])->format('Y-m-d'));
+        }
+
+        if (isset($this->customFilters['billed']) && $this->customFilters['billed'] != "") {
+            $builder->where('billed', $this->customFilters['billed']);
         }
 
         return $builder;

@@ -353,9 +353,11 @@
         <p>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </p>
-        <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
+        @if ($invoice->hasDueDate)
+            <p>
+                {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
+            </p>
+        @endif
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {

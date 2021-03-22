@@ -182,12 +182,10 @@ $(function () {
         if ($(this).is(":checked")) {
             $(".bulk-checkbox").each(function(){
                 $(this).prop('checked', true);
-                $(this).trigger('change');
             })
         } else {
             $(".bulk-checkbox").each(function(){
                 $(this).prop('checked', false);
-                $(this).trigger('change');
             })
         }
     })
@@ -196,7 +194,6 @@ $(function () {
         if ($(this).is(":checked")) {
             $(".bulk-checkbox").each(function(){
                 $(this).prop('checked', true);
-                $(this)[0].dispatchEvent(new Event('change'));
             })
             $(".bulk-checkbox-values").each(function(){
                 $(this).val($("#allRows").val());
@@ -204,7 +201,6 @@ $(function () {
         } else {
             $(".bulk-checkbox").each(function(){
                 $(this).prop('checked', false);
-                $(this)[0].dispatchEvent(new Event('change'));
             })
             $(".bulk-checkbox-values").each(function(){
                 $(this).val("[]");

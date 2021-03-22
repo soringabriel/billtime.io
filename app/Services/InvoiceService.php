@@ -42,7 +42,7 @@ class InvoiceService extends BaseService
      */
     public function store(array $data = []): Invoice
     {
-        $data['times'] = json_decode($data['times']);
+        $data['times'] = json_decode($data['times'] ?? json_encode([]));
 
         DB::beginTransaction();
 
@@ -93,7 +93,7 @@ class InvoiceService extends BaseService
      */
     public function update(Invoice $invoice, array $data = []): Invoice
     {
-        $data['times'] = json_decode($data['times']);
+        $data['times'] = json_decode($data['times'] ?? json_encode([]));
 
         DB::beginTransaction();
 
@@ -125,7 +125,7 @@ class InvoiceService extends BaseService
             $invoice->times()->sync($data['times'] ?? []);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem updating the Invoice.'));
+            throw new GeneralException($e->getMessage() . __('There was a problem updating the Invoice.'));
         }
 
         event(new InvoiceUpdated($invoice));
@@ -243,7 +243,10 @@ class InvoiceService extends BaseService
                     ->notes($notes);
 
         if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
+            $invoice->hasDueDate = true;
             $invoice->payUntilDays(Carbon::createFromFormat('Y-m-d', $invoice_data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $invoice_data['date'])));
+        } else {
+            $invoice->hasDueDate = false;
         }
 
         if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
