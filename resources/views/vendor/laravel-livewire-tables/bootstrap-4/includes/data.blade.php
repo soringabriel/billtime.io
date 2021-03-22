@@ -10,9 +10,17 @@
             style="cursor:pointer"
         @endif
     >
-        @if (isset($this->bulkActions) && $this->bulkActions)
+        @if (isset($this->bulk) && $this->bulk)
             <td>
-                <input type="checkbox" id="checkRow{{ $model->id }}" x-ref="checkRow{{ $model->id }}" class="bulk-checkbox" value="{{ $model->id }}" x-on:change="$refs.checkRow{{ $model->id }}.checked ? selected++ : selected--">
+                <input 
+                    type="checkbox" 
+                    id="checkRow{{ $model->id }}" 
+                    x-ref="checkRow{{ $model->id }}" 
+                    class="bulk-checkbox" 
+                    value="{{ $model->id }}" 
+                    x-on:change="$refs.checkRow{{ $model->id }}.checked ? selected++ : selected--"
+                    {{ in_array($model->id, $this->preCheckedValues) ? 'checked' : '' }}
+                    />
             </td>
         @endif
 

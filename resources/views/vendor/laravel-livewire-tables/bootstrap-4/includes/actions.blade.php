@@ -1,5 +1,5 @@
 @if (isset($this->bulk) && $this->bulk)
-    <input type="hidden" name="times" class="bulk-checkbox-values" value="[]">
+    <input type="hidden" name="times" class="bulk-checkbox-values" value="{{ json_encode($this->preCheckedValues ?? []) }}">
     <div x-show="selected > 0">
         <div class="row" x-show="selected > 0">
             <div class="col text-left text-muted">

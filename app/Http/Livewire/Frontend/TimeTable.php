@@ -91,6 +91,11 @@ class TimeTable extends TableComponentExtended
     public $customFiltersEnabled = true;
 
     /**
+     * @var array
+     */
+    public $preCheckedValues = [];
+
+    /**
      * @var bool
      */
     public $hiddenDataBulk = [
@@ -154,12 +159,20 @@ class TimeTable extends TableComponentExtended
         $filtersEnabled = true, 
         $customFiltersEnabled = true, 
         $isInvoice = false, 
-        $bulkActions = true
+        $bulkActions = true,
+        $bulk = true,
+        $exports = true,
+        $preCheckedValues = "[]"
     ) {
         $this->filtersEnabled = $filtersEnabled;
         $this->customFiltersEnabled = $customFiltersEnabled;
         $this->isInvoice = $isInvoice;
         $this->bulkActions = $bulkActions;
+        $this->bulk = $bulk;
+        $this->preCheckedValues = json_decode($preCheckedValues);
+        if (!$exports) {
+            $this->exports = [];
+        }
     }
 
     /**
@@ -264,11 +277,23 @@ class TimeTable extends TableComponentExtended
                 ->exportFormat(function (Time $model) {
                     return $model->task;
                 }),
+            ColumnExtended::make(__('Billed'))
+                ->sortable()
+                ->format(function (Time $model) {
+                    if ($model->billed) {
+                        return $this->html('<span class="bg-success text-white text-nowrap rounded p-1">' . __('Billed') . '</span>');
+                    }
+                    return $this->html('<span class="bg-dark text-white text-nowrap rounded p-1">' . __('Not Billed') . '</span>');
+                }),
             ColumnExtended::make(__('Details'))
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
                 ->totalable(function() use ($timeTable) {
                     $models = $timeTable->models()->get();
+                    CarbonInterval::setCascadeFactors([
+                        'minute' => [60, 'seconds'],
+                        'hour' => [60, 'minutes'],
+                    ]);
                     $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
                     foreach ($models as $model) {
                         $total->add(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)));

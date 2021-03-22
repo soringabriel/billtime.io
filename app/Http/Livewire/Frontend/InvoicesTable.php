@@ -56,15 +56,15 @@ class InvoicesTable extends TableComponentExtended
                 ->sortable()
                 ->format(function (Invoice $model) {
                     if ($model->isPending()) {
-                        return $this->html('<span class="bg-dark text-white rounded p-1">' . __('Pending') . '</span>');
+                        return $this->html('<span class="bg-dark text-white text-nowrap rounded p-1">' . __('Pending') . '</span>');
                     }
                     if ($model->isPastDue()) {
-                        return $this->html('<span class="bg-danger text-white rounded p-1">' . __('Past Due') . '</span>');
+                        return $this->html('<span class="bg-danger text-white text-nowrap rounded p-1">' . __('Past Due') . '</span>');
                     }
                     if ($model->isPaid()) {
-                        return $this->html('<span class="bg-success text-white rounded p-1">' . __('Paid') . '</span>');
+                        return $this->html('<span class="bg-success text-white text-nowrap rounded p-1">' . __('Paid') . '</span>');
                     }
-                    return $this->html('<span class="bg-default text-dark rounded p-1">' . $model->status . '</span>');
+                    return $this->html('<span class="bg-default text-dark text-nowrap rounded p-1">' . $model->status . '</span>');
                 }),
             ColumnExtended::make(__('Price'))
                 ->searchable()

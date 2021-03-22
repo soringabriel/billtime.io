@@ -96,8 +96,6 @@ class InvoiceController extends Controller
 
         $laravelInvoice = $this->invoiceService->generateInvoice($data);
 
-        $data['price'] = $laravelInvoice->total_amount;
-
         $this->invoiceService->update($invoice, $data);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));

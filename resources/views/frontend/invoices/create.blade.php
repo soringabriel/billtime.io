@@ -149,10 +149,13 @@
                                     <div class="form-group">
                                         <h4>@lang('Associated times')</h4>
                                         <livewire:frontend.time-table 
-                                            filtersEnabled="false" 
-                                            isInvoice="true"
-                                            customFiltersEnabled="false" 
-                                            bulkActions="false"
+                                            filtersEnabled="1" 
+                                            isInvoice="1"
+                                            customFiltersEnabled="1" 
+                                            bulkActions="0"
+                                            bulk="1"
+                                            exports="0"
+                                            preCheckedValues="{{ json_encode(old('times')) }}"
                                          />
                                     </div>
                                 </div><!--tab-times-->

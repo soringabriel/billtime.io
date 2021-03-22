@@ -11,6 +11,10 @@
         </div>
     </div>
 
+    <div class="alert alert-info">
+        @lang('The total associated times to this invoice amount to') <span x-text="associatedTime"></span>
+    </div>
+
     <div class="form-group row">
         <div class="col-md-12">
             <table id="services">
@@ -66,11 +70,11 @@
     <div class="col-md-4">
         <div class="field-group field-group-required">
             <label for="tax" class="col-form-label">@lang('Tax Percentage')</label>
-            <input id="tax" type="number" min="0" max="100" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" required />
+            <input id="tax" type="number" min="0" max="100" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" value="{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}" required />
         </div>
         <div class="field-group field-group-required">
             <label for="shipping" class="col-form-label">@lang('Shipping')</label>
-            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" />
+            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
         </div>
     </div>
     <div class="col-md-4 offset-md-4">
@@ -190,6 +194,8 @@
     }
 
     function initServices() {
+        var associatedTime = $(".total-time").first().html();
+
         function jqueryInit() {
             $(".remove-service-row").on('click', function(e){
                 e.preventDefault();
@@ -215,6 +221,10 @@
                 calculateTotal();
             })
 
+            $(".total-time").on('change', function(){
+                associatedTime = $(this).html();
+            })
+
             calculateTotal();
         }
 
@@ -224,6 +234,7 @@
             currencies: {!! json_encode($currencies) !!},
             tax: "{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}",
             shipping: "{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}",
+            associatedTime: associatedTime,
         }
     }
 </script>

@@ -1,5 +1,5 @@
 <tr>
-    @if (isset($this->bulkActions) && $this->bulkActions)
+    @if (isset($this->bulk) && $this->bulk)
         <th>
             @lang('Select')
             <div class="bulk-select-rows">
