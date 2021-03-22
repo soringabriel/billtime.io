@@ -49,6 +49,7 @@ class Invoice extends Model
         'seller_tax_number',
         'seller_vat_number',
         'seller_address',
+        'seller_bank_name',
         'seller_bank_account',
         'services',
         'tax',

@@ -4,7 +4,7 @@
             :action="route('frontend.invoices.updateStatus', $model)"
             method="patch"
             name="set-status-past-due"
-            button-class="btn btn-warning btn-sm"
+            button-class="btn btn-danger btn-sm"
             hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
         >
             @lang('Mark as Past Due')
@@ -15,7 +15,7 @@
             :action="route('frontend.invoices.updateStatus', $model)"
             method="patch"
             name="set-status-paid"
-            button-class="btn btn-warning btn-sm"
+            button-class="btn btn-success btn-sm"
             hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
         >
             @lang('Mark as Paid')
@@ -26,7 +26,7 @@
             :action="route('frontend.invoices.updateStatus', $model)"
             method="patch"
             name="set-status-pending"
-            button-class="btn btn-warning btn-sm"
+            button-class="btn btn-dark btn-sm"
             hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
         >
             @lang('Mark as Pending')

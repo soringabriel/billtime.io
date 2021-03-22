@@ -52,13 +52,14 @@ class InvoiceService extends BaseService
                     'user_id' => ($data['user_id'] ?? auth()->id()),
                     'number' => $data['number'],
                     'buyer_company_name' => $data['buyer_company_name'],
-                    'buyer_tax_number' => $data['buyer_tax_number'],
-                    'buyer_vat_number' => $data['buyer_vat_number'],
-                    'buyer_address' => $data['buyer_address'],
+                    'buyer_tax_number' => ($data['buyer_tax_number'] ?? null),
+                    'buyer_vat_number' => ($data['buyer_vat_number'] ?? null),
+                    'buyer_address' => ($data['buyer_address'] ?? null),
                     'seller_company_name' => $data['seller_company_name'],
-                    'seller_tax_number' => $data['seller_tax_number'],
-                    'seller_vat_number' => $data['seller_vat_number'],
-                    'seller_address' => $data['seller_address'],
+                    'seller_tax_number' => ($data['seller_tax_number'] ?? null),
+                    'seller_vat_number' => ($data['seller_vat_number'] ?? null),
+                    'seller_address' => ($data['seller_address'] ?? null),
+                    'seller_bank_name' => ($data['seller_bank_name'] ?? null),
                     'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
@@ -67,13 +68,14 @@ class InvoiceService extends BaseService
                     'price' => $data['price'],
                     'date' => $data['date'],
                     'due_date' => ($data['due_date'] ?? null),
-                    'notes' => $data['notes'],
+                    'notes' => ($data['notes'] ?? null),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);
+            $invoice->times()->update(['billed' => 1]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException($e->getMessage().__('There was a problem creating the Invoice.'));
+            throw new GeneralException(__('There was a problem creating the Invoice.'));
         }
 
         event(new InvoiceCreated($invoice));
@@ -103,13 +105,14 @@ class InvoiceService extends BaseService
                     'user_id' => ($data['user_id'] ?? auth()->id()),
                     'number' => $data['number'],
                     'buyer_company_name' => $data['buyer_company_name'],
-                    'buyer_tax_number' => $data['buyer_tax_number'],
-                    'buyer_vat_number' => $data['buyer_vat_number'],
-                    'buyer_address' => $data['buyer_address'],
+                    'buyer_tax_number' => ($data['buyer_tax_number'] ?? null),
+                    'buyer_vat_number' => ($data['buyer_vat_number'] ?? null),
+                    'buyer_address' => ($data['buyer_address'] ?? null),
                     'seller_company_name' => $data['seller_company_name'],
-                    'seller_tax_number' => $data['seller_tax_number'],
-                    'seller_vat_number' => $data['seller_vat_number'],
-                    'seller_address' => $data['seller_address'],
+                    'seller_tax_number' => ($data['seller_tax_number'] ?? null),
+                    'seller_vat_number' => ($data['seller_vat_number'] ?? null),
+                    'seller_address' => ($data['seller_address'] ?? null),
+                    'seller_bank_name' => ($data['seller_bank_name'] ?? null),
                     'seller_bank_account' => $data['seller_bank_account'],
                     'services' => $data['services'],
                     'tax' => $data['tax'],
@@ -118,11 +121,12 @@ class InvoiceService extends BaseService
                     'price' => $data['price'],
                     'date' => $data['date'],
                     'due_date' => ($data['due_date'] ?? null),
-                    'notes' => $data['notes'],
+                    'notes' => ($data['notes'] ?? null),
                     'status' => (Carbon::createFromFormat('Y-m-d', $data['due_date'])->isPast() ? Invoice::STATUS_PAST_DUE : Invoice::STATUS_PENDING),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);
+            $invoice->times()->update(['billed' => 1]);
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException($e->getMessage() . __('There was a problem updating the Invoice.'));
@@ -143,6 +147,8 @@ class InvoiceService extends BaseService
      */
     public function destroy(Invoice $invoice): bool
     {
+        $invoice->times()->update(['billed' => 0]);
+
         if ($this->deleteById($invoice->id)) {
             event(new InvoiceDeleted($invoice));
 
@@ -190,24 +196,39 @@ class InvoiceService extends BaseService
      */
     public function generateInvoice(array $invoice_data): LaravelInvoice
     {
-        $buyer = new Party([
+        $buyer_properties = [
             'name' => $invoice_data['buyer_company_name'],
-            'address' => $invoice_data['buyer_address'],
-            'custom_fields' => [
-                'tax number' => $invoice_data['buyer_tax_number'],
-                'vat number' => $invoice_data['buyer_vat_number'],
-            ],
-        ]);
-        $seller = new Party([
+            'custom_fields' => [],
+        ];
+        if (isset($invoice_data['buyer_address']) && !is_null($invoice_data['buyer_address'])) {
+            $buyer_properties['address'] = $invoice_data['buyer_address'];
+        }
+        if (isset($invoice_data['buyer_tax_number']) && !is_null($invoice_data['buyer_tax_number'])) {
+            $buyer_properties['custom_fields']['tax number'] = $invoice_data['buyer_tax_number'];
+        }
+        if (isset($invoice_data['buyer_vat_number']) && !is_null($invoice_data['buyer_vat_number'])) {
+            $buyer_properties['custom_fields']['vat number'] = $invoice_data['buyer_vat_number'];
+        }
+        $buyer = new Party($buyer_properties);
+
+        $seller_properties = [
             'name' => $invoice_data['seller_company_name'],
-            'address' => $invoice_data['seller_address'],
-            'custom_fields' => [
-                'tax number' => $invoice_data['seller_tax_number'],
-                'vat number' => $invoice_data['seller_vat_number'],
-                'bank name' => $invoice_data['seller_bank_name'],
-                'bank account' => $invoice_data['seller_bank_account'],
-            ],
-        ]);
+            'custom_fields' => [],
+        ];
+        if (isset($invoice_data['seller_address']) && !is_null($invoice_data['seller_address'])) {
+            $seller_properties['address'] = $invoice_data['seller_address'];
+        }
+        if (isset($invoice_data['seller_tax_number']) && !is_null($invoice_data['seller_tax_number'])) {
+            $seller_properties['custom_fields']['tax number'] = $invoice_data['seller_tax_number'];
+        }
+        if (isset($invoice_data['seller_vat_number']) && !is_null($invoice_data['seller_vat_number'])) {
+            $seller_properties['custom_fields']['vat number'] = $invoice_data['seller_vat_number'];
+        }
+        if (isset($invoice_data['seller_bank_name']) && !is_null($invoice_data['seller_bank_name'])) {
+            $seller_properties['custom_fields']['bank name'] = $invoice_data['seller_bank_name'];
+        }
+        $seller_properties['custom_fields']['bank account'] = $invoice_data['seller_bank_account'];
+        $seller = new Party($seller_properties);
 
         $items = [];
         $services = json_decode($invoice_data['services']);

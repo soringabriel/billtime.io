@@ -45,10 +45,10 @@ class InvoicesTable extends TableComponentExtended
             ColumnExtended::make(__('Number'))
                 ->searchable()
                 ->sortable(),
-            ColumnExtended::make(__('Buyer'))
+            ColumnExtended::make(__('Buyer'), 'buyer_company_name')
                 ->searchable()
                 ->sortable(),
-            ColumnExtended::make(__('Seller'))
+            ColumnExtended::make(__('Seller'), 'seller_company_name')
                 ->searchable()
                 ->sortable(),
             ColumnExtended::make(__('Status'))
@@ -69,6 +69,15 @@ class InvoicesTable extends TableComponentExtended
             ColumnExtended::make(__('Price'))
                 ->searchable()
                 ->sortable(),
+            ColumnExtended::make(__('Currency'))
+                ->searchable()
+                ->sortable(),
+            ColumnExtended::make(__('Due Date'))
+                ->searchable()
+                ->sortable()
+                ->format(function (Invoice $model) {
+                    return $model->due_date ?? __('N/A');
+                }),
             ColumnExtended::make(__('Date'))
                 ->searchable()
                 ->sortable(),
