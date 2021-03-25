@@ -284,7 +284,8 @@ class TimeTable extends TableComponentExtended
                         return $this->html('<span class="bg-success text-white text-nowrap rounded p-1">' . __('Billed') . '</span>');
                     }
                     return $this->html('<span class="bg-dark text-white text-nowrap rounded p-1">' . __('Not Billed') . '</span>');
-                }),
+                })
+                ->excludeFromExport(),
             ColumnExtended::make(__('Details'))
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))

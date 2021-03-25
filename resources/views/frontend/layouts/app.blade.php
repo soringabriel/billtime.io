@@ -17,6 +17,15 @@
     @stack('after-styles')
 
     @include('includes.partials.ga')
+
+    @crisp
+
+    @if ($logged_in_user) 
+        <script>
+            $crisp.push(["set", "user:email", "{{ $logged_in_user->email }}"]);
+            $crisp.push(["set", "user:nickname", "{{ $logged_in_user->name }}"]);
+        </script>
+    @endif
 </head>
 <body>
     @include('includes.partials.read-only')

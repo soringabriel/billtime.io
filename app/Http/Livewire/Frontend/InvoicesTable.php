@@ -18,7 +18,17 @@ class InvoicesTable extends TableComponentExtended
     /**
      * @var string
      */
-    public $sortField = 'number';
+    public $sortField = 'created_at';
+
+    /**
+     * @var string
+     */
+    public $sortDirection = 'desc';
+
+    /**
+     * @var bool
+     */
+    public $filtersEnabled = true;
 
     /**
      * @var array
@@ -44,16 +54,20 @@ class InvoicesTable extends TableComponentExtended
         return [
             ColumnExtended::make(__('Number'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Buyer'), 'buyer_company_name')
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Seller'), 'seller_company_name')
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Status'))
                 ->searchable()
                 ->sortable()
+                ->withFilter()
                 ->format(function (Invoice $model) {
                     if ($model->isPending()) {
                         return $this->html('<span class="bg-dark text-white text-nowrap rounded p-1">' . __('Pending') . '</span>');
@@ -68,19 +82,23 @@ class InvoicesTable extends TableComponentExtended
                 }),
             ColumnExtended::make(__('Price'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Currency'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Due Date'))
                 ->searchable()
                 ->sortable()
+                ->withFilter()
                 ->format(function (Invoice $model) {
                     return $model->due_date ?? __('N/A');
                 }),
             ColumnExtended::make(__('Date'))
                 ->searchable()
-                ->sortable(),
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Actions'))
                 ->format(function (Invoice $model) {
                     return view('frontend.invoices.includes.actions', ['model' => $model]);

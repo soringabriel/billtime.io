@@ -122,7 +122,6 @@ class InvoiceService extends BaseService
                     'date' => $data['date'],
                     'due_date' => ($data['due_date'] ?? null),
                     'notes' => ($data['notes'] ?? null),
-                    'status' => (Carbon::createFromFormat('Y-m-d', $data['due_date'])->isPast() ? Invoice::STATUS_PAST_DUE : Invoice::STATUS_PENDING),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);

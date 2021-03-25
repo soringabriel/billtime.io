@@ -10,6 +10,54 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            @auth
+                <ul class="navbar-nav ml-auto">
+                    @if ($logged_in_user->isUser())
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.time.index')"
+                                :active="activeClass(Route::is('frontend.time.index'))"
+                                :text="__('Track Time')"
+                                class="nav-link"/>
+                        </li>
+
+                        @if ($logged_in_user->isParent())
+                            <li class="nav-item">
+                                <x-utils.link
+                                    :href="route('frontend.invoices.index')"
+                                    :active="activeClass(Route::is('frontend.invoices.index'))"
+                                    :text="__('Invoices')"
+                                    class="nav-link"/>
+                            </li>
+
+                            <li class="nav-item">
+                                <x-utils.link
+                                    :href="route('frontend.clients.index')"
+                                    :active="activeClass(Route::is('frontend.clients.index'))"
+                                    :text="__('Clients')"
+                                    class="nav-link"/>
+                            </li>
+                                
+                            <li class="nav-item">
+                                <x-utils.link
+                                    :href="route('frontend.projects.index')"
+                                    :active="activeClass(Route::is('frontend.projects.index'))"
+                                    :text="__('Projects')"
+                                    class="nav-link"/>
+                            </li>
+
+                            <li class="nav-item">
+                                <x-utils.link
+                                    :href="route('frontend.user.subuser.index')"
+                                    :active="activeClass(Route::is('frontend.user.subuser.index'))"
+                                    :text="__('Users')"
+                                    class="nav-link"/>
+                            </li>
+                        @endif
+                    @endif
+                </ul>
+            @endauth
+
             <ul class="navbar-nav ml-auto">
                 @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                     <li class="nav-item dropdown">
@@ -68,40 +116,6 @@
                                     :href="route('admin.dashboard')"
                                     :text="__('Administration')"
                                     class="dropdown-item" />
-                            @endif
-
-                            @if ($logged_in_user->isUser())
-                                <x-utils.link
-                                    :href="route('frontend.time.index')"
-                                    :active="activeClass(Route::is('frontend.time.index'))"
-                                    :text="__('Track Time')"
-                                    class="dropdown-item"/>
-
-                                @if ($logged_in_user->isParent())
-                                    <x-utils.link
-                                        :href="route('frontend.invoices.index')"
-                                        :active="activeClass(Route::is('frontend.invoices.index'))"
-                                        :text="__('Invoices')"
-                                        class="dropdown-item"/>
-
-                                    <x-utils.link
-                                        :href="route('frontend.clients.index')"
-                                        :active="activeClass(Route::is('frontend.clients.index'))"
-                                        :text="__('Clients')"
-                                        class="dropdown-item"/>
-
-                                    <x-utils.link
-                                        :href="route('frontend.projects.index')"
-                                        :active="activeClass(Route::is('frontend.projects.index'))"
-                                        :text="__('Projects')"
-                                        class="dropdown-item"/>
-
-                                    <x-utils.link
-                                        :href="route('frontend.user.subuser.index')"
-                                        :active="activeClass(Route::is('frontend.user.subuser.index'))"
-                                        :text="__('Users')"
-                                        class="dropdown-item"/>
-                                @endif
                             @endif
 
                             <x-utils.link

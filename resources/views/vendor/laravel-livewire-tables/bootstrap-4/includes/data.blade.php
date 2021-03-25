@@ -19,7 +19,7 @@
                     class="bulk-checkbox" 
                     value="{{ $model->id }}" 
                     x-on:change="$refs.checkRow{{ $model->id }}.checked ? selected++ : selected--"
-                    {{ in_array($model->id, $this->preCheckedValues) ? 'checked' : '' }}
+                    {{ in_array($model->id, ($this->preCheckedValues ?? [])) ? 'checked' : '' }}
                     />
             </td>
         @endif
