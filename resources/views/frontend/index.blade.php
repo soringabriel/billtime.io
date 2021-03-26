@@ -202,73 +202,145 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Freelancer')</h5>
+                            <span class="price">@lang('Free')</span>
+                            <p class="year">@lang('of costs')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Manual Time Tracking')</li>
+                                <li><i class="lni lni-ban"></i> @lang('No Data Exports')</li>
+                                <li><i class="lni lni-ban"></i> @lang('No Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW FOR FREE')</a>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Freelancer Pro')</h5>
                             <span class="price">$ 2,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
                             <ul>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">@lang('TRY NOW')</a>
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
-                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-1{fill:#2bdbdc;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-1" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-1" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-1" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-1" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
                         </div>
                     </div> <!-- single pricing -->
                 </div>
-                
+
                 <div class="col-lg-4 col-md-7 col-sm-9">
-                    <div class="single-pricing pro mt-40">
-                        <div class="pricing-baloon">
-                            <img src="{{ asset('img/presentation/baloon.svg#full') }}" alt="baloon">
-                        </div>
-                        <div class="pricing-header">
-                            <h5 class="sub-title">@lang('Small Team')</h5>
-                            <span class="price">$ 24,99</span>
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Startup')</h5>
+                            <span class="price">$ 6,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
                             <ul>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('Up to 20 team members')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Up to 3 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">@lang('TRY NOW')</a>
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
-                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-2{fill:#0067f4;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-2" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-2" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-2" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-2" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Small Team')</h5>
+                            <span class="price">$ 19,99</span>
+                            <p class="year">@lang('per month')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Up to 10 users')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
                         </div>
                     </div> <!-- single pricing -->
                 </div>
                 
                 <div class="col-lg-4 col-md-7 col-sm-9">
-                    <div class="single-pricing enterprise mt-40">
-                        <div class="pricing-flower">
-                            <img src="{{ asset('img/presentation/flower.svg#full') }}" alt="flower">
-                        </div>
-                        <div class="pricing-header text-right">
-                            <h5 class="sub-title">@lang('Unlimited')</h5>
-                            <span class="price">$ 74,99</span>
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Regular')</h5>
+                            <span class="price">$ 49,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
                             <ul>
-                            <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('Unlimited team members')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Up to 50 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">@lang('TRY NOW')</a>
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+                
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Unlimited')</h5>
+                            <span class="price">$ 99,99</span>
+                            <p class="year">@lang('per month')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Unlimited users')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
@@ -292,12 +364,12 @@
             <div class="row justify-content-end">
                 <div class="col-lg-6">
                     <div class="call-action-content text-center">
-                        <h2 class="call-title">Curious to Learn More? Stay Tuned</h2>
-                        <p class="text">You let us know whenever you want us to update anything or think something can be optimised.</p>
+                        <h2 class="call-title">@lang('Stay tuned with our news')</h2>
+                        <p class="text">@lang('Subscribe to our newsletter and stay up to date with our updates.')</p>
                         <div class="call-newsletter">
                             <i class="lni-envelope"></i>
                             <input type="text" placeholder="john@email.com">
-                            <button type="submit">SUBSCRIBE</button>
+                            <button type="submit">@lang('SUBSCRIBE')</button>
                         </div>
                     </div> <!-- slider-content -->
                 </div>
@@ -317,13 +389,6 @@
                         <div class="footer-logo-support d-md-flex align-items-end justify-content-between">
                             <div class="footer-logo d-flex align-items-end">
                                 <a class="mt-30" href="index.html"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
-
-                                <ul class="social mt-30">
-                                    <li><a href="#"><i class="lni-facebook-filled"></i></a></li>
-                                    <li><a href="#"><i class="lni-twitter-original"></i></a></li>
-                                    <li><a href="#"><i class="lni-instagram-original"></i></a></li>
-                                    <li><a href="#"><i class="lni-linkedin-original"></i></a></li>
-                                </ul>
                             </div> <!-- footer logo -->
                             
                         </div> <!-- footer logo support -->

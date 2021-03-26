@@ -141,6 +141,8 @@
     </div><!--container-->
 </nav>
 
+@include('frontend.includes.partials.counter')
+
 @if (config('boilerplate.frontend_breadcrumbs'))
     @include('frontend.includes.partials.breadcrumbs')
 @endif
