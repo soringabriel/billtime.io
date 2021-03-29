@@ -97,7 +97,7 @@ p {
   margin: 0px; }
 
 .bg_cover {
-  background-position: center center;
+  background-position: bottom left;
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -321,14 +321,14 @@ p {
           color: #0067f4; }
 
 .header-hero {
-  height: 850px;
+  height: 750px;
   position: relative; }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
     .header-hero {
-      height: 700px; } }
+      height: 600px; } }
   @media (max-width: 767px) {
     .header-hero {
-      height: 650px; } }
+      height: 550px; } }
   .header-hero::before {
     position: absolute;
     content: '';

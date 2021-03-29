@@ -17,7 +17,7 @@
     @stack('after-styles')
 
     @include('includes.partials.ga')
-    
+
     @crisp
 
     @if ($logged_in_user) 
@@ -87,7 +87,7 @@
                         </nav> <!-- navbar -->
                     </div>
                 </div> <!-- row -->
-            </div> <!-- container -->`
+            </div> <!-- container -->
         </div> <!-- navgition -->
 
         <div id="home" class="header-hero bg_cover" style="background-image: url('{{ asset('img/presentation/header-bg.jpg#full') }}')">
@@ -452,7 +452,7 @@
     <!--====== BACK TO TOP PART ENDS ======-->
 
     @stack('before-scripts')
-    <script src="{{ url(mix('js/presentation.js')) }}"></script>
+    @include('frontend.includes.presentation-js')
     <livewire:scripts />
     @stack('after-scripts')
 </body>
