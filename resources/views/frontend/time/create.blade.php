@@ -65,6 +65,10 @@
                                         <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') }}</textarea>
                                     </div>
                                 </div><!--form-group-->
+
+                                <div class="alert alert-dark" role="alert">
+                                    @lang('You can always track your time easier by starting the counter at the top of the page')
+                                </div>
                             </div>
                         </x-slot>
 

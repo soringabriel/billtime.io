@@ -131,25 +131,8 @@ $(function () {
     })
 
     $(".datetimepicker-action").on('click', function(){
-        let current_datetime = new Date();
-        let month = (current_datetime.getMonth() + 1);
-        let day = current_datetime.getDate();
-        let hour = current_datetime.getHours();
-        let minutes = current_datetime.getMinutes();
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        let formatted_date = current_datetime.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + minutes;
-        $(this).prev().val(formatted_date);
+        let current_formatted_datetime = dateToYYYYMMDDHHIISS(new Date());
+        $(this).prev().val(current_formatted_datetime);
     })
 
     // Livewires bulk selections
@@ -208,3 +191,45 @@ $(function () {
         }
     })
 });
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+  
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function dateToYYYYMMDDHHIISS(datetime) {
+    let month = (datetime.getMonth() + 1);
+    let day = datetime.getDate();
+    let hour = datetime.getHours();
+    let minutes = datetime.getMinutes();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (hour < 10) {
+        hour = "0" + hour;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    return datetime.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + minutes;
+}

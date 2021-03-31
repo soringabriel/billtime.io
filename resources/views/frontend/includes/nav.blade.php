@@ -1,9 +1,10 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar">
     <div class="container">
         <x-utils.link
             :href="route('frontend.index')"
-            :text="appName()"
-            class="navbar-brand" />
+            class="navbar-brand">
+            <img src="{{ asset('img/presentation/logo-small.svg#full') }}" alt="Logo">
+        </x-utils.link>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('Toggle navigation')">
             <span class="navbar-toggler-icon"></span>
@@ -141,7 +142,9 @@
     </div><!--container-->
 </nav>
 
-@include('frontend.includes.partials.counter')
+@auth
+    @include('frontend.includes.partials.counter')
+@endauth
 
 @if (config('boilerplate.frontend_breadcrumbs'))
     @include('frontend.includes.partials.breadcrumbs')

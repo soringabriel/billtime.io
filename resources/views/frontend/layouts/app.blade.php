@@ -20,12 +20,12 @@
 
     @crisp
 
-    @if ($logged_in_user) 
+    @auth
         <script>
             $crisp.push(["set", "user:email", "{{ $logged_in_user->email }}"]);
             $crisp.push(["set", "user:nickname", "{{ $logged_in_user->name }}"]);
         </script>
-    @endif
+    @endauth
 </head>
 <body>
     @include('includes.partials.read-only')
