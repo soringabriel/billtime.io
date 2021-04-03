@@ -190,6 +190,19 @@ $(function () {
             })
         }
     })
+
+});
+
+$(function () {
+    $(".open-chat").on("click", function(){
+        if (typeof $crisp !== 'undefined') {
+            if ($crisp.is("chat:opened")) {
+                $crisp.push(['do', 'chat:close']);
+            } else {
+                $crisp.push(['do', 'chat:open']);
+            }
+        }
+    })
 });
 
 function setCookie(cname, cvalue, exdays) {

@@ -219,3 +219,33 @@ $(function() {
     
 });
 </script>
+
+<script>
+    $(function(){
+        setInterval(() => {
+            var firstp = $("#about p").first();
+            var next = $("#about p:visible").next("p");
+            $("#about p:visible").fadeOut(500, () => {
+                if (next.length > 0) {
+                    next.fadeIn(500);
+                } else {
+                    firstp.fadeIn(500);
+                }
+            })
+        }, 5000);
+    })
+</script>
+
+<script>
+    $(function() {
+        $(".open-chat").on("click", function(){
+            if (typeof $crisp !== 'undefined') {
+                if ($crisp.is("chat:opened")) {
+                    $crisp.push(['do', 'chat:close']);
+                } else {
+                    $crisp.push(['do', 'chat:open']);
+                }
+            }
+        })
+    });
+</script>

@@ -69,7 +69,6 @@ class BladeServiceProvider extends ServiceProvider
 
         Blade::directive('crisp', function () {
             $html = new HtmlString('<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="575954fe-99e3-4470-bb5b-4a4af3ec4b18";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>');
-            $html .= new Htmlstring('<script type="text/javascript">$(function(){$(".open-chat").on("click",function(){"undefined"!=typeof $crisp&&($crisp.is("chat:opened")?$crisp.push(["do","chat:close"]):$crisp.push(["do","chat:open"]))})});</script>');
             return $html;
         });
     }

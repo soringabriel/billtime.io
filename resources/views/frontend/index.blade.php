@@ -59,6 +59,9 @@
                                         <a class="page-scroll" href="#pricing">@lang('Pricing')</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="page-scroll" href="#about">@lang('About')</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="page-scroll open-chat" href="#">@lang('Contact')</a>
                                     </li>
                                     @auth
@@ -353,31 +356,26 @@
 
     <!--====== PRICING PART ENDS ======-->
     
-     <!--====== CALL TO ACTION PART START ======-->
+    <!--====== ABOUT US START ======-->
 
-    <section id="call-to-action" class="call-to-action">
-        <div class="call-action-image">
-            <img src="{{ asset('img/presentation/call-to-action.png#full') }}" alt="call-to-action">
-        </div>
-        
-        <div class="container-fluid">
-            <div class="row justify-content-end">
+    <section id="about" class="about-area" style="background-image: url('{{ asset('img/presentation/about-us.png#full') }}')">
+        <div class="container">
+            <div class="row justify-content-center">
                 <div class="col-lg-6">
-                    <div class="call-action-content text-center">
-                        <h2 class="call-title">@lang('Stay tuned with our news')</h2>
-                        <p class="text">@lang('Subscribe to our newsletter and stay up to date with our updates.')</p>
-                        <div class="call-newsletter">
-                            <i class="lni-envelope"></i>
-                            <input type="text" placeholder="john@email.com">
-                            <button type="submit">@lang('SUBSCRIBE')</button>
-                        </div>
-                    </div> <!-- slider-content -->
+                    <div class="section-title text-center pb-10">
+                        <h4 class="title">@lang('About Us')</h4>
+                    </div> 
                 </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
+            </div> 
+            <div class="row text-center paragraphs">
+                <p>@lang('TimoTrack it\'s a tool that wants to come to the help of all businesses, small or large, and provide them a platform to manage their business')</p>
+                <p style="display: none">@lang('Our product it\'s in continous development and we seek to improve our services all the time')</p>
+                <p style="display: none">@lang('Any sugestions will be welcomed and we will always put customer experience at the top of our priorities!')</p>
+            </div> 
+        </div> 
     </section>
 
-    <!--====== CALL TO ACTION PART ENDS ======-->
+    <!--====== ABOUT US ENDS ======-->
 
     <!--====== FOOTER PART START ======-->
 
@@ -385,58 +383,41 @@
         <div class="footer-widget">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="footer-logo-support d-md-flex align-items-end justify-content-between">
-                            <div class="footer-logo d-flex align-items-end">
-                                <a class="mt-30" href="index.html"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
-                            </div> <!-- footer logo -->
-                            
-                        </div> <!-- footer logo support -->
-                    </div>
-                </div> <!-- row -->
-                <div class="row">
                     <div class="col-lg-2 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">Company</h6>
+                            <h6 class="footer-title">@lang('Links')</h6>
                             <ul>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Career</a></li>
+                                <li><a class="page-scroll" href="#about">@lang('About')</a></li>
+                                <li><a class="page-scroll" href="#" class="open-chat">@lang('Contact')</a></li>
 
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">Product & Services</h6>
+                            <h6 class="footer-title">@lang('Product & Services')</h6>
                             <ul>
-                                <li><a href="#">Products</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Developer</a></li>
+                                <li><a class="page-scroll" href="#pricing">Products</a></li>
+                                <li><a class="page-scroll" href="#service">Services</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
-                    <div class="col-lg-3 col-md-4 col-sm-5">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">Help & Suuport</h6>
+                            <h6 class="footer-title">@lang('Company Details')</h6>
                             <ul>
-                                <li><a href="#">Support Center</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a class="page-scroll">@lang('Marica Sorin-Gabriel PFA')</a></li>
+                                <li><a class="page-scroll" href="mailto:sorinmarica4@gmail.com">Send us an email</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-7">
-                        <div class="footer-newsletter">
-                            <h6 class="footer-title">Subscribe Newsletter</h6>
-                            <div class="newsletter">
-                                <form action="#">
-                                    <input type="text" placeholder="Your Email">
-                                    <button type="submit"><i class="lni-angle-double-right"></i></button>
-                                </form>
-                            </div>
-                            <p class="text">Subscribe weekly newsletter to stay upto date. We don’t send spam.</p>
-                        </div> <!-- footer newsletter -->
+                        <div class="footer-logo-support d-md-flex align-items-end justify-content-between">
+                            <div class="footer-logo d-flex align-items-end">
+                                <a class="mt-30" href="index.html"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
+                            </div> <!-- footer logo -->
+                            
+                        </div> <!-- footer logo support -->
                     </div>
                 </div> <!-- row -->
             </div> <!-- container -->

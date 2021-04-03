@@ -971,3 +971,31 @@ p.form-message.error {
   .back-to-top:hover {
     background-color: #005ad5;
     color: #fff; }
+
+#about {
+  background-color: #0067f4;
+  color: #fff;
+  padding: 100px 0;
+  min-height: 500px;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-blend-mode: multiply;
+
+  .title {
+    margin-bottom: 50px;
+    color: #fff;
+  }
+
+  .paragraphs {
+    padding: 0 15px;
+  
+    p {
+      margin: 30px auto;
+      max-width: 700px;
+      color: #fff;
+      font-size: 18px;
+      line-height: 2;
+    }
+  }
+}

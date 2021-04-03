@@ -62,7 +62,7 @@
                                     <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
 
                                     <div class="col-md-10">
-                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') }}</textarea>
+                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" maxlength="255" />{{ old('details') }}</textarea>
                                     </div>
                                 </div><!--form-group-->
 

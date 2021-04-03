@@ -50,7 +50,7 @@
                         <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
 
                         <div class="col-md-10">
-                            <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') }}</textarea>
+                            <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" required maxlength="255" />{{ old('details') }}</textarea>
                         </div>
                     </div><!--form-group-->
                 </div>
@@ -123,7 +123,7 @@
             document.getElementById("counterEndTime").value = dateToYYYYMMDDHHIISS(new Date());
 
             setCookie('counterStartTime', "", -1);
-            
+
             addTimeForm.submit();
         })
     })()
@@ -172,6 +172,7 @@
                 this.state = "started";
                 setCookie('counterStartTime', new Date(), 1);
                 this.startTime = new Date();
+                startTime = new Date();
             },
             cancelCounter() {
                 if (confirm("{{ __('Are you sure you want to stop the current counter?') }}")) {
