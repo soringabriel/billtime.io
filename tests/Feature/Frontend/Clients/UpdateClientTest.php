@@ -75,6 +75,7 @@ class UpdateClientTest extends TestCase
             'tax_number' => 'tax',
             'vat_number' => 'vat',
             'address' => 'address',
+            'bank_account' => 'bank_account',
         ]);
 
         $this->assertDatabaseHas('clients', [
@@ -83,6 +84,7 @@ class UpdateClientTest extends TestCase
             'tax_number' => 'tax',
             'vat_number' => 'vat',
             'address' => 'address',
+            'bank_account' => 'bank_account',
         ]);
 
         Event::assertDispatched(ClientUpdated::class);

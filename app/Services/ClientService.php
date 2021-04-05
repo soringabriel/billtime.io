@@ -53,7 +53,7 @@ class ClientService extends BaseService
             );
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException(__('There was a problem creating the Client.'));
+            throw new GeneralException($e->getMessage() . __('There was a problem creating the Client.'));
         }
 
         event(new ClientCreated($client));

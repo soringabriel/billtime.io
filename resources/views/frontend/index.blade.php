@@ -29,6 +29,8 @@
 </head>
 <body>
 
+    @include('includes.partials.messages')
+    
     <!--====== HEADER PART START ======-->
 
     <header class="header-area">

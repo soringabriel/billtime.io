@@ -49,12 +49,13 @@ class CreateClientTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->post('/clients', [
+        $response = $this->post('/clients', [
             'name' => 'name',
             'company_name' => 'company',
             'tax_number' => 'tax',
             'vat_number' => 'vat',
             'address' => 'address',
+            'bank_account' => 'bank_account',
         ]);
 
         $this->assertDatabaseHas('clients', [
@@ -63,6 +64,7 @@ class CreateClientTest extends TestCase
             'tax_number' => 'tax',
             'vat_number' => 'vat',
             'address' => 'address',
+            'bank_account' => 'bank_account',
         ]);
 
         Event::assertDispatched(ClientCreated::class);
