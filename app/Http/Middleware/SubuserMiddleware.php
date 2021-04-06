@@ -22,7 +22,11 @@ class SubuserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->route('user')->parent()->first() && $request->user()->id == $request->route('user')->parent()->first()->id) {
+        $user = $request->route('user');
+        if (is_null($user)) {
+            $user = $request->route('deletedUser');
+        }
+        if ($user->parent()->first() && $request->user()->id == $user->parent()->first()->id) {
             return $next($request);
         }
         

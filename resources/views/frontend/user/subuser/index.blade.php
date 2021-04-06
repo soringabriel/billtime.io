@@ -17,7 +17,11 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            icon="c-icon cil-plus"
+                            class="card-header-action mr-3"
+                            :href="route('frontend.user.subuser.deleted')"
+                            :text="__('Deleted Users')"
+                        />
+                        <x-utils.link
                             class="card-header-action"
                             :href="route('frontend.user.subuser.create')"
                             :text="__('Create User')"

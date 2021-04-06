@@ -3,7 +3,7 @@
 @section('title', __('Deleted Users'))
 
 @section('breadcrumb-links')
-    @include('frontend.auth.user.subuser.includes.breadcrumb-links')
+    @include('frontend.user.subuser.includes.breadcrumb-links')
 @endsection
 
 @section('content')
@@ -13,6 +13,14 @@
                 <x-frontend.card>
                     <x-slot name="header">
                         @lang('Deleted Users')
+                    </x-slot>
+
+                    <x-slot name="headerActions">
+                        <x-utils.link
+                            class="card-header-action"
+                            :href="route('frontend.user.subuser.index')"
+                            :text="__('Active Users')"
+                        />
                     </x-slot>
 
                     <x-slot name="body">
