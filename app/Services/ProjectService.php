@@ -49,8 +49,7 @@ class ProjectService extends BaseService
             );
         } catch (Exception $e) {
             DB::rollBack();
-            echo 'Name is ' . $data['name'];
-            throw new GeneralException($e->getMessage() . __('There was a problem creating the Project.'));
+            throw new GeneralException(__('There was a problem creating the Project.'));
         }
 
         event(new ProjectCreated($project));
