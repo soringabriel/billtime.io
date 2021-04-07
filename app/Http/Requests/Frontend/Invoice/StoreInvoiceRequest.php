@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Frontend\Invoice;
 
 use App\Models\Invoice;
+use App\Rules\TimesInvoiceJson;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,8 +38,8 @@ class StoreInvoiceRequest extends FormRequest
             'date' => ['required', 'date_format:Y-m-d'],
             'due_date' => ['nullable', 'date_format:Y-m-d'],
             'notes' => ['max:255'],
-            'price' => ['numeric'],
-            'times' => ['sometimes', 'nullable', 'json'],
+            'price' => ['required', 'numeric'],
+            'times' => ['sometimes', 'nullable', 'json', new TimesInvoiceJson],
         ];
     }
 }

@@ -128,7 +128,7 @@ class InvoiceService extends BaseService
             $invoice->times()->update(['billed' => 1]);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new GeneralException($e->getMessage() . __('There was a problem updating the Invoice.'));
+            throw new GeneralException(__('There was a problem updating the Invoice.'));
         }
 
         event(new InvoiceUpdated($invoice));

@@ -62,8 +62,6 @@ class InvoiceController extends Controller
     {
         $data = $request->validated();
 
-        $laravelInvoice = $this->invoiceService->generateInvoice($data);
-
         $this->invoiceService->store($data);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully created.'));
@@ -93,8 +91,6 @@ class InvoiceController extends Controller
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         $data = $request->validated();
-
-        $laravelInvoice = $this->invoiceService->generateInvoice($data);
 
         $this->invoiceService->update($invoice, $data);
 
