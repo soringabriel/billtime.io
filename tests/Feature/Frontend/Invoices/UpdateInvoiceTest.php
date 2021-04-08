@@ -44,7 +44,7 @@ class UpdateInvoiceTest extends TestCase
 
         $this->actingAs($subuser);
 
-        $response = $this->get('/invoices/{$invoice->id}/edit');
+        $response = $this->get("/invoices/{$invoice->id}/edit");
 
         $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
