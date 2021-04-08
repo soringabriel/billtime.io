@@ -34,6 +34,22 @@ class UpdateInvoiceTest extends TestCase
     }
 
     /** @test */
+    public function a_subuser_cannot_access_the_list_of_the_invoices()
+    {
+        $user = User::factory()->user()->create();
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get('/invoices/{$invoice->id}/edit');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+
+    /** @test */
     public function a_user_cannot_access_edit_invoice_page_for_other_users_invoices()
     {
         $user = User::factory()->user()->create();

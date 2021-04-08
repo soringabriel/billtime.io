@@ -24,4 +24,18 @@ class ListProjectTest extends TestCase
 
         $this->get('/projects')->assertOk();
     }
+
+    /** @test */
+    public function a_subuser_cannot_access_the_list_of_the_projects()
+    {
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get('/projects');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
 }

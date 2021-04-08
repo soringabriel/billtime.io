@@ -28,6 +28,20 @@ class CreateProjectTest extends TestCase
 
         $this->get('/projects/create')->assertOk();
     }
+    
+    /** @test */
+    public function a_subuser_cannot_access_the_create_a_project_page()
+    {
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get("/projects/create");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
 
     /** @test */
     public function creating_a_project_requires_validation()

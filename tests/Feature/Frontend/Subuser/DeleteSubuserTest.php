@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 /**
- * Class DeleteUserTest.
+ * Class DeleteSubuserTest.
  */
-class DeleteUserTest extends TestCase
+class DeleteSubuserTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function an_admin_can_access_deleted_users_page()
+    public function an_parent_user_can_access_deleted_users_page()
     {
         $this->loginAsAdmin();
 

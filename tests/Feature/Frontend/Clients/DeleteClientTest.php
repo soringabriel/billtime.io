@@ -53,4 +53,20 @@ class DeleteClientTest extends TestCase
 
         $this->assertDatabaseHas('clients', ['id' => $client->id]);
     }
+
+    /** @test */
+    public function a_subuser_cannot_delete_a_client()
+    {
+        $user = User::factory()->user()->create();
+
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->delete("/clients/{$client->id}");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
 }

@@ -31,6 +31,22 @@ class UpdateClientTest extends TestCase
     }
 
     /** @test */
+    public function a_subuser_cannot_access_the_edit_a_client_page()
+    {
+        $user = User::factory()->user()->create();
+
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get("/clients/{$client->id}/edit");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+
+    /** @test */
     public function a_user_cannot_access_edit_client_page_for_other_users_clients()
     {
         $user = User::factory()->user()->create();

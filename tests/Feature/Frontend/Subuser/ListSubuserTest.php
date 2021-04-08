@@ -7,9 +7,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
- * Class ListUserTest.
+ * Class ListSubuserTest.
  */
-class ListUserTest extends TestCase
+class ListSubuserTest extends TestCase
 {
     use RefreshDatabase;
 

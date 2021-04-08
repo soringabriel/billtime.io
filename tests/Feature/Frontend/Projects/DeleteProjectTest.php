@@ -40,6 +40,24 @@ class DeleteProjectTest extends TestCase
     }
     
     /** @test */
+    public function a_subuser_cannot_delete_a_project()
+    {
+        $user = User::factory()->user()->create();
+
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->delete("/projects/{$project->id}");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+    
+    /** @test */
     public function a_user_cannot_delete_a_project_that_belongs_to_another_user()
     {
         $user = User::factory()->user()->create();

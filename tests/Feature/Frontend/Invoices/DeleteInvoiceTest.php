@@ -35,7 +35,23 @@ class DeleteInvoiceTest extends TestCase
 
         Event::assertDispatched(InvoiceDeleted::class);
     }
-    
+
+    /** @test */
+    public function a_subuser_cannot_delete_a_invoice()
+    {
+        $user = User::factory()->user()->create();
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->delete("/invoices/{$invoice->id}");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+
     /** @test */
     public function a_user_cannot_delete_a_invoice_that_belongs_to_another_user()
     {
