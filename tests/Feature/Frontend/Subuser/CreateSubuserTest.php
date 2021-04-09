@@ -105,4 +105,34 @@ class CreateSubuserTest extends TestCase
 
         Notification::assertSentTo($user, VerifyEmail::class);
     }
+
+    /** @test */
+    public function a_subuser_cant_create_new_subuser()
+    {
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->post('/subuser', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'OC4Nzu270N!QBVi%U%qX',
+            'password_confirmation' => 'OC4Nzu270N!QBVi%U%qX',
+        ]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+
+        $this->assertDatabaseMissing(
+            'users',
+            [
+                'type' => User::TYPE_USER,
+                'name' => 'John Doe',
+                'email' => 'john@example.com',
+                'parent_user_id' => $user->id,
+                'active' => true,
+            ]
+        );
+    }
 }

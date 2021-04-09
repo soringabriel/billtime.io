@@ -17,167 +17,162 @@ class UpdateSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_admin_can_access_the_edit_user_page()
+    public function a_parent_user_can_access_the_edit_subuser_page()
     {
-        $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $response = $this->get('/admin/auth/user/'.$user->id.'/edit');
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $response = $this->get('/subuser/'.$subuser->id.'/edit');
 
         $response->assertOk();
     }
+    
+    /** @test */
+    public function a_subuser_cant_access_the_edit_subuser_page()
+    {
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get('/subuser/'.$subuser->id.'/edit');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+    
+    /** @test */
+    public function a_parent_user_cant_access_the_edit_subuser_page_for_another_user()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $another_user = User::factory()->user()->create();
+
+        $response = $this->get('/subuser/'.$another_user->id.'/edit');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+    }
+        
+    /** @test */
+    public function a_parent_user_cant_access_the_edit_subuser_page_for_another_users_subuser()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $another_user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+
+        $response = $this->get('/subuser/'.$subuser->id.'/edit');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+    }
 
     /** @test */
-    public function a_user_can_be_updated()
+    public function a_subuser_can_be_updated()
     {
         Event::fake();
 
-        $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $this->assertDatabaseMissing('users', [
-            'id' => $user->id,
-            'type' => User::TYPE_ADMIN,
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->patch("/subuser/{$subuser->id}", [
             'name' => 'John Doe',
             'email' => 'john@example.com',
-        ]);
-
-        $this->patch("/admin/auth/user/{$user->id}", [
-            'type' => User::TYPE_ADMIN,
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'roles' => [
-                Role::whereName(config('boilerplate.access.role.admin'))->first()->id,
-            ],
         ]);
 
         $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'type' => User::TYPE_ADMIN,
+            'id' => $subuser->id,
             'name' => 'John Doe',
             'email' => 'john@example.com',
-        ]);
-
-        $this->assertDatabaseHas('model_has_roles', [
-            'role_id' => Role::whereName(config('boilerplate.access.role.admin'))->first()->id,
-            'model_type' => User::class,
-            'model_id' => User::whereEmail('john@example.com')->first()->id,
+            'parent_user_id' => $user->id
         ]);
 
         Event::assertDispatched(UserUpdated::class);
     }
 
     /** @test */
-    public function only_the_master_admin_can_edit_themselves()
+    public function a_subuser_cant_update_another_subuser()
     {
-        $admin = $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $this->get("/admin/auth/user/{$admin->id}/edit")->assertOk();
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
 
-        $this->logout();
+        $this->actingAs($subuser);
 
-        $otherAdmin = User::factory()->admin()->create();
-        $otherAdmin->assignRole(config('boilerplate.access.role.admin'));
+        $another_subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
 
-        $this->actingAs($otherAdmin);
-
-        $response = $this->get("/admin/auth/user/{$admin->id}/edit");
-
-        $response->assertSessionHas('flash_danger', __('Only the administrator can update this user.'));
-    }
-
-    /** @test */
-    public function only_the_master_admin_can_update_themselves()
-    {
-        $admin = $this->loginAsAdmin();
-
-        $this->assertDatabaseMissing('users', [
-            'id' => $admin->id,
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-        ]);
-
-        $this->patch("/admin/auth/user/{$admin->id}", [
+        $response = $this->patch("/subuser/{$another_subuser->id}", [
             'name' => 'John Doe',
             'email' => 'john@example.com',
         ]);
 
         $this->assertDatabaseHas('users', [
-            'id' => $admin->id,
+            'id' => $another_subuser->id,
+            'name' => $another_subuser->name,
+            'email' => $another_subuser->email,
+            'parent_user_id' => $user->id
+        ]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+    
+    /** @test */
+    public function a_parent_user_cant_update_another_user()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $another_user = User::factory()->user()->create();
+
+        $response = $this->patch("/subuser/{$another_user->id}", [
             'name' => 'John Doe',
             'email' => 'john@example.com',
         ]);
 
-        $this->logout();
-
-        // Make sure other admins can not update the master admin
-
-        $otherAdmin = User::factory()->admin()->create();
-        $otherAdmin->assignRole(config('boilerplate.access.role.admin'));
-
-        $this->actingAs($otherAdmin);
-
-        $response = $this->patch("/admin/auth/user/{$admin->id}", [
-            'id' => $admin->id,
-            'name' => 'Changed Name',
-            'email' => 'changed@example.com',
+        $this->assertDatabaseHas('users', [
+            'id' => $another_user->id,
+            'name' => $another_user->name,
+            'email' => $another_user->email,
+            'parent_user_id' => $another_user->parent_user_id,
         ]);
 
-        $response->assertSessionHas('flash_danger', __('Only the administrator can update this user.'));
-
-        $this->assertDatabaseMissing('users', [
-            'id' => $admin->id,
-            'name' => 'Changed Name',
-            'email' => 'changed@example.com',
-        ]);
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
     }
 
     /** @test */
-    public function the_master_admins_abilities_can_not_be_modified()
+    public function a_parent_user_cant_update_another_users_subusers()
     {
-        $admin = $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $role = Role::factory()->create();
+        $this->actingAs($user);
 
-        $this->assertDatabaseMissing('model_has_roles', [
-            'role_id' => $role->id,
-            'model_type' => User::class,
-            'model_id' => $admin->id,
+        $another_user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+
+        $response = $this->patch("/subuser/{$subuser->id}", [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
         ]);
-
-        $this->patch("/admin/auth/user/{$admin->id}", [
-            'name' => $admin->name,
-            'email' => $admin->email,
-            'roles' => [$role->id],
-        ]);
-
-        $this->assertDatabaseMissing('model_has_roles', [
-            'role_id' => $role->id,
-            'model_type' => User::class,
-            'model_id' => $admin->id,
-        ]);
-    }
-
-    /** @test */
-    public function only_admin_can_update_roles()
-    {
-        $this->actingAs(User::factory()->admin()->create());
-
-        $user = User::factory()->admin()->create(['name' => 'John Doe']);
-
-        $response = $this->patch("/admin/auth/user/{$user->id}", [
-            'type' => User::TYPE_USER,
-            'name' => 'Jane Doe',
-        ]);
-
-        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
 
         $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'type' => User::TYPE_ADMIN,
-            'name' => 'John Doe',
+            'id' => $subuser->id,
+            'name' => $subuser->name,
+            'email' => $subuser->email,
+            'parent_user_id' => $another_user->id
         ]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
     }
 }

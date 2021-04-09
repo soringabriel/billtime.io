@@ -14,36 +14,26 @@ class ListSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function only_a_user_with_correct_permissions_can_list_users()
+    public function a_parent_user_can_see_his_subusers()
     {
-        $this->actingAs($user = User::factory()->admin()->create());
+        $user = User::factory()->user()->create();
 
-        $user->syncPermissions(['admin.access.user.list']);
+        $this->actingAs($user);
 
-        $this->get('/admin/auth/user')->assertOk();
-
-        $user->syncPermissions([]);
-
-        $response = $this->get('/admin/auth/user');
-
-        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
+        $this->get('/subuser')->assertOk();
     }
-
+    
     /** @test */
-    public function only_a_user_with_correct_permissions_can_view_an_individual_user()
+    public function a_subuser_cant_see_the_subusers_page()
     {
-        $this->actingAs($user = User::factory()->admin()->create());
+        $user = User::factory()->user()->create();
 
-        $user->syncPermissions(['admin.access.user.list']);
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
 
-        $newUser = User::factory()->create();
+        $this->actingAs($subuser);
 
-        $this->get('/admin/auth/user/'.$newUser->id)->assertOk();
+        $response = $this->get('/subuser');
 
-        $user->syncPermissions([]);
-
-        $response = $this->get('/admin/auth/user/'.$newUser->id);
-
-        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 }

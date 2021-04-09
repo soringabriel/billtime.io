@@ -17,133 +17,171 @@ class DeleteSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_parent_user_can_access_deleted_users_page()
+    public function an_parent_user_can_access_deleted_subusers_page()
     {
-        $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $response = $this->get('/admin/auth/user/deleted');
+        $this->actingAs($user);
+
+        $response = $this->get('/subuser/deleted');
 
         $response->assertOk();
-
-        $this->logout();
-
-        $this->actingAs(User::factory()->create());
-
-        $response = $this->get('/admin/auth/user/deleted');
-
-        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
     }
 
     /** @test */
-    public function a_user_can_be_deleted()
+    public function an_subuser_cant_access_deleted_subusers_page()
+    {
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get('/subuser/deleted');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+
+    /** @test */
+    public function a_subuser_can_be_deleted()
     {
         Event::fake();
 
-        $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $user = User::factory()->create();
+        $this->actingAs($user);
 
-        $response = $this->delete("/admin/auth/user/{$user->id}");
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $response = $this->delete("/subuser/{$subuser->id}");
 
         $response->assertSessionHas(['flash_success' => __('The user was successfully deleted.')]);
 
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('users', ['id' => $subuser->id]);
 
         Event::assertDispatched(UserDeleted::class);
     }
 
     /** @test */
-    public function a_user_can_be_permanently_deleted()
+    public function an_subuser_cant_delete_another_subuser()
     {
-        Event::fake();
+        $user = User::factory()->user()->create();
 
-        config(['boilerplate.access.user.permanently_delete' => true]);
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
 
-        $this->loginAsAdmin();
+        $this->actingAs($subuser);
 
-        $user = User::factory()->deleted()->create();
+        $another_subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
 
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $response = $this->delete("/subuser/{$another_subuser->id}");
 
-        $response = $this->delete("/admin/auth/user/{$user->id}/permanently-delete");
+        $this->assertDatabaseHas('users', ['id' => $another_subuser->id]);
 
-        $response->assertSessionHas(['flash_success' => __('The user was permanently deleted.')]);
-
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
-
-        Event::assertDispatched(UserDestroyed::class);
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 
     /** @test */
-    public function a_user_cant_be_permanently_deleted_if_the_option_is_off()
+    public function a_user_cant_delete_another_user()
     {
-        config(['boilerplate.access.user.permanently_delete' => false]);
+        $user = User::factory()->user()->create();
 
-        $this->loginAsAdmin();
+        $this->actingAs($user);
 
-        $user = User::factory()->deleted()->create();
+        $another_user = User::factory()->user()->create();
 
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $response = $this->delete("/subuser/{$another_user->id}");
 
-        $this->delete("/admin/auth/user/{$user->id}/permanently-delete")->assertNotFound();
+        $this->assertDatabaseHas('users', ['id' => $another_user->id]);
 
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
     }
 
     /** @test */
-    public function a_user_can_be_restored()
+    public function a_user_cant_delete_another_users_subuser()
     {
-        $this->loginAsAdmin();
+        $user = User::factory()->user()->create();
 
-        $user = User::factory()->deleted()->create();
+        $this->actingAs($user);
 
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $another_user = User::factory()->user()->create();
 
-        $response = $this->patch("/admin/auth/user/{$user->id}/restore");
+        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+
+        $response = $this->delete("/subuser/{$subuser->id}");
+
+        $this->assertDatabaseHas('users', ['id' => $subuser->id]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+    }
+
+    /** @test */
+    public function a_subuser_can_be_restored()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $subuser = User::factory()->deleted()->create(['parent_user_id' => $user->id]);
+
+        $this->assertSoftDeleted('users', ['id' => $subuser->id]);
+
+        $response = $this->patch("/subuser/{$subuser->id}/restore");
 
         $response->assertSessionHas(['flash_success' => __('The user was successfully restored.')]);
 
-        $this->assertDatabaseHas('users', ['id' => $user->id]);
+        $this->assertDatabaseHas('users', ['id' => $subuser->id]);
     }
 
     /** @test */
-    public function the_master_administrator_can_not_be_deleted()
+    public function an_subuser_cant_restore_another_subuser()
     {
-        $admin = $this->getMasterAdmin();
-        $user = User::factory()->admin()->create();
-        $user->assignRole($this->getAdminRole());
+        $user = User::factory()->user()->create();
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $another_subuser = User::factory()->deleted()->create(['parent_user_id' => $user->id]);
+
+        $response = $this->patch("/subuser/{$another_subuser->id}/restore");
+
+        $this->assertSoftDeleted('users', ['id' => $another_subuser->id]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+    }
+
+
+    /** @test */
+    public function a_user_cant_restore_another_user()
+    {
+        $user = User::factory()->user()->create();
+
         $this->actingAs($user);
 
-        $response = $this->delete('/admin/auth/user/'.$admin->id);
+        $another_user = User::factory()->deleted()->create();
 
-        $response->assertSessionHas('flash_danger', __('You can not delete the master administrator.'));
+        $response = $this->patch("/subuser/{$another_user->id}/restore");
 
-        $this->assertDatabaseHas('users', ['id' => $admin->id, 'deleted_at' => null]);
+        $this->assertSoftDeleted('users', ['id' => $another_user->id]);
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
     }
 
     /** @test */
-    public function a_user_can_not_delete_themselves()
+    public function a_user_cant_restore_another_users_subuser()
     {
-        $user = User::factory()->admin()->create();
-        $user->assignRole($this->getAdminRole());
+        $user = User::factory()->user()->create();
+
         $this->actingAs($user);
 
-        $response = $this->delete('/admin/auth/user/'.$user->id);
+        $another_user = User::factory()->deleted()->create();
 
-        $response->assertSessionHas('flash_danger', __('You can not delete yourself.'));
+        $subuser = User::factory()->deleted()->create(['parent_user_id' => $another_user->id]);
 
-        $this->assertDatabaseHas('users', ['id' => $user->id, 'deleted_at' => null]);
-    }
+        $response = $this->patch("/subuser/{$subuser->id}/restore");
 
-    /** @test */
-    public function only_admin_can_delete_users()
-    {
-        $this->actingAs(User::factory()->create());
+        $this->assertSoftDeleted('users', ['id' => $subuser->id]);
 
-        $user = User::factory()->create();
-
-        $response = $this->delete("/admin/auth/user/{$user->id}");
-
-        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
     }
 }

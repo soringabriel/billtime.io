@@ -217,6 +217,7 @@
                                 <li><i class="lni lni-ban"></i> @lang('No Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Free of costs')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -242,6 +243,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -267,6 +269,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 3 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -292,6 +295,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 10 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -317,6 +321,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 50 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -342,6 +347,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Unlimited users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
