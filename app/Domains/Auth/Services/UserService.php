@@ -202,12 +202,12 @@ class UserService extends BaseService
 
         try {
             $user->update([
-                'company_name' => $data['company_name'],
-                'tax_number' => $data['tax_number'],
-                'vat_number' => $data['vat_number'],
-                'address' => $data['address'],
-                'bank_name' => $data['bank_name'],
-                'bank_account' => $data['bank_account'],
+                'company_name' => ($data['company_name'] ?? $user->company_name),
+                'tax_number' => ($data['tax_number'] ?? $user->tax_number),
+                'vat_number' => ($data['vat_number'] ?? $user->vat_number),
+                'address' => ($data['address'] ?? $user->address),
+                'bank_name' => ($data['bank_name'] ?? $user->bank_name),
+                'bank_account' => ($data['bank_account'] ?? $user->bank_account),
             ]);
         } catch (Exception $e) {
             DB::rollBack();

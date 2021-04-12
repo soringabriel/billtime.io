@@ -245,4 +245,72 @@ class UpdateInvoiceTest extends TestCase
             'due_date' => $invoice->due_date,
         ]);
     }
+    
+    /** @test */
+    public function a_invoice_status_can_be_updated()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PAID,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PAID,
+        ]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PENDING,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PENDING,
+        ]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PAST_DUE,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PAST_DUE,
+        ]);
+
+        Event::assertDispatched(InvoiceUpdated::class);
+    }
+        
+    /** @test */
+    public function a_user_cannot_update_the_invoice_status_of_another_users_invoice()
+    {
+        $user = User::factory()->user()->create();
+
+        $this->actingAs($user);
+
+        $another_user = User::factory()->user()->create();
+
+        $invoice = Invoice::factory()->create(['user_id' => $another_user->id]);
+
+        $response = $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PAID,
+        ]);
+
+        $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $another_user->id,
+            'status' => $invoice->status,
+        ]);
+    }
 }
