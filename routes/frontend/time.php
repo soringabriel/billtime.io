@@ -25,7 +25,7 @@ Route::group([
 
     Route::post('/', [TimeController::class, 'store'])->name('store');
 
-    Route::group(['prefix' => '{time}', 'middleware' => 'time'], function () {
+    Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user:time'], function () {
         Route::get('edit', [TimeController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, Time $time) {
@@ -33,8 +33,10 @@ Route::group([
                     ->push(__('Editing :time', ['time' => $time->name]), route('frontend.time.edit', $time));
         });
         Route::patch('/', [TimeController::class, 'update'])->name('update');
+        Route::patch('/toggleBilled', [TimeController::class, 'toggleBilled'])->name('toggleBilled');
         Route::delete('/', [TimeController::class, 'destroy'])->name('destroy');
     });
 
+    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['times']);
     Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware('times');
 });

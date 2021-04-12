@@ -20,10 +20,9 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'company_name' => ['max:255'],
-            'tax_number' => ['max:255'],
-            'vat_number' => ['max:255'],
-            'address' => [],
+            'client_id' => ['required', Rule::exists('clients', 'id')->where(function ($query) {
+                return $query->where('user_id', auth()->user()->id);
+            })],
         ];
     }
 }

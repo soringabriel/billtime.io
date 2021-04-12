@@ -194,6 +194,39 @@ class UserService extends BaseService
      * @param  array  $data
      *
      * @return User
+     * @throws \Throwable
+     */
+    public function updateCompanyDetails(User $user, array $data = []): User
+    {
+        DB::beginTransaction();
+
+        try {
+            $user->update([
+                'company_name' => ($data['company_name'] ?? $user->company_name),
+                'tax_number' => ($data['tax_number'] ?? $user->tax_number),
+                'vat_number' => ($data['vat_number'] ?? $user->vat_number),
+                'address' => ($data['address'] ?? $user->address),
+                'bank_name' => ($data['bank_name'] ?? $user->bank_name),
+                'bank_account' => ($data['bank_account'] ?? $user->bank_account),
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw new GeneralException(__('There was a problem updating this user. Please try again.'));
+        }
+
+        event(new UserUpdated($user));
+
+        DB::commit();
+
+        return $user;
+    }
+
+    /**
+     * @param  User  $user
+     * @param  array  $data
+     *
+     * @return User
      */
     public function updateProfile(User $user, array $data = []): User
     {

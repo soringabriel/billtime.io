@@ -21,10 +21,6 @@ class ProjectEventListener
             ->withProperties([
                 'project' => [
                     'name' => $event->project->name,
-                    'company_name' => $event->project->company_name,
-                    'tax_number' => $event->project->tax_number,
-                    'vat_number' => $event->project->vat_number,
-                    'address' => $event->project->address,
                 ],
             ])
             ->log(':causer.name created project :subject.name');
@@ -40,10 +36,6 @@ class ProjectEventListener
             ->withProperties([
                 'project' => [
                     'name' => $event->project->name,
-                    'company_name' => $event->project->company_name,
-                    'tax_number' => $event->project->tax_number,
-                    'vat_number' => $event->project->vat_number,
-                    'address' => $event->project->address,
                 ],
             ])
             ->log(':causer.name updated project :subject.name');

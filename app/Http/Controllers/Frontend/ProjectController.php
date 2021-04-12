@@ -43,7 +43,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('frontend.projects.create');
+        return view('frontend.projects.create')
+            ->withClients(auth()->user()->clients()->get());
     }
 
     /**
@@ -69,7 +70,8 @@ class ProjectController extends Controller
     public function edit(EditProjectRequest $request, Project $project)
     {
         return view('frontend.projects.edit')
-            ->withProject($project);
+            ->withProject($project)
+            ->withClients(auth()->user()->clients()->get());
     }
 
     /**

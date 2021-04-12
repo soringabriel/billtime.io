@@ -42,12 +42,9 @@ class ProjectService extends BaseService
         try {
             $project = $this->model::create(
                 [
-                    'user_id' => ($data['user_id'] ?? auth()->id()),
+                    'user_id' => auth()->id(),
+                    'client_id' => $data['client_id'],
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
                 ]
             );
         } catch (Exception $e) {
@@ -77,12 +74,9 @@ class ProjectService extends BaseService
         try {
             $project->update(
                 [
-                    'user_id' => ($data['user_id'] ?? auth()->id()),
+                    'user_id' => auth()->id(),
+                    'client_id' => $data['client_id'],
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
                 ]
             );
         } catch (Exception $e) {

@@ -25,6 +25,7 @@
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? ($lastTime ? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') : '') }}" autocomplete="off" required />
+                                        <span class="btn btn-link datetimepicker-action">@lang('Now')</span>
                                     </div>
                                 </div><!--form-group-->
 
@@ -33,6 +34,7 @@
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') }}" autocomplete="off" required />
+                                        <span class="btn btn-link datetimepicker-action">@lang('Now')</span>
                                     </div>
                                 </div><!--form-group-->
 
@@ -60,9 +62,13 @@
                                     <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
 
                                     <div class="col-md-10">
-                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') }}</textarea>
+                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" maxlength="255" />{{ old('details') }}</textarea>
                                     </div>
                                 </div><!--form-group-->
+
+                                <div class="alert alert-dark" role="alert">
+                                    @lang('You can always track your time easier by starting the counter at the top of the page')
+                                </div>
                             </div>
                         </x-slot>
 

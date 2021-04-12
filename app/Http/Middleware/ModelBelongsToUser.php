@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 
 /**
- * Class ProjectMiddleware.
+ * Class ModelBelongsToUser.
  */
-class ProjectMiddleware
+class ModelBelongsToUser
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,12 @@ class ProjectMiddleware
      * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $parameter)
     {
-        if ($request->user()->id == $request->route('project')->user()->first()->id) {
+        if ($request->user()->id == $request->route($parameter)->user()->first()->id) {
             return $next($request);
         }
         
-        return redirect()->route('frontend.projects.index')->withFlashDanger(__("You don't have access to this Project."));
+        return redirect()->route(homeRoute())->withFlashDanger(__("You don't have access to this model."));
     }
 }

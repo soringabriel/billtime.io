@@ -5,3 +5,16 @@
 .alert.header-message {
     border-radius: 0 !important;
 }
+
+.datetimepicker {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &+ .datetimepicker-action {
+        position: absolute;
+        height: 100%;
+        right: 15px;
+        top: 0;
+    }
+}

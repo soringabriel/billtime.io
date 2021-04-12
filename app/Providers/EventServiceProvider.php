@@ -7,6 +7,8 @@ use App\Domains\Auth\Listeners\UserEventListener;
 use App\Listeners\ProjectEventListener;
 use App\Listeners\TagEventListener;
 use App\Listeners\TimeEventListener;
+use App\Listeners\InvoiceEventListener;
+use App\Listeners\ClientEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -38,6 +40,8 @@ class EventServiceProvider extends ServiceProvider
         ProjectEventListener::class,
         TagEventListener::class,
         TimeEventListener::class,
+        InvoiceEventListener::class,
+        ClientEventListener::class,
     ];
 
     /**

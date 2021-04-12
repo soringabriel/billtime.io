@@ -1,7 +1,7 @@
 <div
     class="{{ $this->getOption('bootstrap.container') ? 'container-fluid' : '' }}"
     @if (is_numeric($refresh)) wire:poll.{{ $refresh }}.ms @elseif(is_string($refresh)) wire:poll="{{ $refresh }}" @endif
-    @if (isset($this->bulkActions) && $this->bulkActions) x-data="init()" @endif
+    @if (isset($this->bulk) && $this->bulk) x-data="init()" @endif
 >
 
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.offline')
@@ -34,7 +34,7 @@
 <script>
     function init(){
         return {
-            selected: 0,
+            selected: {{ count(isset($this->preCheckedValues) ? $this->preCheckedValues : []) }},
         };
     }
 </script>

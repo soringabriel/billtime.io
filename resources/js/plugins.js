@@ -130,15 +130,119 @@ $(function () {
         });
     })
 
+    $(".datetimepicker-action").on('click', function(){
+        let current_formatted_datetime = dateToYYYYMMDDHHIISS(new Date());
+        $(this).prev().val(current_formatted_datetime);
+    })
+
+    // Livewires bulk selections
     $(".bulk-checkbox").on('change', function(){
-        let checked = [];
+        let checked;
+        try {
+            checked = JSON.parse($(".bulk-checkbox-values").first().val());
+        } catch (e) {
+            checked = [];
+        }
         $(".bulk-checkbox").each(function(){
+            var index = checked.indexOf($(this).val());
             if ($(this).is(":checked")) {
-                checked.push($(this).val());
+                if (index == -1) {
+                    checked.push($(this).val());
+                }
+            } else {
+                var index = checked.indexOf($(this).val());
+                if (index !== -1) {
+                    checked.splice(index, 1);
+                }
             }
         })
         $(".bulk-checkbox-values").each(function(){
             $(this).val(JSON.stringify(checked));
         })
     })
+
+    $("#checkRowsPage").on('change', function(){
+        if ($(this).is(":checked")) {
+            $(".bulk-checkbox").each(function(){
+                $(this).prop('checked', true);
+            })
+        } else {
+            $(".bulk-checkbox").each(function(){
+                $(this).prop('checked', false);
+            })
+        }
+    })
+
+    $("#checkAllRows").on('change', function(){
+        if ($(this).is(":checked")) {
+            $(".bulk-checkbox").each(function(){
+                $(this).prop('checked', true);
+            })
+            $(".bulk-checkbox-values").each(function(){
+                $(this).val($("#allRows").val());
+            })
+        } else {
+            $(".bulk-checkbox").each(function(){
+                $(this).prop('checked', false);
+            })
+            $(".bulk-checkbox-values").each(function(){
+                $(this).val("[]");
+            })
+        }
+    })
+
 });
+
+$(function () {
+    $(".open-chat").on("click", function(){
+        if (typeof $crisp !== 'undefined') {
+            if ($crisp.is("chat:opened")) {
+                $crisp.push(['do', 'chat:close']);
+            } else {
+                $crisp.push(['do', 'chat:open']);
+            }
+        }
+    })
+});
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+  
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function dateToYYYYMMDDHHIISS(datetime) {
+    let month = (datetime.getMonth() + 1);
+    let day = datetime.getDate();
+    let hour = datetime.getHours();
+    let minutes = datetime.getMinutes();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (hour < 10) {
+        hour = "0" + hour;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    return datetime.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + minutes;
+}

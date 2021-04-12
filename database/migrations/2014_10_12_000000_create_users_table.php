@@ -30,6 +30,12 @@ class CreateUsersTable extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->unsignedBigInteger('parent_user_id')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('tax_number')->nullable();
+            $table->string('vat_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_account')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -25,6 +25,7 @@
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? stringDateFormat($time->start_time, 'Y-m-d H:i') }}" autocomplete="off" required />
+                                        <span class="btn btn-link datetimepicker-action">@lang('Now')</span>
                                     </div>
                                 </div><!--form-group-->
 
@@ -33,6 +34,7 @@
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? stringDateFormat($time->end_time, 'Y-m-d H:i') }}" autocomplete="off" required />
+                                        <span class="btn btn-link datetimepicker-action">@lang('Now')</span>
                                     </div>
                                 </div><!--form-group-->
 

@@ -53,6 +53,11 @@ class TimeTable extends TableComponentExtended
     /**
      * @var bool
      */
+    public $bulk = true;
+
+    /**
+     * @var bool
+     */
     public $bulkActions = true;
 
     /**
@@ -66,9 +71,19 @@ class TimeTable extends TableComponentExtended
     public $filtersEnabled = true;
 
     /**
+     * @var bool
+     */
+    public $isInvoice = false;
+
+    /**
      * @var string
      */
     public $bulkDelete = 'frontend.time.bulkDestroy';
+
+    /**
+     * @var string
+     */
+    public $bulkBill = 'frontend.time.bulkToggleBilled';
 
     /**
      * @var bool
@@ -76,9 +91,14 @@ class TimeTable extends TableComponentExtended
     public $customFiltersEnabled = true;
 
     /**
+     * @var array
+     */
+    public $preCheckedValues = [];
+
+    /**
      * @var bool
      */
-    public $hiddenDataDelete = [
+    public $hiddenDataBulk = [
         [
             'name' => 'times',
             'class' => 'bulk-checkbox-values',
@@ -133,11 +153,51 @@ class TimeTable extends TableComponentExtended
     ];
 
     /**
+     * @return void
+     */
+    public function mount(
+        $filtersEnabled = true, 
+        $customFiltersEnabled = true, 
+        $isInvoice = false, 
+        $bulkActions = true,
+        $bulk = true,
+        $exports = true,
+        $preCheckedValues = "[]"
+    ) {
+        $this->filtersEnabled = $filtersEnabled;
+        $this->customFiltersEnabled = $customFiltersEnabled;
+        $this->isInvoice = $isInvoice;
+        $this->bulkActions = $bulkActions;
+        $this->bulk = $bulk;
+        $this->preCheckedValues = json_decode($preCheckedValues);
+        if (!$exports) {
+            $this->exports = [];
+        }
+    }
+
+    /**
      * @return string
      */
     public function customFilters()
     {
         return $this->html('
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">' . __('Billed') . '</label>
+                </div>
+                <select class="form-control"
+                    wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.billed"
+                    wire:model.lazy="customFilters.billed"
+                    wire:loading.attr="disabled"
+                    placeholder="' . __("Billed") . '"
+                >
+                    <option value="">' . __("Any") . '</option>
+                    <option value="1">' . __("Billed") . '</option>
+                    <option value="0">' . __("Non Billed") . '</option>
+                </select>
+            </div>
+        </div>
         <div class="col">
             <div class="input-group">
                 <input class="form-control" type="date"
@@ -171,7 +231,7 @@ class TimeTable extends TableComponentExtended
     public function columns(): array
     {
         $timeTable = $this;
-        return [
+        $columns = [
             ColumnExtended::make(__('Start Time'))
                 ->sortable()
                 ->withFilter()
@@ -217,11 +277,24 @@ class TimeTable extends TableComponentExtended
                 ->exportFormat(function (Time $model) {
                     return $model->task;
                 }),
+            ColumnExtended::make(__('Billed'))
+                ->sortable()
+                ->format(function (Time $model) {
+                    if ($model->billed) {
+                        return $this->html('<span class="bg-success text-white text-nowrap rounded p-1">' . __('Billed') . '</span>');
+                    }
+                    return $this->html('<span class="bg-dark text-white text-nowrap rounded p-1">' . __('Not Billed') . '</span>');
+                })
+                ->excludeFromExport(),
             ColumnExtended::make(__('Details'))
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
                 ->totalable(function() use ($timeTable) {
                     $models = $timeTable->models()->get();
+                    CarbonInterval::setCascadeFactors([
+                        'minute' => [60, 'seconds'],
+                        'hour' => [60, 'minutes'],
+                    ]);
                     $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
                     foreach ($models as $model) {
                         $total->add(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)));
@@ -234,12 +307,15 @@ class TimeTable extends TableComponentExtended
                 ->exportFormat(function (Time $model) {
                     return '=INDIRECT("B" & ROW()) - INDIRECT("A" & ROW())';
                 }),
-            ColumnExtended::make(__('Actions'))
-                ->format(function (Time $model) {
-                    return view('frontend.time.includes.actions', ['model' => $model]);
-                })
-                ->excludeFromExport(),
         ];
+        if (!$this->isInvoice) {
+            $columns[] = ColumnExtended::make(__('Actions'))
+                            ->format(function (Time $model) {
+                                return view('frontend.time.includes.actions', ['model' => $model]);
+                            })
+                            ->excludeFromExport();
+        }
+        return $columns;
     }
 
         
@@ -250,15 +326,16 @@ class TimeTable extends TableComponentExtended
     {
         $builder = parent::models();
 
-        foreach ($this->columns() as $column) {
-            if ($column->getText() == __('End Time')) {
-                if (isset($this->customFilters['start'])) {
-                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));
-                }
-                if (isset($this->customFilters['end'])) {
-                    $builder->where($builder->getModel()->getTable().'.'.$column->getAttribute(), '<=', Carbon::parse($this->customFilters['end'])->format('Y-m-d'));
-                }
-            }
+        if (isset($this->customFilters['start']) && $this->customFilters['start'] != "") {
+            $builder->where('end_time', '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));
+        }
+
+        if (isset($this->customFilters['end']) && $this->customFilters['end'] != "") {
+            $builder->where('end_time', '<=', Carbon::parse($this->customFilters['end'])->format('Y-m-d'));
+        }
+
+        if (isset($this->customFilters['billed']) && $this->customFilters['billed'] != "") {
+            $builder->where('billed', $this->customFilters['billed']);
         }
 
         return $builder;

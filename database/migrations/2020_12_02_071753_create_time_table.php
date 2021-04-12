@@ -21,6 +21,7 @@ class CreateTimeTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->string('task')->nullable();
             $table->string('details');
+            $table->boolean('billed')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')

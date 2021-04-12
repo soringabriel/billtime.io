@@ -115,4 +115,37 @@ class TimeService extends BaseService
 
         throw new GeneralException(__('There was a problem deleting the Time record.'));
     }
+
+    /**
+     * @param  Time  $time
+     * @param  object  $invoice
+     *
+     * @return Time
+     * @throws GeneralException
+     * @throws \Throwable
+     */
+    public function toggleBilled(Time $time, $invoice = null): Time
+    {
+        DB::beginTransaction();
+
+        try {
+            $time->update(
+                [
+                    'billed' => !$time->billed,
+                ]
+            );
+            if (!is_null($invoice)) {
+                $invoice->times()->syncWithoutDetaching([$time->id]);
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new GeneralException(__('There was a problem updating the Time record.'));
+        }
+
+        event(new TimeUpdated($time));
+
+        DB::commit();
+
+        return $time;
+    }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Project;
 
 use App\Events\Project\ProjectUpdated;
 use App\Models\Project;
+use App\Models\Client;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -21,13 +22,33 @@ class UpdateProjectTest extends TestCase
     {
         $user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
         
         $this->get("/projects/{$project->id}/edit")->assertRedirect('/login');
 
         $this->actingAs($user);
 
         $this->get("/projects/{$project->id}/edit")->assertOk();
+    }
+
+    /** @test */
+    public function a_subuser_cannot_access_the_list_of_the_projects()
+    {
+        $user = User::factory()->user()->create();
+
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+
+        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+
+        $this->actingAs($subuser);
+
+        $response = $this->get("/projects/{$project->id}/edit");
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 
     /** @test */
@@ -39,9 +60,11 @@ class UpdateProjectTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['user_id' => $another_user->id]);
+
+        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
         
-        $this->get("/projects/{$project->id}/edit")->assertRedirect('/projects');
+        $this->get("/projects/{$project->id}/edit")->assertRedirect(route(homeRoute()));
     }
 
     /** @test */
@@ -49,13 +72,38 @@ class UpdateProjectTest extends TestCase
     {
         $user = User::factory()->user()->create();
 
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
         $response = $this->patch("/projects/{$project->id}");
 
-        $response->assertSessionHasErrors(['name']);
+        $response->assertSessionHasErrors(['name', 'client_id']);
+    }
+    
+    /** @test */
+    public function a_project_with_another_user_client_id_can_not_be_created()
+    {
+        $user = User::factory()->user()->create();
+
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user);
+
+        $another_user = User::factory()->user()->create();
+
+        $another_client = Client::factory()->create(['user_id' => $another_user->id]);
+
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+
+        $response = $this->patch("/projects/{$project->id}", [
+            'name' => 'name',
+            'client_id' => $another_client->id,
+        ]);
+
+        $response->assertSessionHasErrors(['client_id']);
     }
 
     /** @test */
@@ -65,24 +113,22 @@ class UpdateProjectTest extends TestCase
 
         $user = User::factory()->user()->create();
 
+        $client = Client::factory()->create(['user_id' => $user->id]);
+
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
 
-        $this->patch("/projects/{$project->id}", [
+        $another_client = Client::factory()->create(['user_id' => $user->id]);
+
+        $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',
-            'company_name' => 'company',
-            'tax_number' => 'tax',
-            'vat_number' => 'vat',
-            'address' => 'address',
+            'client_id' => $another_client->id,
         ]);
 
         $this->assertDatabaseHas('projects', [
             'name' => 'name',
-            'company_name' => 'company',
-            'tax_number' => 'tax',
-            'vat_number' => 'vat',
-            'address' => 'address',
+            'client_id' => $another_client->id,
         ]);
 
         Event::assertDispatched(ProjectUpdated::class);
@@ -97,24 +143,22 @@ class UpdateProjectTest extends TestCase
 
         $another_user = User::factory()->user()->create();
 
-        $project = Project::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['user_id' => $another_user->id]);
+
+        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
+
+        $another_client = Client::factory()->create(['user_id' => $user->id]);
 
         $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',
-            'company_name' => 'company',
-            'tax_number' => 'tax',
-            'vat_number' => 'vat',
-            'address' => 'address',
+            'client_id' => $another_client->id,
         ]);
 
-        $response->assertSessionHas('flash_danger', __("You don't have access to this Project."));
+        $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
 
         $this->assertDatabaseHas('projects', [
             'name' => $project->name,
-            'company_name' => $project->company_name,
-            'tax_number' => $project->tax_number,
-            'vat_number' => $project->vat_number,
-            'address' => $project->address,
+            'client_id' => $client->id,
         ]);
     }
 }

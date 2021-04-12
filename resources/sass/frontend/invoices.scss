@@ -1,0 +1,13 @@
+table#services {
+    .service-row {
+        td {
+            @include tablet-up {
+                padding-right: 10px;
+            }
+        }
+    }
+}
+.invoice-row {
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}

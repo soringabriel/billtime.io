@@ -32,12 +32,9 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
         'name',
-        'company_name',
-        'tax_number',
-        'vat_number',
-        'address',
+        'user_id',
+        'client_id',
     ];
 
     /**

@@ -16,7 +16,7 @@
                             icon="c-icon cil-plus"
                             class="card-header-action"
                             :href="route('frontend.time.create')"
-                            :text="__('Add Time')"
+                            :text="__('Add Manual Time')"
                         />
                     </x-slot>
 

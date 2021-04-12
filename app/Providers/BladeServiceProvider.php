@@ -66,5 +66,10 @@ class BladeServiceProvider extends ServiceProvider
 
             return $html;
         });
+
+        Blade::directive('crisp', function () {
+            $html = new HtmlString('<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="575954fe-99e3-4470-bb5b-4a4af3ec4b18";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>');
+            return $html;
+        });
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DeactivatedSubuserController;
+use App\Http\Controllers\Frontend\User\DeletedSubuserController;
 use App\Http\Controllers\Frontend\User\SubuserController;
 use App\Domains\Auth\Models\User;
 use Tabuna\Breadcrumbs\Trail;
@@ -21,7 +22,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         });
 
     Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
+    Route::patch('profile/updateCompanyDetails', [ProfileController::class, 'updateCompanyDetails'])->name('profile.updateCompanyDetails');
     
     Route::group([
         'prefix' => 'subuser',
@@ -33,6 +34,13 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('frontend.index')
                     ->push(__('User Management'), route('frontend.user.subuser.index'));
+            });
+
+        Route::get('deleted', [DeletedSubuserController::class, 'index'])
+            ->name('deleted')
+            ->breadcrumbs(function (Trail $trail) {
+                $trail->parent('frontend.user.subuser.index')
+                    ->push(__('Deleted Users'), route('frontend.user.subuser.deleted'));
             });
 
         Route::get('create', [SubuserController::class, 'create'])
@@ -47,13 +55,6 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         Route::group([
             'middleware' => 'subuser',
         ], function () {
-            Route::get('deleted', [DeletedSubuserController::class, 'index'])
-                ->name('deleted')
-                ->breadcrumbs(function (Trail $trail) {
-                    $trail->parent('frontend.user.subuser.index')
-                        ->push(__('Deleted Users'), route('frontend.user.subuser.deleted'));
-                });
-
             Route::group(['prefix' => '{user}'], function () {
                 Route::get('/', [SubuserController::class, 'show'])
                     ->name('show')
