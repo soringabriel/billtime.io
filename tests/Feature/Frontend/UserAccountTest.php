@@ -139,4 +139,34 @@ class UserAccountTest extends TestCase
             'bank_account' => 'bank_account',
         ]);
     }
+
+    /** @test */
+    public function a_subuser_cannot_update_their_company_details()
+    {
+        $user = User::factory()->create(]);
+
+        $subuser = User::factory()->create(['parent_user_id' => $user->id]);
+
+        $response = $this->actingAs($subuser)
+            ->patch('/profile/updateCompanyDetails', [
+                'company_name' => 'company_name',
+                'tax_number' => 'tax_number',
+                'vat_number' => 'vat_number',
+                'address' => 'address',
+                'bank_name' => 'bank_name',
+                'bank_account' => 'bank_account',
+            ])->assertRedirect('/');
+
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+
+        $this->assertDatabaseHas('users', [
+            'id' => $subuser->id,
+            'company_name' => $subuser->company_name,
+            'tax_number' => $subuser->tax_number,
+            'vat_number' => $subuser->vat_number,
+            'address' => $subuser->address,
+            'bank_name' => $subuser->bank_name,
+            'bank_account' => $subuser->bank_account,
+        ]);
+    }
 }
