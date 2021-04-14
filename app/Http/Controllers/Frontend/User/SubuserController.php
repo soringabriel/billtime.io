@@ -77,7 +77,7 @@ class SubuserController extends Controller
         $data = $request->validated();
 
         $data['type'] = User::TYPE_USER;
-        $data['parent_user_id'] = auth()->id();
+        $data['organization_id'] = auth()->organization()->first()->id;
         $data['send_confirmation_email'] = '1';
         $data['active'] = '1';
 

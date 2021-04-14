@@ -46,7 +46,7 @@
                                         aria-selected="false" />
                                 @endif
 
-                                @if ($logged_in_user->isParent())
+                                @if ($logged_in_user->isOrganizationOwner())
                                     <x-utils.link
                                         :text="__('Company')"
                                         class="nav-link"

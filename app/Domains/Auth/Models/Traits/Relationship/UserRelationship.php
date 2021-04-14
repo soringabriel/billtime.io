@@ -7,6 +7,7 @@ use App\Domains\Auth\Models\User;
 use App\Models\Time;
 use App\Models\Project;
 use App\Models\Client;
+use App\Models\Organization;
 
 /**
  * Class UserRelationship.
@@ -24,17 +25,9 @@ trait UserRelationship
     /**
      * @return mixed
      */
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'parent_user_id');
-    }
-
-    /**
-     * @return mixed
-     */
     public function subUsers()
     {
-        return $this->hasMany(User::class, 'parent_user_id');
+        return $this->organization()->first()->users();
     }
 
     /**
@@ -59,5 +52,13 @@ trait UserRelationship
     public function clients()
     {
         return $this->hasMany(Client::class, 'user_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

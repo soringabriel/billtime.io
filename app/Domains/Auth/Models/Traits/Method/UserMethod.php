@@ -105,17 +105,17 @@ trait UserMethod
     /**
      * @return bool
      */
-    public function isParent(): bool
+    public function isOrganizationOwner(): bool
     {
-        return is_null($this->parent_user_id);
+        return $this->id == $this->organization()->first()->owner_id;
     }
 
     /**
      * @return int
      */
-    public function getParentId(): int
+    public function getOrganizationOwnerId(): int
     {
-        return ($this->isParent() ? $this->id : $this->parent()->first()->id);
+        return $this->organization()->first()->owner_id;
     }
 
     /**
@@ -123,6 +123,6 @@ trait UserMethod
      */
     public function getProjects(): Collection
     {
-        return ($this->isParent() ? $this->projects()->get() : $this->parent()->first()->projects()->get());
+        return ($this->isOrganizationOwner() ? $this->projects()->get() : $this->organization()->first()->owner()->first()->projects()->get());
     }
 }

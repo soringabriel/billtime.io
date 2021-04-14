@@ -22,7 +22,7 @@ class ParentUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isParent()) {
+        if (auth()->user()->isOrganizationOwner()) {
             return $next($request);
         }
         

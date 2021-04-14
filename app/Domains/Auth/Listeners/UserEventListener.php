@@ -135,7 +135,7 @@ class UserEventListener
      */
     public function onRegister($event)
     {
-        if ($event->user->isParent()) {
+        if ($event->user->isOrganizationOwner()) {
             $this->projectService->store([
                 'user_id' => $event->user->id,
                 'name' => 'Demo Project',

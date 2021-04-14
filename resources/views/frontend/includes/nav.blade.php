@@ -22,7 +22,7 @@
                                 class="nav-link"/>
                         </li>
 
-                        @if ($logged_in_user->isParent())
+                        @if ($logged_in_user->isOrganizationOwner())
                             <li class="nav-item">
                                 <x-utils.link
                                     :href="route('frontend.invoices.index')"

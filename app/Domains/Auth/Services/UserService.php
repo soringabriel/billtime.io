@@ -12,6 +12,7 @@ use App\Domains\Auth\Events\User\UserRegistered;
 use App\Domains\Auth\Models\User;
 use App\Exceptions\GeneralException;
 use App\Services\BaseService;
+use App\Services\OrganizationService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -25,10 +26,12 @@ class UserService extends BaseService
      * UserService constructor.
      *
      * @param  User  $user
+     * @param  OrganizationService  $organizationService
      */
-    public function __construct(User $user)
+    public function __construct(User $user, OrganizationService $organizationService)
     {
         $this->model = $user;
+        $this->organizationService = $organizationService;
     }
 
     /**
@@ -124,7 +127,7 @@ class UserService extends BaseService
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
-                'parent_user_id' => ($data['parent_user_id'] ?? null),
+                'organization_id' => ($data['organization_id'] ?? null),
             ]);
 
             $user->syncRoles($data['roles'] ?? []);
@@ -196,18 +199,13 @@ class UserService extends BaseService
      * @return User
      * @throws \Throwable
      */
-    public function updateCompanyDetails(User $user, array $data = []): User
+    public function updateOrganization(User $user, array $data = []): User
     {
         DB::beginTransaction();
 
         try {
             $user->update([
-                'company_name' => ($data['company_name'] ?? $user->company_name),
-                'tax_number' => ($data['tax_number'] ?? $user->tax_number),
-                'vat_number' => ($data['vat_number'] ?? $user->vat_number),
-                'address' => ($data['address'] ?? $user->address),
-                'bank_name' => ($data['bank_name'] ?? $user->bank_name),
-                'bank_account' => ($data['bank_account'] ?? $user->bank_account),
+                'organization_id' => ($data['organization_id'] ?? $user->organization_id),
             ]);
         } catch (Exception $e) {
             DB::rollBack();
@@ -359,7 +357,7 @@ class UserService extends BaseService
      */
     protected function createUser(array $data = []): User
     {
-        return $this->model::create([
+        $user = $this->model::create([
             'type' => $data['type'] ?? $this->model::TYPE_USER,
             'name' => $data['name'] ?? null,
             'email' => $data['email'] ?? null,
@@ -368,7 +366,13 @@ class UserService extends BaseService
             'provider_id' => $data['provider_id'] ?? null,
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
-            'parent_user_id' => $data['parent_user_id'] ?? null,
+            'organization_id' => $data['organization_id'] ?? null,
         ]);
+        if (is_null($user->organization_id)) {
+            $this->organizationService->store([
+                'owner_id' => $user->id,
+            ]);
+        }
+        return $user;
     }
 }
