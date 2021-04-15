@@ -48,13 +48,13 @@
 
                                 @if ($logged_in_user->isOrganizationOwner())
                                     <x-utils.link
-                                        :text="__('Company')"
+                                        :text="__('Organization')"
                                         class="nav-link"
-                                        id="company-tab"
+                                        id="organization-tab"
                                         data-toggle="pill"
-                                        href="#company"
+                                        href="#organization"
                                         role="tab"
-                                        aria-controls="company"
+                                        aria-controls="organization"
                                         aria-selected="false"/>
                                 @endif
 
@@ -85,9 +85,9 @@
                                 </div><!--tab-password-->
                             @endif
 
-                            @if ($logged_in_user->isParent())
-                                <div class="tab-pane fade pt-3" id="company" role="tabpanel" aria-labelledby="company-tab">
-                                    @include('frontend.user.account.tabs.company')
+                            @if ($logged_in_user->isOrganizationOwner())
+                                <div class="tab-pane fade pt-3" id="organization" role="tabpanel" aria-labelledby="organization-tab">
+                                    @include('frontend.user.account.tabs.organization')
                                 </div><!--tab-information-->
                             @endif
 

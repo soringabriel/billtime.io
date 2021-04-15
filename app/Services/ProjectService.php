@@ -42,7 +42,7 @@ class ProjectService extends BaseService
         try {
             $project = $this->model::create(
                 [
-                    'user_id' => auth()->id(),
+                    'organization_id' => auth()->user()->organization()->first()->id,
                     'client_id' => $data['client_id'],
                     'name' => $data['name'],
                 ]
@@ -74,7 +74,6 @@ class ProjectService extends BaseService
         try {
             $project->update(
                 [
-                    'user_id' => auth()->id(),
                     'client_id' => $data['client_id'],
                     'name' => $data['name'],
                 ]

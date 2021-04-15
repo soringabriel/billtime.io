@@ -33,7 +33,7 @@ class Project extends Model
      */
     protected $fillable = [
         'name',
-        'user_id',
+        'organization_id',
         'client_id',
     ];
 
@@ -41,7 +41,7 @@ class Project extends Model
      * @var string[]
      */
     protected $with = [
-        'user',
+        'organization',
     ];
                 
     /**

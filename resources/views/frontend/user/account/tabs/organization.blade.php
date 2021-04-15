@@ -1,4 +1,4 @@
-<x-forms.patch :action="route('frontend.user.profile.updateCompanyDetails')">
+<x-forms.patch :action="route('frontend.user.profile.updateOrganizationDetails')">
     <div class="form-group row">
         <label for="company_name" class="col-md-3 col-form-label text-md-right">@lang('Company Name')</label>
 

@@ -34,7 +34,7 @@ class ProjectsTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Project::query()->where('user_id', auth()->user()->id);
+        return Project::query()->where('organization_id', auth()->user()->organization()->first()->id);
     }
 
     /**

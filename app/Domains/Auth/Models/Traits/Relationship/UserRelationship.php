@@ -25,14 +25,6 @@ trait UserRelationship
     /**
      * @return mixed
      */
-    public function subUsers()
-    {
-        return $this->organization()->first()->users();
-    }
-
-    /**
-     * @return mixed
-     */
     public function times()
     {
         return $this->hasMany(Time::class, 'user_id');

@@ -16,13 +16,13 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('organization_id');
             $table->unsignedBigInteger('client_id');
             $table->timestamps();
             
-            $table->foreign('user_id')
+            $table->foreign('organization_id')
                 ->references('id')
-                ->on('users')
+                ->on('organizations')
                 ->onDelete('cascade');
 
             $table->foreign('client_id')

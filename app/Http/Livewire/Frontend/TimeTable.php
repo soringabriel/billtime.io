@@ -222,7 +222,8 @@ class TimeTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Time::query()->whereIn('user_id', array_merge([auth()->user()->id], auth()->user()->subUsers()->pluck('id')->toArray()));
+        $users = auth()->user()->isOrganizationOwner() ? auth()->user()->organization()->first()->users()->pluck('id')->toArray() : [auth()->user()->id];
+        return Time::query()->whereIn('user_id', $users);
     }
 
     /**

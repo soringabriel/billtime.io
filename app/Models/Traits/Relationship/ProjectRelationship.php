@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Relationship;
 
-use App\Domains\Auth\Models\User;
+use App\Models\Organization;
 use App\Models\Time;
 use App\Models\Client;
 
@@ -14,9 +14,9 @@ trait ProjectRelationship
     /**
      * @return mixed
      */
-    public function user()
+    public function organization()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
     
     /**
