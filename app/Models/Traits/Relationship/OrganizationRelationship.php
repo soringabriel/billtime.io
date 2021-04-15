@@ -3,6 +3,8 @@
 namespace App\Models\Traits\Relationship;
 
 use App\Domains\Auth\Models\User;
+use App\Models\Project;
+use App\Models\Client;
 
 /**
  * Class OrganizationRelationship.
@@ -23,5 +25,21 @@ trait OrganizationRelationship
     public function users()
     {
         return $this->hasMany(User::class, 'organization_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'organization_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'organization_id');
     }
 }

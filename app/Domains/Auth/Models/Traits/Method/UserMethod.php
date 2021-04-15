@@ -117,12 +117,4 @@ trait UserMethod
     {
         return $this->organization()->first()->owner_id;
     }
-
-    /**
-     * @return Collection
-     */
-    public function getProjects(): Collection
-    {
-        return ($this->isOrganizationOwner() ? $this->projects()->get() : $this->organization()->first()->owner()->first()->projects()->get());
-    }
 }

@@ -49,7 +49,7 @@ class TimeController extends Controller
         $last_time = auth()->user()->times()->orderBy('created_at', 'desc')->first();
         return view('frontend.time.create')
             ->withLastTime($last_time)
-            ->withProjects(auth()->user()->getProjects());
+            ->withProjects(auth()->user()->organization()->first()->projects()->get());
     }
 
     /**
@@ -74,9 +74,10 @@ class TimeController extends Controller
      */
     public function edit(EditTimeRequest $request, Time $time)
     {
+        $projects = auth()->user()->organization()->first()->projects()->get();
         return view('frontend.time.edit')
             ->withTime($time)
-            ->withProjects(auth()->user()->getProjects());
+            ->withProjects(auth()->user()->organization()->first()->projects()->get());
     }
 
     /**
