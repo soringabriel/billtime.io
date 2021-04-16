@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 
 /**
- * Class ParentUserMiddleware.
+ * Class OrganizationOwnerMiddleware.
  */
-class ParentUserMiddleware
+class OrganizationOwnerMiddleware
 {
     /**
      * Handle an incoming request.

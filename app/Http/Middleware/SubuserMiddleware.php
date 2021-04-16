@@ -26,7 +26,7 @@ class SubuserMiddleware
         if (is_null($user)) {
             $user = $request->route('deletedUser');
         }
-        if ($user->parent()->first() && $request->user()->id == $user->parent()->first()->id) {
+        if ($request->user()->id == $user->organization()->first()->owner_id) {
             return $next($request);
         }
         

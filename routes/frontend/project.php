@@ -7,7 +7,7 @@ use App\Models\Project;
 Route::group([
     'prefix' => 'projects',
     'as' => 'projects.',
-    'middleware' => ['parent_user', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['organization_owner', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [ProjectController::class, 'index'])
         ->name('index')

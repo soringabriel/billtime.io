@@ -7,7 +7,7 @@ use App\Models\Invoice;
 Route::group([
     'prefix' => 'invoices',
     'as' => 'invoices.',
-    'middleware' => ['parent_user', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['organization_owner', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [InvoiceController::class, 'index'])
         ->name('index')

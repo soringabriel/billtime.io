@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Frontend\User;
 
 use App\Domains\Auth\Services\UserService;
+use App\Services\OrganizationService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;
-use App\Http\Requests\Frontend\User\UpdateCompanyDetailsRequest;
+use App\Http\Requests\Frontend\User\UpdateOrganizationDetailsRequest;
 
 /**
  * Class ProfileController.
@@ -30,14 +31,14 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param  UpdateCompanyDetailsRequest  $request
-     * @param  UserService  $userService
+     * @param  UpdateOrganizationDetailsRequest  $request
+     * @param  OrganizationService  $organizationService
      *
      * @return mixed
      */
-    public function updateCompanyDetails(UpdateCompanyDetailsRequest $request, UserService $userService)
+    public function updateOrganizationDetails(UpdateOrganizationDetailsRequest $request, OrganizationService $organizationService)
     {
-        $userService->updateCompanyDetails($request->user(), $request->validated());
+        $organizationService->update($request->user()->organization()->first(), $request->validated());
 
         return redirect()->route('frontend.user.account', ['#information'])->withFlashSuccess(__('Company details successfully updated.'));
     }

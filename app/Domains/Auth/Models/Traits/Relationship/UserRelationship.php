@@ -5,6 +5,8 @@ namespace App\Domains\Auth\Models\Traits\Relationship;
 use App\Domains\Auth\Models\PasswordHistory;
 use App\Domains\Auth\Models\User;
 use App\Models\Time;
+use App\Models\Client;
+use App\Models\Project;
 use App\Models\Organization;
 
 /**
@@ -34,5 +36,21 @@ trait UserRelationship
     public function organization()
     {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function clients()
+    {
+        return $this->hasManyThrough(Client::class, Organization::class, 'owner_id', 'organization_id', 'id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function projects()
+    {
+        return $this->hasManyThrough(Project::class, Organization::class, 'owner_id', 'organization_id', 'id', 'id');
     }
 }

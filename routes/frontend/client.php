@@ -7,7 +7,7 @@ use App\Models\Client;
 Route::group([
     'prefix' => 'clients',
     'as' => 'clients.',
-    'middleware' => ['parent_user', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['organization_owner', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [ClientController::class, 'index'])
         ->name('index')

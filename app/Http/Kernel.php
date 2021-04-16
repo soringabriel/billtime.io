@@ -87,7 +87,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'subuser' => \App\Http\Middleware\SubuserMiddleware::class,
         'times' => \App\Http\Middleware\TimesMiddleware::class,
-        'parent_user' => \App\Http\Middleware\ParentUserMiddleware::class,
+        'organization_owner' => \App\Http\Middleware\OrganizationOwnerMiddleware::class,
         'model_belongs_to_user' => \App\Http\Middleware\ModelBelongsToUser::class,
     ];
 

@@ -22,12 +22,12 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         });
 
     Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('profile/updateCompanyDetails', [ProfileController::class, 'updateCompanyDetails'])->middleware('parent_user')->name('profile.updateCompanyDetails');
+    Route::patch('profile/updateOrganizationDetails', [ProfileController::class, 'updateOrganizationDetails'])->middleware('organization_owner')->name('profile.updateOrganizationDetails');
     
     Route::group([
         'prefix' => 'subuser',
         'as' => 'subuser.',
-        'middleware' => 'parent_user',
+        'middleware' => 'organization_owner',
     ], function () {
         Route::get('/', [SubuserController::class, 'index'])
             ->name('index')
