@@ -79,12 +79,12 @@ class OrganizationService extends BaseService
             $organization->update(
                 [
                     'owner_id' => ($data['owner_id'] ?? $organization->owner_id),
-                    'company_name' => ($data['company_name'] ?? $organization->company_name),
-                    'tax_number' => ($data['tax_number'] ?? $organization->tax_number),
-                    'vat_number' => ($data['vat_number'] ?? $organization->vat_number),
-                    'address' => ($data['address'] ?? $organization->address),
-                    'bank_name' => ($data['bank_name'] ?? $organization->bank_name),
-                    'bank_account' => ($data['bank_account'] ?? $organization->bank_account),
+                    'company_name' => $data['company_name'],
+                    'tax_number' => $data['tax_number'],
+                    'vat_number' => $data['vat_number'],
+                    'address' => $data['address'],
+                    'bank_name' => $data['bank_name'],
+                    'bank_account' => $data['bank_account'],
                 ]
             );
         } catch (Exception $e) {
