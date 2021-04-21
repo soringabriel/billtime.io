@@ -6,6 +6,7 @@ use App\Events\Time\TimeDeleted;
 use App\Models\Time;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -24,10 +25,12 @@ class DeleteTimeTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -46,15 +49,19 @@ class DeleteTimeTest extends TestCase
     }
     
     /** @test */
-    public function a_user_cannot_delete_a_time_that_belongs_to_another_user()
+    public function a_user_cannot_delete_a_time_that_belongs_to_another_organization()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
@@ -76,10 +83,12 @@ class DeleteTimeTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -113,12 +122,16 @@ class DeleteTimeTest extends TestCase
     public function a_user_cannot_delete_in_bulk_a_time_that_belongs_to_another_user()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 

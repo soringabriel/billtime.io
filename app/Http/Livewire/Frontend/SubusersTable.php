@@ -48,7 +48,8 @@ class SubusersTable extends TableComponentExtended
     {
         $query = User::with('roles', 'twoFactorAuth')
             ->withCount('twoFactorAuth')
-            ->where('organization_id', auth()->user()->organization()->first()->id);
+            ->where('organization_id', auth()->user()->organization()->first()->id)
+            ->where('id', '<>', auth()->user()->id);
 
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();

@@ -25,7 +25,7 @@ Route::group([
 
     Route::post('/', [ProjectController::class, 'store'])->name('store');
 
-    Route::group(['prefix' => '{project}', 'middleware' => 'model_belongs_to_user:project'], function () {
+    Route::group(['prefix' => '{project}', 'middleware' => 'model_belongs_to_user_organization:project'], function () {
         Route::get('edit', [ProjectController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, Project $project) {

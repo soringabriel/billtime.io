@@ -107,14 +107,7 @@ trait UserMethod
      */
     public function isOrganizationOwner(): bool
     {
-        return $this->id == $this->organization()->first()->owner_id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrganizationOwnerId(): int
-    {
-        return $this->organization()->first()->owner_id;
+        $organization = $this->organization()->first();
+        return is_null($organization) ? false : $this->id == $organization->owner_id;
     }
 }

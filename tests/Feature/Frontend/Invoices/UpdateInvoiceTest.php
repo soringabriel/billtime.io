@@ -7,6 +7,7 @@ use App\Models\Time;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -23,6 +24,8 @@ class UpdateInvoiceTest extends TestCase
     public function only_an_user_can_access_the_edit_a_invoice_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $invoice = Invoice::factory()->create(['user_id' => $user->id]);
         
@@ -37,10 +40,12 @@ class UpdateInvoiceTest extends TestCase
     public function a_subuser_cannot_access_the_list_of_the_invoices()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $invoice = Invoice::factory()->create(['user_id' => $user->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
@@ -53,10 +58,14 @@ class UpdateInvoiceTest extends TestCase
     public function a_user_cannot_access_edit_invoice_page_for_other_users_invoices()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $invoice = Invoice::factory()->create(['user_id' => $another_user->id]);
         
@@ -67,6 +76,8 @@ class UpdateInvoiceTest extends TestCase
     public function updating_a_invoice_requires_validation()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
@@ -83,16 +94,20 @@ class UpdateInvoiceTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $invoice = Invoice::factory()->create(['user_id' => $user->id]);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
@@ -144,6 +159,8 @@ class UpdateInvoiceTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
@@ -201,10 +218,14 @@ class UpdateInvoiceTest extends TestCase
     public function a_user_cannot_update_another_user_invoice()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $invoice = Invoice::factory()->create(['user_id' => $another_user->id]);
 
@@ -252,6 +273,8 @@ class UpdateInvoiceTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
@@ -294,10 +317,14 @@ class UpdateInvoiceTest extends TestCase
     public function a_user_cannot_update_the_invoice_status_of_another_users_invoice()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $invoice = Invoice::factory()->create(['user_id' => $another_user->id]);
 

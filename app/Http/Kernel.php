@@ -89,6 +89,7 @@ class Kernel extends HttpKernel
         'times' => \App\Http\Middleware\TimesMiddleware::class,
         'organization_owner' => \App\Http\Middleware\OrganizationOwnerMiddleware::class,
         'model_belongs_to_user' => \App\Http\Middleware\ModelBelongsToUser::class,
+        'model_belongs_to_user_organization' => \App\Http\Middleware\ModelBelongsToUserOrganization::class,
     ];
 
     /**

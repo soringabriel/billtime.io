@@ -27,7 +27,7 @@ class OrganizationEventListener
      */
     public function onCreated($event)
     {
-        $this->userService->updateOrganization($this->owner()->first(), [
+        $this->userService->updateOrganization($event->organization->owner()->first(), [
             'organization_id' => $event->organization->id
         ]);
         activity('organization')

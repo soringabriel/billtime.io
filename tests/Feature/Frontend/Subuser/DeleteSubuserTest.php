@@ -5,6 +5,7 @@ namespace Tests\Feature\Backend\User;
 use App\Domains\Auth\Events\User\UserDeleted;
 use App\Domains\Auth\Events\User\UserDestroyed;
 use App\Domains\Auth\Models\User;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -20,6 +21,8 @@ class DeleteSubuserTest extends TestCase
     public function an_parent_user_can_access_deleted_subusers_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
@@ -32,8 +35,10 @@ class DeleteSubuserTest extends TestCase
     public function an_subuser_cant_access_deleted_subusers_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
@@ -48,10 +53,12 @@ class DeleteSubuserTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $response = $this->delete("/subuser/{$subuser->id}");
 
@@ -66,12 +73,14 @@ class DeleteSubuserTest extends TestCase
     public function an_subuser_cant_delete_another_subuser()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
-        $another_subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $another_subuser = User::factory()->user()->create(['organization_id' => $user->id]);
 
         $response = $this->delete("/subuser/{$another_subuser->id}");
 
@@ -84,10 +93,14 @@ class DeleteSubuserTest extends TestCase
     public function a_user_cant_delete_another_user()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $response = $this->delete("/subuser/{$another_user->id}");
 
@@ -100,12 +113,16 @@ class DeleteSubuserTest extends TestCase
     public function a_user_cant_delete_another_users_subuser()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $another_organization->id]);
 
         $response = $this->delete("/subuser/{$subuser->id}");
 
@@ -118,10 +135,12 @@ class DeleteSubuserTest extends TestCase
     public function a_subuser_can_be_restored()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $subuser = User::factory()->deleted()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->deleted()->create(['organization_id' => $organization->id]);
 
         $this->assertSoftDeleted('users', ['id' => $subuser->id]);
 
@@ -136,12 +155,14 @@ class DeleteSubuserTest extends TestCase
     public function an_subuser_cant_restore_another_subuser()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
-        $another_subuser = User::factory()->deleted()->create(['parent_user_id' => $user->id]);
+        $another_subuser = User::factory()->deleted()->create(['organization_id' => $organization->id]);
 
         $response = $this->patch("/subuser/{$another_subuser->id}/restore");
 
@@ -155,10 +176,14 @@ class DeleteSubuserTest extends TestCase
     public function a_user_cant_restore_another_user()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->deleted()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $response = $this->patch("/subuser/{$another_user->id}/restore");
 
@@ -168,15 +193,19 @@ class DeleteSubuserTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cant_restore_another_users_subuser()
+    public function a_user_cant_restore_another_organization_subuser()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->deleted()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $subuser = User::factory()->deleted()->create(['parent_user_id' => $another_user->id]);
+        $subuser = User::factory()->deleted()->create(['organization_id' => $another_organization->id]);
 
         $response = $this->patch("/subuser/{$subuser->id}/restore");
 

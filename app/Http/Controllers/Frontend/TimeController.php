@@ -74,7 +74,6 @@ class TimeController extends Controller
      */
     public function edit(EditTimeRequest $request, Time $time)
     {
-        $projects = auth()->user()->organization()->first()->projects()->get();
         return view('frontend.time.edit')
             ->withTime($time)
             ->withProjects(auth()->user()->organization()->first()->projects()->get());

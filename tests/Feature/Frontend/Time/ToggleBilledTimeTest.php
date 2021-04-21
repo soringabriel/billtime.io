@@ -6,6 +6,7 @@ use App\Events\Time\TimeUpdated;
 use App\Models\Time;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -22,14 +23,18 @@ class ToggleBilledTimeTest extends TestCase
     public function a_user_cannot_toggle_another_user_time()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
@@ -56,12 +61,14 @@ class ToggleBilledTimeTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -88,12 +95,14 @@ class ToggleBilledTimeTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 

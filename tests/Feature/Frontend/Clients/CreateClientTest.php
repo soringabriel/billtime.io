@@ -5,6 +5,7 @@ namespace Tests\Feature\Frontend\Client;
 use App\Events\Client\ClientCreated;
 use App\Domains\Auth\Models\User;
 use App\Models\Client;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -20,6 +21,8 @@ class CreateClientTest extends TestCase
     public function only_an_user_can_access_the_create_a_client_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
         
         $this->get('/clients/create')->assertRedirect('/login');
 
@@ -32,8 +35,10 @@ class CreateClientTest extends TestCase
     public function a_subuser_cannot_access_the_create_client_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
@@ -46,6 +51,8 @@ class CreateClientTest extends TestCase
     public function creating_a_client_requires_validation()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
         
@@ -60,6 +67,8 @@ class CreateClientTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 

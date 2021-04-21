@@ -25,7 +25,7 @@ Route::group([
 
     Route::post('/', [ClientController::class, 'store'])->name('store');
 
-    Route::group(['prefix' => '{client}', 'middleware' => 'model_belongs_to_user:client'], function () {
+    Route::group(['prefix' => '{client}', 'middleware' => 'model_belongs_to_user_organization:client'], function () {
         Route::get('edit', [ClientController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, Client $client) {

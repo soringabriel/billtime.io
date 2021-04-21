@@ -6,6 +6,7 @@ use App\Events\Time\TimeUpdated;
 use App\Models\Time;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -22,10 +23,12 @@ class UpdateTimeTest extends TestCase
     public function only_an_user_can_access_the_edit_a_time_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -43,14 +46,18 @@ class UpdateTimeTest extends TestCase
     public function a_user_cannot_access_edit_time_page_for_other_users_times()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
@@ -64,12 +71,14 @@ class UpdateTimeTest extends TestCase
     public function updating_a_time_requires_validation()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -87,19 +96,21 @@ class UpdateTimeTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $new_project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -126,21 +137,23 @@ class UpdateTimeTest extends TestCase
         Event::fake();
 
         $parent = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $parent->id]);
+        $parent->update(['organization_id' => $organization->id]);
 
-        $user = User::factory()->user()->create(['parent_user_id' => $parent->id]);
+        $user = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $parent->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $parent->id, 'client_id' => $client->id]);
+        $new_project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -165,12 +178,14 @@ class UpdateTimeTest extends TestCase
     public function a_time_with_another_user_project_can_not_be_updated()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $user->id, 
@@ -178,10 +193,12 @@ class UpdateTimeTest extends TestCase
         ]);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $another_client = Client::factory()->create(['user_id' => $another_user->id]);
+        $another_client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $new_project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $another_client->id]);
+        $new_project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $another_client->id]);
 
         $response = $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',
@@ -214,21 +231,25 @@ class UpdateTimeTest extends TestCase
     public function a_user_cannot_update_another_user_time()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
             'user_id' => $another_user->id, 
             'project_id' => $project->id
         ]);
 
-        $new_project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $new_project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $response = $this->patch("/time/{$time->id}", [
             'start_time' => '2020-12-01 00:00',

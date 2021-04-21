@@ -28,8 +28,8 @@ class OrganizationFactory extends Factory
     {
         return [
             'company_name' => $this->faker->company,
-            'tax_number' => $this->faker->asciify('********'),,
-            'vat_number' => $this->faker->asciify('********'),,
+            'tax_number' => $this->faker->asciify('********'),
+            'vat_number' => $this->faker->asciify('********'),
             'address' => $this->faker->address,
             'bank_name' => $this->faker->asciify('********'),
             'bank_account' => $this->faker->asciify('********'),

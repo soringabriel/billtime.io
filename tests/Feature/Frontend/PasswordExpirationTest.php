@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend;
 
 use App\Domains\Auth\Models\User;
+use App\Models\Organization;
 use Tests\TestCase;
 
 /**
@@ -64,6 +65,8 @@ class PasswordExpirationTest extends TestCase
     public function a_user_can_update_their_expired_password()
     {
         $user = User::factory()->passwordExpired()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 

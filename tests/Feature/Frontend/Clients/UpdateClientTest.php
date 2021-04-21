@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Client;
 
 use App\Events\Client\ClientUpdated;
 use App\Models\Client;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -20,8 +21,10 @@ class UpdateClientTest extends TestCase
     public function only_an_user_can_access_the_edit_a_client_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
         
         $this->get("/clients/{$client->id}/edit")->assertRedirect('/login');
 
@@ -34,10 +37,12 @@ class UpdateClientTest extends TestCase
     public function a_subuser_cannot_access_the_edit_a_client_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($subuser);
 
@@ -47,15 +52,19 @@ class UpdateClientTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_access_edit_client_page_for_other_users_clients()
+    public function a_user_cannot_access_edit_client_page_for_other_organizations_clients()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
         
         $this->get("/clients/{$client->id}/edit")->assertRedirect(route(homeRoute()));
     }
@@ -64,10 +73,12 @@ class UpdateClientTest extends TestCase
     public function updating_a_client_requires_validation()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $response = $this->patch("/clients/{$client->id}");
 
@@ -80,10 +91,12 @@ class UpdateClientTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $this->patch("/clients/{$client->id}", [
             'name' => 'name',
@@ -107,15 +120,19 @@ class UpdateClientTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_update_another_user_client()
+    public function a_user_cannot_update_another_organization_client()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
         $response = $this->patch("/clients/{$client->id}", [
             'name' => 'name',

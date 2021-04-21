@@ -22,7 +22,7 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name' => ['required', 'max:255'],
             'client_id' => ['required', Rule::exists('clients', 'id')->where(function ($query) {
-                return $query->where('user_id', auth()->user()->id);
+                return $query->where('organization_id', auth()->user()->organization()->first()->id);
             })],
         ];
     }
