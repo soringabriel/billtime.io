@@ -60,9 +60,8 @@ class SubuserController extends Controller
     public function create()
     {
         return view('frontend.user.subuser.create')
-            ->withRoles($this->roleService->get())
-            ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withGeneral($this->permissionService->getUncategorizedPermissions());
+            ->withCategories($this->permissionService->getCategorizedPermissions()->where('type', User::TYPE_USER))
+            ->withGeneral($this->permissionService->getUncategorizedPermissions()->where('type', User::TYPE_USER));
     }
 
     /**
@@ -107,9 +106,8 @@ class SubuserController extends Controller
     {
         return view('frontend.user.subuser.edit')
             ->withUser($user)
-            ->withRoles($this->roleService->get())
-            ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withGeneral($this->permissionService->getUncategorizedPermissions())
+            ->withCategories($this->permissionService->getCategorizedPermissions()->where('type', User::TYPE_USER))
+            ->withGeneral($this->permissionService->getUncategorizedPermissions()->where('type', User::TYPE_USER))
             ->withUsedPermissions($user->permissions->modelKeys());
     }
 

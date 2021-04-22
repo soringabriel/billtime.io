@@ -9,9 +9,9 @@ use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
 
 /**
- * Class PermissionRoleTableSeeder.
+ * Class NewPermissionsSeeder.
  */
-class PermissionRoleSeeder extends Seeder
+class NewPermissionsSeeder extends Seeder
 {
     use DisableForeignKeys;
 
