@@ -32,8 +32,21 @@ class UpdateSubuserRequest extends FormRequest
         return [
             'name' => ['required', 'max:100'],
             'email' => ['required', 'max:255', 'email', Rule::unique('users')->ignore($this->user->id)],
+            'permissions' => ['sometimes', 'array'],
+            'permissions.*' => [Rule::exists('permissions', 'id')->where('type', User::TYPE_USER)],
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'permissions.*.exists' => __('One or more permissions were not found or are not allowed to be associated with this user type.'),
+        ];
+    }
+
     /**
      * Handle a failed authorization attempt.
      *

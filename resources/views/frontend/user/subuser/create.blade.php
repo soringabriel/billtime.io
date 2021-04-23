@@ -51,6 +51,8 @@
                                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
                                     </div>
                                 </div><!--form-group-->
+
+                                @include('frontend.user.subuser.includes.permissions')
                             </div>
                         </x-slot>
 

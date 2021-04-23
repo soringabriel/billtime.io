@@ -35,6 +35,8 @@
                                         <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
                                     </div>
                                 </div><!--form-group-->
+
+                                @include('frontend.user.subuser.includes.permissions')
                             </div>
                         </x-slot>
 

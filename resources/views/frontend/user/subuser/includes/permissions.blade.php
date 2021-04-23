@@ -18,7 +18,7 @@
 @endif
 
 @if ($categories->count())
-    <h5 class="mb-3">@lang('Permission Categories')</h5>
+    <h5 class="mb-3">@lang('Permissions')</h5>
 
     <ul class="permission-tree m-0 p-0 list-unstyled">
         @foreach($categories as $permission)
@@ -27,7 +27,7 @@
                 <label for="{{ $permission->id }}">{{ $permission->description ?? $permission->name }}</label>
 
                 @if($permission->children->count())
-                    @include('backend.auth.role.includes.children', ['children' => $permission->children])
+                    @include('frontend.user.subuser.includes.children', ['children' => $permission->children])
                 @endif
             </li>
         @endforeach
