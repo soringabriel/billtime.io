@@ -66,6 +66,8 @@
                                     <li class="nav-item">
                                         <a class="page-scroll open-chat" href="#">@lang('Contact')</a>
                                     </li>
+                                </ul>
+                                <ul class="navbar-nav m-auto">
                                     @auth
                                         @if ($logged_in_user->isUser())
                                             <li class="nav-item">

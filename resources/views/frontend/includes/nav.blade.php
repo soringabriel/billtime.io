@@ -143,7 +143,9 @@
 </nav>
 
 @auth
-    @include('frontend.includes.partials.counter')
+    @if ($logged_in_user->can('user.access.times.automatic-time'))
+        @include('frontend.includes.partials.counter')
+    @endif
 @endauth
 
 @if (config('boilerplate.frontend_breadcrumbs'))

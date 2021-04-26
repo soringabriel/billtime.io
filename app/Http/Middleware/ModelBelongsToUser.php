@@ -20,8 +20,12 @@ class ModelBelongsToUser
      * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle($request, Closure $next, $parameter)
+    public function handle($request, Closure $next, $parameter, $permission = null)
     {
+        if (!is_null($permission) && $request->user()->can($permission)) {
+            return $next($request);
+        }
+        
         if ($request->user()->id == $request->route($parameter)->user()->first()->id) {
             return $next($request);
         }

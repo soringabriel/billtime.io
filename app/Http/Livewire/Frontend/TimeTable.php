@@ -170,7 +170,7 @@ class TimeTable extends TableComponentExtended
         $this->bulkActions = $bulkActions;
         $this->bulk = $bulk;
         $this->preCheckedValues = json_decode($preCheckedValues);
-        if (!$exports) {
+        if (!$exports || !auth()->user()->can('user.access.times.export')) {
             $this->exports = [];
         }
     }
@@ -222,7 +222,8 @@ class TimeTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        $users = auth()->user()->isOrganizationOwner() ? auth()->user()->organization()->first()->users()->pluck('id')->toArray() : [auth()->user()->id];
+        $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
+        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
         return Time::query()->whereIn('user_id', $users);
     }
 

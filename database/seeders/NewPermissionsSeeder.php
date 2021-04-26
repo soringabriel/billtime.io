@@ -42,21 +42,27 @@ class NewPermissionsSeeder extends Seeder
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
+                'name' => 'user.access.times.mark-billed',
+                'description' => 'Can Mark As Billed/Unbilled Times',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
                 'name' => 'user.access.times.delete-all',
                 'description' => 'Can Delete All Subusers Times',
-                'sort' => 3,
+                'sort' => 4,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.automatic-time',
                 'description' => 'Can Use Automatic Time',
-                'sort' => 4,
+                'sort' => 5,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.export',
                 'description' => 'Can Export Times',
-                'sort' => 5,
+                'sort' => 6,
             ]),
         ]);
 
@@ -69,8 +75,8 @@ class NewPermissionsSeeder extends Seeder
         $invoices->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.invoices.show',
-                'description' => 'Can View Invoices',
+                'name' => 'user.access.invoices.show-all',
+                'description' => 'Can View All Invoices',
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
@@ -80,15 +86,21 @@ class NewPermissionsSeeder extends Seeder
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.invoices.edit',
-                'description' => 'Can Edit Invoices',
+                'name' => 'user.access.invoices.edit-all',
+                'description' => 'Can Edit All Invoices',
                 'sort' => 3,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.invoices.delete',
-                'description' => 'Can Delete Invoices',
+                'name' => 'user.access.invoices.update-status-all',
+                'description' => 'Can Update Status For All Invoices',
                 'sort' => 4,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.delete-all',
+                'description' => 'Can Delete All Invoices',
+                'sort' => 5,
             ]),
         ]);
 
