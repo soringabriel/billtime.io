@@ -85,11 +85,12 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'type' => \App\Domains\Auth\Http\Middleware\UserTypeCheck::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'subuser' => \App\Http\Middleware\SubuserMiddleware::class,
+        'subusers_quota' => \App\Http\Middleware\SubusersQuotaMiddleware::class,
         'times' => \App\Http\Middleware\TimesMiddleware::class,
         'organization_owner' => \App\Http\Middleware\OrganizationOwnerMiddleware::class,
         'model_belongs_to_user' => \App\Http\Middleware\ModelBelongsToUser::class,
         'model_belongs_to_user_organization' => \App\Http\Middleware\ModelBelongsToUserOrganization::class,
+        'not_organization_owner' => \App\Http\Middleware\UserIsNotOrganizationOwner::class,
     ];
 
     /**

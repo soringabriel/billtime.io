@@ -31,38 +31,44 @@ class NewPermissionsSeeder extends Seeder
         $times->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
+                'name' => 'user.access.times.access',
+                'description' => 'Has Acces To Times',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
                 'name' => 'user.access.times.show-all',
                 'description' => 'Can View All Subusers Times',
+                'sort' => 2,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.edit-all',
                 'description' => 'Can Edit All Subusers Times',
-                'sort' => 2,
+                'sort' => 3,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.mark-billed',
                 'description' => 'Can Mark As Billed/Unbilled Times',
-                'sort' => 3,
+                'sort' => 4,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.delete-all',
                 'description' => 'Can Delete All Subusers Times',
-                'sort' => 4,
+                'sort' => 5,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.automatic-time',
                 'description' => 'Can Use Automatic Time',
-                'sort' => 5,
+                'sort' => 6,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.times.export',
                 'description' => 'Can Export Times',
-                'sort' => 6,
+                'sort' => 7,
             ]),
         ]);
 
@@ -75,32 +81,38 @@ class NewPermissionsSeeder extends Seeder
         $invoices->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.access',
+                'description' => 'Has Acces To Invoices',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
                 'name' => 'user.access.invoices.show-all',
                 'description' => 'Can View All Invoices',
+                'sort' => 2,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.invoices.create',
                 'description' => 'Can Create Invoices',
-                'sort' => 2,
+                'sort' => 3,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.invoices.edit-all',
                 'description' => 'Can Edit All Invoices',
-                'sort' => 3,
+                'sort' => 4,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.invoices.update-status-all',
                 'description' => 'Can Update Status For All Invoices',
-                'sort' => 4,
+                'sort' => 5,
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
                 'name' => 'user.access.invoices.delete-all',
                 'description' => 'Can Delete All Invoices',
-                'sort' => 5,
+                'sort' => 6,
             ]),
         ]);
 
@@ -113,8 +125,8 @@ class NewPermissionsSeeder extends Seeder
         $clients->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.clients.show',
-                'description' => 'Can View Clients',
+                'name' => 'user.access.clients.access',
+                'description' => 'Has Acces To Clients',
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
@@ -145,8 +157,8 @@ class NewPermissionsSeeder extends Seeder
         $projects->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.projects.show',
-                'description' => 'Can View Projects',
+                'name' => 'user.access.projects.access',
+                'description' => 'Has Acces To Projects',
             ]),
             new Permission([
                 'type' => User::TYPE_USER,
@@ -177,8 +189,8 @@ class NewPermissionsSeeder extends Seeder
         $subusers->children()->saveMany([
             new Permission([
                 'type' => User::TYPE_USER,
-                'name' => 'user.access.users.show',
-                'description' => 'Can View Users',
+                'name' => 'user.access.users.access',
+                'description' => 'Has Acces To Users',
             ]),
             new Permission([
                 'type' => User::TYPE_USER,

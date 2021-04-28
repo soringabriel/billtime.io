@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 
 /**
- * Class SubuserMiddleware.
+ * Class UserIsNotOrganizationOwner.
  */
-class SubuserMiddleware
+class UserIsNotOrganizationOwner
 {
     /**
      * Handle an incoming request.
@@ -22,14 +22,10 @@ class SubuserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->route('user');
-        if (is_null($user)) {
-            $user = $request->route('deletedUser');
-        }
-        if ($request->user()->id == $user->organization()->first()->owner_id) {
+        if (!$request->route('user')->isOrganizationOwner()) {
             return $next($request);
         }
         
-        return redirect()->route('frontend.user.subuser.index')->withFlashDanger(__("You don't have access to this User."));
+        return redirect()->route(homeRoute())->withFlashDanger(__("You don't have access to this model."));
     }
 }

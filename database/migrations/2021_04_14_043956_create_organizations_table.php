@@ -22,6 +22,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('address')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_account')->nullable();
+            $table->integer('subusers_quota')->default(0);
             $table->timestamps();
         });
     }

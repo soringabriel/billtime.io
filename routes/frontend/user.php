@@ -27,7 +27,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::group([
         'prefix' => 'subuser',
         'as' => 'subuser.',
-        'middleware' => 'organization_owner',
+        'middleware' => 'permission:user.access.users.access',
     ], function () {
         Route::get('/', [SubuserController::class, 'index'])
             ->name('index')
@@ -38,6 +38,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
 
         Route::get('deleted', [DeletedSubuserController::class, 'index'])
             ->name('deleted')
+            ->middleware('permission:user.access.users.delete')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('frontend.user.subuser.index')
                     ->push(__('Deleted Users'), route('frontend.user.subuser.deleted'));
@@ -45,39 +46,38 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
 
         Route::get('create', [SubuserController::class, 'create'])
             ->name('create')
+            ->middleware('permission:user.access.users.create', 'subusers_quota')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('frontend.user.subuser.index')
                     ->push(__('Create User'), route('frontend.user.subuser.create'));
             });
 
-        Route::post('/', [SubuserController::class, 'store'])->name('store');
+        Route::post('/', [SubuserController::class, 'store'])->middleware('permission:user.access.users.create', 'subusers_quota')->name('store');
 
-        Route::group([
-            'middleware' => 'subuser',
-        ], function () {
-            Route::group(['prefix' => '{user}'], function () {
-                Route::get('/', [SubuserController::class, 'show'])
-                    ->name('show')
-                    ->breadcrumbs(function (Trail $trail, User $user) {
-                        $trail->parent('frontend.user.subuser.index')
-                            ->push($user->name, route('frontend.user.subuser.show', $user));
-                    });
+        Route::group(['prefix' => '{user}'], function () {
+            Route::get('/', [SubuserController::class, 'show'])
+                ->name('show')
+                ->middleware('not_organization_owner')
+                ->breadcrumbs(function (Trail $trail, User $user) {
+                    $trail->parent('frontend.user.subuser.index')
+                        ->push($user->name, route('frontend.user.subuser.show', $user));
+                });
 
-                Route::get('edit', [SubuserController::class, 'edit'])
-                    ->name('edit')
-                    ->breadcrumbs(function (Trail $trail, User $user) {
-                        $trail->parent('frontend.user.subuser.show', $user)
-                            ->push(__('Edit'), route('frontend.user.subuser.edit', $user));
-                    });
+            Route::get('edit', [SubuserController::class, 'edit'])
+                ->name('edit')
+                ->middleware(['not_organization_owner', 'permission:user.access.users.edit'])
+                ->breadcrumbs(function (Trail $trail, User $user) {
+                    $trail->parent('frontend.user.subuser.show', $user)
+                        ->push(__('Edit'), route('frontend.user.subuser.edit', $user));
+                });
 
-                Route::patch('/', [SubuserController::class, 'update'])->name('update');
-                Route::delete('/', [SubuserController::class, 'destroy'])->name('destroy');
-            });
+            Route::patch('/', [SubuserController::class, 'update'])->middleware(['not_organization_owner', 'permission:user.access.users.edit'])->name('update');
+            Route::delete('/', [SubuserController::class, 'destroy'])->middleware(['not_organization_owner', 'permission:user.access.users.delete'])->name('destroy');
+        });
 
-            Route::group(['prefix' => '{deletedUser}'], function () {
-                Route::patch('restore', [DeletedSubuserController::class, 'update'])->name('restore');
-                Route::delete('permanently-delete', [DeletedSubuserController::class, 'destroy'])->name('permanently-delete');
-            });
+        Route::group(['prefix' => '{deletedUser}', 'middleware' => 'permission:user.access.users.delete'], function () {
+            Route::patch('restore', [DeletedSubuserController::class, 'update'])->name('restore');
+            Route::delete('permanently-delete', [DeletedSubuserController::class, 'destroy'])->name('permanently-delete');
         });
     });
 });

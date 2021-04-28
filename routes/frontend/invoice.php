@@ -7,11 +7,10 @@ use App\Models\Invoice;
 Route::group([
     'prefix' => 'invoices',
     'as' => 'invoices.',
-    'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['permission:user.access.invoices.access', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [InvoiceController::class, 'index'])
         ->name('index')
-        ->middleware('permission:user.access.invoices')
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.index')
                 ->push(__('Invoice Managment'), route('frontend.invoices.index'));

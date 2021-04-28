@@ -7,7 +7,7 @@ use App\Models\Time;
 Route::group([
     'prefix' => 'time',
     'as' => 'time.',
-    'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['permission:user.access.times.access', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [TimeController::class, 'index'])
         ->name('index')
@@ -38,6 +38,6 @@ Route::group([
         Route::delete('/', [TimeController::class, 'destroy'])->middleware('model_belongs_to_user:time,user.access.times.delete-all')->name('destroy');
     });
 
-    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->middleware('permission:user.access.times.mark-billed')->name('bulkToggleBilled')->middleware(['times']);
-    Route::delete('/', [TimeController::class, 'bulkDestroy'])->middleware('model_belongs_to_user:time,user.access.times.delete-all')->name('bulkDestroy')->middleware('times');
+    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['times', 'permission:user.access.times.mark-billed']);
+    Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware(['times', 'permission:user.access.times.delete-all']);
 });

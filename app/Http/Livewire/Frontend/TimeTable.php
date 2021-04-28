@@ -76,14 +76,20 @@ class TimeTable extends TableComponentExtended
     public $isInvoice = false;
 
     /**
-     * @var string
+     * @var array
      */
-    public $bulkDelete = 'frontend.time.bulkDestroy';
+    public $bulkDelete = [
+        'route' => 'frontend.time.bulkDestroy',
+        'permission' => 'user.access.times.delete-all',
+    ];
 
     /**
-     * @var string
+     * @var array
      */
-    public $bulkBill = 'frontend.time.bulkToggleBilled';
+    public $bulkBill = [
+        'route' => 'frontend.time.bulkToggleBilled',
+        'permission' => 'user.access.times.mark-billed',
+    ];
 
     /**
      * @var bool

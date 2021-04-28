@@ -41,6 +41,7 @@ class OrganizationEventListener
                     'address' => $event->organization->address,
                     'bank_name' => $event->organization->bank_name,
                     'bank_account' => $event->organization->bank_account,
+                    'subusers_quota' => $event->organization->subusers_quota,
                 ],
             ])
             ->log(':causer.name created organization :subject.name');
@@ -62,6 +63,7 @@ class OrganizationEventListener
                     'address' => $event->organization->address,
                     'bank_name' => $event->organization->bank_name,
                     'bank_account' => $event->organization->bank_account,
+                    'subusers_quota' => $event->organization->subusers_quota,
                 ],
             ])
             ->log(':causer.name updated organization :subject.name');

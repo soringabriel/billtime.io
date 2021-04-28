@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col text-left">
                     <x-utils.form-button
-                        :action="route($this->bulkBill)"
+                        :action="route($this->bulkBill['route'])"
                         method="post"
                         button-class="btn btn-primary btn-sm"
                         icon="fas fa-sync-alt"
@@ -19,10 +19,11 @@
                         data-placement="right"
                         title="{{ __('If a time is billed it will become unbilled. Otherwise it will be marked as billed.') }}"
                         hiddenData="{!! json_encode($this->hiddenDataBulk ?? []) !!}"
+                        :permission="$this->bulkBill['permission']"
                     >
                         @lang('Toggle billed')
                     </x-utils.form-button>
-                    <x-utils.delete-button href="{{ route($this->bulkDelete) }}" hiddenData="{!! json_encode($this->hiddenDataBulk ?? []) !!}" />
+                    <x-utils.delete-button href="{{ route($this->bulkDelete['route']) }}" hiddenData="{!! json_encode($this->hiddenDataBulk ?? []) !!}" :permission="$this->bulkDelete['permission']" />
                 </div>
             </div>
         @endif

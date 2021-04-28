@@ -19,42 +19,45 @@
                                 :href="route('frontend.time.index')"
                                 :active="activeClass(Route::is('frontend.time.index'))"
                                 :text="__('Track Time')"
-                                class="nav-link"/>
+                                class="nav-link"
+                                permission="user.access.times.access" />
                         </li>
 
-                        @if ($logged_in_user->isOrganizationOwner())
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.invoices.index')"
-                                    :active="activeClass(Route::is('frontend.invoices.index'))"
-                                    :text="__('Invoices')"
-                                    class="nav-link"/>
-                            </li>
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.invoices.index')"
+                                :active="activeClass(Route::is('frontend.invoices.index'))"
+                                :text="__('Invoices')"
+                                class="nav-link"
+                                permission="user.access.invoices.access" />
+                        </li>
 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.clients.index')"
-                                    :active="activeClass(Route::is('frontend.clients.index'))"
-                                    :text="__('Clients')"
-                                    class="nav-link"/>
-                            </li>
-                                
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.projects.index')"
-                                    :active="activeClass(Route::is('frontend.projects.index'))"
-                                    :text="__('Projects')"
-                                    class="nav-link"/>
-                            </li>
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.clients.index')"
+                                :active="activeClass(Route::is('frontend.clients.index'))"
+                                :text="__('Clients')"
+                                class="nav-link"
+                                permission="user.access.clients.access" />
+                        </li>
+                            
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.projects.index')"
+                                :active="activeClass(Route::is('frontend.projects.index'))"
+                                :text="__('Projects')"
+                                class="nav-link"
+                                permission="user.access.projects.access" />
+                        </li>
 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.user.subuser.index')"
-                                    :active="activeClass(Route::is('frontend.user.subuser.index'))"
-                                    :text="__('Users')"
-                                    class="nav-link"/>
-                            </li>
-                        @endif
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.user.subuser.index')"
+                                :active="activeClass(Route::is('frontend.user.subuser.index'))"
+                                :text="__('Users')"
+                                class="nav-link"
+                                permission="user.access.users.access" />
+                        </li>
                     @endif
                 </ul>
             @endauth

@@ -20,6 +20,7 @@
                             class="card-header-action"
                             :href="route('frontend.user.subuser.index')"
                             :text="__('Active Users')"
+                            permission="user.access.users.access"
                         />
                     </x-slot>
 

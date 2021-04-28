@@ -85,6 +85,7 @@ class OrganizationService extends BaseService
                     'address' => $data['address'],
                     'bank_name' => $data['bank_name'],
                     'bank_account' => $data['bank_account'],
+                    'subusers_quota' => ($data['subusers_quota'] ?? $organization->subusers_quota),
                 ]
             );
         } catch (Exception $e) {

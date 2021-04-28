@@ -39,6 +39,7 @@ class Organization extends Model
         'address',
         'bank_name',
         'bank_account',
+        'subusers_quota',
     ];
                 
     /**

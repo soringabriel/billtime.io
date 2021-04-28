@@ -44,7 +44,7 @@ class ProjectController extends Controller
     public function create()
     {
         return view('frontend.projects.create')
-            ->withClients(auth()->user()->clients()->get());
+            ->withClients(auth()->user()->organization()->first()->clients()->get());
     }
 
     /**
@@ -71,7 +71,7 @@ class ProjectController extends Controller
     {
         return view('frontend.projects.edit')
             ->withProject($project)
-            ->withClients(auth()->user()->clients()->get());
+            ->withClients(auth()->user()->organization()->first()->clients()->get());
     }
 
     /**
