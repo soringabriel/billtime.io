@@ -26,7 +26,7 @@ Route::group([
 
     Route::post('/', [InvoiceController::class, 'store'])->middleware('permission:user.access.invoices.create')->name('store');
 
-    Route::group(['prefix' => '{invoice}'], function () {
+    Route::group(['prefix' => '{invoice}', 'middleware' => ['model_belongs_to_user_organization:invoice']], function () {
         Route::get('edit', [InvoiceController::class, 'edit'])
             ->name('edit')
             ->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')

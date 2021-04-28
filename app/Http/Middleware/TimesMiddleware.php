@@ -27,7 +27,7 @@ class TimesMiddleware
         if (!is_null($times)) {
             foreach ($times as $time) {
                 $time_model = Time::find($time);
-                if ($time_model->user()->first()->id != $request->user()->id) {
+                if ($time_model->organization()->first()->id != $request->user()->organization()->first()->id) {
                     return redirect()->route('frontend.time.index')->withFlashDanger(__("You don't have access to one of the Times selected."));
                 }
             }

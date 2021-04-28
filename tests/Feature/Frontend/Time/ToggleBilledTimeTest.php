@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -25,6 +26,10 @@ class ToggleBilledTimeTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.mark-billed')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -56,7 +61,7 @@ class ToggleBilledTimeTest extends TestCase
     }
 
     /** @test */
-    public function a_non_billed_time_can_be_marked_as_billed()
+    public function a_non_billed_time_can_be_marked_as_billed_only_by_an_user_with_permissions()
     {
         Event::fake();
 
@@ -75,6 +80,13 @@ class ToggleBilledTimeTest extends TestCase
             'project_id' => $project->id
         ]);
 
+        $this->patch("/time/{$time->id}/toggleBilled")->assertSessionHas(['flash_danger' => __('You do not have access to do that.')]);
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.mark-billed')->first()->id, 
+        ]);
+
         $this->patch("/time/{$time->id}/toggleBilled");
 
         $this->assertDatabaseHas('time', [
@@ -90,7 +102,7 @@ class ToggleBilledTimeTest extends TestCase
     }
 
     /** @test */
-    public function a_billed_time_can_be_marked_as_not_billed()
+    public function a_billed_time_can_be_marked_as_not_billed_only_by_an_user_with_permissions()
     {
         Event::fake();
 
@@ -108,6 +120,13 @@ class ToggleBilledTimeTest extends TestCase
             'user_id' => $user->id, 
             'project_id' => $project->id,
             'billed' => 1,
+        ]);
+
+        $this->patch("/time/{$time->id}/toggleBilled")->assertSessionHas(['flash_danger' => __('You do not have access to do that.')]);
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.mark-billed')->first()->id, 
         ]);
 
         $this->patch("/time/{$time->id}/toggleBilled");

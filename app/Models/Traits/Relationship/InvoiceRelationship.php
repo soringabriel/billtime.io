@@ -26,4 +26,12 @@ trait InvoiceRelationship
     {
         return $this->belongsToMany(Time::class, 'invoice_has_times');
     }
+
+    /**
+     * @return mixed
+     */
+    public function organization()
+    {
+        return $this->user()->first()->organization();
+    }
 }

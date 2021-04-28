@@ -27,6 +27,6 @@ class SubusersQuotaMiddleware
             return $next($request);
         }
         
-        return redirect()->route('frontend.user.subuser.index')->withFlashDanger(__("You organization reached the subusers quota limit."));
+        return redirect()->route('frontend.user.subuser.index')->withFlashDanger(__("Your organization reached the subusers quota limit."));
     }
 }

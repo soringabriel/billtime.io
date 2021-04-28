@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Organization;
 use Tests\TestCase;
 
@@ -27,6 +28,9 @@ class PasswordExpirationTest extends TestCase
     public function a_user_with_an_expired_password_cannot_access_dashboard()
     {
         $user = User::factory()->passwordExpired()->create();
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend\Invoice;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Invoice;
 use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +17,7 @@ class ViewInvoiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_subuser_cannot_view_the_invoices()
+    public function a_subuser_without_permissions_cannot_view_all_the_invoices()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -30,7 +31,27 @@ class ViewInvoiceTest extends TestCase
 
         $response = $this->get("/invoices/{$invoice->id}/download");
 
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+        $response->assertSessionHas('flash_danger', __('You do not have access to do that.'));
+    }
+
+    /** @test */
+    public function a_subuser_with_permissions_cannot_view_all_the_invoices()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
+        $subuser->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id,
+            Permission::where('name', 'user.access.invoices.show-all')->first()->id, 
+        ]);
+
+        $this->actingAs($subuser);
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+
+        $this->get("/invoices/{$invoice->id}/download")->assertSessionDoesntHaveErrors();
     }
 
     /** @test */
@@ -39,6 +60,10 @@ class ViewInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id,
+            Permission::where('name', 'user.access.invoices.show-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 

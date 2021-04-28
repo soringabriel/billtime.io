@@ -23,7 +23,7 @@ trait InvoiceMethod
         return $this->status == self::STATUS_PAID;
     }
 
-        /**
+    /**
      * @return bool
      */
     public function isPending(): bool

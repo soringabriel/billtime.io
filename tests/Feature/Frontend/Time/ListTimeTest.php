@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend\Time;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,6 +25,12 @@ class ListTimeTest extends TestCase
         $this->get('/time')->assertRedirect('/login');
 
         $this->actingAs($user);
+
+        $this->get('/time')->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
 
         $this->get('/time')->assertOk();
     }

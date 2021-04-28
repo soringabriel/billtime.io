@@ -6,6 +6,7 @@ use App\Events\Client\ClientDeleted;
 use App\Models\Client;
 use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -18,7 +19,7 @@ class DeleteClientTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_client_can_be_deleted()
+    public function a_client_can_be_deleted_only_by_a_user_with_permissions()
     {
         Event::fake();
 
@@ -31,6 +32,13 @@ class DeleteClientTest extends TestCase
         $this->actingAs($user);
 
         $this->assertDatabaseHas('clients', ['id' => $client->id]);
+
+        $this->delete("/clients/{$client->id}")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.clients.access')->first()->id, 
+            Permission::where('name', 'user.access.clients.delete')->first()->id
+        ]);
 
         $response = $this->delete("/clients/{$client->id}");
 
@@ -45,6 +53,10 @@ class DeleteClientTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.clients.access')->first()->id, 
+            Permission::where('name', 'user.access.clients.create')->first()->id
+        ]);
 
         $another_user = User::factory()->user()->create();
         $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
@@ -59,23 +71,5 @@ class DeleteClientTest extends TestCase
         $this->delete("/clients/{$client->id}");
 
         $this->assertDatabaseHas('clients', ['id' => $client->id]);
-    }
-
-    /** @test */
-    public function a_subuser_cannot_delete_a_client()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
-
-        $client = Client::factory()->create(['organization_id' => $organization->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->delete("/clients/{$client->id}");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 }

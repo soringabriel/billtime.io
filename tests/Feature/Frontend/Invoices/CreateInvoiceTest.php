@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Invoice;
 
 use App\Events\Invoice\InvoiceCreated;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Time;
 use App\Models\Project;
 use App\Models\Client;
@@ -21,7 +22,7 @@ class CreateInvoiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function only_an_user_can_access_the_create_a_invoice_page()
+    public function only_an_user_with_permissions_can_access_the_create_a_invoice_page()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -31,23 +32,14 @@ class CreateInvoiceTest extends TestCase
 
         $this->actingAs($user);
 
+        $this->get('/invoices/create')->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.create')->first()->id
+        ]);
+
         $this->get('/invoices/create')->assertOk();
-    }
-
-    /** @test */
-    public function a_subuser_cannot_access_the_create_a_invoice_page()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get("/invoices/create");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 
     /** @test */
@@ -56,6 +48,10 @@ class CreateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.create')->first()->id
+        ]);
 
         $this->actingAs($user);
         
@@ -65,13 +61,17 @@ class CreateInvoiceTest extends TestCase
     }
 
     /** @test */
-    public function a_invoice_cannot_be_associated_to_times_that_dont_belong_to_the_user()
+    public function a_invoice_cannot_be_associated_to_times_that_dont_belong_to_the_user_organization()
     {
         Event::fake();
 
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -146,6 +146,10 @@ class CreateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 

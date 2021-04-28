@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend\Project;
 
 use App\Events\Project\ProjectCreated;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Organization;
@@ -19,7 +20,7 @@ class CreateProjectTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function only_an_user_can_access_the_create_a_project_page()
+    public function only_an_user_with_permissions_can_access_the_create_a_project_page()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -29,31 +30,26 @@ class CreateProjectTest extends TestCase
 
         $this->actingAs($user);
 
+        $this->get('/projects/create')->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.create')->first()->id
+        ]);
+
         $this->get('/projects/create')->assertOk();
     }
     
-    /** @test */
-    public function a_subuser_cannot_access_the_create_a_project_page()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get("/projects/create");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-    }
-
     /** @test */
     public function creating_a_project_requires_validation()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.create')->first()->id
+        ]);
 
         $this->actingAs($user);
         
@@ -68,6 +64,10 @@ class CreateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -93,6 +93,10 @@ class CreateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.create')->first()->id
+        ]);
 
         $client = Client::factory()->create(['organization_id' => $organization->id]);
 

@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -33,27 +34,14 @@ class UpdateProjectTest extends TestCase
 
         $this->actingAs($user);
 
+        $this->get("/projects/{$project->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
+
         $this->get("/projects/{$project->id}/edit")->assertOk();
-    }
-
-    /** @test */
-    public function a_subuser_cannot_access_the_list_of_the_projects()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
-
-        $client = Client::factory()->create(['organization_id' => $organization->id]);
-
-        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get("/projects/{$project->id}/edit");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 
     /** @test */
@@ -62,6 +50,10 @@ class UpdateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -82,6 +74,10 @@ class UpdateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $client = Client::factory()->create(['organization_id' => $organization->id]);
 
@@ -100,6 +96,10 @@ class UpdateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $client = Client::factory()->create(['organization_id' => $organization->id]);
 
@@ -129,6 +129,10 @@ class UpdateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $client = Client::factory()->create(['organization_id' => $organization->id]);
 
@@ -157,6 +161,10 @@ class UpdateProjectTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $this->actingAs($user);
 

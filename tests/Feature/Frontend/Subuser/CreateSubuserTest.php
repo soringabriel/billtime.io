@@ -3,8 +3,8 @@
 namespace Tests\Feature\Frontend\Subuser;
 
 use App\Domains\Auth\Events\User\UserCreated;
-use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Models\Organization;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,41 +20,52 @@ class CreateSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_logged_in_user_can_access_the_create_subuser_page()
+    public function an_logged_in_user_with_permissions_can_access_the_create_subuser_page()
     {
         $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $organization = Organization::factory()->create(['owner_id' => $user->id, 'subusers_quota' => -1]);
         $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $response = $this->get('/subuser/create');
+        $this->get('/subuser/create')->assertRedirect(route(homeRoute()));
 
-        $response->assertOk();
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.create')->first()->id
+        ]);
+
+        $this->get('/subuser/create')->assertOk();
     }
 
     /** @test */
-    public function a_subuser_cannot_access_the_create_subuser_page()
+    public function create_subuser_requires_subusers_quota_validation()
     {
         $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $organization = Organization::factory()->create(['owner_id' => $user->id, 'subusers_quota' => 0]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.create')->first()->id
+        ]);
 
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
+        $this->actingAs($user);
 
-        $this->actingAs($subuser);
+        $response = $this->post('/subuser');
 
-        $response = $this->get('/subuser/create');
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
+        $response->assertSessionHas('flash_danger', __('Your organization reached the subusers quota limit.'));
     }
 
     /** @test */
     public function create_subuser_requires_validation()
     {
         $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $organization = Organization::factory()->create(['owner_id' => $user->id, 'subusers_quota' => -1]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -67,8 +78,12 @@ class CreateSubuserTest extends TestCase
     public function subuser_email_needs_to_be_unique()
     {
         $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $organization = Organization::factory()->create(['owner_id' => $user->id, 'subusers_quota' => -1]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -87,8 +102,12 @@ class CreateSubuserTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $organization = Organization::factory()->create(['owner_id' => $user->id, 'subusers_quota' => -1]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.create')->first()->id
+        ]);
 
         $this->actingAs($user);
 
@@ -115,37 +134,5 @@ class CreateSubuserTest extends TestCase
         $user = User::where('email', 'john@example.com')->first();
 
         Notification::assertSentTo($user, VerifyEmail::class);
-    }
-
-    /** @test */
-    public function a_subuser_cant_create_new_subuser()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->post('/subuser', [
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => 'OC4Nzu270N!QBVi%U%qX',
-            'password_confirmation' => 'OC4Nzu270N!QBVi%U%qX',
-        ]);
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-
-        $this->assertDatabaseMissing(
-            'users',
-            [
-                'type' => User::TYPE_USER,
-                'name' => 'John Doe',
-                'email' => 'john@example.com',
-                'parent_user_id' => $user->id,
-                'active' => true,
-            ]
-        );
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -20,7 +21,7 @@ class UpdateTimeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function only_an_user_can_access_the_edit_a_time_page()
+    public function only_an_user_with_permissions_can_access_the_edit_a_time_page()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -39,15 +40,63 @@ class UpdateTimeTest extends TestCase
 
         $this->actingAs($user);
 
+        $this->get("/time/{$time->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
+
         $this->get("/time/{$time->id}/edit")->assertOk();
     }
 
     /** @test */
-    public function a_user_cannot_access_edit_time_page_for_other_users_times()
+    public function only_an_user_with_permissions_can_access_the_edit_a_time_page_for_another_user_from_the_same_organization()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $subuser->id, 
+            'project_id' => $project->id
+        ]);
+        
+        $this->get("/time/{$time->id}/edit")->assertRedirect('/login');
+
+        $this->actingAs($user);
+
+        $this->get("/time/{$time->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
+
+        $this->get("/time/{$time->id}/edit")->assertSessionHas(['flash_danger' => __('You don\'t have access to this model.')]);
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+
+        $this->get("/time/{$time->id}/edit")->assertOk();
+    }
+
+    /** @test */
+    public function a_user_cannot_access_edit_time_page_for_other_organization_users_times()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -73,6 +122,10 @@ class UpdateTimeTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -98,6 +151,10 @@ class UpdateTimeTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -132,15 +189,19 @@ class UpdateTimeTest extends TestCase
     }
 
     /** @test */
-    public function a_time_with_a_parent_project_can_be_updated()
+    public function a_time_of_another_user_can_be_updated_with_permissions()
     {
         Event::fake();
 
-        $parent = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $parent->id]);
-        $parent->update(['organization_id' => $organization->id]);
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
-        $user = User::factory()->user()->create(['organization_id' => $organization->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
@@ -149,7 +210,7 @@ class UpdateTimeTest extends TestCase
         $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $time = Time::factory()->create([
-            'user_id' => $user->id, 
+            'user_id' => $subuser->id, 
             'project_id' => $project->id
         ]);
 
@@ -172,7 +233,7 @@ class UpdateTimeTest extends TestCase
         ]);
 
         Event::assertDispatched(TimeUpdated::class);
-    }
+    }    
 
     /** @test */
     public function a_time_with_another_user_project_can_not_be_updated()
@@ -180,6 +241,10 @@ class UpdateTimeTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -228,11 +293,15 @@ class UpdateTimeTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_update_another_user_time()
+    public function a_user_cannot_update_another_organization_user_time()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 

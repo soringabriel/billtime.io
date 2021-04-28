@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -21,7 +22,7 @@ class UpdateInvoiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function only_an_user_can_access_the_edit_a_invoice_page()
+    public function only_an_user_with_permissions_can_access_the_edit_a_invoice_page()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -33,33 +34,51 @@ class UpdateInvoiceTest extends TestCase
 
         $this->actingAs($user);
 
+        $this->get("/invoices/{$invoice->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+        ]);
+
+        $this->get("/invoices/{$invoice->id}/edit")->assertOk();
+    }
+    
+    /** @test */
+    public function an_subuser_with_permissions_can_access_the_edit_a_invoice_page()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        
+        $subuser = User::factory()->user()->create();
+        $subuser->update(['organization_id' => $organization->id]);
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+        
+        $this->get("/invoices/{$invoice->id}/edit")->assertRedirect('/login');
+
+        $this->actingAs($subuser);
+
+        $this->get("/invoices/{$invoice->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $subuser->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.edit-all')->first()->id, 
+        ]);
+
         $this->get("/invoices/{$invoice->id}/edit")->assertOk();
     }
 
     /** @test */
-    public function a_subuser_cannot_access_the_list_of_the_invoices()
+    public function a_user_cannot_access_edit_invoice_page_for_other_organization_users_invoices()
     {
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
-
-        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
-
-        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get("/invoices/{$invoice->id}/edit");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-    }
-
-    /** @test */
-    public function a_user_cannot_access_edit_invoice_page_for_other_users_invoices()
-    {
-        $user = User::factory()->user()->create();
-        $organization = Organization::factory()->create(['owner_id' => $user->id]);
-        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -78,6 +97,9 @@ class UpdateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -89,13 +111,17 @@ class UpdateInvoiceTest extends TestCase
     }
 
     /** @test */
-    public function a_invoice_cannot_be_associated_to_times_that_dont_belong_to_the_user_when_updating()
+    public function a_invoice_cannot_be_associated_to_times_that_dont_belong_to_the_user_organization_when_updating()
     {
         Event::fake();
 
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -161,6 +187,9 @@ class UpdateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -220,6 +249,10 @@ class UpdateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.edit-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
@@ -275,8 +308,64 @@ class UpdateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+        ]);
 
         $this->actingAs($user);
+
+        $invoice = Invoice::factory()->create(['user_id' => $user->id]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PAID,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PAID,
+        ]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PENDING,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PENDING,
+        ]);
+
+        $this->patch("/invoices/{$invoice->id}/updateStatus", [
+            'status' => Invoice::STATUS_PAST_DUE,
+        ]);
+
+        $this->assertDatabaseHas('invoices', [
+            'id' => $invoice->id,
+            'user_id' => $user->id,
+            'status' => Invoice::STATUS_PAST_DUE,
+        ]);
+
+        Event::assertDispatched(InvoiceUpdated::class);
+    }
+   
+    /** @test */
+    public function a_invoice_status_can_be_updated_by_a_subuser_with_permissions()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        
+        $subuser = User::factory()->user()->create();
+        $subuser->update(['organization_id' => $organization->id]);
+        $subuser->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.update-status-all')->first()->id, 
+        ]);
+
+        $this->actingAs($subuser);
 
         $invoice = Invoice::factory()->create(['user_id' => $user->id]);
 
@@ -319,6 +408,10 @@ class UpdateInvoiceTest extends TestCase
         $user = User::factory()->user()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.invoices.access')->first()->id, 
+            Permission::where('name', 'user.access.invoices.update-status-all')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 

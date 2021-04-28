@@ -54,7 +54,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
 
         Route::post('/', [SubuserController::class, 'store'])->middleware('permission:user.access.users.create', 'subusers_quota')->name('store');
 
-        Route::group(['prefix' => '{user}'], function () {
+        Route::group(['prefix' => '{user}', 'middleware' => 'model_belongs_to_user_organization:user'], function () {
             Route::get('/', [SubuserController::class, 'show'])
                 ->name('show')
                 ->middleware('not_organization_owner')
@@ -75,7 +75,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
             Route::delete('/', [SubuserController::class, 'destroy'])->middleware(['not_organization_owner', 'permission:user.access.users.delete'])->name('destroy');
         });
 
-        Route::group(['prefix' => '{deletedUser}', 'middleware' => 'permission:user.access.users.delete'], function () {
+        Route::group(['prefix' => '{deletedUser}', 'middleware' => ['permission:user.access.users.delete', 'model_belongs_to_user_organization:deletedUser']], function () {
             Route::patch('restore', [DeletedSubuserController::class, 'update'])->name('restore');
             Route::delete('permanently-delete', [DeletedSubuserController::class, 'destroy'])->name('permanently-delete');
         });
