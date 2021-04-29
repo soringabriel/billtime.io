@@ -118,6 +118,16 @@
     let startTime = getCookie('counterStartTime');
 
     (function(){
+        setTimeout(() => {
+            $("#saveTimeModal").on('show.bs.modal', function() {
+                document.getElementById("navsWrapper").style.position = "initial";
+            })
+
+            $("#saveTimeModal").on('hide.bs.modal', function() {
+                document.getElementById("navsWrapper").style.position = "sticky";
+            })
+        }, 500);
+
         var addTimeForm = document.getElementById("counterAddTimeForm");
 
         addTimeForm.addEventListener("submit", function(e){

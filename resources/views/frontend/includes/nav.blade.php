@@ -1,4 +1,4 @@
-<div class="sticky-top">
+<div class="sticky-top" id="navsWrapper">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar">
         <div class="container">
             <x-utils.link
