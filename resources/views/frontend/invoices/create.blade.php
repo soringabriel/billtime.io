@@ -69,8 +69,8 @@
                                                 <h2>@lang('Seller Information')</h2>
 
                                                 <div class="field-group field-group-required">
-                                                    <label for="sellerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                                    <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $organization->company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                                    <label for="sellerCompanyName" class="col-form-label">@lang('Seller Name')</label>
+                                                    <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $organization->company_name }}" class="form-control" placeholder="{{ __('Seller Name') }}" maxlength="255" required />
                                                 </div>
                                                 
                                                 <div class="field-group">
@@ -95,7 +95,7 @@
 
                                                 <div class="field-group">
                                                     <label for="sellerBankAccount" class="col-form-label">@lang('Bank Account')</label>
-                                                    <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $organization->bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
+                                                    <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $organization->bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" />
                                                 </div>
                                             </div>
 
@@ -112,8 +112,8 @@
                                                 </div>
 
                                                 <div class="field-group field-group-required">
-                                                    <label for="buyerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                                    <input id="buyerCompanyName" x-model="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                                    <label for="buyerCompanyName" class="col-form-label">@lang('Buyer Name')</label>
+                                                    <input id="buyerCompanyName" x-model="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') }}" class="form-control" placeholder="{{ __('Buyer Name') }}" maxlength="255" required />
                                                 </div>
                                                 
                                                 <div class="field-group">

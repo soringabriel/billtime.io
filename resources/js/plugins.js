@@ -158,6 +158,7 @@ $(function () {
         })
         $(".bulk-checkbox-values").each(function(){
             $(this).val(JSON.stringify(checked));
+            $(this)[0].dispatchEvent(new Event('change'));
         })
     })
 
@@ -171,6 +172,17 @@ $(function () {
                 $(this).prop('checked', false);
             })
         }
+        var values = [];
+        $(".bulk-checkbox").each(function(){
+            if ($(this).is(":checked")) {
+                values.push($(this).val());
+            }
+        });
+        console.log(values);
+        $(".bulk-checkbox-values").each(function(){
+            $(this).val(JSON.stringify(values));
+            $(this)[0].dispatchEvent(new Event('change'));
+        })
     })
 
     $("#checkAllRows").on('change', function(){
@@ -180,6 +192,7 @@ $(function () {
             })
             $(".bulk-checkbox-values").each(function(){
                 $(this).val($("#allRows").val());
+                $(this)[0].dispatchEvent(new Event('change'));
             })
         } else {
             $(".bulk-checkbox").each(function(){
@@ -187,9 +200,16 @@ $(function () {
             })
             $(".bulk-checkbox-values").each(function(){
                 $(this).val("[]");
+                $(this)[0].dispatchEvent(new Event('change'));
             })
         }
     })
+
+    $(".bulk-checkbox-values").on('change', function(){
+        setTimeout(() => {
+            $("#checkedTimesValues")[0].dispatchEvent(new Event('change'));
+        }, 1500);
+    });
 
 });
 

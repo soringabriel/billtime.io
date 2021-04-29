@@ -20,7 +20,7 @@ class CreateTimeTable extends Migration
             $table->timestamp('end_time')->nullable();
             $table->unsignedBigInteger('project_id');
             $table->string('task')->nullable();
-            $table->string('details');
+            $table->string('details')->nullable();
             $table->boolean('billed')->default(false);
             $table->timestamps();
 

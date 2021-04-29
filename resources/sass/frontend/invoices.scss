@@ -3,6 +3,7 @@ table#services {
         td {
             @include tablet-up {
                 padding-right: 10px;
+                padding-top: 16px;
             }
         }
     }

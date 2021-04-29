@@ -16,6 +16,7 @@ use App\Services\OrganizationService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Class UserService.
@@ -367,6 +368,7 @@ class UserService extends BaseService
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
             'organization_id' => $data['organization_id'] ?? null,
+            'api_token' => Str::random(60),
         ]);
         if (is_null($user->organization_id)) {
             $this->organizationService->store([

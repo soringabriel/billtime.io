@@ -30,7 +30,7 @@ class UpdateTimeRequest extends FormRequest
             'end_time' => ['required', 'date_format:Y-m-d H:i', 'before_or_equal:' . Carbon::now()->timezone(auth()->user()->timezone)],
             'project_id' => ['required', Rule::exists('projects', 'id')->where('organization_id', auth()->user()->organization()->first()->id)],
             'task' => ['max:255'],
-            'details' => ['required', 'max:255'],
+            'details' => ['max:255'],
         ];
     }
 }

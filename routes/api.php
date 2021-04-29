@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Frontend\TimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,14 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
+Route::group(['as' => 'user.api.time.', 'middleware' => [
+        'permission:user.access.times.access', 
+        'permission:user.access.times.automatic-time', 
+        'auth:api', 
+        'password.expires', 
+        config('boilerplate.access.middleware.verified')
+    ]
+], function () {
+    Route::post('/', [TimeController::class, 'store'])->name('store');
+}); 

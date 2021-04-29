@@ -60,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'provider',
         'provider_id',
         'organization_id',
+        'api_token',
     ];
 
     /**

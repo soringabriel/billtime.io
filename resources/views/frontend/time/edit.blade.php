@@ -42,11 +42,18 @@
                                     <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
 
                                     <div class="col-md-10">
-                                        <select name="project_id" class="form-control select2-project">
+                                        <select name="project_id" class="form-control select2-project mb-2">
                                             @foreach ($projects as $project) 
                                                 <option value="{{ $project->id }}" {{ ($project->id == $time->project_id ? 'selected' : '') }}>{{ $project->name }}</option>    
                                             @endforeach
                                         </select>
+                                        <x-utils.link
+                                            icon="c-icon cil-plus"
+                                            class="card-header-action"
+                                            :href="route('frontend.projects.create')"
+                                            :text="__('Add New Project')"
+                                            permission="user.access.projects.create"
+                                        />
                                     </div>
                                 </div><!--form-group-->
 

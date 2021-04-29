@@ -1,5 +1,6 @@
 @if (isset($this->bulk) && $this->bulk)
-    <input type="hidden" name="times" class="bulk-checkbox-values" value="{{ json_encode($this->preCheckedValues ?? []) }}">
+    <input type="hidden" name="times" wire:change="setCheckedValuesTime($event.target.value)" class="bulk-checkbox-values" value="{{ json_encode($this->preCheckedValues ?? []) }}">
+    <input type="hidden" id="checkedTimesValues" value="{{ isset($this->checkedValuesTime) ? $this->checkedValuesTime : 0 }}">
     <div x-show="selected > 0">
         <div class="row" x-show="selected > 0">
             <div class="col text-left text-muted">

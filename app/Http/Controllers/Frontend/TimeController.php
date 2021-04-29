@@ -12,6 +12,7 @@ use App\Http\Requests\Frontend\Time\DeleteTimeRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimesRequest;
 use App\Services\TimeService;
 use App\Models\Time;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class TimeController.
@@ -61,7 +62,14 @@ class TimeController extends Controller
      */
     public function store(StoreTimeRequest $request)
     {
-        $this->timeService->store($request->validated());
+        $result = $this->timeService->store($request->validated());
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result
+            ]);
+        }
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was added.'));
     }

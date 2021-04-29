@@ -11,8 +11,8 @@
         </div>
     </div>
 
-    <div class="alert alert-info">
-        @lang('The total associated times to this invoice amount to') <span x-text="associatedTime"></span>
+    <div class="alert alert-info" x-show="associatedTime != null && associatedTime != '1 second'">
+        @lang('The total associated times to this invoice amount to') <span id="associatedTimeInvoice" x-text="associatedTime" x-on:change="resetAssociatedTime()"></span>
     </div>
 
     <div class="form-group row">
@@ -36,28 +36,28 @@
                         }
                     @endphp
                     @foreach ($services as $service)
-                        <tr class="service-row">
+                        <tr class="service-row mb-2">
                             <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" value="{{ $service->name }}" maxlength="255" required /></td>
                             <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" value="{{ $service->units }}" maxlength="255" required /></td>
                             <td><input type="number" min="1" class="form-control service-quantity" value="{{ $service->quantity }}" required /></td>
-                            <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" value="{{ $service->price }}" required /></td>
+                            <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required /></td>
                             <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required /></td>
                             <td><span class="service-sub-total">{{ $service->total }}</span></td>
                             <td>
-                                <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
-                                <button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-danger remove-service-row mr-2" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                                <button class="btn btn-success add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                             </td>
                         </tr>
                     @endforeach
                 @else
-                    <tr class="service-row">
+                    <tr class="service-row mb-2">
                         <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
                         <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
                         <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                        <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required /></td>
+                        <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required /></td>
                         <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
                         <td><span class="service-sub-total">0</span></td>
-                        <td><button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button></td>
+                        <td><button class="btn btn-success add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
                     </tr>
                 @endif
             </table>
@@ -152,24 +152,25 @@
 
     function addServiceRow() {
         $("#services").append(`
-            <tr class="service-row">
+            <tr class="service-row mb-2">
                 <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
                 <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
                 <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Price for one unit') }}" required /></td>
+                <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required /></td>
                 <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
                 <td><span class="service-sub-total">0</span></td>
                 <td>
-                    <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
-                    <button class="btn btn-success add-service-row"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-danger remove-service-row mr-2" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-success add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                 </td>
             </tr>
         `);
-        if ($(".service-row").first().children(".remove-service-row").length == 0) {
-            $(".service-row").first().children("td").last().prepend(`
-                <button class="btn btn-danger remove-service-row"><i class="fas fa-times"></i></button>
+        if ($(".service-row").first().find(".remove-service-row").length == 0) {
+            $(".service-row").first().find("td").last().prepend(`
+                <button class="btn btn-danger remove-service-row mr-2"><i class="fas fa-times"></i></button>
             `);
-            $(".service-row").first().children("remove-service-row").on('click', function(){
+            $(".service-row").first().find(".remove-service-row").first().on('click', function(e){
+                e.preventDefault();
                 removeServiceRow($(this));
             })
         }
@@ -194,7 +195,7 @@
     }
 
     function initServices() {
-        var associatedTime = $(".total-time").first().html();
+        var associatedTime = $("#checkedTimesValues").val() ?? null;
 
         function jqueryInit() {
             $(".remove-service-row").on('click', function(e){
@@ -221,8 +222,8 @@
                 calculateTotal();
             })
 
-            $(".total-time").on('change', function(){
-                associatedTime = $(this).html();
+            $("#checkedTimesValues").on('change', function(){
+                $("#associatedTimeInvoice")[0].dispatchEvent(new Event('change'));
             })
 
             calculateTotal();
@@ -235,6 +236,9 @@
             tax: "{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}",
             shipping: "{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}",
             associatedTime: associatedTime,
+            resetAssociatedTime() {
+                this.associatedTime = $("#checkedTimesValues").val();
+            },
         }
     }
 </script>

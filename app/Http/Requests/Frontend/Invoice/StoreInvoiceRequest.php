@@ -30,7 +30,7 @@ class StoreInvoiceRequest extends FormRequest
             'seller_vat_number' => ['max:255'],
             'seller_address' => [],
             'seller_bank_name' => ['max:255'],
-            'seller_bank_account' => ['required'],
+            'seller_bank_account' => ['max:255'],
             'services' => ['required', 'json'],
             'tax' => ['required', 'integer', 'between:0,100'],
             'shipping' => ['nullable', 'min:0'],

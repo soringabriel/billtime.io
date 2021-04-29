@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($request->expectsJson()) {
+            return $this->renderAPI($request, $exception);
+        }
+
         if ($exception instanceof UnauthorizedException) {
             return redirect()
                 ->route(homeRoute())
@@ -62,6 +66,41 @@ class Handler extends ExceptionHandler
             return redirect()
                 ->route(homeRoute())
                 ->withFlashDanger(__('The requested resource was not found.'));
+        }
+
+        return parent::render($request, $exception);
+    }
+
+    /**
+     * Render an exception into an HTTP response for API requests.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function renderAPI($request, Throwable $exception)
+    {
+        if ($exception instanceof UnauthorizedException) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['message' => __('You do not have access to do that.')],
+            ]);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['message' => $exception->getMessage() ?? __('You do not have access to do that.')],
+            ]);
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['message' => __('The requested resource was not found.')],
+            ]);
         }
 
         return parent::render($request, $exception);
