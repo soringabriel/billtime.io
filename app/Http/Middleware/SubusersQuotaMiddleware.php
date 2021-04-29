@@ -23,7 +23,7 @@ class SubusersQuotaMiddleware
     public function handle($request, Closure $next)
     {
         $organization = auth()->user()->organization()->first();
-        if ($organization->subusers_quota == -1 || $organization->subusers_quota > $organization->users()->where('id', '<>', $organization->owner_id)->get()->count()) {
+        if ($organization->subusers_quota == -1 || $organization->subusers_quota > $organization->users()->where('id', '<>', $organization->owner_id)->onlyActive()->get()->count()) {
             return $next($request);
         }
         
