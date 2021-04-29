@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Domains\Auth\Models\User;
 
 /**
- * Class ParentUserMiddleware.
+ * Class SubusersQuotaMiddleware.
  */
-class ParentUserMiddleware
+class SubusersQuotaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,10 +22,11 @@ class ParentUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isParent()) {
+        $organization = auth()->user()->organization()->first();
+        if ($organization->subusers_quota == -1 || $organization->subusers_quota > $organization->users()->where('id', '<>', $organization->owner_id)->get()->count()) {
             return $next($request);
         }
         
-        return redirect()->route('frontend.index')->withFlashDanger(__("You don't have access to this page."));
+        return redirect()->route('frontend.user.subuser.index')->withFlashDanger(__("Your organization reached the subusers quota limit."));
     }
 }

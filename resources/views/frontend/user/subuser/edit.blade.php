@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" permission="user.access.users.access" />
                         </x-slot>
 
                         <x-slot name="body">
@@ -35,6 +35,8 @@
                                         <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
                                     </div>
                                 </div><!--form-group-->
+
+                                @include('frontend.user.subuser.includes.permissions')
                             </div>
                         </x-slot>
 

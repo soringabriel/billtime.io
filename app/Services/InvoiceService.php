@@ -60,7 +60,7 @@ class InvoiceService extends BaseService
                     'seller_vat_number' => ($data['seller_vat_number'] ?? null),
                     'seller_address' => ($data['seller_address'] ?? null),
                     'seller_bank_name' => ($data['seller_bank_name'] ?? null),
-                    'seller_bank_account' => $data['seller_bank_account'],
+                    'seller_bank_account' => ($data['seller_bank_account'] ?? null),
                     'services' => $data['services'],
                     'tax' => $data['tax'],
                     'shipping' => ($data['shipping'] ?? null),
@@ -113,7 +113,7 @@ class InvoiceService extends BaseService
                     'seller_vat_number' => ($data['seller_vat_number'] ?? null),
                     'seller_address' => ($data['seller_address'] ?? null),
                     'seller_bank_name' => ($data['seller_bank_name'] ?? null),
-                    'seller_bank_account' => $data['seller_bank_account'],
+                    'seller_bank_account' => ($data['seller_bank_account'] ?? null),
                     'services' => $data['services'],
                     'tax' => $data['tax'],
                     'shipping' => ($data['shipping'] ?? null),
@@ -226,7 +226,9 @@ class InvoiceService extends BaseService
         if (isset($invoice_data['seller_bank_name']) && !is_null($invoice_data['seller_bank_name'])) {
             $seller_properties['custom_fields']['bank name'] = $invoice_data['seller_bank_name'];
         }
-        $seller_properties['custom_fields']['bank account'] = $invoice_data['seller_bank_account'];
+        if (isset($invoice_data['seller_bank_account']) && !is_null($invoice_data['seller_bank_account'])) {
+            $seller_properties['custom_fields']['bank account'] = $invoice_data['seller_bank_account'];
+        }
         $seller = new Party($seller_properties);
 
         $items = [];

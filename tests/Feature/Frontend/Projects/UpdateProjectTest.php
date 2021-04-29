@@ -5,7 +5,9 @@ namespace Tests\Feature\Frontend\Project;
 use App\Events\Project\ProjectUpdated;
 use App\Models\Project;
 use App\Models\Client;
+use App\Models\Organization;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -21,48 +23,47 @@ class UpdateProjectTest extends TestCase
     public function only_an_user_can_access_the_edit_a_project_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
         
         $this->get("/projects/{$project->id}/edit")->assertRedirect('/login');
 
         $this->actingAs($user);
 
+        $this->get("/projects/{$project->id}/edit")->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
+
         $this->get("/projects/{$project->id}/edit")->assertOk();
     }
 
     /** @test */
-    public function a_subuser_cannot_access_the_list_of_the_projects()
+    public function a_user_cannot_access_edit_project_page_for_other_organization_projects()
     {
         $user = User::factory()->user()->create();
-
-        $client = Client::factory()->create(['user_id' => $user->id]);
-
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
-
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get("/projects/{$project->id}/edit");
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-    }
-
-    /** @test */
-    public function a_user_cannot_access_edit_project_page_for_other_users_projects()
-    {
-        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
         
         $this->get("/projects/{$project->id}/edit")->assertRedirect(route(homeRoute()));
     }
@@ -71,12 +72,18 @@ class UpdateProjectTest extends TestCase
     public function updating_a_project_requires_validation()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $response = $this->patch("/projects/{$project->id}");
 
@@ -84,19 +91,27 @@ class UpdateProjectTest extends TestCase
     }
     
     /** @test */
-    public function a_project_with_another_user_client_id_can_not_be_created()
+    public function a_project_with_another_organization_client_id_can_not_be_created()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $another_client = Client::factory()->create(['user_id' => $another_user->id]);
+        $another_client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
         $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',
@@ -112,14 +127,20 @@ class UpdateProjectTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
-        $client = Client::factory()->create(['user_id' => $user->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $project = Project::factory()->create(['user_id' => $user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
 
-        $another_client = Client::factory()->create(['user_id' => $user->id]);
+        $another_client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',
@@ -135,19 +156,27 @@ class UpdateProjectTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_update_another_user_project()
+    public function a_user_cannot_update_another_organization_project()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $client = Client::factory()->create(['user_id' => $another_user->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
 
-        $project = Project::factory()->create(['user_id' => $another_user->id, 'client_id' => $client->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
 
-        $another_client = Client::factory()->create(['user_id' => $user->id]);
+        $another_client = Client::factory()->create(['organization_id' => $organization->id]);
 
         $response = $this->patch("/projects/{$project->id}", [
             'name' => 'name',

@@ -17,6 +17,7 @@
                             class="card-header-action"
                             :href="route('frontend.invoices.create')"
                             :text="__('Add Invoice')"
+                            permission="user.access.invoices.create"
                         />
                     </x-slot>
 

@@ -98,45 +98,4 @@ class UserAccountTest extends TestCase
         // Double check
         $this->get('/account')->assertRedirect('/email/verify');
     }
-
-    /** @test */
-    public function a_user_can_update_their_company_details()
-    {
-        $user = User::factory()->create([
-            'name' => 'Jane Doe',
-        ]);
-
-        $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'name' => 'Jane Doe',
-            'company_name' => $user->company_name,
-            'tax_number' => $user->tax_number,
-            'vat_number' => $user->vat_number,
-            'address' => $user->address,
-            'bank_name' => $user->bank_name,
-            'bank_account' => $user->bank_account,
-        ]);
-
-        $response = $this->actingAs($user)
-            ->patch('/profile/updateCompanyDetails', [
-                'company_name' => 'company_name',
-                'tax_number' => 'tax_number',
-                'vat_number' => 'vat_number',
-                'address' => 'address',
-                'bank_name' => 'bank_name',
-                'bank_account' => 'bank_account',
-            ])->assertRedirect('/account?#information');
-
-        $response->assertSessionHas('flash_success', __('Company details successfully updated.'));
-
-        $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'company_name' => 'company_name',
-            'tax_number' => 'tax_number',
-            'vat_number' => 'vat_number',
-            'address' => 'address',
-            'bank_name' => 'bank_name',
-            'bank_account' => 'bank_account',
-        ]);
-    }
 }

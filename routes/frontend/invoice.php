@@ -7,7 +7,7 @@ use App\Models\Invoice;
 Route::group([
     'prefix' => 'invoices',
     'as' => 'invoices.',
-    'middleware' => ['parent_user', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['permission:user.access.invoices.access', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [InvoiceController::class, 'index'])
         ->name('index')
@@ -18,23 +18,25 @@ Route::group([
 
     Route::get('create', [InvoiceController::class, 'create'])
         ->name('create')
+        ->middleware('permission:user.access.invoices.create')
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.invoices.index')
                 ->push(__('Add Invoice'), route('frontend.invoices.create'));
     });
 
-    Route::post('/', [InvoiceController::class, 'store'])->name('store');
+    Route::post('/', [InvoiceController::class, 'store'])->middleware('permission:user.access.invoices.create')->name('store');
 
-    Route::group(['prefix' => '{invoice}', 'middleware' => 'model_belongs_to_user:invoice'], function () {
+    Route::group(['prefix' => '{invoice}', 'middleware' => ['model_belongs_to_user_organization:invoice']], function () {
         Route::get('edit', [InvoiceController::class, 'edit'])
             ->name('edit')
+            ->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')
             ->breadcrumbs(function (Trail $trail, Invoice $invoice) {
                 $trail->parent('frontend.invoices.index')
                     ->push(__('Editing :invoice', ['invoice' => $invoice->name]), route('frontend.invoices.edit', $invoice));
         });
-        Route::get('download', [InvoiceController::class, 'download'])->name('download');
-        Route::patch('/', [InvoiceController::class, 'update'])->name('update');
-        Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->name('updateStatus');
-        Route::delete('/', [InvoiceController::class, 'destroy'])->name('destroy');
+        Route::get('download', [InvoiceController::class, 'download'])->middleware('model_belongs_to_user:invoice,user.access.invoices.show-all')->name('download');
+        Route::patch('/', [InvoiceController::class, 'update'])->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')->name('update');
+        Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->middleware('model_belongs_to_user:invoice,user.access.invoices.update-status-all')->name('updateStatus');
+        Route::delete('/', [InvoiceController::class, 'destroy'])->middleware('model_belongs_to_user:invoice,user.access.invoices.delete-all')->name('destroy');
     });
 });

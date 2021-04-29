@@ -23,7 +23,7 @@ class TimesInvoiceJson implements Rule
         $times = json_decode($value);
 
         foreach ($times as $time) {
-            if (is_null(auth()->user()->times()->find($time))) {
+            if (is_null(auth()->user()->organization()->first()->times()->find($time))) {
                 return false;
             }
         }

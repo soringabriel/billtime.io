@@ -17,6 +17,7 @@
                             class="card-header-action"
                             :href="route('frontend.projects.create')"
                             :text="__('Add Project')"
+                            permission="user.access.projects.create"
                         />
                     </x-slot>
 

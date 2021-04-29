@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" permission="user.access.users.access" />
                         </x-slot>
 
                         <x-slot name="body">
@@ -51,6 +51,8 @@
                                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
                                     </div>
                                 </div><!--form-group-->
+
+                                @include('frontend.user.subuser.includes.permissions')
                             </div>
                         </x-slot>
 

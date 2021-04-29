@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.clients.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.clients.index')" :text="__('Cancel')" permission="user.access.clients.access" />
                         </x-slot>
 
                         <x-slot name="body">

@@ -1,0 +1,217 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Domains\Auth\Models\Permission;
+use App\Domains\Auth\Models\Role;
+use App\Domains\Auth\Models\User;
+use Database\Seeders\Traits\DisableForeignKeys;
+use Illuminate\Database\Seeder;
+
+/**
+ * Class NewPermissionsSeeder.
+ */
+class NewPermissionsSeeder extends Seeder
+{
+    use DisableForeignKeys;
+
+    /**
+     * Run the database seed.
+     */
+    public function run()
+    {
+        $this->disableForeignKeys();
+
+        $times = Permission::create([
+            'type' => User::TYPE_USER,
+            'name' => 'user.access.times',
+            'description' => 'Times Permissions',
+        ]);
+
+        $times->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.access',
+                'description' => 'Has Acces To Times',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.show-all',
+                'description' => 'Can View All Subusers Times',
+                'sort' => 2,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.edit-all',
+                'description' => 'Can Edit All Subusers Times',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.mark-billed',
+                'description' => 'Can Mark As Billed/Unbilled Times',
+                'sort' => 4,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.delete-all',
+                'description' => 'Can Delete All Subusers Times',
+                'sort' => 5,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.automatic-time',
+                'description' => 'Can Use Automatic Time',
+                'sort' => 6,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.times.export',
+                'description' => 'Can Export Times',
+                'sort' => 7,
+            ]),
+        ]);
+
+        $invoices = Permission::create([
+            'type' => User::TYPE_USER,
+            'name' => 'user.access.invoices',
+            'description' => 'Invoices Permissions',
+        ]);
+
+        $invoices->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.access',
+                'description' => 'Has Acces To Invoices',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.show-all',
+                'description' => 'Can View All Invoices',
+                'sort' => 2,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.create',
+                'description' => 'Can Create Invoices',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.edit-all',
+                'description' => 'Can Edit All Invoices',
+                'sort' => 4,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.update-status-all',
+                'description' => 'Can Update Status For All Invoices',
+                'sort' => 5,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.invoices.delete-all',
+                'description' => 'Can Delete All Invoices',
+                'sort' => 6,
+            ]),
+        ]);
+
+        $clients = Permission::create([
+            'type' => User::TYPE_USER,
+            'name' => 'user.access.clients',
+            'description' => 'Clients Permissions',
+        ]);
+
+        $clients->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.clients.access',
+                'description' => 'Has Acces To Clients',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.clients.create',
+                'description' => 'Can Create Clients',
+                'sort' => 2,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.clients.edit',
+                'description' => 'Can Edit Clients',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.clients.delete',
+                'description' => 'Can Delete Clients',
+                'sort' => 4,
+            ]),
+        ]);
+
+        $projects = Permission::create([
+            'type' => User::TYPE_USER,
+            'name' => 'user.access.projects',
+            'description' => 'Projects Permissions',
+        ]);
+
+        $projects->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.projects.access',
+                'description' => 'Has Acces To Projects',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.projects.create',
+                'description' => 'Can Create Projects',
+                'sort' => 2,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.projects.edit',
+                'description' => 'Can Edit Projects',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.projects.delete',
+                'description' => 'Can Delete Projects',
+                'sort' => 4,
+            ]),
+        ]);
+
+        $subusers = Permission::create([
+            'type' => User::TYPE_USER,
+            'name' => 'user.access.users',
+            'description' => 'Users Permissions',
+        ]);
+
+        $subusers->children()->saveMany([
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.users.access',
+                'description' => 'Has Acces To Users',
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.users.create',
+                'description' => 'Can Create Users',
+                'sort' => 2,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.users.edit',
+                'description' => 'Can Edit Users',
+                'sort' => 3,
+            ]),
+            new Permission([
+                'type' => User::TYPE_USER,
+                'name' => 'user.access.users.delete',
+                'description' => 'Can Delete Users',
+                'sort' => 4,
+            ]),
+        ]);
+
+        $this->enableForeignKeys();
+    }
+}

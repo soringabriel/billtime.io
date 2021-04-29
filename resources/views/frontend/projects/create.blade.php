@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.projects.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.projects.index')" :text="__('Cancel')" permission="user.access.projects.access" />
                         </x-slot>
 
                         <x-slot name="body">
@@ -32,11 +32,18 @@
                                     <label for="client_id" class="col-md-2 col-form-label">@lang('Client')</label>
 
                                     <div class="col-md-10">
-                                        <select name="client_id" class="form-control select2">
+                                        <select name="client_id" class="form-control select2 mb-2">
                                             @foreach ($clients as $client) 
                                                 <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'checked' : '' }}>{{ $client->name }}</option>    
                                             @endforeach
                                         </select>
+                                        <x-utils.link
+                                            icon="c-icon cil-plus"
+                                            class="card-header-action"
+                                            :href="route('frontend.clients.create')"
+                                            :text="__('Add Client')"
+                                            permission="user.access.clients.create"
+                                        />
                                     </div>
                                 </div><!--form-group-->
                             </div>

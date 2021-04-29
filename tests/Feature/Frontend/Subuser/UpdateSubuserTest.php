@@ -3,8 +3,9 @@
 namespace Tests\Feature\Backend\User;
 
 use App\Domains\Auth\Events\User\UserUpdated;
-use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -17,61 +18,70 @@ class UpdateSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_parent_user_can_access_the_edit_subuser_page()
+    public function a_user_with_permissions_can_access_the_edit_subuser_page()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
-        $response = $this->get('/subuser/'.$subuser->id.'/edit');
+        $this->get('/subuser/'.$subuser->id.'/edit')->assertRedirect(route(homeRoute()));
 
-        $response->assertOk();
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
+
+        $this->get('/subuser/'.$subuser->id.'/edit')->assertOk();
     }
     
     /** @test */
-    public function a_subuser_cant_access_the_edit_subuser_page()
+    public function a_user_cant_access_the_edit_subuser_page_for_another_user()
     {
         $user = User::factory()->user()->create();
-
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get('/subuser/'.$subuser->id.'/edit');
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-    }
-    
-    /** @test */
-    public function a_parent_user_cant_access_the_edit_subuser_page_for_another_user()
-    {
-        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $response = $this->get('/subuser/'.$another_user->id.'/edit');
 
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this model.'));
     }
         
     /** @test */
-    public function a_parent_user_cant_access_the_edit_subuser_page_for_another_users_subuser()
+    public function a_user_cant_access_the_edit_subuser_page_for_another_organization_subuser()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $another_organization->id]);
 
         $response = $this->get('/subuser/'.$subuser->id.'/edit');
 
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this model.'));
     }
 
     /** @test */
@@ -80,10 +90,16 @@ class UpdateSubuserTest extends TestCase
         Event::fake();
 
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $organization->id]);
 
         $this->patch("/subuser/{$subuser->id}", [
             'name' => 'John Doe',
@@ -94,46 +110,28 @@ class UpdateSubuserTest extends TestCase
             'id' => $subuser->id,
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'parent_user_id' => $user->id
+            'organization_id' => $organization->id
         ]);
 
         Event::assertDispatched(UserUpdated::class);
     }
-
-    /** @test */
-    public function a_subuser_cant_update_another_subuser()
-    {
-        $user = User::factory()->user()->create();
-
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
-
-        $this->actingAs($subuser);
-
-        $another_subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
-
-        $response = $this->patch("/subuser/{$another_subuser->id}", [
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-        ]);
-
-        $this->assertDatabaseHas('users', [
-            'id' => $another_subuser->id,
-            'name' => $another_subuser->name,
-            'email' => $another_subuser->email,
-            'parent_user_id' => $user->id
-        ]);
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
-    }
     
     /** @test */
-    public function a_parent_user_cant_update_another_user()
+    public function a_user_cant_update_another_user()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
         $response = $this->patch("/subuser/{$another_user->id}", [
             'name' => 'John Doe',
@@ -144,22 +142,30 @@ class UpdateSubuserTest extends TestCase
             'id' => $another_user->id,
             'name' => $another_user->name,
             'email' => $another_user->email,
-            'parent_user_id' => $another_user->parent_user_id,
+            'organization_id' => $another_organization->id,
         ]);
 
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this model.'));
     }
 
     /** @test */
-    public function a_parent_user_cant_update_another_users_subusers()
+    public function a_user_cant_update_another_organization_subusers()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+            Permission::where('name', 'user.access.users.edit')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 
         $another_user = User::factory()->user()->create();
+        $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
+        $another_user->update(['organization_id' => $another_organization->id]);
 
-        $subuser = User::factory()->user()->create(['parent_user_id' => $another_user->id]);
+        $subuser = User::factory()->user()->create(['organization_id' => $another_organization->id]);
 
         $response = $this->patch("/subuser/{$subuser->id}", [
             'name' => 'John Doe',
@@ -170,9 +176,9 @@ class UpdateSubuserTest extends TestCase
             'id' => $subuser->id,
             'name' => $subuser->name,
             'email' => $subuser->email,
-            'parent_user_id' => $another_user->id
+            'organization_id' => $another_organization->id
         ]);
 
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this User.'));
+        $response->assertSessionHas('flash_danger', __('You don\'t have access to this model.'));
     }
 }

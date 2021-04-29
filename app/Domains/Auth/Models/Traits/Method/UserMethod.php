@@ -105,24 +105,9 @@ trait UserMethod
     /**
      * @return bool
      */
-    public function isParent(): bool
+    public function isOrganizationOwner(): bool
     {
-        return is_null($this->parent_user_id);
-    }
-
-    /**
-     * @return int
-     */
-    public function getParentId(): int
-    {
-        return ($this->isParent() ? $this->id : $this->parent()->first()->id);
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getProjects(): Collection
-    {
-        return ($this->isParent() ? $this->projects()->get() : $this->parent()->first()->projects()->get());
+        $organization = $this->organization()->first();
+        return is_null($organization) ? false : $this->id == $organization->owner_id;
     }
 }

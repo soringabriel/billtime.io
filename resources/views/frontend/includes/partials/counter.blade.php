@@ -30,11 +30,18 @@
                         <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
 
                         <div class="col-md-10">
-                            <select name="project_id" class="form-control select2-project">
-                                @foreach ($projectModel::all() as $project) 
+                            <select name="project_id" class="form-control select2-project mb-2">
+                                @foreach ($projectModel::where('organization_id', $logged_in_user->organization_id)->get() as $project) 
                                     <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                 @endforeach
                             </select>
+                            <x-utils.link
+                                icon="c-icon cil-plus"
+                                class="card-header-action"
+                                :href="route('frontend.projects.create')"
+                                :text="__('Add New Project')"
+                                permission="user.access.projects.create"
+                            />
                         </div>
                     </div><!--form-group-->
 
@@ -50,9 +57,11 @@
                         <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
 
                         <div class="col-md-10">
-                            <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" required maxlength="255" />{{ old('details') }}</textarea>
+                            <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" maxlength="255" />{{ old('details') }}</textarea>
                         </div>
                     </div><!--form-group-->
+
+                    <div id="alertsWrapper"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
@@ -109,22 +118,50 @@
     let startTime = getCookie('counterStartTime');
 
     (function(){
+        setTimeout(() => {
+            $("#saveTimeModal").on('show.bs.modal', function() {
+                document.getElementById("navsWrapper").style.position = "initial";
+            })
+
+            $("#saveTimeModal").on('hide.bs.modal', function() {
+                document.getElementById("navsWrapper").style.position = "sticky";
+            })
+        }, 500);
+
         var addTimeForm = document.getElementById("counterAddTimeForm");
 
         addTimeForm.addEventListener("submit", function(e){
-            let startTimeValue = document.getElementById("counterStartTime").value;
-            let endTimeValue = document.getElementById("counterEndTime").value;
-
-            if (startTimeValue == "" || endTimeValue == "") {
-                e.preventDefault();
-            }
+            e.preventDefault();
 
             document.getElementById("counterStartTime").value = dateToYYYYMMDDHHIISS(new Date(startTime));
             document.getElementById("counterEndTime").value = dateToYYYYMMDDHHIISS(new Date());
 
-            setCookie('counterStartTime', "", -1);
-
-            addTimeForm.submit();
+            fetch("{{ route('user.api.time.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer {{ $logged_in_user->api_token }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(new FormData(addTimeForm))),
+            })
+            .then(response => response.text())
+            .then(result => {
+                result = JSON.parse(result);
+                if (result.success) {
+                    setCookie('counterStartTime', "", -1);
+                    location.reload();
+                } else {
+                    document.getElementById("alertsWrapper").innerHTML = "";
+                    for (var index in result.errors) {
+                        document.getElementById("alertsWrapper").innerHTML += "<div class='alert alert-danger mb-3' role='alert'>" + result.errors[index] + "</div>";
+                    }
+                    var buttons = document.querySelectorAll(".modal-footer .btn");
+                    buttons.forEach(function(button) {
+                        button.removeAttribute("disabled");
+                    });
+                }
+            })
         })
     })()
 

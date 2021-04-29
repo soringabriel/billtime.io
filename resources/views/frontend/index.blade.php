@@ -66,6 +66,8 @@
                                     <li class="nav-item">
                                         <a class="page-scroll open-chat" href="#">@lang('Contact')</a>
                                     </li>
+                                </ul>
+                                <ul class="navbar-nav m-auto">
                                     @auth
                                         @if ($logged_in_user->isUser())
                                             <li class="nav-item">
@@ -233,7 +235,7 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Freelancer Pro')</h5>
-                            <span class="price">$ 2,99</span>
+                            <span class="price">$ 3,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
@@ -259,7 +261,7 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Startup')</h5>
-                            <span class="price">$ 6,99</span>
+                            <span class="price">$ 9,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
@@ -285,7 +287,7 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Small Team')</h5>
-                            <span class="price">$ 19,99</span>
+                            <span class="price">$ 24,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">

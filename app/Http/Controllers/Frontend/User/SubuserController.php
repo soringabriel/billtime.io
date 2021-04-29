@@ -60,9 +60,8 @@ class SubuserController extends Controller
     public function create()
     {
         return view('frontend.user.subuser.create')
-            ->withRoles($this->roleService->get())
-            ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withGeneral($this->permissionService->getUncategorizedPermissions());
+            ->withCategories($this->permissionService->getCategorizedPermissions()->where('type', User::TYPE_USER)->whereIn('id', auth()->user()->permissions->modelKeys()))
+            ->withGeneral($this->permissionService->getUncategorizedPermissions()->where('type', User::TYPE_USER));
     }
 
     /**
@@ -77,7 +76,7 @@ class SubuserController extends Controller
         $data = $request->validated();
 
         $data['type'] = User::TYPE_USER;
-        $data['parent_user_id'] = auth()->id();
+        $data['organization_id'] = auth()->user()->organization()->first()->id;
         $data['send_confirmation_email'] = '1';
         $data['active'] = '1';
 
@@ -107,9 +106,8 @@ class SubuserController extends Controller
     {
         return view('frontend.user.subuser.edit')
             ->withUser($user)
-            ->withRoles($this->roleService->get())
-            ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withGeneral($this->permissionService->getUncategorizedPermissions())
+            ->withCategories($this->permissionService->getCategorizedPermissions()->where('type', User::TYPE_USER)->whereIn('id', auth()->user()->permissions->modelKeys()))
+            ->withGeneral($this->permissionService->getUncategorizedPermissions()->where('type', User::TYPE_USER))
             ->withUsedPermissions($user->permissions->modelKeys());
     }
 

@@ -59,13 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'to_be_logged_out',
         'provider',
         'provider_id',
-        'parent_user_id',
-        'company_name',
-        'tax_number',
-        'vat_number',
-        'address',
-        'bank_name',
-        'bank_account',
+        'organization_id',
+        'api_token',
     ];
 
     /**

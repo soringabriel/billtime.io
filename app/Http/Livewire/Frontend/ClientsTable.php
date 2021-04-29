@@ -33,7 +33,7 @@ class ClientsTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Client::query()->where('user_id', auth()->user()->id);
+        return Client::query()->where('organization_id', auth()->user()->organization()->first()->id);
     }
 
     /**

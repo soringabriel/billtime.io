@@ -29,13 +29,8 @@ class CreateUsersTable extends Migration
             $table->boolean('to_be_logged_out')->default(false);
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
-            $table->unsignedBigInteger('parent_user_id')->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('tax_number')->nullable();
-            $table->string('vat_number')->nullable();
-            $table->string('address')->nullable();
-            $table->string('bank_name')->nullable();
-            $table->string('bank_account')->nullable();
+            $table->unsignedBigInteger('organization_id')->nullable();
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

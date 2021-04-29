@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.invoices.index')" :text="__('Cancel')" />
+                            <x-utils.link class="card-header-action" :href="route('frontend.invoices.index')" :text="__('Cancel')" permission="user.access.invoices.access" />
                         </x-slot>
 
                         <x-slot name="body">
@@ -70,8 +70,8 @@
                                                 <h2>@lang('Seller Information')</h2>
 
                                                 <div class="field-group field-group-required">
-                                                    <label for="sellerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                                    <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $invoice->seller_company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                                    <label for="sellerCompanyName" class="col-form-label">@lang('Seller Name')</label>
+                                                    <input id="sellerCompanyName" type="text" name="seller_company_name" value="{{ old('seller_company_name') ?? $invoice->seller_company_name }}" class="form-control" placeholder="{{ __('Seller Name') }}" maxlength="255" required />
                                                 </div>
                                                 
                                                 <div class="field-group">
@@ -96,7 +96,7 @@
 
                                                 <div class="field-group">
                                                     <label for="sellerBankAccount" class="col-form-label">@lang('Bank Account')</label>
-                                                    <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $invoice->seller_bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" required />
+                                                    <input id="sellerBankAccount" type="text" name="seller_bank_account" value="{{ old('seller_bank_account') ?? $invoice->seller_bank_account }}" class="form-control" placeholder="{{ __('Bank Account') }}" maxlength="255" />
                                                 </div>
                                             </div>
 
@@ -104,8 +104,8 @@
                                                 <h2>@lang('Buyer Information')</h2>
 
                                                 <div class="field-group field-group-required">
-                                                    <label for="buyerCompanyName" class="col-form-label">@lang('Company Name')</label>
-                                                    <input id="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') ?? $invoice->buyer_company_name }}" class="form-control" placeholder="{{ __('Company Name') }}" maxlength="255" required />
+                                                    <label for="buyerCompanyName" class="col-form-label">@lang('Buyer Name')</label>
+                                                    <input id="buyerCompanyName" type="text" name="buyer_company_name" value="{{ old('buyer_company_name') ?? $invoice->buyer_company_name }}" class="form-control" placeholder="{{ __('Buyer Name') }}" maxlength="255" required />
                                                 </div>
                                                 
                                                 <div class="field-group">

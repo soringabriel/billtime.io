@@ -43,6 +43,9 @@ class InvoicesTable extends TableComponentExtended
      */
     public function query(): Builder
     {
+        if (auth()->user()->can('user.access.invoices.show-all')) {
+            return Invoice::query()->whereIn('user_id', auth()->user()->organization()->first()->users()->pluck('id'));
+        }
         return Invoice::query()->where('user_id', auth()->user()->id);
     }
 

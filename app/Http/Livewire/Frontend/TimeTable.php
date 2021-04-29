@@ -76,14 +76,20 @@ class TimeTable extends TableComponentExtended
     public $isInvoice = false;
 
     /**
-     * @var string
+     * @var array
      */
-    public $bulkDelete = 'frontend.time.bulkDestroy';
+    public $bulkDelete = [
+        'route' => 'frontend.time.bulkDestroy',
+        'permission' => 'user.access.times.delete-all',
+    ];
 
     /**
-     * @var string
+     * @var array
      */
-    public $bulkBill = 'frontend.time.bulkToggleBilled';
+    public $bulkBill = [
+        'route' => 'frontend.time.bulkToggleBilled',
+        'permission' => 'user.access.times.mark-billed',
+    ];
 
     /**
      * @var bool
@@ -96,12 +102,18 @@ class TimeTable extends TableComponentExtended
     public $preCheckedValues = [];
 
     /**
+     * @var integer
+     */
+    public $checkedValuesTime = 0;
+
+    /**
      * @var bool
      */
     public $hiddenDataBulk = [
         [
             'name' => 'times',
             'class' => 'bulk-checkbox-values',
+            'value' => "[]",
         ]
     ];
 
@@ -169,8 +181,10 @@ class TimeTable extends TableComponentExtended
         $this->isInvoice = $isInvoice;
         $this->bulkActions = $bulkActions;
         $this->bulk = $bulk;
-        $this->preCheckedValues = json_decode($preCheckedValues);
-        if (!$exports) {
+        $this->preCheckedValues = json_decode($preCheckedValues) ?? [];
+        $this->hiddenDataBulk[0]['value'] = json_encode($this->preCheckedValues ?? []);
+        $this->setCheckedValuesTime($this->preCheckedValues);
+        if (!$exports || !auth()->user()->can('user.access.times.export')) {
             $this->exports = [];
         }
     }
@@ -222,7 +236,9 @@ class TimeTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Time::query()->whereIn('user_id', array_merge([auth()->user()->id], auth()->user()->subUsers()->pluck('id')->toArray()));
+        $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
+        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+        return Time::query()->whereIn('user_id', $users);
     }
 
     /**
@@ -318,7 +334,6 @@ class TimeTable extends TableComponentExtended
         return $columns;
     }
 
-        
     /**
      * @return Builder
      */
@@ -339,5 +354,27 @@ class TimeTable extends TableComponentExtended
         }
 
         return $builder;
+    }
+
+    /**
+     * @return void
+     */
+    public function setCheckedValuesTime($checkedTimes)
+    {
+        if (!is_array($checkedTimes)) {
+            $checkedTimes = json_decode($checkedTimes);
+        }
+        $this->preCheckedValues = $checkedTimes;
+        $this->hiddenDataBulk[0]['value'] = json_encode($this->preCheckedValues ?? []);
+        $models = Time::whereIn('id', $checkedTimes)->get();
+        CarbonInterval::setCascadeFactors([
+            'minute' => [60, 'seconds'],
+            'hour' => [60, 'minutes'],
+        ]);
+        $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
+        foreach ($models as $model) {
+            $total->add(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)));
+        }
+        $this->checkedValuesTime = $total->cascade()->forHumans();
     }
 }

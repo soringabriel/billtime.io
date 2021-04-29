@@ -17,6 +17,7 @@
                             class="card-header-action"
                             :href="route('frontend.clients.create')"
                             :text="__('Add Client')"
+                            permission="user.access.clients.create"
                         />
                     </x-slot>
 

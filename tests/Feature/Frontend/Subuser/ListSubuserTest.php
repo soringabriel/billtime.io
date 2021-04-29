@@ -3,6 +3,8 @@
 namespace Tests\Feature\Backend\User;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,26 +16,20 @@ class ListSubuserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_parent_user_can_see_his_subusers()
+    public function a_user_with_permissions_can_see_subusers()
     {
         $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
 
         $this->actingAs($user);
 
+        $this->get('/subuser')->assertRedirect(route(homeRoute()));
+
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.users.access')->first()->id, 
+        ]);
+
         $this->get('/subuser')->assertOk();
-    }
-    
-    /** @test */
-    public function a_subuser_cant_see_the_subusers_page()
-    {
-        $user = User::factory()->user()->create();
-
-        $subuser = User::factory()->user()->create(['parent_user_id' => $user->id]);
-
-        $this->actingAs($subuser);
-
-        $response = $this->get('/subuser');
-
-        $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
     }
 }

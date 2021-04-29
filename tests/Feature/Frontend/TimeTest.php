@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Tests\TestCase;
 
 /**
@@ -15,7 +16,12 @@ class TimeTest extends TestCase
     {
         $this->get('/time')->assertRedirect('/login');
 
-        $this->actingAs(User::factory()->user()->create());
+        $user = User::factory()->user()->create();
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
+
+        $this->actingAs($user);
 
         $this->get('/time')->assertOk();
     }

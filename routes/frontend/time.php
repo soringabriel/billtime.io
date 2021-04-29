@@ -7,7 +7,7 @@ use App\Models\Time;
 Route::group([
     'prefix' => 'time',
     'as' => 'time.',
-    'middleware' => ['auth', 'password.expires', config('boilerplate.access.middleware.verified')],
+    'middleware' => ['permission:user.access.times.access', 'auth', 'password.expires', config('boilerplate.access.middleware.verified')],
 ], function () {
     Route::get('/', [TimeController::class, 'index'])
         ->name('index')
@@ -25,18 +25,19 @@ Route::group([
 
     Route::post('/', [TimeController::class, 'store'])->name('store');
 
-    Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user:time'], function () {
+    Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user_organization:time'], function () {
         Route::get('edit', [TimeController::class, 'edit'])
             ->name('edit')
+            ->middleware('model_belongs_to_user:time,user.access.times.edit-all')
             ->breadcrumbs(function (Trail $trail, Time $time) {
                 $trail->parent('frontend.time.index')
                     ->push(__('Editing :time', ['time' => $time->name]), route('frontend.time.edit', $time));
         });
-        Route::patch('/', [TimeController::class, 'update'])->name('update');
-        Route::patch('/toggleBilled', [TimeController::class, 'toggleBilled'])->name('toggleBilled');
-        Route::delete('/', [TimeController::class, 'destroy'])->name('destroy');
+        Route::patch('/', [TimeController::class, 'update'])->middleware('model_belongs_to_user:time,user.access.times.edit-all')->name('update');
+        Route::patch('/toggleBilled', [TimeController::class, 'toggleBilled'])->middleware('permission:user.access.times.mark-billed')->name('toggleBilled');
+        Route::delete('/', [TimeController::class, 'destroy'])->middleware('model_belongs_to_user:time,user.access.times.delete-all')->name('destroy');
     });
 
-    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['times']);
-    Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware('times');
+    Route::post('/toggleBilled', [TimeController::class, 'bulkToggleBilled'])->name('bulkToggleBilled')->middleware(['times', 'permission:user.access.times.mark-billed']);
+    Route::delete('/', [TimeController::class, 'bulkDestroy'])->name('bulkDestroy')->middleware(['times', 'permission:user.access.times.delete-all']);
 });

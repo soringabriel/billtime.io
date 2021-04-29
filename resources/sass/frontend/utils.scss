@@ -1,0 +1,5 @@
+.container {
+    @include desktop-1200 {
+        max-width: 1300px;
+    }
+}

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Middleware;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use Tests\TestCase;
 
 /**
@@ -14,7 +15,10 @@ class ToBeLoggedOutTest extends TestCase
     public function the_user_can_be_forced_logged_out()
     {
         $user = User::factory()->user()->create(['to_be_logged_out' => false]);
-
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
+        
         $this->actingAs($user);
 
         $this->get('/time')->assertOk();

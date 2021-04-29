@@ -48,7 +48,8 @@ class SubusersTable extends TableComponentExtended
     {
         $query = User::with('roles', 'twoFactorAuth')
             ->withCount('twoFactorAuth')
-            ->where('parent_user_id', auth()->id());
+            ->where('organization_id', auth()->user()->organization()->first()->id)
+            ->where('id', '<>', auth()->user()->id);
 
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();
@@ -92,24 +93,6 @@ class SubusersTable extends TableComponentExtended
                 })
                 ->format(function (User $model) {
                     return view('frontend.user.subuser.includes.2fa', ['user' => $model]);
-                }),
-            ColumnExtended::make(__('Roles'), 'roles_label')
-                ->searchable(function ($builder, $term) {
-                    return $builder->orWhereHas('roles', function ($query) use ($term) {
-                        return $query->where('name', 'like', '%'.$term.'%');
-                    });
-                })
-                ->format(function (User $model) {
-                    return $this->html($model->roles_label);
-                }),
-            ColumnExtended::make(__('Additional Permissions'), 'permissions_label')
-                ->searchable(function ($builder, $term) {
-                    return $builder->orWhereHas('permissions', function ($query) use ($term) {
-                        return $query->where('name', 'like', '%'.$term.'%');
-                    });
-                })
-                ->format(function (User $model) {
-                    return $this->html($model->permissions_label);
                 }),
             ColumnExtended::make(__('Actions'))
                 ->format(function (User $model) {

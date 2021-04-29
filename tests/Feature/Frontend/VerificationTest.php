@@ -3,6 +3,7 @@
 namespace Tests\Feature\Frontend;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Auth\Models\Permission;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -16,6 +17,9 @@ class VerificationTest extends TestCase
     public function an_unverified_user_cannot_access_dashboard()
     {
         $user = User::factory()->unconfirmed()->create();
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+        ]);
 
         $this->actingAs($user);
 

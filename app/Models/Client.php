@@ -32,7 +32,7 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'organization_id',
         'name',
         'company_name',
         'tax_number',
@@ -45,7 +45,7 @@ class Client extends Model
      * @var string[]
      */
     protected $with = [
-        'user',
+        'organization',
         'projects',
     ];
                 
