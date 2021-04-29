@@ -24,7 +24,6 @@ class PlanEventListener
                     'price' => $event->plan->price,
                     'currency' => $event->plan->currency,
                     'billing_type' => $event->plan->billing_type,
-                    'paddle_id' => $event->plan->paddle_id,
                     'subusers_quota' => $event->plan->subusers_quota,
                 ],
             ])
@@ -44,7 +43,6 @@ class PlanEventListener
                     'price' => $event->plan->price,
                     'currency' => $event->plan->currency,
                     'billing_type' => $event->plan->billing_type,
-                    'paddle_id' => $event->plan->paddle_id,
                     'subusers_quota' => $event->plan->subusers_quota,
                 ],
             ])

@@ -8,6 +8,9 @@ use App\Http\Requests\Backend\Plan\EditPlanRequest;
 use App\Http\Requests\Backend\Plan\UpdatePlanRequest;
 use App\Http\Requests\Backend\Plan\DeletePlanRequest;
 use App\Models\Plan;
+use App\Domains\Auth\Models\User;
+use App\Services\PlanService;
+use App\Domains\Auth\Services\PermissionService;
 
 /**
  * Class PlansController.
@@ -20,13 +23,20 @@ class PlansController
     protected $planService;
 
     /**
+     * @var PermissionService
+     */
+    protected $permissionService;
+
+    /**
      * PlansController constructor.
      *
      * @param  PlanService  $planService
+     * @param  PermissionService  $permissionService
      */
-    public function __construct(PlanService $planService)
+    public function __construct(PlanService $planService, PermissionService $permissionService)
     {
         $this->planService = $planService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -42,7 +52,9 @@ class PlansController
      */
     public function create()
     {
-        return view('backend.plan.create');
+        return view('backend.plan.create')            
+            ->withCategories($this->permissionService->getCategorizedPermissions())
+            ->withGeneral($this->permissionService->getUncategorizedPermissions());
     }
 
     /**
@@ -67,7 +79,11 @@ class PlansController
      */
     public function edit(EditPlanRequest $request, Plan $plan)
     {
-        return view('backend.plan.edit')->withPlan($plan);
+        return view('backend.plan.edit')
+            ->withPlan($plan)
+            ->withCategories($this->permissionService->getCategorizedPermissions())
+            ->withGeneral($this->permissionService->getUncategorizedPermissions())
+            ->withUsedPermissions($plan->permissions->modelKeys());
     }
 
     /**

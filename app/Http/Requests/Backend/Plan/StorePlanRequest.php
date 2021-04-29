@@ -4,6 +4,7 @@ namespace App\Http\Requests\Backend\Plan;
 
 use App\Models\Plan;
 use App\Models\PlanService;
+use App\Domains\Auth\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,7 +37,7 @@ class StorePlanRequest extends FormRequest
             'billing_type' => ['required', Rule::in(Plan::BILLING_TYPES)],
             'subusers_quota' => ['required', 'integer'],
             'permissions' => ['sometimes', 'array'],
-            'permissions.*' => [Rule::exists('permissions', 'id')->where('type', $this->type)],
+            'permissions.*' => [Rule::exists('permissions', 'id')->where('type', User::TYPE_USER)],
         ];
     }
 

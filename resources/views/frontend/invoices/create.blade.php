@@ -181,8 +181,7 @@
                 buyerAddress: "{{ old('buyerAddress') }}",
                 updateBuyer() {
                     var buyerDetails = JSON.parse(this.buyerClient);
-                    console.log(buyerDetails);
-                    this.buyerCompanyName = (buyerDetails.company_name ?? '');
+                    this.buyerCompanyName = (buyerDetails.company_name ?? buyerDetails.name ?? '');
                     this.buyerTaxNumber = (buyerDetails.tax_number ?? '');
                     this.buyerVatNumber = (buyerDetails.vat_number ?? '');
                     this.buyerAddress = (buyerDetails.address ?? '');

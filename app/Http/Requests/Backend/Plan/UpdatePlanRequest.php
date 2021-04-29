@@ -4,6 +4,7 @@ namespace App\Http\Requests\Backend\Plan;
 
 use App\Models\Plan;
 use App\Models\PlanService;
+use App\Domains\Auth\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,10 +25,9 @@ class UpdatePlanRequest extends FormRequest
             'name' => ['required', 'max:100', Rule::unique('plans')->ignore($this->request->get('name'), 'name')],
             'price' => ['required', 'max:100', 'min:0'],
             'currency' => ['required', 'max:3'],
-            'billing_type' => ['required', Rule::in(Plan::BILLING_TYPES)],
             'subusers_quota' => ['required', 'integer'],
             'permissions' => ['sometimes', 'array'],
-            'permissions.*' => [Rule::exists('permissions', 'id')->where('type', $this->type)],
+            'permissions.*' => [Rule::exists('permissions', 'id')->where('type', User::TYPE_USER)],
         ];
     }
 

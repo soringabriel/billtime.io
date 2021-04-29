@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Backend;
 
 use App\Models\Plan;
 use Illuminate\Database\Eloquent\Builder;
-use Rappasoft\LaravelLivewireTables\TableComponent;
+use App\Custom\LaravelLivewireTables\TableComponentExtended;
 use Rappasoft\LaravelLivewireTables\Traits\HtmlComponents;
-use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Custom\LaravelLivewireTables\Views\ColumnExtended;
 
 /**
  * Class PlansTable.
  */
-class PlansTable extends TableComponent
+class PlansTable extends TableComponentExtended
 {
     use HtmlComponents;
 
@@ -42,19 +42,19 @@ class PlansTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Name'))
+            ColumnExtended::make(__('Name'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Price'))
+            ColumnExtended::make(__('Price'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Currency'))
+            ColumnExtended::make(__('Currency'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Paddle Id'))
+            ColumnExtended::make(__('Paddle Id'))
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Actions'))
+            ColumnExtended::make(__('Actions'))
                 ->format(function (Plan $model) {
                     return view('backend.plan.includes.actions', ['model' => $model]);
                 }),

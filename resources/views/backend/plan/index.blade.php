@@ -18,7 +18,7 @@
         </x-slot>
 
         <x-slot name="body">
-            <livewire:plans-table />
+            <livewire:backend.plans-table />
         </x-slot>
     </x-backend.card>
 @endsection

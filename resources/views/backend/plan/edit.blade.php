@@ -1,4 +1,5 @@
 @inject('model', '\App\Models\Plan')
+@inject('userModel', '\App\Domains\Auth\Models\User')
 
 @extends('backend.layouts.app')
 
@@ -50,7 +51,17 @@
                         </div>
                     </div><!--form-group-->
 
-                    @include('backend.auth.includes.permissions')
+                    <div class="form-group row">
+                        <label for="permissions" class="col-md-2 col-form-label">@lang('Additional Permissions')</label>
+
+                        <div class="col-md-10">
+                            @include('backend.auth.role.includes.no-permissions-message')
+
+                            <div>
+                                @include('backend.auth.includes.partials.permission-type', ['type' => $userModel::TYPE_USER])
+                            </div>
+                        </div>
+                    </div><!--form-group-->
 
                 </div>
             </x-slot>

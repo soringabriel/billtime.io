@@ -108,3 +108,23 @@ if (! function_exists('currencyToSymbol')) {
         }
     }
 }
+
+if (! function_exists('billingTypeToPaddleId')) {
+    /**
+     * Returns a the paddle id of the plan based on the billing type
+     *
+     * @param $billing_type
+     *
+     * @return string
+     * @throws Exception
+     */
+    function billingTypeToPaddleId($billing_type)
+    {
+        $map = [
+            Plan::BILLING_TYPE_NONE => null,
+            Plan::BILLING_TYPE_MONTHLY => env('MONTHLY_PADDLE_ID'),
+            Plan::BILLING_TYPE_YEARLY => env('YEARLY_PADDLE_ID'),
+        ];
+        return $map[$billing_type];
+    }
+}

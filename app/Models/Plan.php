@@ -14,16 +14,17 @@ class Plan extends Model
         HasFactory,
         PlanRelationship;
 
-    public const BILLING_TYPE_NONE= 'none';
+    public const BILLING_TYPE_NONE = 'none';
     public const BILLING_TYPE_MONTHLY = 'monthly';
     public const BILLING_TYPE_YEARLY = 'yearly';
     public const BILLING_TYPES = [Plan::BILLING_TYPE_NONE, Plan::BILLING_TYPE_MONTHLY, Plan::BILLING_TYPE_YEARLY];
 
-    public const PADDLE_ID = [
-        Plan::BILLING_TYPE_NONE => null,
-        Plan::BILLING_TYPE_MONTHLY => env('MONTHLY_PADDLE_ID'),
-        Plan::BILLING_TYPE_YEARLY => env('YEARLY_PADDLE_ID'),
-    ];
+    /**
+     * The guard name that it's neccessary for the permissions association.
+     *
+     * @var string
+     */
+    protected $guard_name = 'web';
 
     /**
      * The table associated with the model.

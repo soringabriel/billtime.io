@@ -18,6 +18,14 @@
                 :text="__('Dashboard')" />
         </li>
 
+        <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('admin.plan.*'), 'c-open c-show') }}">
+            <x-utils.link
+                :href="route('admin.plan.index')"
+                icon="c-sidebar-nav-icon cil-bolt"
+                class="c-sidebar-nav-link"
+                :text="__('Plans')" />
+        </li>
+
         @if (
             $logged_in_user->hasAllAccess() ||
             (
