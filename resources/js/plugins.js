@@ -178,7 +178,6 @@ $(function () {
                 values.push($(this).val());
             }
         });
-        console.log(values);
         $(".bulk-checkbox-values").each(function(){
             $(this).val(JSON.stringify(values));
             $(this)[0].dispatchEvent(new Event('change'));
