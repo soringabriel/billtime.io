@@ -53,5 +53,6 @@ class StoreTimeRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422));
         }
+        parent::failedValidation($validator);
     }
 }

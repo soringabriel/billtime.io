@@ -1,6 +1,6 @@
 @inject('projectModel', '\App\Models\Project')
 
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top pt-3" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
     <div class="container">
         <span class="counter" x-text="counter"></span>
         <h5 class="d-md-block d-none">@lang('Track your time by using the buttons on the right!')</h5>

@@ -140,7 +140,7 @@ class UpdateTimeTest extends TestCase
 
         $response = $this->patch("/time/{$time->id}");
 
-        $response->assertSessionHasErrors(['start_time', 'end_time', 'details']);
+        $response->assertSessionHasErrors(['start_time', 'end_time']);
     }
 
     /** @test */

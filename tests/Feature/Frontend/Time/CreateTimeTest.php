@@ -54,7 +54,7 @@ class CreateTimeTest extends TestCase
         
         $response = $this->post('/time');
 
-        $response->assertSessionHasErrors(['start_time', 'end_time', 'details']);
+        $response->assertSessionHasErrors(['start_time', 'end_time']);
     }
 
     /** @test */

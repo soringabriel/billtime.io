@@ -57,7 +57,7 @@ class CreateInvoiceTest extends TestCase
         
         $response = $this->post('/invoices');
 
-        $response->assertSessionHasErrors(['number', 'buyer_company_name', 'seller_company_name', 'seller_bank_account', 'services', 'tax', 'currency', 'price', 'date']);
+        $response->assertSessionHasErrors(['number', 'buyer_company_name', 'seller_company_name', 'services', 'tax', 'currency', 'price', 'date']);
     }
 
     /** @test */
