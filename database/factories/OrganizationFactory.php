@@ -27,6 +27,7 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         return [
+            'plan_id' => env('DEFAULT_PLAN'),
             'company_name' => $this->faker->company,
             'tax_number' => $this->faker->asciify('********'),
             'vat_number' => $this->faker->asciify('********'),

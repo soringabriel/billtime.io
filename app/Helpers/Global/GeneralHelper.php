@@ -43,7 +43,7 @@ if (! function_exists('homeRoute')) {
             }
 
             if (auth()->user()->isUser()) {
-                return 'frontend.time.index';
+                return 'frontend.dashboard';
             }
         }
 

@@ -12,7 +12,7 @@ Route::group([
     Route::get('/', [InvoiceController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('frontend.dashboard')
                 ->push(__('Invoice Managment'), route('frontend.invoices.index'));
     });
 

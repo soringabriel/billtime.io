@@ -43,6 +43,7 @@ class OrganizationService extends BaseService
             $organization = $this->model::create(
                 [
                     'owner_id' => ($data['owner_id'] ?? auth()->id()),
+                    'plan_id' => env('DEFAULT_PLAN'),
                     'company_name' => ($data['company_name'] ?? null),
                     'tax_number' => ($data['tax_number'] ?? null),
                     'vat_number' => ($data['vat_number'] ?? null),

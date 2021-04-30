@@ -17,7 +17,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::get('account', [AccountController::class, 'index'])
         ->name('account')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('frontend.dashboard')
                 ->push(__('My Account'), route('frontend.user.account'));
         });
 
@@ -32,7 +32,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         Route::get('/', [SubuserController::class, 'index'])
             ->name('index')
             ->breadcrumbs(function (Trail $trail) {
-                $trail->parent('frontend.index')
+                $trail->parent('frontend.dashboard')
                     ->push(__('User Management'), route('frontend.user.subuser.index'));
             });
 

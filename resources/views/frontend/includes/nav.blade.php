@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar">
         <div class="container">
             <x-utils.link
-                :href="route('frontend.index')"
+                :href="route(homeRoute())"
                 class="navbar-brand">
                 <img src="{{ asset('img/presentation/logo-small.svg#full') }}" alt="Logo">
             </x-utils.link>

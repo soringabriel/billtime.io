@@ -12,7 +12,7 @@ Route::group([
     Route::get('/', [ClientController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('frontend.dashboard')
                 ->push(__('Client Managment'), route('frontend.clients.index'));
     });
 
