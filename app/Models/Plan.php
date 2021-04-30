@@ -53,6 +53,7 @@ class Plan extends Model
         'currency',
         'billing_type',
         'subusers_quota',
+        'trial_days',
     ];
                 
     /**

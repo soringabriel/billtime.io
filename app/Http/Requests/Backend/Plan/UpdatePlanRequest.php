@@ -26,6 +26,7 @@ class UpdatePlanRequest extends FormRequest
             'price' => ['required', 'max:100', 'min:0'],
             'currency' => ['required', 'max:3'],
             'subusers_quota' => ['required', 'integer'],
+            'trial_days' => ['required', 'integer'],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [Rule::exists('permissions', 'id')->where('type', User::TYPE_USER)],
         ];

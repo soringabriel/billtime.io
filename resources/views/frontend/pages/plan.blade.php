@@ -5,6 +5,7 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
+            <h1 class="mt-5 mb-3">@lang('Select Your Plan')</h1>
             <div class="col-md-12">
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Plan;
 use Carbon\Carbon;
 
 if (! function_exists('appName')) {

@@ -47,6 +47,7 @@ class PlanService extends BaseService
                     'currency' => $data['currency'],
                     'billing_type' => $data['billing_type'],
                     'subusers_quota' => $data['subusers_quota'],
+                    'trial_days' => $data['trial_days'],
                 ]
             );
             $plan->syncPermissions($data['permissions'] ?? []);
@@ -82,6 +83,7 @@ class PlanService extends BaseService
                     'currency' => $data['currency'] ?? $plan->currency,
                     'billing_type' => $data['billing_type'] ?? $plan->billing_type,
                     'subusers_quota' => $data['subusers_quota'] ?? $plan->subusers_quota,
+                    'trial_days' => $data['trial_days'],
                 ]
             );
             $plan->syncPermissions($data['permissions'] ?? []);

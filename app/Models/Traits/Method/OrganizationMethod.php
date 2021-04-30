@@ -42,11 +42,13 @@ trait OrganizationMethod
         }
 
         foreach ($daily as $key => $value) {
-            $daily[$key] = number_format($value->hours + $value->minutes / 100, 2);
+            $value = $value->cascade();
+            $daily[$key] = number_format($value->hours + ($value->minutes / 100), 2);
         }
 
         foreach ($monthly as $key => $value) {
-            $monthly[$key] = number_format($value->hours + $value->minutes / 100, 2);
+            $value = $value->cascade();
+            $monthly[$key] = number_format($value->hours + ($value->minutes / 100), 2);
         }
 
         $daily = array_slice($daily, -30, 30);

@@ -44,6 +44,14 @@
                         </ul>
                     </div>
                 @endif
+                @if (!$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
+                    <h2 class="mt-5">
+                        <x-utils.link
+                            :href="route('frontend.plan')"
+                            :text="__('Upgrade Your Plan')" />
+                        @lang('To Receive Extra Features')
+                    </h2>
+                @endif
                 @if ($logged_in_user->times()->count())
                     <div id="userTimesChart">
                         <h1 class="mt-5 mb-5">@lang('Your Times')</h1>

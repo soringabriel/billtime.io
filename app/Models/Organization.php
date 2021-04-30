@@ -7,12 +7,14 @@ use App\Models\Traits\Method\OrganizationMethod;
 use App\Models\Traits\Relationship\OrganizationRelationship;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Paddle\Billable;
 
 class Organization extends Model
 {
     use HasFactory,
         OrganizationMethod,
-        OrganizationRelationship;
+        OrganizationRelationship,
+        Billable;
 
     /**
      * The table associated with the model.
