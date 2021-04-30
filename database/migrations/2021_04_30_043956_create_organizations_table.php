@@ -17,6 +17,7 @@ class CreateOrganizationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('next_plan_id');
             $table->string('company_name')->nullable();
             $table->string('tax_number')->nullable();
             $table->string('vat_number')->nullable();
@@ -32,6 +33,11 @@ class CreateOrganizationsTable extends Migration
                 ->onDelete('cascade');
 
             $table->foreign('plan_id')
+                ->references('id')
+                ->on('plans')
+                ->onDelete('cascade');
+
+            $table->foreign('next_plan_id')
                 ->references('id')
                 ->on('plans')
                 ->onDelete('cascade');

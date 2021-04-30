@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Method\PlanMethod;
 use App\Models\Traits\Relationship\PlanRelationship;
 use Database\Factories\PlanFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ class Plan extends Model
 {
     use HasRoles,
         HasFactory,
+        PlanMethod,
         PlanRelationship;
 
     public const BILLING_TYPE_NONE = 'none';

@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Models\Traits\Method;
+
+use App\Models\Plan;
+use Illuminate\Support\HtmlString;
+
+/**
+ * Trait PlanMethod.
+ */
+trait PlanMethod
+{
+    /**
+     * @return bool
+     */
+    public function isBiggest(): bool
+    {
+        return is_null(Plan::where('price', '>', $this->price)->first());
+    }
+
+    /**
+     * @return HtmlString
+     */
+    public function getButton(Plan $plan, Plan $nextPlan): HtmlString
+    {
+        if ($plan->id == $nextPlan->id) {
+            if ($this->id == $plan->id) {   
+                return new HtmlString('<a class="btn btn-secondary">' . __('Current') . '</a>');
+            }
+            if ($this->price > $plan->price) {   
+                // To do either paylink either upgrade link based on if the plan is default or not
+                return new HtmlString('<a class="btn btn-primary">' . __('Upgrade') . '</a>');
+            }
+            if ($this->price < $plan->price) { 
+                // To do downgrade link  
+                return new HtmlString('<a class="btn btn-danger">' . __('Downgrade') . '</a>');
+            }
+        } else {
+            if ($this->id == $plan->id) {   
+                return new HtmlString('<a class="btn btn-success">' . __('Cancel Downgrade') . '</a>');
+            }
+            if ($this->id == $nextPlan->id) {   
+                return new HtmlString('<a class="btn btn-secondary">' . __('Starting on next billing') . '</a>');
+            }
+            if (($this->price < $nextPlan->price) || ($this->price > $nextPlan->price && $this->price < $plan->price)) {   
+                // To do downgrade link  
+                return new HtmlString('<a class="btn btn-primary">' . __('Downgrade') . '</a>');
+            }
+            if ($this->price > $plan->price) {   
+                // To do upgrade link
+                return new HtmlString('<a class="btn btn-primary">' . __('Upgrade') . '</a>');
+            }
+        }
+    }
+}

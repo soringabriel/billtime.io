@@ -11,4 +11,12 @@ Route::group([
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Dashboard'), route('frontend.dashboard'));
         });
+
+    Route::get('/plan', [PagesController::class, 'plan'])
+        ->name('plan')
+        ->middleware('organization_owner')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.dashboard')
+                ->push(__('Plan'), route('frontend.plan'));
+    });
 });

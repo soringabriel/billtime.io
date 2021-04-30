@@ -76,6 +76,15 @@
                 @endauth
 
                 <ul class="navbar-nav ml-auto">
+                    @if (!$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
+                        <li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.plan')"
+                                :text="__('Upgrade')"
+                                class="btn btn-success" />
+                        </li>
+                    @endif
+
                     @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                         <li class="nav-item dropdown">
                             <x-utils.link
@@ -132,6 +141,14 @@
                                     <x-utils.link
                                         :href="route('admin.dashboard')"
                                         :text="__('Administration')"
+                                        class="dropdown-item" />
+                                @endif
+
+                                @if ($logged_in_user->isOrganizationOwner())
+                                    <x-utils.link
+                                        :href="route('frontend.plan')"
+                                        :active="activeClass(Route::is('frontend.plan'))"
+                                        :text="__('Plan')"
                                         class="dropdown-item" />
                                 @endif
 

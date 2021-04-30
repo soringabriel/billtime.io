@@ -32,6 +32,14 @@ trait OrganizationRelationship
     /**
      * @return mixed
      */
+    public function nextPlan()
+    {
+        return $this->belongsTo(Plan::class, 'next_plan_id');
+    }
+
+    /**
+     * @return mixed
+     */
     public function users()
     {
         return $this->hasMany(User::class, 'organization_id');

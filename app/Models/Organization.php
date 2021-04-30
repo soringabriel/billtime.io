@@ -36,6 +36,7 @@ class Organization extends Model
     protected $fillable = [
         'owner_id',
         'plan_id',
+        'next_plan_id',
         'company_name',
         'tax_number',
         'vat_number',

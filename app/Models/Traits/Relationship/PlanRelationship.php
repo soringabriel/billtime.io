@@ -16,4 +16,12 @@ trait PlanRelationship
     {
         return $this->hasMany(Organization::class, 'plan_id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function organizationsNextPlan()
+    {
+        return $this->hasMany(Organization::class, 'next_plan_id');
+    }
 }

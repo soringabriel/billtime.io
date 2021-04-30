@@ -44,6 +44,7 @@ class OrganizationService extends BaseService
                 [
                     'owner_id' => ($data['owner_id'] ?? auth()->id()),
                     'plan_id' => env('DEFAULT_PLAN'),
+                    'next_plan_id' => env('DEFAULT_PLAN'),
                     'company_name' => ($data['company_name'] ?? null),
                     'tax_number' => ($data['tax_number'] ?? null),
                     'vat_number' => ($data['vat_number'] ?? null),
@@ -80,6 +81,8 @@ class OrganizationService extends BaseService
             $organization->update(
                 [
                     'owner_id' => ($data['owner_id'] ?? $organization->owner_id),
+                    'plan_id' => $data['plan_id'] ?? $organization->plan_id,
+                    'next_plan_id' => $data['next_plan_id'] ?? $organization->next_plan_id,
                     'company_name' => $data['company_name'],
                     'tax_number' => $data['tax_number'],
                     'vat_number' => $data['vat_number'],

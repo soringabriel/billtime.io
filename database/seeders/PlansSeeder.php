@@ -87,7 +87,7 @@ class PlansSeeder extends Seeder
         ]);
 
         $regular = Plan::create([
-            'name' => 'Startup',
+            'name' => 'Regular',
             'price' => 49.99,
             'currency' => 'USD',
             'billing_type' => Plan::BILLING_TYPE_MONTHLY,
