@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Method\OrganizationMethod;
 use App\Models\Traits\Relationship\OrganizationRelationship;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Organization extends Model
 {
     use HasFactory,
+        OrganizationMethod,
         OrganizationRelationship;
 
     /**

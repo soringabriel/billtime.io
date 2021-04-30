@@ -14,6 +14,9 @@ class PagesController extends Controller
      */
     public function dashboard()
     {
-        return view('frontend.pages.dashboard')->withOrganization(auth()->user()->organization()->first());
+        return view('frontend.pages.dashboard')
+            ->withOrganization(auth()->user()->organization()->first())
+            ->withTimesChartData(auth()->user()->getTimesChartData())
+            ->withOrganizationTimesChartData(auth()->user()->organization()->first()->getTimesChartData());
     }
 }
