@@ -40,7 +40,7 @@ trait PlanMethod
                 // To do either paylink either upgrade link based on if the plan is default or not
                 if ($plan->isDefault()) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
-                        ->returnTo(route('frontend.dashboard')) // Todo - Congratulations page
+                        ->returnTo(route('frontend.subscription.confirmation'))
                         ->withMetadata(['plan_id' => $this->id])
                         ->trialDays($this->trial_days)
                         ->create(

@@ -6,6 +6,7 @@ use App\Events\Organization\OrganizationCreated;
 use App\Events\Organization\OrganizationDeleted;
 use App\Events\Organization\OrganizationUpdated;
 use App\Models\Organization;
+use App\Models\Plan;
 use App\Exceptions\GeneralException;
 use App\Services\BaseService;
 use Exception;
@@ -119,5 +120,41 @@ class OrganizationService extends BaseService
         }
 
         throw new GeneralException(__('There was a problem deleting the Organization.'));
+    }
+
+    /**
+     * @param  Organization  $organization
+     * @param  Plan  $plan
+     *
+     * @return Organization
+     */
+    protected function upgrade(Organization $organization, Plan $plan): Organization
+    {
+        $subscription = $organization->subscription('default');
+
+        if (is_null($subscription)) {
+            return $this->update($organization, ['plan_id' => $plan->id]);
+        }
+
+        $organization_current_plan = $organization->plan()->first();
+        $organization_next_plan = $organization->nextPlan()->first();
+
+        try {
+            if ($plan->isDefault()) {
+                $organization->subscription('default')->updatePaddleSubscription(
+                    [
+                        'passthrough' => json_encode(['plan_id' => $plan->id]),
+                        'prorate' => false,
+                        'bill_immediately' => false,
+                        'quantity' => 1,
+                        'currency' => $plan->currency,
+                        'recurring_price' => $plan->price,
+                    ]
+                );
+            }
+
+        } catch (PaddleException $e) {
+            throw new GeneralException($e->getMessage());
+        }
     }
 }

@@ -1,0 +1,14 @@
+@extends('frontend.layouts.app')
+
+@section('title', __('Subscription Confirmation'))
+
+@section('content')
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1 class="mt-5">@lang('Thank you for subscribing to your new plan!')</h1>
+                <!-- To Do in the future: Feedback with rating for our product. Either here or through newsletter -->
+            </div><!--col-md-10-->
+        </div><!--row-->
+    </div><!--container-->
+@endsection
