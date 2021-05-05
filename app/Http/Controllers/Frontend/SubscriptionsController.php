@@ -4,12 +4,28 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
+use App\Services\OrganizationService;
 
 /**
  * Class SubscriptionsController.
  */
 class SubscriptionsController extends Controller
 {
+    /**
+     * @var OrganizationService
+     */
+    protected $organizationService;
+
+    /**
+     * SubscriptionsController constructor.
+     *
+     * @param  OrganizationService  $organizationService
+     */
+    public function __construct(OrganizationService $organizationService)
+    {
+        $this->organizationService = $organizationService;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -29,7 +45,14 @@ class SubscriptionsController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function upgrade()
+    public function updateSubscription(Plan $plan)
     {
+        $original_plan = auth()->user()->organization()->first()->plan()->first();
+
+        $this->organizationService->switchPlan(auth()->user()->organization()->first(), $plan);
+
+        $route = $plan->price > $original_plan->price ? 'frontend.subscription.confirmation' : 'frontend.plan';
+
+        return redirect()->route($route)->withFlashSuccess(__('Your subscriptions was updated.'));
     }
 }

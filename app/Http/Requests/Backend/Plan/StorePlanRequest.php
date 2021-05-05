@@ -36,7 +36,6 @@ class StorePlanRequest extends FormRequest
             'currency' => ['required', 'max:3'],
             'billing_type' => ['required', Rule::in(Plan::BILLING_TYPES)],
             'subusers_quota' => ['required', 'integer'],
-            'trial_days' => ['required', 'integer'],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [Rule::exists('permissions', 'id')->where('type', User::TYPE_USER)],
         ];

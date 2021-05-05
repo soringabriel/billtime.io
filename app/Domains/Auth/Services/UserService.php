@@ -377,7 +377,6 @@ class UserService extends BaseService
                 'owner_id' => $user->id,
             ]);
         }
-        $user->syncPermissions($organization->plan()->first()->permissions->modelKeys());
         return $user;
     }
 }

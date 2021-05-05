@@ -52,14 +52,6 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        <label for="trial_days" class="col-md-2 col-form-label">@lang('Trial Days')</label>
-
-                        <div class="col-md-10">
-                            <input type="number" name="trial_days" class="form-control" placeholder="{{ __('Trial Days') }}" value="{{ old('trial_days') ?? $plan->trial_days }}" required />
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
                         <label for="permissions" class="col-md-2 col-form-label">@lang('Additional Permissions')</label>
 
                         <div class="col-md-10">

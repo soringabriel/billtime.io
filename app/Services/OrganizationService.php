@@ -54,6 +54,7 @@ class OrganizationService extends BaseService
                     'bank_account' => ($data['bank_account'] ?? null),
                 ]
             );
+            $this->updateOrganizationPermissions($organization);
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem creating the Organization.'));
@@ -81,18 +82,19 @@ class OrganizationService extends BaseService
         try {
             $organization->update(
                 [
-                    'owner_id' => ($data['owner_id'] ?? $organization->owner_id),
+                    'owner_id' => $data['owner_id'] ?? $organization->owner_id,
                     'plan_id' => $data['plan_id'] ?? $organization->plan_id,
                     'next_plan_id' => $data['next_plan_id'] ?? $organization->next_plan_id,
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
-                    'bank_name' => $data['bank_name'],
-                    'bank_account' => $data['bank_account'],
-                    'subusers_quota' => ($data['subusers_quota'] ?? $organization->subusers_quota),
+                    'company_name' => $data['company_name'] ?? $organization->company_name,
+                    'tax_number' => $data['tax_number'] ?? $organization->tax_number,
+                    'vat_number' => $data['vat_number'] ?? $organization->vat_number,
+                    'address' => $data['address'] ?? $organization->address,
+                    'bank_name' => $data['bank_name'] ?? $organization->bank_name,
+                    'bank_account' => $data['bank_account'] ?? $organization->bank_account,
+                    'subusers_quota' => $data['subusers_quota'] ?? $organization->subusers_quota,
                 ]
             );
+            $this->updateOrganizationPermissions($organization);
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem updating the Organization.'));
@@ -124,35 +126,50 @@ class OrganizationService extends BaseService
 
     /**
      * @param  Organization  $organization
+     *
+     * @return void
+     * @throws GeneralException
+     * @throws \Throwable
+     */
+    public function updateOrganizationPermissions(Organization $organization): void
+    {
+        $owner = $organization->owner()->first();
+        $users = $organization->users()->where('users.id', '<>', $owner->id)->get();
+        $plan_permissions = $organization->plan()->first()->permissions->modelKeys();
+        $owner->syncPermissions($plan_permissions);
+        foreach ($users as $user) {
+            $user->syncPermissions(array_intersect($plan_permissions, $user->permissions->modelKeys()));
+        }
+    }
+
+    /**
+     * @param  Organization  $organization
      * @param  Plan  $plan
      *
-     * @return Organization
+     * @return void
      */
-    protected function upgrade(Organization $organization, Plan $plan): Organization
+    public function switchPlan(Organization $organization, Plan $plan): void
     {
         $subscription = $organization->subscription('default');
 
         if (is_null($subscription)) {
-            return $this->update($organization, ['plan_id' => $plan->id]);
+            throw new GeneralException(__("The organization does not have a valid subscription."));
         }
 
         $organization_current_plan = $organization->plan()->first();
         $organization_next_plan = $organization->nextPlan()->first();
 
         try {
-            if ($plan->isDefault()) {
-                $organization->subscription('default')->updatePaddleSubscription(
-                    [
-                        'passthrough' => json_encode(['plan_id' => $plan->id]),
-                        'prorate' => false,
-                        'bill_immediately' => false,
-                        'quantity' => 1,
-                        'currency' => $plan->currency,
-                        'recurring_price' => $plan->price,
-                    ]
-                );
-            }
-
+            $organization->subscription('default')->updatePaddleSubscription(
+                [
+                    'passthrough' => json_encode(['plan_id' => $plan->id]),
+                    'prorate' => false,
+                    'bill_immediately' => ($plan->price > $organization_current_plan->price ? true : false),
+                    'quantity' => 1,
+                    'currency' => $plan->currency,
+                    'recurring_price' => $plan->price,
+                ]
+            );
         } catch (PaddleException $e) {
             throw new GeneralException($e->getMessage());
         }

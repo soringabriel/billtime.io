@@ -10,6 +10,7 @@ use Tabuna\Breadcrumbs\Trail;
  */
 Route::get('/', [HomeController::class, 'index'])
     ->name('index')
+    ->middleware('guest')
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('frontend.index'));
     });

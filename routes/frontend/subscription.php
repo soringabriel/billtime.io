@@ -21,4 +21,8 @@ Route::group([
             $trail->parent('frontend.dashboard')
                 ->push(__('Confirmation'), route('frontend.subscription.confirmation'));
     });
+
+    Route::group(['prefix' => '{plan}'], function () {
+        Route::get('/update', [SubscriptionsController::class, 'updateSubscription'])->name('update');
+    });
 });

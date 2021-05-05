@@ -32,7 +32,6 @@ class PlanFactory extends Factory
             'currency' => $this->faker->currencyCode,
             'billing_type' => $this->faker->randomElement(Plan::BILLING_TYPES),
             'subusers_quota' => -1,
-            'trial_days' => 14,
         ];
     }
 }

@@ -33,6 +33,8 @@ class PagesController extends Controller
         }
         $organization = auth()->user()->organization()->first();
         return view('frontend.pages.plan')
+            ->withOrganization($organization)
+            ->withSubscription($organization->subscription('default'))
             ->withUserPlan($organization->plan()->first())
             ->withUserNextPlan($organization->nextPlan()->first())
             ->withAssociatedPlans($associated_array_plans);

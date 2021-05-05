@@ -21,7 +21,6 @@ class CreatePlansTable extends Migration
             $table->string('currency');
             $table->enum('billing_type', Plan::BILLING_TYPES)->default(Plan::BILLING_TYPE_MONTHLY);
             $table->integer('subusers_quota')->default(0);
-            $table->integer('trial_days')->default(0);
             $table->timestamps();
         });
     }

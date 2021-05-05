@@ -105,7 +105,7 @@
                             <h3 class="header-title">@lang('TimoTrack')</h3>
                             <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="#pricing">@lang('Free 14 days trial')</a></li>
+                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="#pricing">@lang('Free first month trial')</a></li>
                                 <li><a class="main-btn btn-two page-scroll" href="#about">@lang('Read more about us')</a></li>
                             </ul>
                         </div> <!-- header content -->
@@ -245,7 +245,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -271,7 +271,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 3 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -297,7 +297,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 10 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -323,7 +323,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 50 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -349,7 +349,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Unlimited users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">

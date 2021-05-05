@@ -12,6 +12,19 @@ use Carbon\CarbonInterval;
 trait OrganizationMethod
 {
     /**
+     * @return bool
+     */
+    public function hasCompanyDetails(): bool
+    {
+        return !is_null($this->company_name) ||
+            !is_null($this->tax_number) ||
+            !is_null($this->vat_number) ||
+            !is_null($this->address) ||
+            !is_null($this->bank_name) ||
+            !is_null($this->bank_account);
+    }
+
+    /**
      * @return array
      */
     public function getTimesChartData(): array

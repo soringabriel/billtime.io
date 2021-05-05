@@ -77,7 +77,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     @auth
-                        @if (!$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
+                        @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
                             <li class="nav-item">
                                 <x-utils.link
                                     :href="route('frontend.plan')"

@@ -59,6 +59,7 @@ trait UserRelationship
      */
     public function plan()
     {
-        return $this->organization()->first()->plan();
+        $organization = $this->organization()->first();
+        return is_null($organization) ? null : $organization->plan();
     }
 }

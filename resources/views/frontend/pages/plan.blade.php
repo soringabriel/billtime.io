@@ -22,7 +22,9 @@
                                     <li><i class="fas fa-times"></i> @lang('No Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Free of costs')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('Free of costs')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -48,7 +50,9 @@
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('14 Days Free Trial')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -74,7 +78,9 @@
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 3 users')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('14 Days Free Trial')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -100,7 +106,9 @@
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 10 users')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('14 Days Free Trial')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -126,7 +134,9 @@
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 50 users')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('14 Days Free Trial')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -152,7 +162,9 @@
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Unlimited users')</li>
                                     <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
-                                    <li><i class="fas fa-check"></i> @lang('14 Days Free Trial')</li>
+                                    @if (is_null($subscription))
+                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -169,6 +181,7 @@
                 <div class="alert alert-info mt-5">
                     @lang('Subscriptions flow information:')
                     <ul class="mt-3">
+                        <li>@lang('The first month free trial is available only for the first subscription of the user')</li>
                         <li>@lang('If a subscription invoice goes past due, you still get to use the current plan with all it\'s features, untill the subscription is cancelled')</li>
                         <li>@lang('If you downgrade to a plan that offers less features, the downgrade will take place at the end of the current billing period, and until then you will still be able to use all of the features of your current plan')</li>
                         <li>@lang('If you downgrade to a plan that offers less users and you currently have more users than the limit of the new plan, when the downgrade occurs, some of your users will be deactivated so that the limit will be matched.')</li>

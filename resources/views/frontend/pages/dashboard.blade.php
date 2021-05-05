@@ -10,7 +10,7 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                @if ($logged_in_user->clients()->count() == 0 || $logged_in_user->projects()->count() == 0 || $organization->created_at == $organization->updated_at)
+                @if ($logged_in_user->clients()->count() == 0 || $logged_in_user->projects()->count() == 0 || !$organization->hasCompanyDetails())
                     <div id="onboarding">
                         <h1 class="mt-3 mb-5">@lang('Welcome to TimoTrack')</h1>
                         <h4 class="mb-5">@lang('Before you can start tracking your time there are a few more steps that you need to complete!')</h4>
@@ -34,7 +34,7 @@
                                     />
                                 </li>
                             @endif
-                            @if ($organization->created_at == $organization->updated_at)
+                            @if (!$organization->hasCompanyDetails())
                                 <li>
                                     <x-utils.link
                                         :href="route('frontend.user.account') . '#organization'"
@@ -64,7 +64,7 @@
                 @else
                     <h3 class="mt-5">@lang('You don\'t have any tracked times yet!')</h3>
                 @endif
-                @if ($logged_in_user->can('user.access.times.show-all'))
+                @if ($logged_in_user->can('user.access.times.show-all') && $logged_in_user->organization()->first()->times()->count())
                     <div id="organizationTimesChart">
                         <h1 class="mt-5 mb-5">@lang('Organization Times')</h1>
 
