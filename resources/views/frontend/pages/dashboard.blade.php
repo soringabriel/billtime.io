@@ -98,6 +98,16 @@
                         borderColor: 'rgb(153, 102, 255)',
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                min: 0,
+                            },
+                        }]
+                    }
                 }
             };
 
@@ -131,6 +141,16 @@
                         ],
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                min: 0,
+                            },
+                        }]
+                    }
                 }
             };
 
@@ -153,6 +173,16 @@
                             borderColor: 'rgb(153, 102, 255)',
                             borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    min: 0,
+                                },
+                            }]
+                        }
                     }
                 };
 
@@ -186,6 +216,16 @@
                             ],
                             borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    min: 0,
+                                },
+                            }]
+                        }
                     }
                 };
 

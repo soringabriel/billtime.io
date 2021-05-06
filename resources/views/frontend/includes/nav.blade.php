@@ -152,6 +152,12 @@
                                         :active="activeClass(Route::is('frontend.plan'))"
                                         :text="__('Plan')"
                                         class="dropdown-item" />
+
+                                    <x-utils.link
+                                        :href="route('frontend.receipts')"
+                                        :active="activeClass(Route::is('frontend.receipts'))"
+                                        :text="__('Receipts')"
+                                        class="dropdown-item" />
                                 @endif
 
                                 <x-utils.link

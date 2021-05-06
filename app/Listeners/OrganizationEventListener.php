@@ -55,7 +55,7 @@ class OrganizationEventListener
         $owner = $event->organization->owner()->first();
         $users = $event->organization->users()->onlyActive()->where('users.id', '<>', $owner->id)->get();
         $subusers_quota = $event->organization->subusers_quota;
-        while (count($users) > $subusers_quota) {
+        while (count($users) > $subusers_quota && $subusers_quota >= 0) {
             $this->userService->delete($users[$subusers_quota]);
             $subusers_quota++;
         }

@@ -32,11 +32,24 @@ class PagesController extends Controller
             $associated_array_plans[$plan->name] = $plan;
         }
         $organization = auth()->user()->organization()->first();
+        $updateUrl = null;
+        if ($organization->subscribed('default')) {
+            $updateUrl = $organization->subscription('default')->updateUrl();
+        }
         return view('frontend.pages.plan')
             ->withOrganization($organization)
             ->withSubscription($organization->subscription('default'))
+            ->withUpdateUrl($updateUrl)
             ->withUserPlan($organization->plan()->first())
             ->withUserNextPlan($organization->nextPlan()->first())
             ->withAssociatedPlans($associated_array_plans);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function receipts()
+    {
+        return view('frontend.pages.receipts');
     }
 }

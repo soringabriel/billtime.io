@@ -6,6 +6,13 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <h1 class="mt-5 mb-3">@lang('Select Your Plan')</h1>
+            <div class="col-md-12 text-center">
+                @if (!is_null($updateUrl))
+                    <x-paddle-button :url="$updateUrl" class="px-8 py-4 h5" data-theme="none">
+                        @lang('Update Card Information')
+                    </x-paddle-button>
+                @endif
+            </div>
             <div class="col-md-12">
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
@@ -40,7 +47,7 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Freelancer Pro')</h5>
-                                <span class="price">$ 3,99</span>
+                                <span class="price">$ 4,99</span>
                                 <p class="year">@lang('per month')</p>
                             </div>
                             <div class="pricing-list">

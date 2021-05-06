@@ -18,5 +18,11 @@ Route::group([
         ->breadcrumbs(function (Trail $trail) {
             $trail->parent('frontend.dashboard')
                 ->push(__('Plan'), route('frontend.plan'));
-    });
+        });
+
+    Route::get('/receipts', [PagesController::class, 'receipts'])
+        ->name('receipts')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Dashboard'), route('frontend.dashboard'));
+        });
 });

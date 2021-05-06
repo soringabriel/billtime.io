@@ -235,7 +235,7 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Freelancer Pro')</h5>
-                            <span class="price">$ 3,99</span>
+                            <span class="price">$ 4,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">

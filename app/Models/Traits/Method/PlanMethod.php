@@ -58,7 +58,7 @@ trait PlanMethod
                         );
                     return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } else {
-                    return new HtmlString('<a name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
+                    return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
                 }
             }
             if ($this->price < $plan->price) { 
@@ -95,7 +95,7 @@ trait PlanMethod
                         );
                     return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } 
-                return new HtmlString('<a name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
+                return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
             }
         }
     }
