@@ -38,7 +38,7 @@ trait PlanMethod
                 return new HtmlString('<a class="btn btn-secondary">' . __('Current') . '</a>');
             }
             if ($this->price > $plan->price) {   
-                if ($plan->isDefault() || is_null($organization_subscription)) {
+                if (is_null($organization_subscription)) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
                         ->returnTo(route('frontend.subscription.confirmation'))
                         ->withMetadata(['plan_id' => $this->id])
@@ -50,7 +50,7 @@ trait PlanMethod
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,
                                 ],
-                                'title' => $this->name,
+                                'custom_message' => __('Monthly Subscription For ') . $this->name,
                                 'vat_number' => $organization->vat_number,
                                 'vat_company_name' => $organization->company_name,
                                 'customer_email' => auth()->user()->email,
@@ -58,7 +58,7 @@ trait PlanMethod
                         );
                     return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } else {
-                    return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
+                    return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . __(' + VAT') . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
                 }
             }
             if ($this->price < $plan->price) { 
@@ -87,7 +87,7 @@ trait PlanMethod
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,
                                 ],
-                                'title' => $this->name,
+                                'custom_message' => __('Monthly Subscription For ') . $this->name,
                                 'vat_number' => $organization->vat_number,
                                 'vat_company_name' => $organization->company_name,
                                 'customer_email' => auth()->user()->email,
@@ -95,7 +95,7 @@ trait PlanMethod
                         );
                     return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } 
-                return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
+                return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . __(' + VAT') . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-primary">' . __('Upgrade') . '</a>');
             }
         }
     }
