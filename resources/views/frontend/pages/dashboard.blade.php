@@ -10,13 +10,18 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                @if ($logged_in_user->clients()->count() == 0 || $logged_in_user->projects()->count() == 0 || !$organization->hasCompanyDetails())
+                @if ($organization->start_period)
+                    <h5 class="mt-3 mb-5 alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
+                @endif
+                @if (($logged_in_user->clients()->count() == 0 && $logged_in_user->can('user.access.clients.create')) || 
+                    ($logged_in_user->projects()->count() == 0 && $logged_in_user->can('user.access.projects.create')) || 
+                    (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner()))
                     <div id="onboarding">
                         <h1 class="mt-3 mb-5">@lang('Welcome to TimoTrack')</h1>
                         <h4 class="mb-5">@lang('Before you can start tracking your time there are a few more steps that you need to complete!')</h4>
 
                         <ol class="stepper">
-                            @if ($logged_in_user->clients()->count() == 0)
+                            @if ($logged_in_user->clients()->count() == 0 && $logged_in_user->can('user.access.clients.create'))
                                 <li>
                                     <x-utils.link
                                         :href="route('frontend.clients.create')"
@@ -25,7 +30,7 @@
                                     />
                                 </li>
                             @endif
-                            @if ($logged_in_user->projects()->count() == 0)
+                            @if ($logged_in_user->projects()->count() == 0 && $logged_in_user->can('user.access.projects.create'))
                                 <li>
                                     <x-utils.link
                                         :href="route('frontend.projects.create')"
@@ -34,7 +39,7 @@
                                     />
                                 </li>
                             @endif
-                            @if (!$organization->hasCompanyDetails())
+                            @if (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner())
                                 <li>
                                     <x-utils.link
                                         :href="route('frontend.user.account') . '#organization'"
@@ -49,30 +54,34 @@
                         <x-utils.link
                             :href="route('frontend.plan')"
                             :text="__('Upgrade Your Plan')" />
-                        @lang('To Receive Extra Features')
+                        @if (!$organization->start_period)
+                            @lang('To Receive Extra Features')
+                        @endif
                     </h2>
                 @endif
-                @if ($logged_in_user->times()->count())
-                    <div id="userTimesChart">
-                        <h1 class="mt-5 mb-5">@lang('Your Times')</h1>
+                @if ($logged_in_user->can('user.access.times.access'))
+                    @if ($logged_in_user->times()->count())
+                        <div id="userTimesChart">
+                            <h1 class="mt-5 mb-5">@lang('Your Times')</h1>
 
-                        <div class="row">
-                            <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerDay" width="400" height="300"></canvas></div>
-                            <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerMonth" width="400" height="300"></canvas></div>
+                            <div class="row">
+                                <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerDay" width="400" height="300"></canvas></div>
+                                <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerMonth" width="400" height="300"></canvas></div>
+                            </div>
                         </div>
-                    </div>
-                @else
-                    <h3 class="mt-5">@lang('You don\'t have any tracked times yet!')</h3>
-                @endif
-                @if ($logged_in_user->can('user.access.times.show-all') && $logged_in_user->organization()->first()->times()->count())
-                    <div id="organizationTimesChart">
-                        <h1 class="mt-5 mb-5">@lang('Organization Times')</h1>
+                    @else
+                        <h3 class="mt-5">@lang('You don\'t have any tracked times yet!')</h3>
+                    @endif
+                    @if ($logged_in_user->can('user.access.times.show-all') && $logged_in_user->organization()->first()->times()->count())
+                        <div id="organizationTimesChart">
+                            <h1 class="mt-5 mb-5">@lang('Organization Times')</h1>
 
-                        <div class="row">
-                            <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerDay" width="400" height="300"></canvas></div>
-                            <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerMonth" width="400" height="300"></canvas></div>
+                            <div class="row">
+                                <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerDay" width="400" height="300"></canvas></div>
+                                <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerMonth" width="400" height="300"></canvas></div>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 @endif
             </div><!--col-md-10-->
         </div><!--row-->

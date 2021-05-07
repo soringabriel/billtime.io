@@ -25,4 +25,6 @@ Route::group([
     Route::group(['prefix' => '{plan}'], function () {
         Route::get('/update', [SubscriptionsController::class, 'updateSubscription'])->name('update');
     });
+
+    Route::get('/cancel-subscription', [SubscriptionsController::class, 'cancelSubscription'])->name('cancel-subscription');
 });

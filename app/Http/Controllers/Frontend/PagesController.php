@@ -33,14 +33,27 @@ class PagesController extends Controller
         }
         $organization = auth()->user()->organization()->first();
         $updateUrl = null;
-        if ($organization->subscribed('default')) {
+        if ($organization->subscribed('default') && !$organization->subscription('default')->cancelled()) {
             $updateUrl = $organization->subscription('default')->updateUrl();
         }
+        $organization_plan = $organization->plan()->first();
+        $cancelUrl = null;
+        if ($organization->subscribed('default') && !$organization->subscription('default')->cancelled()) {
+            $cancelUrl = route('frontend.subscription.cancel-subscription');
+        }
+        $organization_next_plan = $organization->nextPlan()->first();
+        $nextPayment = null;
+        if (!$organization_next_plan->isDefault()) {
+            $nextPayment = $organization->subscription('default')->nextPayment();
+        }
+
         return view('frontend.pages.plan')
             ->withOrganization($organization)
             ->withSubscription($organization->subscription('default'))
             ->withUpdateUrl($updateUrl)
-            ->withUserPlan($organization->plan()->first())
+            ->withCancelUrl($cancelUrl)
+            ->withNextPayment($nextPayment)
+            ->withUserPlan($organization_plan)
             ->withUserNextPlan($organization->nextPlan()->first())
             ->withAssociatedPlans($associated_array_plans);
     }

@@ -39,7 +39,7 @@ class ReceiptsTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Receipt::query()->where('billable_id', auth()->user()->organization()->first()->id);
+        return Receipt::query()->where('billable_id', auth()->user()->organization()->first()->id)->where('amount', '>', '0');
     }
 
     /**

@@ -5,14 +5,32 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
+            @if ($organization->start_period)
+                <div class="col-md-12 text-center mt-3 mb-3">
+                    <h5 class="alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
+                </div>
+            @endif
             <h1 class="mt-5 mb-3">@lang('Select Your Plan')</h1>
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center mt-3 mb-3">
                 @if (!is_null($updateUrl))
                     <x-paddle-button :url="$updateUrl" class="px-8 py-4 h5" data-theme="none">
                         @lang('Update Card Information')
                     </x-paddle-button>
                 @endif
+                @if (!is_null($cancelUrl))
+                    <x-utils.link
+                        class="px-8 py-4 h5 ml-5"
+                        :href="$cancelUrl"
+                        name="confirm-item"
+                        :data-overrirde-message="__('Are you sure you want to do this?') . '<br><br>' . __('Your billing information will be deleted!')"
+                        :text="__('Cancel Subscription')" />
+                @endif
             </div>
+            @if (!is_null($nextPayment))
+                <div class="col-md-12 text-center mt-3 mb-3 h5">
+                    @lang('Your next payment is on') {{ $nextPayment->date()->format('F j, Y')}} @lang('when you will be charged') {{ $nextPayment->amount() }}
+                </div>
+            @endif
             <div class="col-md-12">
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
@@ -188,9 +206,12 @@
                 <div class="alert alert-info mt-5">
                     @lang('Subscriptions flow information:')
                     <ul class="mt-3">
-                        <li>@lang('The first month free trial is available only for the first subscription of the user')</li>
+                        <li>@lang('The first month free trial is available only for the first charge of the user')</li>
+                        <li>@lang('Users can change/cancel their plan at any time')</li>
+                        <li>@lang('Cancelling a subscription leads to immediately losing your plan. It is recommended to downgrade to the Freelancer plan instead as this downgrade will happen at the end of the billing period.')</li>
                         <li>@lang('If a subscription invoice goes past due, you still get to use the current plan with all it\'s features, untill the subscription is cancelled')</li>
                         <li>@lang('If you downgrade to a plan that offers less features, the downgrade will take place at the end of the current billing period, and until then you will still be able to use all of the features of your current plan')</li>
+                        <li>@lang('If you downgrade to a plan that offers less features, all of your users will lose the permissions from the previous plan as well')</li>
                         <li>@lang('If you downgrade to a plan that offers less users and you currently have more users than the limit of the new plan, when the downgrade occurs, some of your users will be deactivated so that the limit will be matched.')</li>
                         <li>@lang('The deactivated users from a downgrade are still gonna appear on the')
                             <x-utils.link

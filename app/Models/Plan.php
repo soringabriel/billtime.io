@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\Method\PlanMethod;
 use App\Models\Traits\Relationship\PlanRelationship;
+use App\Models\Traits\Scope\PlanScope;
 use Database\Factories\PlanFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,7 +15,8 @@ class Plan extends Model
     use HasRoles,
         HasFactory,
         PlanMethod,
-        PlanRelationship;
+        PlanRelationship,
+        PlanScope;
 
     public const BILLING_TYPE_NONE = 'none';
     public const BILLING_TYPE_MONTHLY = 'monthly';

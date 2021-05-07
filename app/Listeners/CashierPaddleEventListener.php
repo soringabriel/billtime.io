@@ -32,6 +32,8 @@ class CashierPaddleEventListener
             'plan_id' => $plan->id,
             'next_plan_id' => $plan->id,
             'subusers_quota' => $plan->subusers_quota,
+            'plan_expire' => null,
+            'start_period' => false,
         ]);
         activity('subscription-organization')
             ->performedOn($organization)
@@ -61,12 +63,14 @@ class CashierPaddleEventListener
     public function onSubscriptionCancelled(SubscriptionCancelled $event)
     {
         $organization = $event->subscription->billable;
-        $default_plan = Plan::find(env('DEFAULT_PLAN'));
-        $this->organizationService->update($organization, [
-            'plan_id' => $default_plan->id,
-            'next_plan_id' => $default_plan->id,
-            'subusers_quota' => $default_plan->subusers_quota,
-        ]);
+        if (is_null($organization->plan_expire)) {
+            $default_plan = Plan::find(env('DEFAULT_PLAN'));
+            $this->organizationService->update($organization, [
+                'plan_id' => $default_plan->id,
+                'next_plan_id' => $default_plan->id,
+                'subusers_quota' => $default_plan->subusers_quota,
+            ]);
+        }
         activity('subscription-organization')
             ->performedOn($organization)
             ->withProperties($event)

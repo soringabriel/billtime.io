@@ -25,6 +25,8 @@ class CreateOrganizationsTable extends Migration
             $table->string('bank_name')->nullable();
             $table->string('bank_account')->nullable();
             $table->integer('subusers_quota')->default(0);
+            $table->timestamp('plan_expire')->nullable();
+            $table->boolean('start_period')->default(true);
             $table->timestamps();
 
             $table->foreign('owner_id')

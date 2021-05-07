@@ -52,6 +52,8 @@ class OrganizationService extends BaseService
                     'address' => ($data['address'] ?? null),
                     'bank_name' => ($data['bank_name'] ?? null),
                     'bank_account' => ($data['bank_account'] ?? null),
+                    'plan_expire' => ($data['plan_expire'] ?? null),
+                    'start_period' => ($data['start_period'] ?? true),
                 ]
             );
             $this->updateOrganizationPermissions($organization);
@@ -92,6 +94,8 @@ class OrganizationService extends BaseService
                     'bank_name' => $data['bank_name'] ?? $organization->bank_name,
                     'bank_account' => $data['bank_account'] ?? $organization->bank_account,
                     'subusers_quota' => $data['subusers_quota'] ?? $organization->subusers_quota,
+                    'plan_expire' => array_key_exists('plan_expire', $data) ? $data['plan_expire'] : $organization->plan_expire,
+                    'start_period' => array_key_exists('start_period', $data) ? $data['start_period'] : $organization->start_period,
                 ]
             );
             $this->updateOrganizationPermissions($organization);
@@ -173,5 +177,28 @@ class OrganizationService extends BaseService
         } catch (PaddleException $e) {
             throw new GeneralException($e->getMessage());
         }
+    }
+    
+    /**
+     * @param  Organization  $organization
+     *
+     * @return void
+     */
+    public function cancelSubscription(Organization $organization): void
+    {
+        $subscription = $organization->subscription('default');
+
+        if (is_null($subscription)) {
+            throw new GeneralException(__('You don\'t have a valid subscription.'));
+        }
+
+        if (!$organization->plan()->first()->isDefault()) {
+            $this->update($organization, [
+                'next_plan_id' => Plan::default()->get()->first()->id,
+                'plan_expire' => $subscription->nextPayment()->date()->format('Y-m-d H:i:s'),
+            ]);
+        }
+        
+        $subscription->cancelNow();
     }
 }

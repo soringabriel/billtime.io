@@ -46,6 +46,8 @@ class Organization extends Model
         'bank_name',
         'bank_account',
         'subusers_quota',
+        'plan_expire',
+        'start_period',
     ];
                 
     /**

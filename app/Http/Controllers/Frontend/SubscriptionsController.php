@@ -55,4 +55,14 @@ class SubscriptionsController extends Controller
 
         return redirect()->route($route)->withFlashSuccess(__('Your subscriptions was updated.'));
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function cancelSubscription()
+    {
+        $this->organizationService->cancelSubscription(auth()->user()->organization()->first());
+
+        return redirect()->route('frontend.plan')->withFlashSuccess(__('Your subscriptions was cancelled.'));
+    }
 }
