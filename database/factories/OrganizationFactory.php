@@ -28,6 +28,7 @@ class OrganizationFactory extends Factory
     {
         return [
             'plan_id' => env('DEFAULT_PLAN'),
+            'next_plan_id' => env('DEFAULT_PLAN'),
             'company_name' => $this->faker->company,
             'tax_number' => $this->faker->asciify('********'),
             'vat_number' => $this->faker->asciify('********'),

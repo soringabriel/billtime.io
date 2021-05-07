@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('activitylog:clean')->daily();
-        $schedule->command('plan:expire')->daily();
+        $schedule->command('plan:expire')->everyMinute();
     }
 
     /**

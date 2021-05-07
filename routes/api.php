@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Frontend\TimeController;
-use App\Http\Controllers\Frontend\SubscriptionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +27,4 @@ Route::group(['as' => 'user.api.time.', 'middleware' => [
     ]
 ], function () {
     Route::post('/store-time', [TimeController::class, 'store'])->name('store');
-}); 
-
-Route::group(['as' => 'user.api.subscription.', 'middleware' => [
-    'organization_owner',
-    'auth:api', 
-    'password.expires', 
-    config('boilerplate.access.middleware.verified')
-]
-], function () {
-    Route::post('/upgrade-subscription', [SubscriptionsController::class, 'upgrade'])->name('upgrade');
 }); 

@@ -57,7 +57,6 @@ $(function () {
      */
     $('body').on('submit', 'form[name=delete-item]', function(e) {
         e.preventDefault();
-        console.log($(this));
 
         Swal.fire({
             title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to delete this item?',
@@ -75,7 +74,6 @@ $(function () {
     })
         .on('submit', 'form[name=confirm-item]', function (e) {
             e.preventDefault();
-            console.log($(this));
 
             Swal.fire({
                 title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to do this?',
@@ -96,7 +94,6 @@ $(function () {
          * Add an 'are you sure' pop-up to any button/link
          */
         e.preventDefault();
-        console.log($(this));
         Swal.fire({
             title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to do this?',
             showCancelButton: true,
