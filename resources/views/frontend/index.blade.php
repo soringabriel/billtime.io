@@ -5,9 +5,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ appName() }} | @yield('title')</title>
-    <meta name="description" content="@yield('meta_description', appName())">
-    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
+    <title>{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')</title>
+    <meta name="description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     @yield('meta')
 
     @stack('before-styles')
