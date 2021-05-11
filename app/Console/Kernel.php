@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('activitylog:clean')->daily();
         $schedule->command('plan:expire')->everyMinute();
+        $schedule->command('backup:clean')->daily()->at('01:00');
+        $schedule->command('backup:run')->daily()->at('01:30');
     }
 
     /**

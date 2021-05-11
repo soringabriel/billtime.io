@@ -30,6 +30,7 @@
         "rappasoft/laravel-livewire-tables": "^0.3",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^3.11",
         "tabuna/breadcrumbs": "^2.2"
     },
