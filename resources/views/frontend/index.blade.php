@@ -407,17 +407,16 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Product & Services')</h6>
                             <ul>
-                                <li><a class="page-scroll" href="#pricing">Products</a></li>
-                                <li><a class="page-scroll" href="#service">Services</a></li>
+                                <li><a class="page-scroll" href="#pricing">@lang('Products')</a></li>
+                                <li><a class="page-scroll" href="#service">@lang('Services')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">@lang('Company Details')</h6>
+                            <h6 class="footer-title">@lang('Contact Details')</h6>
                             <ul>
-                                <li><a class="page-scroll">@lang('Marica Sorin-Gabriel PFA')</a></li>
-                                <li><a class="page-scroll" href="mailto:sorinmarica4@gmail.com">Send us an email</a></li>
+                                <li><a class="page-scroll" href="mailto:info@timotrack.com">@lang('Send Us An Email')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>

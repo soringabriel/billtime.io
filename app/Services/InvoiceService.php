@@ -189,12 +189,17 @@ class InvoiceService extends BaseService
     
     /**
      * @param  array  $invoice_data
-     *
+     * @param  string $locale
+     * 
      * @return LaravelInvoice
      * @throws GeneralException
      */
-    public function generateInvoice(array $invoice_data): LaravelInvoice
+    public function generateInvoice(array $invoice_data, $locale = null): LaravelInvoice
     {
+        if (!is_null($locale)) {
+            app()->setLocale($locale);
+        }
+        
         $buyer_properties = [
             'name' => $invoice_data['buyer_company_name'],
             'custom_fields' => [],
@@ -248,6 +253,7 @@ class InvoiceService extends BaseService
         $series = str_replace($sequence, "", $invoice_data['number']);
 
         $invoice = LaravelInvoice::make()
+                    ->name(__("Invoice"))
                     ->series($series)
                     ->sequence($sequence)
                     ->serialNumberFormat('{SERIES}{SEQUENCE}')
@@ -262,7 +268,8 @@ class InvoiceService extends BaseService
                     ->currencyDecimalPoint(',')
                     ->taxRate($invoice_data['tax'])
                     ->addItems($items)
-                    ->notes($notes);
+                    ->notes($notes)
+                    ->filename("invoice_" . $invoice_data['number'] . "_" . $locale);
 
         if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
             $invoice->hasDueDate = true;
@@ -273,6 +280,10 @@ class InvoiceService extends BaseService
 
         if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
             $invoice->shipping($invoice_data['shipping']);
+        }
+
+        if (!is_null($locale)) {
+            app()->setLocale(config('app.locale'));
         }
 
         return $invoice;

@@ -12,6 +12,10 @@
                     </x-slot>
 
                     <x-slot name="body">
+                        <div class="text-center mb-4">
+                            @include('frontend.auth.includes.social')
+                        </div>
+
                         <x-forms.post :action="route('frontend.auth.login')">
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">@lang('E-mail Address')</label>
@@ -57,10 +61,6 @@
                                     <x-utils.link :href="route('frontend.auth.password.request')" class="btn btn-link" :text="__('Forgot Your Password?')" />
                                 </div>
                             </div><!--form-group-->
-
-                            <div class="text-center">
-                                @include('frontend.auth.includes.social')
-                            </div>
                         </x-forms.post>
                     </x-slot>
                 </x-frontend.card>

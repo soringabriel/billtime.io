@@ -75,7 +75,7 @@
                         </p>
                         <h2>Contact Information</h2>
                         <p>
-                            Sorin Gabriel Marica<br>
+                            Sorin-Gabriel Marica<br>
                             +40(721)095710<br>
                             info@timotrack.com<br>
                             www.TimoTrack.com

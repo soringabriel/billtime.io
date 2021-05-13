@@ -124,14 +124,14 @@
         if (!isNaN(taxPercentage)) {
             var tax = (taxPercentage * servicesSum / 100);
             $("#totalTax").html(tax);
-            servicesSum -= tax;
+            servicesSum += tax;
         } else {
             $("#totalTax").html(0);
         }
         var shipping = parseFloat($("#shipping").val());
         if (!isNaN(shipping)) {
             $("#shippingVal").html(shipping);
-            servicesSum -= shipping;
+            servicesSum += shipping;
         } else {
             $("#shippingVal").html(0);
         }

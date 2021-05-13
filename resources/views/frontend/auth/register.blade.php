@@ -12,6 +12,10 @@
                     </x-slot>
 
                     <x-slot name="body">
+                        <div class="text-center mb-4">
+                            @include('frontend.auth.includes.social')
+                        </div>
+
                         <x-forms.post :action="route('frontend.auth.register')">
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Name')</label>

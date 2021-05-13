@@ -43,7 +43,7 @@ class PagesController extends Controller
         }
         $organization_next_plan = $organization->nextPlan()->first();
         $nextPayment = null;
-        if (!$organization_next_plan->isDefault()) {
+        if (!$organization_next_plan->isDefault() && $organization->subscribed('default')) {
             $nextPayment = $organization->subscription('default')->nextPayment();
         }
 
