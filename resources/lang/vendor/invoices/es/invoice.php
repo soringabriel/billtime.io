@@ -33,4 +33,9 @@ return [
     'notes'           => 'Notas',
     'shipping'        => 'Transporte',
 
+    'invoice'         => 'Factura',
+    'tax_number'      => 'Número de impuesto',
+    'vat_number'      => 'Número de valor agregado',
+    'bank_name'       => 'Nombre del banco',
+    'bank_account'    => 'Cuenta bancaria',
 ];

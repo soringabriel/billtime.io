@@ -26,11 +26,16 @@ return [
     'total_discount'  => 'Remise totale',
     'taxable_amount'  => 'Montant imposable',
     'total_taxes'     => 'Total des taxes',
-    'tax_rate'        => 'Taux d'imposition',
+    'tax_rate'        => 'Taux d\'imposition',
     'total_amount'    => 'Montant total',
-    'pay_until'       => 'Veuillez payer jusqu'au',
+    'pay_until'       => 'Veuillez payer jusqu\'au',
     'amount_in_words' => 'Le montant en mots',
     'notes'           => 'Remarques',
     'shipping'        => 'Expédition',
 
+    'invoice'         => 'Facturer',
+    'tax_number'      => 'Numéro d\'identification fiscale',
+    'vat_number'      => 'Numéro de TVA',
+    'bank_name'       => 'Nom de banque',
+    'bank_account'    => 'Compte bancaire',
 ];

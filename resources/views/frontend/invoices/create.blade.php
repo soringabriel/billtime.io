@@ -165,6 +165,8 @@
                                     </div>
                                 </div><!--tab-times-->
                             </div>
+
+                            <div class="alert alert-info">@lang('Once you create the invoice you can download it in multiple languages. For any translation mistakes or any other translation needed please contact us and we will add them as soon as possible.')</div>
                         </x-slot>
 
                         <x-slot name="footer">

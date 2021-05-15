@@ -10,9 +10,9 @@ return [
 
     'serial'          => 'Număr de factură',
     'date'            => 'Data facturii',
-    'seller'          => 'Seller',
+    'seller'          => 'Vanzător',
     'buyer'           => 'Cumpărător',
-    'address'         => 'Abordare',
+    'address'         => 'Adresă',
     'code'            => 'Cod',
     'vat'             => 'Cod de TVA',
     'phone'           => 'Numar de telefon',
@@ -28,9 +28,14 @@ return [
     'total_taxes'     => 'Total impozite',
     'tax_rate'        => 'Cota de impozitare',
     'total_amount'    => 'Valoare totală',
-    'pay_until'       => 'Vă rugăm să plătiți până',
+    'pay_until'       => 'Vă rugăm să plătiți până pe',
     'amount_in_words' => 'Suma în cuvinte',
-    'notes'           => 'Note',
+    'notes'           => 'Notă',
     'shipping'        => 'Livrare',
 
+    'invoice'         => 'Factură',
+    'tax_number'      => 'CUI',
+    'vat_number'      => 'Număr TVA',
+    'bank_name'       => 'Nume Bancă',
+    'bank_account'    => 'Cont Bancar',
 ];

@@ -33,4 +33,9 @@ return [
     'notes'           => 'Notatki',
     'shipping'        => 'Wysyłka',
 
+    'invoice'         => 'Faktura',
+    'tax_number'      => 'Numer identyfikacji podatkowej',
+    'vat_number'      => 'Numer VAT',
+    'bank_name'       => 'Nazwa banku',
+    'bank_account'    => 'Konto bankowe',
 ];

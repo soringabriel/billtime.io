@@ -33,4 +33,9 @@ return [
     'notes'           => 'Notes',
     'shipping'        => 'Shipping',
 
+    'invoice'         => 'Invoice',
+    'tax_number'      => 'Tax Number',
+    'vat_number'      => 'VAT Number',
+    'bank_name'       => 'Bank Name',
+    'bank_account'    => 'Bank Account',
 ];

@@ -46,15 +46,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <select x-model="locale" class="form-control">
+                        <label for="language{{ $model->id }}">@lang('Select Language')</label>
+
+                        <select x-model="locale" class="form-control" id="language{{ $model->id }}">
                             @foreach (config('boilerplate.locale.invoices_languages') as $locale => $language)
                                 <option value="{{ $locale }}">{{ $language }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
-                        <x-utils.link x-bind:href="'{{ route('frontend.invoices.download', $model) }}' + '?locale=' + locale" class="btn btn-primary" icon="fas fa-download" :text="__('Download')" />
+                        <button type="button" class="btn btn-secondary w-auto" data-dismiss="modal">@lang('Close')</button>
+                        <x-utils.link x-bind:href="'{{ route('frontend.invoices.download', $model) }}' + '?locale=' + locale" class="btn btn-primary w-auto" icon="fas fa-download" :text="__('Download')" />
                     </div>
                 </div>
             </div>

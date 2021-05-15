@@ -10,8 +10,8 @@ return [
 
     'serial'          => 'Rechnungsnummer',
     'date'            => 'Rechnungsdatum',
-    'seller'          => 'Seller',
-    'buyer'           => 'Verkäufer',
+    'seller'          => 'Verkäufer',
+    'buyer'           => 'Käufer',
     'address'         => 'Adresse',
     'code'            => 'Code',
     'vat'             => 'Umsatzsteuer-Identifikationsnummer',
@@ -33,4 +33,9 @@ return [
     'notes'           => 'Anmerkungen',
     'shipping'        => 'Versand',
 
+    'invoice'         => 'Rechnung',
+    'tax_number'      => 'Steuernummer',
+    'vat_number'      => 'Umsatzsteuer-Identifikationsnummer',
+    'bank_name'       => 'Bank Name',
+    'bank_account'    => 'Bankkonto',
 ];

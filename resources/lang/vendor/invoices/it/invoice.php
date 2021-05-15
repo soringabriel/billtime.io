@@ -33,4 +33,9 @@ return [
     'notes'           => 'Appunti',
     'shipping'        => 'Spedizione',
 
+    'invoice'         => 'Fattura',
+    'tax_number'      => 'Codice fiscale',
+    'vat_number'      => 'Partita IVA',
+    'bank_name'       => 'Nome della banca',
+    'bank_account'    => 'Conto bancario',
 ];

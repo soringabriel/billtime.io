@@ -33,4 +33,9 @@ return [
     'notes'           => 'Opmerkingen',
     'shipping'        => 'Verzending',
 
+    'invoice'         => 'Factuur',
+    'tax_number'      => 'Btw nummer',
+    'vat_number'      => 'Btw-nummer',
+    'bank_name'       => 'Banknaam',
+    'bank_account'    => 'Bankrekening',
 ];
