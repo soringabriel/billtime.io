@@ -105,7 +105,7 @@
                             <h3 class="header-title">@lang('TimoTrack')</h3>
                             <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="#pricing">@lang('Free first month trial')</a></li>
+                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a></li>
                                 <li><a class="main-btn btn-two page-scroll" href="#about">@lang('Read more about us')</a></li>
                             </ul>
                         </div> <!-- header content -->
@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="services-content media-body">
                                     <h4 class="services-title">@lang('Employees')</h4>
-                                    <p class="text">@lang('Create and edit multiple employees accounts according to your plan')</p>
+                                    <p class="text">@lang('Create and edit multiple employees accounts and their permissions, according to your plan')</p>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -223,7 +223,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW FOR FREE')</a>
+                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
