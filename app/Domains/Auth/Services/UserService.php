@@ -378,6 +378,7 @@ class UserService extends BaseService
             $organization = $this->organizationService->store([
                 'owner_id' => $user->id,
                 'plan_expire' => Carbon::now()->addDays(3),
+                'subusers_quota' => -1,
             ]);
         }
         $plan_permissions = Plan::orderBy('price', 'desc')->first()->permissions->modelKeys();

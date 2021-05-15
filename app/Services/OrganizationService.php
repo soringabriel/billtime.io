@@ -52,6 +52,7 @@ class OrganizationService extends BaseService
                     'address' => ($data['address'] ?? null),
                     'bank_name' => ($data['bank_name'] ?? null),
                     'bank_account' => ($data['bank_account'] ?? null),
+                    'subusers_quota' => ($data['subusers_quota'] ?? 0),
                     'plan_expire' => ($data['plan_expire'] ?? null),
                     'start_period' => ($data['start_period'] ?? true),
                 ]

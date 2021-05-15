@@ -5,7 +5,7 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
-            @if ($organization->start_period)
+            @if ($organization->start_period && $logged_in_user->isOrganizationOwner())
                 <div class="col-md-12 text-center mt-3 mb-3">
                     <h5 class="alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
                 </div>
