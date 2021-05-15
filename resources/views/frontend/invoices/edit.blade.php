@@ -140,6 +140,11 @@
                                 <div class="tab-pane fade pt-3 show" id="times" role="tabpanel" aria-labelledby="times-tab">
                                     <div class="form-group">
                                         <h4>@lang('Associated times')</h4>
+                                        <div class="alert alert-info" role="alert">
+                                            @lang('If you want to create a link between your invoice and the time records added by your organization, you can create that link by checking the times from this table.')
+                                            @lang('Each invoice can have associated multiple times and each time can have associated multiple invoices.')
+                                            @lang('Associating a time to an invoice will automatically mark the time as billed.')
+                                        </div>
                                         <livewire:frontend.time-table 
                                             filtersEnabled="1" 
                                             isInvoice="1"

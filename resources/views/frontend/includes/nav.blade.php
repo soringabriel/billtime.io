@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar">
         <div class="container">
             <x-utils.link
-                :href="route('frontend.index')"
+                :href="route(homeRoute())"
                 class="navbar-brand">
                 <img src="{{ asset('img/presentation/logo-small.svg#full') }}" alt="Logo">
             </x-utils.link>
@@ -15,68 +15,95 @@
                 @auth
                     <ul class="navbar-nav ml-auto">
                         @if ($logged_in_user->isUser())
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.time.index')"
-                                    :active="activeClass(Route::is('frontend.time.index'))"
-                                    :text="__('Track Time')"
-                                    class="nav-link"
-                                    permission="user.access.times.access" />
-                            </li>
 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.invoices.index')"
-                                    :active="activeClass(Route::is('frontend.invoices.index'))"
-                                    :text="__('Invoices')"
-                                    class="nav-link"
-                                    permission="user.access.invoices.access" />
-                            </li>
+                            @if ($logged_in_user->can('user.access.times.access'))
+                                <li class="nav-item">
+                                    <x-utils.link
+                                        :href="route('frontend.time.index')"
+                                        :active="activeClass(Route::is('frontend.time.index'))"
+                                        :text="__('Track Time')"
+                                        class="nav-link"
+                                        permission="user.access.times.access" />
+                                </li>
+                            @endif
 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.clients.index')"
-                                    :active="activeClass(Route::is('frontend.clients.index'))"
-                                    :text="__('Clients')"
-                                    class="nav-link"
-                                    permission="user.access.clients.access" />
-                            </li>
+                            @if ($logged_in_user->can('user.access.invoices.access'))
+                                <li class="nav-item">
+                                    <x-utils.link
+                                        :href="route('frontend.invoices.index')"
+                                        :active="activeClass(Route::is('frontend.invoices.index'))"
+                                        :text="__('Invoices')"
+                                        class="nav-link"
+                                        permission="user.access.invoices.access" />
+                                </li>
+                            @endif
+
+                            @if ($logged_in_user->can('user.access.clients.access'))
+                                <li class="nav-item">
+                                    <x-utils.link
+                                        :href="route('frontend.clients.index')"
+                                        :active="activeClass(Route::is('frontend.clients.index'))"
+                                        :text="__('Clients')"
+                                        class="nav-link"
+                                        permission="user.access.clients.access" />
+                                </li>
+                            @endif
                                 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.projects.index')"
-                                    :active="activeClass(Route::is('frontend.projects.index'))"
-                                    :text="__('Projects')"
-                                    class="nav-link"
-                                    permission="user.access.projects.access" />
-                            </li>
+                            @if ($logged_in_user->can('user.access.projects.access'))
+                                <li class="nav-item">
+                                    <x-utils.link
+                                        :href="route('frontend.projects.index')"
+                                        :active="activeClass(Route::is('frontend.projects.index'))"
+                                        :text="__('Projects')"
+                                        class="nav-link"
+                                        permission="user.access.projects.access" />
+                                </li>
+                            @endif
 
-                            <li class="nav-item">
-                                <x-utils.link
-                                    :href="route('frontend.user.subuser.index')"
-                                    :active="activeClass(Route::is('frontend.user.subuser.index'))"
-                                    :text="__('Users')"
-                                    class="nav-link"
-                                    permission="user.access.users.access" />
-                            </li>
+                            @if ($logged_in_user->can('user.access.users.access'))
+                                <li class="nav-item">
+                                    <x-utils.link
+                                        :href="route('frontend.user.subuser.index')"
+                                        :active="activeClass(Route::is('frontend.user.subuser.index'))"
+                                        :text="__('Users')"
+                                        class="nav-link"
+                                        permission="user.access.users.access" />
+                                </li>
+                            @endif
+
                         @endif
                     </ul>
                 @endauth
 
                 <ul class="navbar-nav ml-auto">
-                    @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
-                        <li class="nav-item dropdown">
-                            <x-utils.link
-                                :text="__(getLocaleName(app()->getLocale()))"
-                                class="nav-link dropdown-toggle"
-                                id="navbarDropdownLanguageLink"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false" />
+                    @auth
+                        @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
+                            <li class="nav-item">
+                                <x-utils.link
+                                    :href="route('frontend.plan')"
+                                    :text="__('Upgrade')"
+                                    class="btn btn-success" />
+                            </li>
+                        @endif
+                    @endauth
 
-                            @include('includes.partials.lang')
-                        </li>
-                    @endif
+                    @php 
+                        /*
+                            @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
+                                <li class="nav-item dropdown">
+                                    <x-utils.link
+                                        :text="__(getLocaleName(app()->getLocale()))"
+                                        class="nav-link dropdown-toggle"
+                                        id="navbarDropdownLanguageLink"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false" />
+
+                                    @include('includes.partials.lang')
+                                </li>
+                            @endif
+                        */
+                    @endphp
 
                     @guest
                         <li class="nav-item">
@@ -120,6 +147,20 @@
                                     <x-utils.link
                                         :href="route('admin.dashboard')"
                                         :text="__('Administration')"
+                                        class="dropdown-item" />
+                                @endif
+
+                                @if ($logged_in_user->isOrganizationOwner())
+                                    <x-utils.link
+                                        :href="route('frontend.plan')"
+                                        :active="activeClass(Route::is('frontend.plan'))"
+                                        :text="__('Plan')"
+                                        class="dropdown-item" />
+
+                                    <x-utils.link
+                                        :href="route('frontend.receipts')"
+                                        :active="activeClass(Route::is('frontend.receipts'))"
+                                        :text="__('Receipts')"
                                         class="dropdown-item" />
                                 @endif
 

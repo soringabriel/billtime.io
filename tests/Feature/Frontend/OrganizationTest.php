@@ -12,7 +12,7 @@ use Tests\TestCase;
 class OrganizationTest extends TestCase
 {
     /** @test */
-    public function a_user_can_update_their_company_details()
+    public function a_user_that_is_an_organization_owner_can_update_their_company_details()
     {
         $user = User::factory()->create(['name' => 'Jane Doe']);
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
@@ -63,7 +63,7 @@ class OrganizationTest extends TestCase
     }
 
     /** @test */
-    public function a_subuser_cannot_update_their_company_details()
+    public function a_user_that_is_not_the_organization_owner_cannot_update_their_company_details()
     {
         $user = User::factory()->create();
         $organization = Organization::factory()->create(['owner_id' => $user->id]);

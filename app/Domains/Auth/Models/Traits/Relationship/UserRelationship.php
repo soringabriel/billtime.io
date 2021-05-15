@@ -53,4 +53,13 @@ trait UserRelationship
     {
         return $this->hasManyThrough(Project::class, Organization::class, 'owner_id', 'organization_id', 'id', 'id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function plan()
+    {
+        $organization = $this->organization()->first();
+        return is_null($organization) ? null : $organization->plan();
+    }
 }

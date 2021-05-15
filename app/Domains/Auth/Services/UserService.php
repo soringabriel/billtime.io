@@ -10,6 +10,8 @@ use App\Domains\Auth\Events\User\UserStatusChanged;
 use App\Domains\Auth\Events\User\UserUpdated;
 use App\Domains\Auth\Events\User\UserRegistered;
 use App\Domains\Auth\Models\User;
+use App\Models\Organization;
+use App\Models\Plan;
 use App\Exceptions\GeneralException;
 use App\Services\BaseService;
 use App\Services\OrganizationService;
@@ -17,6 +19,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 /**
  * Class UserService.
@@ -370,11 +373,16 @@ class UserService extends BaseService
             'organization_id' => $data['organization_id'] ?? null,
             'api_token' => Str::random(60),
         ]);
-        if (is_null($user->organization_id)) {
-            $this->organizationService->store([
+        $organization = isset($data['organization_id']) ? Organization::find($data['organization_id']) : null;
+        if (is_null($organization)) {
+            $organization = $this->organizationService->store([
                 'owner_id' => $user->id,
+                'plan_expire' => Carbon::now()->addDays(3),
+                'subusers_quota' => -1,
             ]);
         }
+        $plan_permissions = Plan::orderBy('price', 'desc')->first()->permissions->modelKeys();
+        $user->syncPermissions($plan_permissions);
         return $user;
     }
 }

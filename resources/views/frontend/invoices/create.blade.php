@@ -56,7 +56,7 @@
                                             <div class="col-md-6">
                                                 <div class="field-group field-group-required">
                                                     <label for="name" class="col-form-label">@lang('Date')</label>
-                                                    <input type="date" class="form-control" name="date" value="{{ old('date') }}" required>
+                                                    <input type="date" class="form-control" name="date" value="{{ old('date') ?? date('Y-m-d') }}" required>
                                                 </div>
                                                 <div class="field-group">
                                                     <label for="name" class="col-form-label">@lang('Due Date')</label>
@@ -148,6 +148,11 @@
                                 <div class="tab-pane fade pt-3 show" id="times" role="tabpanel" aria-labelledby="times-tab">
                                     <div class="form-group">
                                         <h4>@lang('Associated times')</h4>
+                                        <div class="alert alert-info" role="alert">
+                                            @lang('If you want to create a link between your invoice and the time records added by your organization, you can create that link by checking the times from this table.')
+                                            @lang('Each invoice can have associated multiple times and each time can have associated multiple invoices.')
+                                            @lang('Associating a time to an invoice will automatically mark the time as billed.')
+                                        </div>
                                         <livewire:frontend.time-table 
                                             filtersEnabled="1" 
                                             isInvoice="1"
@@ -160,6 +165,8 @@
                                     </div>
                                 </div><!--tab-times-->
                             </div>
+
+                            <div class="alert alert-info">@lang('Once you create the invoice you can download it in multiple languages. For any translation mistakes or any other translation needed please contact us and we will add them as soon as possible.')</div>
                         </x-slot>
 
                         <x-slot name="footer">
@@ -181,8 +188,7 @@
                 buyerAddress: "{{ old('buyerAddress') }}",
                 updateBuyer() {
                     var buyerDetails = JSON.parse(this.buyerClient);
-                    console.log(buyerDetails);
-                    this.buyerCompanyName = (buyerDetails.company_name ?? '');
+                    this.buyerCompanyName = (buyerDetails.company_name ?? buyerDetails.name ?? '');
                     this.buyerTaxNumber = (buyerDetails.tax_number ?? '');
                     this.buyerVatNumber = (buyerDetails.vat_number ?? '');
                     this.buyerAddress = (buyerDetails.address ?? '');

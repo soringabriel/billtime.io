@@ -5,9 +5,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ appName() }} | @yield('title')</title>
-    <meta name="description" content="@yield('meta_description', appName())">
-    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
+    <title>{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')</title>
+    <meta name="description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     @yield('meta')
 
     @stack('before-styles')
@@ -105,7 +105,7 @@
                             <h3 class="header-title">@lang('TimoTrack')</h3>
                             <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="#pricing">@lang('Free 14 days trial')</a></li>
+                                <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="#pricing">@lang('Free first month trial')</a></li>
                                 <li><a class="main-btn btn-two page-scroll" href="#about">@lang('Read more about us')</a></li>
                             </ul>
                         </div> <!-- header content -->
@@ -235,7 +235,7 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Freelancer Pro')</h5>
-                            <span class="price">$ 3,99</span>
+                            <span class="price">$ 4,99</span>
                             <p class="year">@lang('per month')</p>
                         </div>
                         <div class="pricing-list">
@@ -245,7 +245,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -271,7 +271,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 3 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -297,7 +297,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 10 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -323,7 +323,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Up to 50 users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -349,7 +349,7 @@
                                 <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Unlimited users')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Customer Support')</li>
-                                <li><i class="lni-check-mark-circle"></i> @lang('14 Days Free Trial')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('First Month Free')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
@@ -407,17 +407,16 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Product & Services')</h6>
                             <ul>
-                                <li><a class="page-scroll" href="#pricing">Products</a></li>
-                                <li><a class="page-scroll" href="#service">Services</a></li>
+                                <li><a class="page-scroll" href="#pricing">@lang('Products')</a></li>
+                                <li><a class="page-scroll" href="#service">@lang('Services')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">@lang('Company Details')</h6>
+                            <h6 class="footer-title">@lang('Contact Details')</h6>
                             <ul>
-                                <li><a class="page-scroll">@lang('Marica Sorin-Gabriel PFA')</a></li>
-                                <li><a class="page-scroll" href="mailto:sorinmarica4@gmail.com">Send us an email</a></li>
+                                <li><a class="page-scroll" href="mailto:info@timotrack.com">@lang('Send Us An Email')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>

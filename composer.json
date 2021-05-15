@@ -19,6 +19,7 @@
         "jamesmills/laravel-timezone": "^1.9",
         "lab404/laravel-impersonate": "^1.6",
         "langleyfoxall/laravel-nist-password-rules": "^4.1",
+        "laravel/cashier-paddle": "^1.4",
         "laravel/framework": "^8.0",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.0",
@@ -29,6 +30,7 @@
         "rappasoft/laravel-livewire-tables": "^0.3",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^3.11",
         "tabuna/breadcrumbs": "^2.2"
     },

@@ -123,7 +123,7 @@ class InvoiceController extends Controller
      */
     public function download(DownloadInvoiceRequest $request, Invoice $invoice)
     {
-        return $this->invoiceService->generateInvoice($invoice->toArray())->download();
+        return $this->invoiceService->generateInvoice($invoice->toArray(), $request->validated()['locale'])->download();
     }
 
     /**

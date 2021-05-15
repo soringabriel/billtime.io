@@ -33,5 +33,5 @@ trait Filter
      *
      * @var int
      */
-    public $filtersDebounce = 500;
+    public $filtersDebounce = 1000;
 }

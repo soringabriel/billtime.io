@@ -33,5 +33,5 @@ trait CustomFilters
      *
      * @var int
      */
-    public $customFiltersDebounce = 500;
+    public $customFiltersDebounce = 1000;
 }

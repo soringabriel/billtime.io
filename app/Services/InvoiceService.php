@@ -189,12 +189,17 @@ class InvoiceService extends BaseService
     
     /**
      * @param  array  $invoice_data
-     *
+     * @param  string $locale
+     * 
      * @return LaravelInvoice
      * @throws GeneralException
      */
-    public function generateInvoice(array $invoice_data): LaravelInvoice
+    public function generateInvoice(array $invoice_data, $locale = null): LaravelInvoice
     {
+        if (!is_null($locale)) {
+            app()->setLocale($locale);
+        }
+        
         $buyer_properties = [
             'name' => $invoice_data['buyer_company_name'],
             'custom_fields' => [],
@@ -203,10 +208,10 @@ class InvoiceService extends BaseService
             $buyer_properties['address'] = $invoice_data['buyer_address'];
         }
         if (isset($invoice_data['buyer_tax_number']) && !is_null($invoice_data['buyer_tax_number'])) {
-            $buyer_properties['custom_fields']['tax number'] = $invoice_data['buyer_tax_number'];
+            $buyer_properties['custom_fields'][__('invoices::invoice.tax_number')] = $invoice_data['buyer_tax_number'];
         }
         if (isset($invoice_data['buyer_vat_number']) && !is_null($invoice_data['buyer_vat_number'])) {
-            $buyer_properties['custom_fields']['vat number'] = $invoice_data['buyer_vat_number'];
+            $buyer_properties['custom_fields'][__('invoices::invoice.vat_number')] = $invoice_data['buyer_vat_number'];
         }
         $buyer = new Party($buyer_properties);
 
@@ -218,16 +223,16 @@ class InvoiceService extends BaseService
             $seller_properties['address'] = $invoice_data['seller_address'];
         }
         if (isset($invoice_data['seller_tax_number']) && !is_null($invoice_data['seller_tax_number'])) {
-            $seller_properties['custom_fields']['tax number'] = $invoice_data['seller_tax_number'];
+            $seller_properties['custom_fields'][__('invoices::invoice.tax_number')] = $invoice_data['seller_tax_number'];
         }
         if (isset($invoice_data['seller_vat_number']) && !is_null($invoice_data['seller_vat_number'])) {
-            $seller_properties['custom_fields']['vat number'] = $invoice_data['seller_vat_number'];
+            $seller_properties['custom_fields'][__('invoices::invoice.vat_number')] = $invoice_data['seller_vat_number'];
         }
         if (isset($invoice_data['seller_bank_name']) && !is_null($invoice_data['seller_bank_name'])) {
-            $seller_properties['custom_fields']['bank name'] = $invoice_data['seller_bank_name'];
+            $seller_properties['custom_fields'][__('invoices::invoice.bank_name')] = $invoice_data['seller_bank_name'];
         }
         if (isset($invoice_data['seller_bank_account']) && !is_null($invoice_data['seller_bank_account'])) {
-            $seller_properties['custom_fields']['bank account'] = $invoice_data['seller_bank_account'];
+            $seller_properties['custom_fields'][__('invoices::invoice.bank_account')] = $invoice_data['seller_bank_account'];
         }
         $seller = new Party($seller_properties);
 
@@ -248,6 +253,7 @@ class InvoiceService extends BaseService
         $series = str_replace($sequence, "", $invoice_data['number']);
 
         $invoice = LaravelInvoice::make()
+                    ->name(__("invoices::invoice.invoice"))
                     ->series($series)
                     ->sequence($sequence)
                     ->serialNumberFormat('{SERIES}{SEQUENCE}')
@@ -262,7 +268,8 @@ class InvoiceService extends BaseService
                     ->currencyDecimalPoint(',')
                     ->taxRate($invoice_data['tax'])
                     ->addItems($items)
-                    ->notes($notes);
+                    ->notes($notes)
+                    ->filename("invoice_" . $invoice_data['number'] . "_" . $locale);
 
         if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
             $invoice->hasDueDate = true;
@@ -273,6 +280,10 @@ class InvoiceService extends BaseService
 
         if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
             $invoice->shipping($invoice_data['shipping']);
+        }
+
+        if (!is_null($locale)) {
+            app()->setLocale(config('app.locale'));
         }
 
         return $invoice;

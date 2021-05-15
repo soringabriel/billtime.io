@@ -59,7 +59,7 @@ $(function () {
         e.preventDefault();
 
         Swal.fire({
-            title: 'Are you sure you want to delete this item?',
+            title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to delete this item?',
             showCancelButton: true,
             confirmButtonText: 'Confirm Delete',
             cancelButtonText: 'Cancel',
@@ -76,7 +76,7 @@ $(function () {
             e.preventDefault();
 
             Swal.fire({
-                title: 'Are you sure you want to do this?',
+                title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to do this?',
                 showCancelButton: true,
                 confirmButtonText: 'Continue',
                 cancelButtonText: 'Cancel',
@@ -94,9 +94,8 @@ $(function () {
          * Add an 'are you sure' pop-up to any button/link
          */
         e.preventDefault();
-
         Swal.fire({
-            title: 'Are you sure you want to do this?',
+            title: $(this).attr('data-overrirde-message') ?? 'Are you sure you want to do this?',
             showCancelButton: true,
             confirmButtonText: 'Continue',
             cancelButtonText: 'Cancel',

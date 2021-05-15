@@ -4,6 +4,7 @@ namespace Tests\Feature\Frontend;
 
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Models\Permission;
+use App\Models\Organization;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -97,6 +98,8 @@ class ResetPasswordTest extends TestCase
         config(['boilerplate.access.user.password_history' => false]);
 
         $user = User::factory()->create(['email' => 'john@example.com', 'password' => ']EqZL4}zBT']);
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
         $user->syncPermissions([
             Permission::where('name', 'user.access.times.access')->first()->id, 
         ]);

@@ -3,14 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Method\OrganizationMethod;
 use App\Models\Traits\Relationship\OrganizationRelationship;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Paddle\Billable;
 
 class Organization extends Model
 {
     use HasFactory,
-        OrganizationRelationship;
+        OrganizationMethod,
+        OrganizationRelationship,
+        Billable;
 
     /**
      * The table associated with the model.
@@ -33,6 +37,8 @@ class Organization extends Model
      */
     protected $fillable = [
         'owner_id',
+        'plan_id',
+        'next_plan_id',
         'company_name',
         'tax_number',
         'vat_number',
@@ -40,6 +46,8 @@ class Organization extends Model
         'bank_name',
         'bank_account',
         'subusers_quota',
+        'plan_expire',
+        'start_period',
     ];
                 
     /**

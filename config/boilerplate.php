@@ -176,12 +176,25 @@ return [
             'no' => ['name' => 'Norwegian', 'rtl' => false],
             'pl' => ['name' => 'Polish', 'rtl' => false],
             'pt_BR' => ['name' => 'Brazilian Portuguese', 'rtl' => false],
-            'ro' => ['name' => 'Romana', 'rtl' => false],
+            'ro' => ['name' => 'Romanian', 'rtl' => false],
             'ru' => ['name' => 'Russian', 'rtl' => false],
             'sv' => ['name' => 'Swedish', 'rtl' => false],
             'th' => ['name' => 'Thai', 'rtl' => false],
             'tr' => ['name' => 'Turkish', 'rtl' => false],
             'uk' => ['name' => 'Ukrainian', 'rtl' => false],
+        ],
+
+        /* The languages allowed for invoices (already translated) */
+        'invoices_languages' => [
+            'en' => 'English',
+            'nl' => 'Dutch',
+            'de' => 'German',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'it' => 'Italian',
+            'pl' => 'Polish',
+            'pt_BR' => 'Brazilian Portuguese',
+            'ro' => 'Romanian',
         ],
     ],
 

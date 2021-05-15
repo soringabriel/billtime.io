@@ -6,6 +6,7 @@ use App\Domains\Auth\Models\User;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Time;
+use App\Models\Plan;
 
 /**
  * Class OrganizationRelationship.
@@ -18,6 +19,22 @@ trait OrganizationRelationship
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function nextPlan()
+    {
+        return $this->belongsTo(Plan::class, 'next_plan_id');
     }
 
     /**

@@ -12,7 +12,7 @@ Route::group([
     Route::get('/', [TimeController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('frontend.dashboard')
                 ->push(__('Time Managment'), route('frontend.time.index'));
     });
 

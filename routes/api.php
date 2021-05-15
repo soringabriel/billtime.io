@@ -26,5 +26,5 @@ Route::group(['as' => 'user.api.time.', 'middleware' => [
         config('boilerplate.access.middleware.verified')
     ]
 ], function () {
-    Route::post('/', [TimeController::class, 'store'])->name('store');
+    Route::post('/store-time', [TimeController::class, 'store'])->name('store');
 }); 

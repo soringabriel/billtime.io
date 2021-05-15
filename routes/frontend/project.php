@@ -12,7 +12,7 @@ Route::group([
     Route::get('/', [ProjectController::class, 'index'])
         ->name('index')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('frontend.dashboard')
                 ->push(__('Project Managment'), route('frontend.projects.index'));
     });
 
