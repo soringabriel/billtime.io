@@ -8,6 +8,21 @@
     <title>{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')</title>
     <meta name="description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
     <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
+    <meta name="theme-color" content="#1B99A9">
+    <meta name="keywords" content="timetracker,time tracking,time tracker,business managment,invoice creator,billing tool,invoice tool,invoicing tool">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
+    <meta name="twitter:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
+    <meta name="twitter:description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="twitter:site" content="{{ env('APP_URL') }}">
+    <meta name="twitter:image" content="{{ asset('img/presentation/social-image.png#full') }}">
+    <meta property="og:description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}" />
+    <meta property="og:image" content="{{ asset('img/presentation/social-image.png#full') }}" />
+    <meta property="og:url" content="{{ env('APP_URL') }}" />
+    <link rel="apple-touch-icon" href="{{ asset('img/presentation/logo-square.png#full') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/presentation/logo-square.png#full') }}">
+    <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="en-US" />
+
     @yield('meta')
 
     @stack('before-styles')
