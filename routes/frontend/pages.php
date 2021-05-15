@@ -22,6 +22,7 @@ Route::group([
 
     Route::get('/receipts', [PagesController::class, 'receipts'])
         ->name('receipts')
+        ->middleware('organization_owner')
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Dashboard'), route('frontend.dashboard'));
         });

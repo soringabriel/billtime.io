@@ -22,7 +22,7 @@ class UpdatePlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:100', Rule::unique('plans')->ignore($this->request->get('name'), 'name')],
+            'name' => ['required', 'max:100', Rule::unique('plans')->ignore($this->route('plan')->name, 'name')],
             'price' => ['required', 'max:100', 'min:0'],
             'currency' => ['required', 'max:3'],
             'subusers_quota' => ['required', 'integer'],
