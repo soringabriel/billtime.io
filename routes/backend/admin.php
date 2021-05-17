@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\DashboardController;
 use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\Backend\PlansController;
+use App\Http\Controllers\Backend\FeedbacksController;
 use App\Models\Plan;
 
 // All route names are prefixed with 'admin.'.
@@ -41,5 +42,16 @@ Route::group([
         });
         Route::patch('/', [PlansController::class, 'update'])->name('update');
         Route::delete('/', [PlansController::class, 'destroy'])->name('destroy');
+    });
+});
+
+Route::group([
+    'prefix' => 'feedback',
+    'as' => 'feedback.',
+], function () {
+    Route::get('/', [FeedbacksController::class, 'index'])
+        ->name('index')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Feedbacks'), route('admin.feedback.index'));
     });
 });

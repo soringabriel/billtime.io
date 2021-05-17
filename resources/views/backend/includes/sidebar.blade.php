@@ -26,6 +26,15 @@
                 :text="__('Plans')" />
         </li>
 
+        <li class="c-sidebar-nav-item">
+            <x-utils.link
+                class="c-sidebar-nav-link"
+                :href="route('admin.feedback.index')"
+                :active="activeClass(Route::is('admin.feedback.index'), 'c-active')"
+                icon="c-sidebar-nav-icon fas fa-comment-dots"
+                :text="__('Feedback')" />
+        </li>
+
         @if (
             $logged_in_user->hasAllAccess() ||
             (

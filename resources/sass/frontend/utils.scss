@@ -32,3 +32,28 @@ ol.stepper {
         }
     }
 }
+
+#kustomer {
+    display: none;
+
+    @include tablet-up {
+        display: initial;
+    }
+    
+    .kustomer-feedback-component {
+        left: 14px;
+        bottom: 14px;
+        right: initial;
+        z-index: 1100;
+    
+        .kustomer-popup {
+            left: 10px;
+            right: initial;
+        }
+    
+        .kustomer-tooltip {
+            left: 70px;
+            right: initial !important;
+        }
+    }
+}

@@ -27,6 +27,7 @@
         "laraveldaily/laravel-invoices": "^2.0",
         "livewire/livewire": "^2.0",
         "maatwebsite/excel": "^3.1",
+        "mydnic/laravel-kustomer": "^1.6",
         "rappasoft/laravel-livewire-tables": "^0.3",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
