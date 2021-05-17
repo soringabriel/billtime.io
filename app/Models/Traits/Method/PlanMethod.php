@@ -56,13 +56,22 @@ trait PlanMethod
                                 'customer_email' => auth()->user()->email,
                             ]
                         );
-                    return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Purchase\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } else {
-                    return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-primary">' . __('Upgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Upgrade\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-primary">' . __('Upgrade') . '</a>');
                 }
             }
             if ($this->price < $plan->price) { 
-                return new HtmlString('<a name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-danger">' . __('Downgrade') . '</a>');
+                return new HtmlString('<a onclick="gtag(\'event\', \'Downgrade\', {
+                    \'event_category\': \'Payment\',
+                    \'event_label\': \'' . $this->name . '\',
+                })" name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-danger">' . __('Downgrade') . '</a>');
             }
         } else {
             if ($this->id == $plan->id) {   
@@ -84,9 +93,15 @@ trait PlanMethod
                                 'customer_email' => auth()->user()->email,
                             ]
                         );
-                    return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-success" data-theme="none">' . __('Cancel Downgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Purchase\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-success" data-theme="none">' . __('Cancel Downgrade') . '</a>');
                 } else {
-                    return new HtmlString('<a href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-success">' . __('Cancel Downgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Cancel Downgrade\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-success">' . __('Cancel Downgrade') . '</a>');
                 }
             }
             if ($this->id == $nextPlan->id) {   
@@ -111,9 +126,15 @@ trait PlanMethod
                                 'customer_email' => auth()->user()->email,
                             ]
                         );
-                    return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-danger" data-theme="none">' . __('Downgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Purchase\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-danger" data-theme="none">' . __('Downgrade') . '</a>');
                 } else {
-                    return new HtmlString('<a name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-danger">' . __('Downgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Downgrade\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" name="confirm-item" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-danger">' . __('Downgrade') . '</a>');
                 }
             }
             if ($this->price > $plan->price) {  
@@ -135,9 +156,15 @@ trait PlanMethod
                                 'customer_email' => auth()->user()->email,
                             ]
                         );
-                    return new HtmlString('<a href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
+                    return new HtmlString('<a onclick="gtag(\'event\', \'Purchase\', {
+                        \'event_category\': \'Payment\',
+                        \'event_label\': \'' . $this->name . '\',
+                    })" href="#!" data-override="' . $paylink . '" class="paddle_button btn btn-lg btn-primary" data-theme="none">' . __('Upgrade') . '</a>');
                 } 
-                return new HtmlString('<a name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-primary">' . __('Upgrade') . '</a>');
+                return new HtmlString('<a onclick="gtag(\'event\', \'Upgrade\', {
+                    \'event_category\': \'Payment\',
+                    \'event_label\': \'' . $this->name . '\',
+                })" name="confirm-item" data-overrirde-message="' . __('Are you sure you want to do this?') . '<br><br>' . __('You will be charged') . ' ' . $this->price . ' ' . $this->currency . '" href="' . route('frontend.subscription.update', $this) . '" class="btn btn-lg btn-primary">' . __('Upgrade') . '</a>');
             }
         }
     }
