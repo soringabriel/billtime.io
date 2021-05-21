@@ -53,6 +53,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('Least benefits per user, per month')</p>
                                 {{ $associatedPlans['Freelancer']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -81,6 +82,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('$4,99 per user, per month')</p>
                                 {{ $associatedPlans['Freelancer Pro']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -109,6 +111,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('$3,33 per user, per month')</p>
                                 {{ $associatedPlans['Startup']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -137,6 +140,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('$2,49 per user, per month')</p>
                                 {{ $associatedPlans['Small Team']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -165,6 +169,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('$1 per user, per month')</p>
                                 {{ $associatedPlans['Regular']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -193,6 +198,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
+                                <p class="mb-4 text-secondary">@lang('Less than $1 per user, per month')</p>
                                 {{ $associatedPlans['Unlimited']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">

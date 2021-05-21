@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')</title>
-    <meta name="description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
     <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     <meta name="theme-color" content="#1B99A9">
     <meta name="keywords" content="timetracker,time tracking,time tracker,business managment,invoice creator,billing tool,invoice tool,invoicing tool">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
     <meta name="twitter:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
-    <meta name="twitter:description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="twitter:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
     <meta name="twitter:site" content="{{ env('APP_URL') }}">
     <meta name="twitter:image" content="{{ asset('img/presentation/social-image.png#full') }}">
-    <meta property="og:description" content="{{ __('TimoTrack is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}" />
+    <meta property="og:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}" />
     <meta property="og:image" content="{{ asset('img/presentation/social-image.png#full') }}" />
     <meta property="og:url" content="{{ env('APP_URL') }}" />
     <link rel="apple-touch-icon" href="{{ asset('img/presentation/logo-square.png#full') }}" />
@@ -117,7 +117,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">@lang('TimoTrack')</h3>
+                            <h3 class="header-title">@lang('Timo-Track')</h3>
                             <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a></li>
@@ -238,6 +238,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('Least benefits per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -264,6 +265,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$4,99 per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -290,6 +292,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$3,33 per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -316,6 +319,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$2,49 per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -342,6 +346,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$1 per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -368,6 +373,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('Less than $1 per user, per month')</p>
                             <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('TRY NOW')</a>
                         </div>
                         <div class="buttom-shape">
@@ -393,7 +399,7 @@
                 </div>
             </div> 
             <div class="row text-center paragraphs">
-                <p>@lang('TimoTrack it\'s a tool that wants to come to the help of all businesses, small or large, and provide them a platform to manage their business')</p>
+                <p>@lang('Timo-Track it\'s a tool that wants to come to the help of all businesses, small or large, and provide them a platform to manage their business')</p>
                 <p style="display: none">@lang('Our product it\'s in continous development and we seek to improve our services all the time')</p>
                 <p style="display: none">@lang('Any sugestions will be welcomed and we will always put customer experience at the top of our priorities!')</p>
             </div> 

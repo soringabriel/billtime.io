@@ -17,7 +17,7 @@
                     ($organization->projects()->count() == 0 && $logged_in_user->can('user.access.projects.create')) || 
                     (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner()))
                     <div id="onboarding">
-                        <h1 class="mt-3 mb-5">@lang('Welcome to TimoTrack')</h1>
+                        <h1 class="mt-3 mb-5">@lang('Welcome to Timo-Track')</h1>
                         <h4 class="mb-5">@lang('Before you can start tracking your time there are a few more steps that you need to complete!')</h4>
 
                         <ol class="stepper">
