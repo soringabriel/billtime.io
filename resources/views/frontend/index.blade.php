@@ -19,6 +19,7 @@
     <meta property="og:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}" />
     <meta property="og:image" content="{{ asset('img/presentation/social-image.png#full') }}" />
     <meta property="og:url" content="{{ env('APP_URL') }}" />
+    <meta property="fb:app_id" content="579550796341146" />
     <link rel="apple-touch-icon" href="{{ asset('img/presentation/logo-square.png#full') }}" />
     <link rel="icon" type="image/x-icon" href="{{ asset('img/presentation/logo-square.png#full') }}">
     <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="en-US" />

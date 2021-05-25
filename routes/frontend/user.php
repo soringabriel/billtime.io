@@ -76,7 +76,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         });
 
         Route::group(['prefix' => '{deletedUser}', 'middleware' => ['permission:user.access.users.delete', 'model_belongs_to_user_organization:deletedUser']], function () {
-            Route::patch('restore', [DeletedSubuserController::class, 'update'])->name('restore');
+            Route::patch('restore', [DeletedSubuserController::class, 'update'])->middleware('subusers_quota')->name('restore');
             Route::delete('permanently-delete', [DeletedSubuserController::class, 'destroy'])->name('permanently-delete');
         });
     });
