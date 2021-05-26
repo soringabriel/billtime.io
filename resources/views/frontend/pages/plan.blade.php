@@ -46,14 +46,13 @@
                                     <li><i class="fas fa-times"></i> @lang('No Data Exports')</li>
                                     <li><i class="fas fa-times"></i> @lang('No Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('Free of costs')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('Free of costs')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('Least benefits per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('Least amount of benefits')</p>
                                 {{ $associatedPlans['Freelancer']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -67,7 +66,7 @@
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Freelancer Pro')</h5>
                                 <span class="price">$ 4,99</span>
-                                <p class="year">@lang('per month')</p>
+                                <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
                                 <ul>
@@ -75,14 +74,13 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$4,99 per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$4,99 in total, per month')</p>
                                 {{ $associatedPlans['Freelancer Pro']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -95,8 +93,8 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Startup')</h5>
-                                <span class="price">$ 9,99</span>
-                                <p class="year">@lang('per month')</p>
+                                <span class="price">$ 3,33</span>
+                                <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
                                 <ul>
@@ -104,14 +102,13 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 3 users')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$3,33 per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$9,99 in total, per month')</p>
                                 {{ $associatedPlans['Startup']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -124,8 +121,8 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Small Team')</h5>
-                                <span class="price">$ 24,99</span>
-                                <p class="year">@lang('per month')</p>
+                                <span class="price">$ 2,49</span>
+                                <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
                                 <ul>
@@ -133,14 +130,13 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 10 users')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$2,49 per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$24,99 in total, per month')</p>
                                 {{ $associatedPlans['Small Team']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -153,8 +149,8 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Regular')</h5>
-                                <span class="price">$ 49,99</span>
-                                <p class="year">@lang('per month')</p>
+                                <span class="price">$ 0,99</span>
+                                <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
                                 <ul>
@@ -162,14 +158,13 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 50 users')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$1 per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$49,99 in total, per month')</p>
                                 {{ $associatedPlans['Regular']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -182,23 +177,22 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Unlimited')</h5>
-                                <span class="price">$ 99,99</span>
-                                <p class="year">@lang('per month')</p>
+                                <span class="price">~$ 0,01</span>
+                                <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
                                 <ul>
                                     <li><i class="fas fa-check"></i> @lang('Time Tracking')</li>
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Unlimited users')</li>
-                                    <li><i class="fas fa-check"></i> @lang('Customer Support')</li>
+                                    <li><i class="fas fa-check"></i> <strong>@lang('Unlimited users')</strong></li>
                                     @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> @lang('First Month Free')</li>
+                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('Less than $1 per user, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$99,99 in total, per month')</p>
                                 {{ $associatedPlans['Unlimited']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
