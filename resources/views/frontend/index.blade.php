@@ -421,17 +421,18 @@
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">@lang('Product & Services')</h6>
+                            <h6 class="footer-title">@lang('Services & Pricing')</h6>
                             <ul>
-                                <li><a class="page-scroll" href="#pricing">@lang('Products')</a></li>
+                                <li><a class="page-scroll" href="#pricing">@lang('Pricing')</a></li>
                                 <li><a class="page-scroll" href="#service">@lang('Services')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-link">
-                            <h6 class="footer-title">@lang('Contact Details')</h6>
+                            <h6 class="footer-title">@lang('Other Details')</h6>
                             <ul>
+                                <li><a href="https://blog.timotrack.com/">@lang('Blog')</a></li>
                                 <li><a class="page-scroll" href="mailto:info@timotrack.com">@lang('Send Us An Email')</a></li>
                             </ul>
                         </div> <!-- footer link -->
