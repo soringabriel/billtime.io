@@ -879,3 +879,35 @@ p.form-message.error {
     }
   }
 }
+
+.navgition .navbar .navbar-nav .register-btn-wrapper.nav-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    .register-btn {
+      &:after, &:before {
+        opacity: 0;
+      }
+    }
+  }
+
+  .register-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #0067f4;
+    color: #fff;
+    height: 50%;
+    border: 1px solid #0067f4;
+    transition: all 0.5s;
+
+    &:hover {
+      text-decoration: none;
+      background: transparent;
+      color: #121212;
+    }
+  }
+}

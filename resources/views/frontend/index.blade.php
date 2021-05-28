@@ -100,8 +100,8 @@
                                         </li>
 
                                         @if (config('boilerplate.access.user.registration'))
-                                            <li class="nav-item">
-                                                <a href="{{ route('frontend.auth.register') }}">@lang('Register')</a>
+                                            <li class="nav-item register-btn-wrapper">
+                                                <a class="register-btn" href="{{ route('frontend.auth.register') }}">@lang('Sign Up')</a>
                                             </li>
                                         @endif
                                     @endauth
