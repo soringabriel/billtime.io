@@ -119,7 +119,7 @@
                                 <x-utils.link
                                     :href="route('frontend.auth.register')"
                                     :active="activeClass(Route::is('frontend.auth.register'))"
-                                    :text="__('Register')"
+                                    :text="__('Sign Up')"
                                     class="nav-link" />
 
                             </li>
