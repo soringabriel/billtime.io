@@ -12,6 +12,10 @@
                     </x-slot>
 
                     <x-slot name="body">
+                        <div class="text-center m-2">
+                            <h4>@lang('Register now for free, and you will have access to the full features of our service!')</h4>
+                        </div>
+                        
                         <div class="text-center mb-4">
                             @include('frontend.auth.includes.social')
                         </div>
