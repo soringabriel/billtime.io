@@ -12,7 +12,7 @@
                     </x-slot>
 
                     <x-slot name="headerActions">
-                        <x-utils.link class="card-header-action" :href="route('frontend.user.subuser.index')" :text="__('Back')" permission="user.access.users.access" />
+                        <x-utils.link class="btn btn-primary" :href="route('frontend.user.subuser.index')" :text="__('Back')" permission="user.access.users.access" />
                     </x-slot>
 
                     <x-slot name="body">

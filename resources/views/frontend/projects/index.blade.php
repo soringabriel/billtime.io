@@ -13,8 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            icon="c-icon cil-plus"
-                            class="card-header-action"
+                            class="btn btn-primary"
                             :href="route('frontend.projects.create')"
                             :text="__('Add Project')"
                             permission="user.access.projects.create"

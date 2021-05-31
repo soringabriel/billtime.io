@@ -17,13 +17,13 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="card-header-action mr-3"
+                            class="btn btn-danger mr-3"
                             :href="route('frontend.user.subuser.deleted')"
                             :text="__('Deleted Users')"
                             permission="user.access.users.delete"
                         />
                         <x-utils.link
-                            class="card-header-action"
+                            class="btn btn-primary"
                             :href="route('frontend.user.subuser.create')"
                             :text="__('Create User')"
                             permission="user.access.users.create"

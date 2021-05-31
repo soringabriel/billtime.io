@@ -13,8 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            icon="c-icon cil-plus"
-                            class="card-header-action"
+                            class="btn btn-primary"
                             :href="route('frontend.invoices.create')"
                             :text="__('Add Invoice')"
                             permission="user.access.invoices.create"

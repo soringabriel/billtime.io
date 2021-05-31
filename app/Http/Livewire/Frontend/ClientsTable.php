@@ -29,6 +29,14 @@ class ClientsTable extends TableComponentExtended
     ];
 
     /**
+     * @var array
+     */
+    public $emptyTableAction = [
+        'route' => 'frontend.clients.create',
+        'text' => 'Add Your First Client',
+    ];
+
+    /**
      * @return Builder
      */
     public function query(): Builder

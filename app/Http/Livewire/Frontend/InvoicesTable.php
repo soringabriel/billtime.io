@@ -39,6 +39,14 @@ class InvoicesTable extends TableComponentExtended
     ];
 
     /**
+     * @var array
+     */
+    public $emptyTableAction = [
+        'route' => 'frontend.invoices.create',
+        'text' => 'Add Your First Invoice',
+    ];
+
+    /**
      * @return Builder
      */
     public function query(): Builder

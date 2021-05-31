@@ -17,7 +17,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="card-header-action"
+                            class="btn btn-primary"
                             :href="route('frontend.user.subuser.index')"
                             :text="__('Active Users')"
                             permission="user.access.users.access"

@@ -14,10 +14,6 @@
                             @lang('Add Client')
                         </x-slot>
 
-                        <x-slot name="headerActions">
-                            <x-utils.link class="card-header-action" :href="route('frontend.clients.index')" :text="__('Cancel')" permission="user.access.clients.access" />
-                        </x-slot>
-
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
@@ -71,7 +67,8 @@
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Create Client')</button>
+                            <button class="btn btn-primary float-right" type="submit">@lang('Create Client')</button>
+                            <x-utils.link class="btn btn-danger float-right mr-3" :href="route('frontend.clients.index')" :text="__('Cancel')" permission="user.access.clients.access" />
                         </x-slot>
                     </x-frontend.card>
                 </x-forms.post>

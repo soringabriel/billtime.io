@@ -65,7 +65,7 @@
                                     <x-utils.link
                                         :href="route('frontend.user.subuser.index')"
                                         :active="activeClass(Route::is('frontend.user.subuser.index'))"
-                                        :text="__('Users')"
+                                        :text="__('Team')"
                                         class="nav-link"
                                         permission="user.access.users.access" />
                                 </li>

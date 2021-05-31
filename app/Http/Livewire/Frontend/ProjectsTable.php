@@ -30,6 +30,14 @@ class ProjectsTable extends TableComponentExtended
     ];
 
     /**
+     * @var array
+     */
+    public $emptyTableAction = [
+        'route' => 'frontend.projects.create',
+        'text' => 'Add Your First Project',
+    ];
+
+    /**
      * @return Builder
      */
     public function query(): Builder

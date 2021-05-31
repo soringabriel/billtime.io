@@ -34,11 +34,22 @@ class SubusersTable extends TableComponentExtended
     ];
 
     /**
+     * @var array
+     */
+    public $emptyTableAction = [
+        'route' => 'frontend.user.subuser.create',
+        'text' => 'Add Your First Team Member',
+    ];
+
+    /**
      * @param  string  $status
      */
     public function mount($status = 'active'): void
     {
         $this->status = $status;
+        if ($status != 'active') {
+            unset($this->emptyTableAction);
+        }
     }
 
     /**

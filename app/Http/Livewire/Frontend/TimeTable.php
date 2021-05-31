@@ -165,6 +165,14 @@ class TimeTable extends TableComponentExtended
     ];
 
     /**
+     * @var array
+     */
+    public $emptyTableAction = [
+        'route' => 'frontend.time.create',
+        'text' => 'Add Your First Time',
+    ];
+
+    /**
      * @return void
      */
     public function mount(
