@@ -42,14 +42,6 @@
                             </div><!--form-group-->
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Password Confirmation')</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
-                                </div>
-                            </div><!--form-group-->
-
-                            <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check">
                                         <input type="checkbox" name="terms" value="1" id="terms" class="form-check-input" required>

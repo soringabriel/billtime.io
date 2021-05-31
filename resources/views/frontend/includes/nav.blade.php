@@ -188,7 +188,7 @@
     </nav>
 
     @auth
-        @if ($logged_in_user->can('user.access.times.automatic-time'))
+        @if ($logged_in_user->can('user.access.times.automatic-time') && $logged_in_user->isVerified())
             @include('frontend.includes.partials.counter')
         @endif
     @endauth
