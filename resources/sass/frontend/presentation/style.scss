@@ -322,7 +322,8 @@ p {
 
 .header-hero {
   height: 750px;
-  position: relative; }
+  position: relative;
+  background-position: center bottom; }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
     .header-hero {
       height: 600px; } }
