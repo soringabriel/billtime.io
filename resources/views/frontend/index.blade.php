@@ -205,6 +205,14 @@
 
     <!--====== SERVICES PART ENDS ======-->
 
+    <div class="container align-items-center mb-5">
+        <div class="row">
+            <div class="offset-md-2 col-md-8 mb-5">
+                <a class="btn btn-lg btn-block text-center btn-primary" href="{{ route('frontend.auth.register') }}">@lang('Start now! It\'s free!')</a>
+            </div>
+        </div>
+    </div>
+
     <!--====== SCREENSHOTS PART START ======-->
 
     <section id="screenshots" class="screenshots-area mt-5 mb-5">
