@@ -110,7 +110,7 @@
             </div> <!-- container -->
         </div> <!-- navgition -->
 
-        <div id="home" class="header-hero bg_cover" style="background-image: url('{{ asset('img/presentation/header-bg.jpg#full') }}')">
+        <div id="home" class="header-hero bg_cover" style="background-image: url('{{ asset('img/presentation/header-bg.jpg#full') }}'); background-image: -webkit-image-set(url('{{ asset('img/presentation/header-bg.webp#full') }}') 1x);">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
@@ -277,7 +277,7 @@
 
     <!--====== ABOUT US START ======-->
 
-    <section id="about" class="about-area" style="background-image: url('{{ asset('img/presentation/about-us.png#full') }}')">
+    <section id="about" class="about-area" style="background-image: url('{{ asset('img/presentation/about-us.png#full') }}'); background-image: -webkit-image-set(url('{{ asset('img/presentation/about-us.webp#full') }}') 1x);">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
@@ -344,12 +344,6 @@
     </footer>
 
     <!--====== FOOTER PART ENDS ======-->
-
-    <!--====== BACK TO TOP PART START ======-->
-
-    <a class="back-to-top" href="#"><i class="lni-chevron-up"></i></a>
-
-    <!--====== BACK TO TOP PART ENDS ======-->
 
     @stack('before-scripts')
     @include('frontend.includes.presentation-js')
