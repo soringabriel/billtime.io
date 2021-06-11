@@ -159,12 +159,13 @@ $(function() {
         var scrollbarLocation = $(this).scrollTop();
 
         scrollLink.each(function() {
+          if (typeof $(this.hash).offset() !== 'undefined') {
+            var sectionOffset = $(this.hash).offset().top - 90;
 
-          var sectionOffset = $(this.hash).offset().top - 90;
-
-          if ( sectionOffset <= scrollbarLocation ) {
+            if ( sectionOffset <= scrollbarLocation ) {
             $(this).parent().addClass('active');
             $(this).parent().siblings().removeClass('active');
+            }
           }
         });
     });

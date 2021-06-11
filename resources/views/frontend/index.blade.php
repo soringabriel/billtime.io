@@ -198,7 +198,11 @@
         </div> <!-- conteiner -->
         <div class="services-image d-lg-flex align-items-center">
             <div class="image">
-                <img src="{{ asset('img/presentation/services.jpg#full') }}" alt="Services">
+                <picture>
+                    <source type="image/webp" srcset="{{ asset('img/presentation/services.webp#full') }}">
+                    <source type="image/jpg" srcset="{{ asset('img/presentation/services.jpg#full') }}">
+                    <img src="{{ asset('img/presentation/services.jpg#full') }}" alt="Services">
+                </picture>
             </div>
         </div> <!-- services image -->
     </section>
@@ -221,19 +225,39 @@
                 <div id="screenshotsCarousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{ asset('img/presentation/screenshots/times.png#full') }}" alt="{{ __('Times') }}">
+                            <picture class="d-block w-100">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/times.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/times.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/times.png#full') }}" alt="{{ __('Times') }}">
+                            </picture>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('img/presentation/screenshots/dashboard.png#full') }}" alt="{{ __('Dasbhoard') }}">
+                            <picture class="d-block w-100">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/dashboard.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/dashboard.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/dashboard.png#full') }}" alt="{{ __('Dasbhoard') }}">
+                            </picture>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('img/presentation/screenshots/create-invoice.png#full') }}" alt="{{ __('Invoice') }}">
+                            <picture class="d-block w-100">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/create-invoice.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/create-invoice.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/create-invoice.png#full') }}" alt="{{ __('Invoice') }}">
+                            </picture>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('img/presentation/screenshots/create-user.png#full') }}" alt="{{ __('Users') }}">
+                            <picture class="d-block w-100">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/create-user.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/create-user.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/create-user.png#full') }}" alt="{{ __('Users') }}">
+                            </picture>
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('img/presentation/screenshots/account.png#full') }}" alt="{{ __('Account') }}">
+                            <picture class="d-block w-100">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/account.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/account.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/account.png#full') }}" alt="{{ __('Account') }}">
+                            </picture>
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#screenshotsCarousel" role="button" data-slide="prev">
