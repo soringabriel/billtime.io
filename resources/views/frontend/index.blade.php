@@ -115,7 +115,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">@lang('Timo-Track')</h3>
+                            <h1 class="header-title">@lang('Timo-Track')</h1>
                             <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a></li>
