@@ -1,25 +1,27 @@
 <div id="navsWrapper">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar" style="min-height: 75px">
         <div class="container-fluid">
+            @auth
+                <button class="c-header-toggler c-class-toggler d-block d-lg-none mfe-auto navbar-toggler" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+                    <i class="c-icon c-icon-lg cil-menu"></i>
+                </button>
+            @endauth
+
             <x-utils.link
                 :href="route(homeRoute())"
-                class="navbar-brand">
+                class="navbar-brand d-none d-lg-block">
                 <img src="{{ asset('img/presentation/logo-small.svg#full') }}" alt="Logo">
             </x-utils.link>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('Toggle navigation')">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto align-items-center">
+            <div id="navbarSupportedContent" class="ml-auto">
+                <ul class="navbar-nav ml-auto align-items-center flex-row justify-content-between">
                     @auth
                         @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
                             <li class="nav-item mr-3">
                                 <x-utils.link
                                     :href="route('frontend.plan')"
                                     :text="__('Upgrade')"
-                                    class="btn btn-success" />
+                                    class="btn btn-success d-none d-md-block" />
                             </li>
                         @endif
                     @endauth
@@ -48,7 +50,7 @@
                                 :href="route('frontend.auth.login')"
                                 :active="activeClass(Route::is('frontend.auth.login'))"
                                 :text="__('Login')"
-                                class="nav-link" />
+                                class="nav-link mr-3" />
                         </li>
 
                         @if (config('boilerplate.access.user.registration'))

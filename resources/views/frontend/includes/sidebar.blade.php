@@ -1,5 +1,5 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-    <div class="c-sidebar-brand d-lg-down-none pt-3 pb-3">
+    <div class="c-sidebar-brand pt-3 pb-3">
         <img class="c-sidebar-brand-full w-50" src="{{ asset('img/presentation/logo-small.svg#full') }}" alt="Logo">
         <img class="c-sidebar-brand-minimized w-50" src="{{ asset('img/presentation/logo-square.png#full') }}" alt="Logo">
     </div><!--c-sidebar-brand-->
