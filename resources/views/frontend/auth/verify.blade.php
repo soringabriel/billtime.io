@@ -5,10 +5,10 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <x-frontend.card>
+            <div class="col-md-6 col-lg-4 text-center">
+                <x-frontend.card class="transparent-header">
                     <x-slot name="header">
-                        @lang('Verify Your E-mail Address')
+                        <h4 class="pt-3 m-auto">@lang('Verify Your E-mail Address')</h4>
                     </x-slot>
 
                     <x-slot name="body">

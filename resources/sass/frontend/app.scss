@@ -10,6 +10,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import '~@coreui/coreui/scss/coreui';
+@import '~@coreui/icons/css/free.min.css';
+
 @import '~jquery-datetimepicker/jquery.datetimepicker.css';
 
 @import 'livewires';
@@ -18,6 +21,7 @@
 
 @import 'invoices';
 @import 'includes/navbar';
+@import 'includes/sidebar';
 @import 'includes/counter';
 @import 'includes/permissions';
 

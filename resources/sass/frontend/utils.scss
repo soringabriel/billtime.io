@@ -1,6 +1,8 @@
 .container {
     @include desktop-1200 {
         max-width: 1300px;
+        padding-left: 30px;
+        padding-right: 30px;
     }
 }
 
@@ -56,4 +58,9 @@ ol.stepper {
             right: initial !important;
         }
     }
+}
+
+.card.transparent-header .card-header {
+    border-bottom: 0;
+    background: transparent;
 }

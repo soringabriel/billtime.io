@@ -29,19 +29,25 @@
         </script>
     @endauth
 </head>
-<body>
-    @include('includes.partials.read-only')
-    @include('includes.partials.logged-in-as')
-    @include('includes.partials.announcements')
+<body class="c-app {{ Request::segment(count(Request::segments())) }}">
+    @auth
+        @include('frontend.includes.sidebar')
+    @endauth
 
-    <div id="app">
-        @include('frontend.includes.nav')
-        @include('includes.partials.messages')
+    <div class="c-wrapper c-fixed-components">
+        @include('includes.partials.read-only')
+        @include('includes.partials.logged-in-as')
+        @include('includes.partials.announcements')
 
-        <main>
-            @yield('content')
-        </main>
-    </div><!--app-->
+        <div id="app" class="c-body">
+            @include('frontend.includes.nav')
+            @include('includes.partials.messages')
+
+            <main class="c-main">
+                @yield('content')
+            </main>
+        </div><!--app-->
+    </div>
 
     @stack('before-scripts')
     <script src="{{ url(mix('js/manifest.js')) }}"></script>
@@ -52,7 +58,7 @@
     @stack('after-scripts')
 
     @auth
-        @include('kustomer::kustomer')
+        <!-- @include('kustomer::kustomer') -->
     @endauth
 </body>
 </html>

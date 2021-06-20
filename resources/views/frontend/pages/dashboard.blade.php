@@ -120,8 +120,11 @@
                 }
             };
 
-            var ctx = document.getElementById('userTimePerDay').getContext('2d');
-            window.myLine = new Chart(ctx, configDaily);
+            var userTimePerDay = document.getElementById('userTimePerDay');
+            if (userTimePerDay !== null) {
+                var ctx = document.getElementById('userTimePerDay').getContext('2d');
+                window.myLine = new Chart(ctx, configDaily);
+            }
 
             const configMonthly = {
                 type: 'bar',
@@ -163,8 +166,11 @@
                 }
             };
 
-            var ctx = document.getElementById('userTimePerMonth').getContext('2d');
-            window.myLine = new Chart(ctx, configMonthly);
+            var userTimePerMonth = document.getElementById('userTimePerMonth');
+            if (userTimePerMonth !== null) {
+                var ctx = document.getElementById('userTimePerMonth').getContext('2d');
+                window.myLine = new Chart(ctx, configMonthly);
+            }
 
             @if ($logged_in_user->can('user.access.times.show-all'))
                 const organizationLabelsDaily = {!! json_encode(array_keys($organizationTimesChartData['daily'])) !!};
@@ -195,8 +201,11 @@
                     }
                 };
 
-                var ctx = document.getElementById('organizationTimePerDay').getContext('2d');
-                window.myLine = new Chart(ctx, organizationConfigDaily);
+                var organizationTimePerDay = document.getElementById('organizationTimePerDay');
+                if (organizationTimePerDay !== null) {
+                    var ctx = document.getElementById('organizationTimePerDay').getContext('2d');
+                    window.myLine = new Chart(ctx, organizationConfigDaily);
+                }
 
                 const organizationConfigMonthly = {
                     type: 'bar',
@@ -238,8 +247,11 @@
                     }
                 };
 
-                var ctx = document.getElementById('organizationTimePerMonth').getContext('2d');
-                window.myLine = new Chart(ctx, organizationConfigMonthly);
+                var organizationTimePerMonth = document.getElementById('organizationTimePerMonth');
+                if (organizationTimePerMonth !== null) {
+                    var ctx = organizationTimePerMonth.getContext('2d');
+                    window.myLine = new Chart(ctx, organizationConfigMonthly);
+                }
             @endif
         })();
     </script>

@@ -1,6 +1,6 @@
-<div class="sticky-top" id="navsWrapper">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar">
-        <div class="container">
+<div id="navsWrapper">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm main-navbar" style="min-height: 75px">
+        <div class="container-fluid">
             <x-utils.link
                 :href="route(homeRoute())"
                 class="navbar-brand">
@@ -12,73 +12,10 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                @auth
-                    <ul class="navbar-nav ml-auto">
-                        @if ($logged_in_user->isUser())
-
-                            @if ($logged_in_user->can('user.access.times.access'))
-                                <li class="nav-item">
-                                    <x-utils.link
-                                        :href="route('frontend.time.index')"
-                                        :active="activeClass(Route::is('frontend.time.index'))"
-                                        :text="__('Track Time')"
-                                        class="nav-link"
-                                        permission="user.access.times.access" />
-                                </li>
-                            @endif
-
-                            @if ($logged_in_user->can('user.access.invoices.access'))
-                                <li class="nav-item">
-                                    <x-utils.link
-                                        :href="route('frontend.invoices.index')"
-                                        :active="activeClass(Route::is('frontend.invoices.index'))"
-                                        :text="__('Invoices')"
-                                        class="nav-link"
-                                        permission="user.access.invoices.access" />
-                                </li>
-                            @endif
-
-                            @if ($logged_in_user->can('user.access.clients.access'))
-                                <li class="nav-item">
-                                    <x-utils.link
-                                        :href="route('frontend.clients.index')"
-                                        :active="activeClass(Route::is('frontend.clients.index'))"
-                                        :text="__('Clients')"
-                                        class="nav-link"
-                                        permission="user.access.clients.access" />
-                                </li>
-                            @endif
-                                
-                            @if ($logged_in_user->can('user.access.projects.access'))
-                                <li class="nav-item">
-                                    <x-utils.link
-                                        :href="route('frontend.projects.index')"
-                                        :active="activeClass(Route::is('frontend.projects.index'))"
-                                        :text="__('Projects')"
-                                        class="nav-link"
-                                        permission="user.access.projects.access" />
-                                </li>
-                            @endif
-
-                            @if ($logged_in_user->can('user.access.users.access'))
-                                <li class="nav-item">
-                                    <x-utils.link
-                                        :href="route('frontend.user.subuser.index')"
-                                        :active="activeClass(Route::is('frontend.user.subuser.index'))"
-                                        :text="__('Team')"
-                                        class="nav-link"
-                                        permission="user.access.users.access" />
-                                </li>
-                            @endif
-
-                        @endif
-                    </ul>
-                @endauth
-
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto align-items-center">
                     @auth
                         @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
-                            <li class="nav-item">
+                            <li class="nav-item mr-3">
                                 <x-utils.link
                                     :href="route('frontend.plan')"
                                     :text="__('Upgrade')"
@@ -186,14 +123,14 @@
             </div><!--navbar-collapse-->
         </div><!--container-->
     </nav>
-
-    @auth
-        @if ($logged_in_user->can('user.access.times.automatic-time') && $logged_in_user->isVerified())
-            @include('frontend.includes.partials.counter')
-        @endif
-    @endauth
 </div>
 
 @if (config('boilerplate.frontend_breadcrumbs'))
     @include('frontend.includes.partials.breadcrumbs')
 @endif
+
+@auth
+    @if ($logged_in_user->can('user.access.times.automatic-time') && $logged_in_user->isVerified())
+        @include('frontend.includes.partials.counter')
+    @endif
+@endauth

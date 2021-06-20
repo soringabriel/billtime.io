@@ -5,26 +5,21 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <x-frontend.card>
+            <div class="col-md-6 col-lg-4">
+                <x-frontend.card class="transparent-header">
                     <x-slot name="header">
-                        @lang('Reset Password')
+                        <h4 class="pt-3 m-auto">@lang('Reset Password')</h4>
                     </x-slot>
 
                     <x-slot name="body">
                         <x-forms.post :action="route('frontend.auth.password.email')">
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">@lang('E-mail Address')</label>
-
-                                <div class="col-md-6">
-                                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="{{ __('E-mail Address') }}" maxlength="255" required autofocus autocomplete="email" />
-                                </div>
+                            <div class="form-group">
+                                <label for="email">@lang('E-mail Address')</label>
+                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" placeholder="{{ __('E-mail Address') }}" maxlength="255" required autofocus autocomplete="email" />
                             </div><!--form-group-->
 
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button class="btn btn-primary" type="submit">@lang('Send Password Reset Link')</button>
-                                </div>
+                            <div class="form-group mt-4 mb-0">
+                                <button class="btn btn-primary btn-block btn-lg" type="submit">@lang('Send Password Reset Link')</button>
                             </div><!--form-group-->
                         </x-forms.post>
                     </x-slot>

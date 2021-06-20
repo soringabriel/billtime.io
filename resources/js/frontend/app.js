@@ -6,5 +6,11 @@
 
 import 'alpinejs'
 
+window.$ = window.jQuery = require('jquery');
+window.Swal = require('sweetalert2');
+
+var $ = window.$;
+
 require('../bootstrap');
+require('@coreui/coreui');
 require('../plugins');

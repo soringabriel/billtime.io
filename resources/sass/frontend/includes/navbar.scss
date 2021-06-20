@@ -1,6 +1,8 @@
+#navsWrapper {
+    z-index: 9999;
+}
 .main-navbar {
     li.nav-item {
-        margin: 0 10px;
         font-size: 16px;
     }
 }
