@@ -42,7 +42,7 @@ class ClientService extends BaseService
         try {
             $client = $this->model::create(
                 [
-                    'organization_id' => auth()->user()->organization()->first()->id,
+                    'organization_id' => $data['organization_id'] ?? auth()->user()->organization()->first()->id,
                     'name' => $data['name'],
                     'company_name' => $data['company_name'],
                     'tax_number' => $data['tax_number'],

@@ -42,7 +42,7 @@ class ProjectService extends BaseService
         try {
             $project = $this->model::create(
                 [
-                    'organization_id' => auth()->user()->organization()->first()->id,
+                    'organization_id' => $data['organization_id'] ?? auth()->user()->organization()->first()->id,
                     'client_id' => $data['client_id'],
                     'name' => $data['name'],
                 ]

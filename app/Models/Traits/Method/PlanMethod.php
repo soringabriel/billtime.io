@@ -45,7 +45,7 @@ trait PlanMethod
                         ->create(
                             [
                                 'prices' => [
-                                    is_null($organization->subscription('default')) ? 'USD:0' : $this->currency . ':' . $this->price,
+                                    $this->currency . ':' . $this->price,
                                 ],
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,
@@ -82,7 +82,7 @@ trait PlanMethod
                         ->create(
                             [
                                 'prices' => [
-                                    is_null($organization->subscription('default')) ? 'USD:0' : $this->currency . ':' . $this->price,
+                                    $this->currency . ':' . $this->price,
                                 ],
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,
@@ -115,7 +115,7 @@ trait PlanMethod
                         ->create(
                             [
                                 'prices' => [
-                                    is_null($organization->subscription('default')) ? 'USD:0' : $this->currency . ':' . $this->price,
+                                    $this->currency . ':' . $this->price,
                                 ],
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,
@@ -145,7 +145,7 @@ trait PlanMethod
                         ->create(
                             [
                                 'prices' => [
-                                    is_null($organization->subscription('default')) ? 'USD:0' : $this->currency . ':' . $this->price,
+                                    $this->currency . ':' . $this->price,
                                 ],
                                 'recurring_prices' => [
                                     $this->currency . ':' . $this->price,

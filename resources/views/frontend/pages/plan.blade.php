@@ -46,9 +46,6 @@
                                     <li><i class="fas fa-times"></i> @lang('No Data Exports')</li>
                                     <li><i class="fas fa-times"></i> @lang('No Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('Free of costs')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -74,9 +71,6 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -102,9 +96,6 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 3 users')</li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -130,9 +121,6 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 10 users')</li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -158,9 +146,6 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('Up to 50 users')</li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
@@ -186,9 +171,6 @@
                                     <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-check"></i> @lang('Invoicing')</li>
                                     <li><i class="fas fa-check"></i> <strong>@lang('Unlimited users')</strong></li>
-                                    @if (is_null($subscription))
-                                        <li><i class="fas fa-check"></i> <strong>@lang('First Month Free')</strong></li>
-                                    @endif
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">

@@ -15,6 +15,8 @@ use App\Models\Plan;
 use App\Exceptions\GeneralException;
 use App\Services\BaseService;
 use App\Services\OrganizationService;
+use App\Services\ClientService;
+use App\Services\ProjectService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -31,11 +33,15 @@ class UserService extends BaseService
      *
      * @param  User  $user
      * @param  OrganizationService  $organizationService
+     * @param  ClientService  $clientService
+     * @param  ProjectService  $projectService
      */
-    public function __construct(User $user, OrganizationService $organizationService)
+    public function __construct(User $user, OrganizationService $organizationService, ClientService $clientService, ProjectService $projectService)
     {
         $this->model = $user;
         $this->organizationService = $organizationService;
+        $this->clientService = $clientService;
+        $this->projectService = $projectService;
     }
 
     /**
@@ -377,10 +383,24 @@ class UserService extends BaseService
         if (is_null($organization)) {
             $organization = $this->organizationService->store([
                 'owner_id' => $user->id,
-                'plan_expire' => Carbon::now()->addDays(3),
+                'plan_expire' => Carbon::now()->addDays(14),
                 'subusers_quota' => -1,
             ]);
         }
+        $client = $this->clientService->store([
+            'organization_id' => $organization->id,
+            'name' => 'My First Client',
+            'company_name' => '',
+            'tax_number' => '',
+            'vat_number' => '',
+            'address' => '',
+            'bank_account' => '',
+        ]);
+        $project = $this->projectService->store([
+            'organization_id' => $organization->id,
+            'client_id' => $client->id,
+            'name' => 'Untitled Project',
+        ]);
         $plan_permissions = Plan::orderBy('price', 'desc')->first()->permissions->modelKeys();
         $user->syncPermissions($plan_permissions);
         return $user;

@@ -1,4 +1,4 @@
-@if (isset($this->emptyTableAction))
+@if (isset($this->emptyTableAction) && $this->query()->get()->isEmpty())
     <tr>
         <td colspan="{{ collect($columns)->count() }}" class="text-center">
             <x-utils.link

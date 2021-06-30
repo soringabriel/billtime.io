@@ -9,33 +9,33 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                @if ($organization->start_period && $logged_in_user->isOrganizationOwner())
+            <div class="col-md-12 text-center pb-5">
+                @if (($organization->times()->count() == 0 && $logged_in_user->can('user.access.times')) || 
+                    ($logged_in_user->invoices()->count() == 0 && $logged_in_user->can('user.access.invoices.create')) || 
+                    ($organization->start_period && $logged_in_user->isOrganizationOwner()))
                     <h5 class="mt-3 mb-5 alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
                 @endif
-                @if (($organization->clients()->count() == 0 && $logged_in_user->can('user.access.clients.create')) || 
-                    ($organization->projects()->count() == 0 && $logged_in_user->can('user.access.projects.create')) || 
-                    (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner()))
+                @if ((!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner()))
                     <div id="onboarding">
                         <h1 class="mt-3 mb-5">@lang('Welcome to Timo-Track')</h1>
-                        <h4 class="mb-5">@lang('Before you can start tracking your time there are a few more steps that you need to complete!')</h4>
+                        <h4 class="mb-5">@lang('As a new user there is a list of things you should complete, to have a better experience on the app:')</h4>
 
                         <ol class="stepper">
-                            @if ($organization->clients()->count() == 0 && $logged_in_user->can('user.access.clients.create'))
+                            @if ($organization->times()->count() == 0 && $logged_in_user->can('user.access.times'))
                                 <li>
                                     <x-utils.link
-                                        :href="route('frontend.clients.create')"
-                                        :text="__('Add your first client')"
-                                        permission="user.access.clients.create"
+                                        :href="route('frontend.time.create')"
+                                        :text="__('Track your first manual time')"
+                                        permission="user.access.times"
                                     />
                                 </li>
                             @endif
-                            @if ($organization->projects()->count() == 0 && $logged_in_user->can('user.access.projects.create'))
+                            @if ($logged_in_user->invoices()->count() == 0 && $logged_in_user->can('user.access.invoices.create'))
                                 <li>
                                     <x-utils.link
-                                        :href="route('frontend.projects.create')"
-                                        :text="__('Add your first project')"
-                                        permission="user.access.projects.create"
+                                        :href="route('frontend.invoices.create')"
+                                        :text="__('Generate your first invoice')"
+                                        permission="user.access.invoices.create"
                                     />
                                 </li>
                             @endif
@@ -48,16 +48,6 @@
                             @endif
                         </ul>
                     </div>
-                @endif
-                @if (!$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
-                    <h2 class="mt-5">
-                        <x-utils.link
-                            :href="route('frontend.plan')"
-                            :text="__('Upgrade Your Plan')" />
-                        @if (!$organization->start_period)
-                            @lang('To Receive Extra Features')
-                        @endif
-                    </h2>
                 @endif
                 @if ($logged_in_user->can('user.access.times.access'))
                     @if ($logged_in_user->times()->count())
