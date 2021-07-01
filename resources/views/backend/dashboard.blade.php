@@ -31,11 +31,11 @@
                 <div class="col-md-6">
                     <h3>@lang('Today Stats')</h3>
                     <ul>
-                        <li class="p-2">@lang('Today Users:') {{ count($userModel::where('created_at', '>', now())->get()) }}</li>
-                        <li class="p-2">@lang('Today Times:') {{ count($timeModel::where('created_at', '>', now())->get()) }}</li>
-                        <li class="p-2">@lang('Today Invoices:') {{ count($invoiceModel::where('created_at', '>', now())->get()) }}</li>
-                        <li class="p-2">@lang('Today Clients:') {{ count($clientModel::where('created_at', '>', now())->get()) }}</li>
-                        <li class="p-2">@lang('Today Projects:') {{ count($projectModel::where('created_at', '>', now())->get()) }}</li>
+                        <li class="p-2">@lang('Today Users:') {{ count($userModel::whereDate('created_at', today())->get()) }}</li>
+                        <li class="p-2">@lang('Today Times:') {{ count($timeModel::whereDate('created_at', today())->get()) }}</li>
+                        <li class="p-2">@lang('Today Invoices:') {{ count($invoiceModel::whereDate('created_at', today())->get()) }}</li>
+                        <li class="p-2">@lang('Today Clients:') {{ count($clientModel::whereDate('created_at', today())->get()) }}</li>
+                        <li class="p-2">@lang('Today Projects:') {{ count($projectModel::whereDate('created_at', today())->get()) }}</li>
                     </ul>
                 </div>
             </div>
