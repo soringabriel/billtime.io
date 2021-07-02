@@ -16,27 +16,34 @@
         </x-slot>
 
         <x-slot name="body">
-            <h2 class="mb-5">@lang('Welcome to the Dashboard')</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>@lang('All Time Stats')</h3>
-                    <ul>
-                        <li class="p-2">@lang('Total Users:') {{ count($userModel::all()) }}</li>
-                        <li class="p-2">@lang('Total Times:') {{ count($timeModel::all()) }}</li>
-                        <li class="p-2">@lang('Total Invoices:') {{ count($invoiceModel::all()) }}</li>
-                        <li class="p-2">@lang('Total Clients:') {{ count($clientModel::all()) }}</li>
-                        <li class="p-2">@lang('Total Projects:') {{ count($projectModel::all()) }}</li>
-                    </ul>
+            <div class="container">
+                <h2 class="mb-5">@lang('Welcome to the Dashboard')</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>@lang('All Time Stats')</h3>
+                        <ul>
+                            <li class="p-2">@lang('Total Users:') {{ count($userModel::all()) }}</li>
+                            <li class="p-2">@lang('Total Times:') {{ count($timeModel::all()) }}</li>
+                            <li class="p-2">@lang('Total Invoices:') {{ count($invoiceModel::all()) }}</li>
+                            <li class="p-2">@lang('Total Clients:') {{ count($clientModel::all()) }}</li>
+                            <li class="p-2">@lang('Total Projects:') {{ count($projectModel::all()) }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>@lang('Today Stats')</h3>
+                        <ul>
+                            <li class="p-2">@lang('Today Users:') {{ count($userModel::whereDate('created_at', today())->get()) }}</li>
+                            <li class="p-2">@lang('Today Times:') {{ count($timeModel::whereDate('created_at', today())->get()) }}</li>
+                            <li class="p-2">@lang('Today Invoices:') {{ count($invoiceModel::whereDate('created_at', today())->get()) }}</li>
+                            <li class="p-2">@lang('Today Clients:') {{ count($clientModel::whereDate('created_at', today())->get()) }}</li>
+                            <li class="p-2">@lang('Today Projects:') {{ count($projectModel::whereDate('created_at', today())->get()) }}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>@lang('Today Stats')</h3>
-                    <ul>
-                        <li class="p-2">@lang('Today Users:') {{ count($userModel::whereDate('created_at', today())->get()) }}</li>
-                        <li class="p-2">@lang('Today Times:') {{ count($timeModel::whereDate('created_at', today())->get()) }}</li>
-                        <li class="p-2">@lang('Today Invoices:') {{ count($invoiceModel::whereDate('created_at', today())->get()) }}</li>
-                        <li class="p-2">@lang('Today Clients:') {{ count($clientModel::whereDate('created_at', today())->get()) }}</li>
-                        <li class="p-2">@lang('Today Projects:') {{ count($projectModel::whereDate('created_at', today())->get()) }}</li>
-                    </ul>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <livewire:backend.error-activities-table />
+                    </div>
                 </div>
             </div>
         </x-slot>

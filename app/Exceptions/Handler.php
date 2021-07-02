@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        activity('exception')
+            ->withProperties($request)
+            ->log($exception->getMessage());
+
         if ($request->expectsJson()) {
             return $this->renderAPI($request, $exception);
         }

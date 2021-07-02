@@ -43,6 +43,10 @@ class GeneralException extends Exception
      */
     public function render($request)
     {
+        activity('exception')
+            ->withProperties($request)
+            ->log($this->message);
+
         // All instances of GeneralException redirect back with a flash message to show a bootstrap alert-error
         if ($request->expectsJson()) {
             return response()->json([
