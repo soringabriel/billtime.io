@@ -75,6 +75,7 @@ class SenderIntegration extends Command
                             '{$timezone}' => $user->timezone,
                             '{$is_verified}' => $user->isVerified(),
                             '{$created_at}' => $user->created_at,
+                            '{$last_login_at}' => $user->last_login_at,
                         ]
                     ]);
                 } else {
@@ -98,6 +99,7 @@ class SenderIntegration extends Command
                             '{$timezone}' => $user->timezone,
                             '{$is_verified}' => $user->isVerified(),
                             '{$created_at}' => $user->created_at,
+                            '{$last_login_at}' => $user->last_login_at,
                         ]
                     ]);
                 }

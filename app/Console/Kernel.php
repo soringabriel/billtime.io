@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -29,7 +30,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('activitylog:clean')->daily();
         $schedule->command('plan:expire')->everyMinute();
-        $schedule->command('sender:integration')->hourly();
+        if (!App::environment('local')) {
+            $schedule->command('sender:integration')->hourly();
+        }
         $schedule->command('backup:clean')->daily()->at('01:00');
         $schedule->command('backup:run')->daily()->at('01:30');
     }
