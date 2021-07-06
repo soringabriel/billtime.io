@@ -17,7 +17,10 @@
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label">@lang('Name')</label>
+                                    <label for="name" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('Name')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The name of the project you want to add') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" required />
@@ -25,7 +28,10 @@
                                 </div><!--form-group-->
                                 
                                 <div class="form-group row">
-                                    <label for="client_id" class="col-md-2 col-form-label">@lang('Client')</label>
+                                    <label for="client_id" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('Client')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The client you want to associate the project to') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <select name="client_id" class="form-control select2 mb-2">

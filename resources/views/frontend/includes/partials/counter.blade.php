@@ -27,9 +27,12 @@
                     <input type="hidden" id="counterEndTime" name="end_time" />
 
                     <div class="form-group row">
-                        <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
+                        <label for="project_id" class="col-md-3 col-form-label">
+                            <span class="required-field">@lang('Project')</span>
+                            <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
+                        </label>
 
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <select name="project_id" class="form-control select2-project mb-2">
                                 @foreach ($projectModel::where('organization_id', $logged_in_user->organization_id)->get() as $project) 
                                     <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
@@ -46,17 +49,23 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        <label for="task" class="col-md-2 col-form-label">@lang('Task')</label>
+                        <label for="task" class="col-md-3 col-form-label">
+                            @lang('Task')
+                            <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The task you\'ve been working on') }}"></i>
+                        </label>
 
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" maxlength="255" value="{{ old('task') }}" />
                         </div>
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                        <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
+                        <label for="details" class="col-md-3 col-form-label">
+                            @lang('Details')
+                            <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('A few comments about your work') }}"></i>
+                        </label>
 
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" maxlength="255" />{{ old('details') }}</textarea>
                         </div>
                     </div><!--form-group-->

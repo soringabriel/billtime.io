@@ -17,17 +17,23 @@
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label">@lang('Name')</label>
+                                    <label for="name" class="col-md-3 col-form-label">
+                                        <span class="required-field">@lang('Name')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The name of your team member') }}"></i>
+                                    </label>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $user->name }}" maxlength="100" required />
                                     </div>
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="email" class="col-md-2 col-form-label">@lang('E-mail Address')</label>
+                                    <label for="email" class="col-md-3 col-form-label">
+                                        <span class="required-field">@lang('E-mail Address')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The e-mail address of your team member') }}"></i>
+                                    </label>
 
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
                                     </div>
                                 </div><!--form-group-->

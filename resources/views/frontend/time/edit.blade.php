@@ -17,7 +17,10 @@
                         <x-slot name="body">
                             <div>
                                 <div class="form-group row">
-                                    <label for="start_time" class="col-md-2 col-form-label">@lang('Start Time')</label>
+                                    <label for="start_time" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('Start Time')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The time when you started working') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? stringDateFormat($time->start_time, 'Y-m-d H:i') }}" autocomplete="off" required />
@@ -26,7 +29,10 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="end_time" class="col-md-2 col-form-label">@lang('End Time')</label>
+                                    <label for="end_time" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('End Time')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The time when you ended working') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <input type="datetime" class="datetimepicker form-control" name="end_time" placeholder="{{ __('End Time') }}" value="{{ old('end_time') ?? stringDateFormat($time->end_time, 'Y-m-d H:i') }}" autocomplete="off" required />
@@ -35,7 +41,10 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="project_id" class="col-md-2 col-form-label">@lang('Project')</label>
+                                    <label for="project_id" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('Project')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <select name="project_id" class="form-control select2-project mb-2">
@@ -54,7 +63,10 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="task" class="col-md-2 col-form-label">@lang('Task')</label>
+                                    <label for="task" class="col-md-2 col-form-label">
+                                        @lang('Task')
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The task you\'ve been working on') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <input type="text" name="task" class="form-control" placeholder="{{ __('Task') }}" value="{{ old('task') ?? $time->task }}" maxlength="255" />
@@ -62,7 +74,10 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="details" class="col-md-2 col-form-label">@lang('Details')</label>
+                                    <label for="details" class="col-md-2 col-form-label">
+                                        @lang('Details')
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('A few comments about your work') }}"></i>
+                                    </label>
 
                                     <div class="col-md-10">
                                         <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') ?? $time->details }}</textarea>

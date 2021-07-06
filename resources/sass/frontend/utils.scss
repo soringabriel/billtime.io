@@ -64,3 +64,11 @@ ol.stepper {
     border-bottom: 0;
     background: transparent;
 }
+
+.required-field {
+    &:after {
+        content: '*';
+        color: red;
+        margin-left: 4px;
+    }
+}

@@ -18,7 +18,10 @@
 @endif
 
 @if ($categories->count())
-    <h5 class="mb-3">@lang('Permissions')</h5>
+    <h5 class="mb-4 mt-4">
+        @lang('Permissions')
+        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('As the organization owner, you decide what features each member of your team will be able to access.') }}"></i>
+    </h5>
 
     <ul class="permission-tree m-0 p-0 list-unstyled">
         @foreach($categories as $permission)
