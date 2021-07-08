@@ -306,7 +306,7 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Links')</h6>
                             <ul>
-                                <li><a class="page-scroll" href="#about">@lang('About')</a></li>
+                                <li><a href="{{ route('frontend.pages.faq') }}">@lang('FAQ')</a></li>
                                 <li><a class="page-scroll" href="#" class="open-chat">@lang('Contact')</a></li>
 
                             </ul>

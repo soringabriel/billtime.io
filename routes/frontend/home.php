@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\TermsController;
+use App\Http\Controllers\Frontend\FaqController;
 use Tabuna\Breadcrumbs\Trail;
 
 /*
@@ -20,4 +21,11 @@ Route::get('terms', [TermsController::class, 'index'])
     ->breadcrumbs(function (Trail $trail) {
         $trail->parent('frontend.index')
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
+    });
+
+Route::get('faq', [FaqController::class, 'index'])
+    ->name('pages.faq')
+    ->breadcrumbs(function (Trail $trail) {
+        $trail->parent('frontend.index')
+            ->push(__('FAQ'), route('frontend.pages.faq'));
     });

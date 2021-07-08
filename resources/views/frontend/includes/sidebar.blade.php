@@ -166,6 +166,15 @@
             </ul>
         </li>
 
+        <li class="c-sidebar-nav-item">
+            <x-utils.link
+                class="c-sidebar-nav-link"
+                :href="route('frontend.pages.faq')"
+                :active="activeClass(Route::is('frontend.pages.faq'), 'c-active')"
+                icon="c-sidebar-nav-icon fas fa-question-circle"
+                :text="__('Documentation & FAQ')" />
+        </li>
+
     </ul>
 
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="#sidebar" data-class="c-sidebar-minimized"></button>
