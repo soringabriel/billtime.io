@@ -34,6 +34,8 @@
 
     @include('includes.partials.ga')
 
+    @include('includes.partials.gtm-head')
+
     @crisp
 
     @if ($logged_in_user) 
@@ -44,6 +46,8 @@
     @endif
 </head>
 <body>
+
+    @include('includes.partials.gtm-body')
 
     @include('includes.partials.messages')
     

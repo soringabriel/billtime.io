@@ -130,6 +130,15 @@ return [
     | Found in views/includes/partials/ga.blade.php
     */
     'google_analytics' => env('GOOGLE_ANALYTICS', 'UA-XXXXX-X'),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Google Tag Manager
+    |--------------------------------------------------------------------------
+    |
+    | Found in views/includes/partials/gtm-head.blade.php and views/includes/partials/gtm-body.blade.php
+    */
+    'google_tag_manager' => env('GOOGLE_TAG_MANAGER', 'GTM-XXXXXXX'),
 
     /*
     |--------------------------------------------------------------------------

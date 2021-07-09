@@ -18,6 +18,8 @@
 
     @include('includes.partials.ga')
 
+    @include('includes.partials.gtm-head')
+
     @paddleJS
     
     @crisp
@@ -30,6 +32,9 @@
     @endauth
 </head>
 <body class="c-app {{ Request::segment(count(Request::segments())) }}">
+
+    @include('includes.partials.gtm-body')
+
     @auth
         @include('frontend.includes.sidebar')
     @endauth
