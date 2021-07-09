@@ -67,15 +67,15 @@ class SenderIntegration extends Command
                             '{$organization_owner}' => $user->id == $organization->owner_id,
                             '{$organization_plan}' => $plan->name,
                             '{$organization_next_plan}' => $next_plan->name,
-                            '{$organization_plan_expire}' => $organization->plan_expire,
+                            '{$organization_plan_expire}' => (is_null($organization->plan_expire) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $organization->plan_expire)->format('Y-m-d')),
                             '{$number_of_times}' => count($times),
                             '{$number_of_invoices}' => count($invoices),
                             '{$can_access_times}' => $user->can('user.access.times.access'),
                             '{$can_create_invoice}' => $user->can('user.access.invoices.create'),
                             '{$timezone}' => $user->timezone,
                             '{$is_verified}' => $user->isVerified(),
-                            '{$created_at}' => $user->created_at,
-                            '{$last_login_at}' => $user->last_login_at,
+                            '{$created_at}' => (is_null($user->created_at) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->format('Y-m-d')),
+                            '{$last_login_at}' => (is_null($user->last_login_at) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $user->last_login_at)->format('Y-m-d')),
                         ]
                     ]);
                 } else {
@@ -91,15 +91,15 @@ class SenderIntegration extends Command
                             '{$organization_owner}' => $user->id == $organization->owner_id,
                             '{$organization_plan}' => $plan->name,
                             '{$organization_next_plan}' => $next_plan->name,
-                            '{$organization_plan_expire}' => $organization->plan_expire,
+                            '{$organization_plan_expire}' => (is_null($organization->plan_expire) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $organization->plan_expire)->format('Y-m-d')),
                             '{$number_of_times}' => count($times),
                             '{$number_of_invoices}' => count($invoices),
                             '{$can_access_times}' => $user->can('user.access.times.access'),
                             '{$can_create_invoice}' => $user->can('user.access.invoices.create'),
                             '{$timezone}' => $user->timezone,
                             '{$is_verified}' => $user->isVerified(),
-                            '{$created_at}' => $user->created_at,
-                            '{$last_login_at}' => $user->last_login_at,
+                            '{$created_at}' => (is_null($user->created_at) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->format('Y-m-d')),
+                            '{$last_login_at}' => (is_null($user->last_login_at) ? '' : Carbon::createFromFormat('Y-m-d H:i:s', $user->last_login_at)->format('Y-m-d')),
                         ]
                     ]);
                 }
