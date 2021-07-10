@@ -44,7 +44,7 @@ class GeneralException extends Exception
     public function render($request)
     {
         activity('exception')
-            ->withProperties($request)
+            ->withProperties(hashRequestPasswords($request))
             ->log($this->message);
 
         // All instances of GeneralException redirect back with a flash message to show a bootstrap alert-error

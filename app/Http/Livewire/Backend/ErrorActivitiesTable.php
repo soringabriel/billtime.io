@@ -39,7 +39,7 @@ class ErrorActivitiesTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Activity::where('log_name', 'exception');
+        return Activity::where('log_name', 'exception')->where('description', '<>', '');
     }
 
     /**

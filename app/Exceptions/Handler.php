@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         activity('exception')
-            ->withProperties($request)
+            ->withProperties(hashRequestPasswords($request))
             ->log($exception->getMessage());
 
         if ($request->expectsJson()) {

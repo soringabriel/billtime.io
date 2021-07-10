@@ -2,6 +2,7 @@
 
 use App\Models\Plan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 if (! function_exists('appName')) {
     /**
@@ -127,5 +128,25 @@ if (! function_exists('billingTypeToPaddleId')) {
             Plan::BILLING_TYPE_YEARLY => env('YEARLY_PADDLE_ID'),
         ];
         return $map[$billing_type];
+    }
+}
+
+if (! function_exists('hashRequestPasswords')) {
+    /**
+     * Transforms a request by hashing the password properties from it
+     *
+     * @param $request
+     *
+     * @return \Illuminate\Http\Request
+     */
+    function hashRequestPasswords($request)
+    {
+        $request = $request->all();
+        foreach ($request as $key => $value) {
+            if (strpos($key, "password") !== false) {
+                $request[$key] = "******";
+            }
+        }
+        return $request;
     }
 }
