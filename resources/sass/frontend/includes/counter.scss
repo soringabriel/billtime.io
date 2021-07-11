@@ -1,21 +1,40 @@
 #counterMenu {
     .counter {
+        width: 100%;
         font-size: 24px;
-        letter-spacing: 2px;
+        text-align: center;
+        margin-bottom: 4px;
+
+        @include tablet-up {
+            letter-spacing: 1px;
+            width: auto;
+            text-align: initial;
+            margin-bottom: initial;
+        }
     }
-    h5 {
+    h6 {
         margin-bottom: 0;
     }
     .actions {
+        width: 100%;
+        text-align: center;
+
+        @include tablet-up {
+            width: auto;
+            text-align: initial;
+        }
         button {
             margin-left: 0;
-            margin-right: 10px;
-            letter-spacing: 2px;
             font-size: 16px;
+
+            &.btn-danger {
+                margin-right: 10px;
+            }
 
             @include tablet-up {
                 margin-left: 10px;
-                margin-right: 0;
+                margin-right: 10px;
+                letter-spacing: 1px;
             }
         }
     }

@@ -5,14 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')</title>
+    <title>{{ appName() }} | @lang('Time tracking and billing software')</title>
     <meta name="description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
     <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     <meta name="theme-color" content="#1B99A9">
     <meta name="keywords" content="timetracker,time tracking,time tracker,business managment,invoice creator,billing tool,invoice tool,invoicing tool">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
-    <meta name="twitter:title" content="{{ appName() }} | @lang('Business managment tool for time tracking and invoice creation.')" />
+    <meta property="og:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
+    <meta name="twitter:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
     <meta name="twitter:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
     <meta name="twitter:site" content="{{ env('APP_URL') }}">
     <meta name="twitter:image" content="{{ asset('img/presentation/social-image.png#full') }}">

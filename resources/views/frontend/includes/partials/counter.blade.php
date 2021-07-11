@@ -3,7 +3,7 @@
 <nav class="sticky-top navbar navbar-expand-md navbar-light bg-dark text-white shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
     <div class="container-fluid pt-2 pb-2 pl-3 pr-3">
         <span class="counter" x-text="counter"></span>
-        <h5 class="d-md-block d-none">@lang('Track your time by using the buttons on the right!')</h5>
+        <h6 class="d-md-block d-none">@lang('Track your time using the buttons on the right!')</h6>
         <div class="actions">
             <button class="btn btn-danger" @click="cancelCounter()" x-show="showCancelButton()">@lang('Cancel')</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">@lang('Stop & Save')</button>

@@ -1,9 +1,28 @@
 table#services {
+    width: 100%;
+
+    .head {
+        display: none; 
+
+        @include tablet-up {
+            display: table-row;
+        }
+    }
     .service-row {
+        display: flex;
+        flex-direction: column;
+
+        @include tablet-up {
+            display: table-row;
+        }
+
         td {
+            margin-top: 8px;
+
             @include tablet-up {
                 padding-right: 10px;
                 padding-top: 16px;
+                margin-top: initial
             }
         }
     }

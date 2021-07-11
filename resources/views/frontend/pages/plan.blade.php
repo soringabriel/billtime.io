@@ -10,7 +10,8 @@
                     <h5 class="alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
                 </div>
             @endif
-            <h1 class="mt-5 mb-3">@lang('Select Your Plan')</h1>
+            <h1 class="mt-3 mb-3">@lang('Select Your Plan')</h1>
+            @if (!is_null($updateUrl) || !is_null($cancelUrl))
             <div class="col-md-12 text-center mt-3 mb-3">
                 @if (!is_null($updateUrl))
                     <x-paddle-button :url="$updateUrl" class="px-8 py-4 h5" data-theme="none">
@@ -26,6 +27,7 @@
                         :text="__('Cancel Subscription')" />
                 @endif
             </div>
+            @endif
             @if (!is_null($nextPayment))
                 <div class="col-md-12 text-center mt-3 mb-3 h5">
                     @lang('Your next payment is on') {{ $nextPayment->date()->format('F j, Y')}} @lang('when you will be charged') {{ $nextPayment->amount() }}
@@ -33,7 +35,7 @@
             @endif
             <div class="col-md-12">
                 <div class="row justify-content-center">
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Freelancer')</h5>
@@ -58,7 +60,7 @@
                         </div> <!-- single pricing -->
                     </div>
 
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Freelancer Pro')</h5>
@@ -83,7 +85,7 @@
                         </div> <!-- single pricing -->
                     </div>
 
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Startup')</h5>
@@ -108,7 +110,7 @@
                         </div> <!-- single pricing -->
                     </div>
 
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Small Team')</h5>
@@ -133,7 +135,7 @@
                         </div> <!-- single pricing -->
                     </div>
                     
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Regular')</h5>
@@ -158,7 +160,7 @@
                         </div> <!-- single pricing -->
                     </div>
                     
-                    <div class="col-lg-4 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Unlimited')</h5>

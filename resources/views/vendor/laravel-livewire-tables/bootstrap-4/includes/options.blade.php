@@ -1,5 +1,5 @@
 @if ($paginationEnabled || $searchEnabled)
-    <div class="row mb-4">
+    <div class="row mb-4 livewire-options">
         @if ($paginationEnabled && count($perPageOptions))
             <div class="col form-inline">
                 @lang('laravel-livewire-tables::strings.per_page'): &nbsp;

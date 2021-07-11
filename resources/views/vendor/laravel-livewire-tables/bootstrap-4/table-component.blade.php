@@ -28,8 +28,8 @@
     @endif
 
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.actions')
-    @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.total')
     @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.pagination')
+    @include('laravel-livewire-tables::'.config('laravel-livewire-tables.theme').'.includes.total')
 </div>
 <script>
     function init(){

@@ -47,7 +47,7 @@
             :action="route('frontend.time.toggleBilled', $model)"
             method="patch"
             button-class="btn btn-warning btn-sm"
-            icon="fas fa-sync-alt"
+            icon="fas fa-dollar-sign"
             name="confirm-item"
             permission="user.access.times.mark-billed"
         >
@@ -58,7 +58,7 @@
             :action="route('frontend.time.toggleBilled', $model)"
             method="patch"
             button-class="btn btn-success btn-sm"
-            icon="fas fa-sync-alt"
+            icon="fas fa-dollar-sign"
             name="confirm-item"
             permission="user.access.times.mark-billed"
         >

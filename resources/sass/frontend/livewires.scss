@@ -1,5 +1,9 @@
 .table thead th {
     vertical-align: top;
+
+    .form-control {
+        min-width: 100px;
+    }
 }
 .action-buttons .btn {
     width: 100%;
@@ -18,4 +22,13 @@
 }
 .action-buttons {
     max-width: 150px;
+}
+.livewire-options {
+    flex-direction: column;
+    gap: 16px;
+
+    @include tablet-up {
+        flex-direction: initial;
+        gap: initial
+    }
 }

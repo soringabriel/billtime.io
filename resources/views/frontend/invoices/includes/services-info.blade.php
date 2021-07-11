@@ -58,12 +58,30 @@
                     @endphp
                     @foreach ($services as $service)
                         <tr class="service-row mb-2">
-                            <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" value="{{ $service->name }}" maxlength="255" required /></td>
-                            <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" value="{{ $service->units }}" maxlength="255" required /></td>
-                            <td><input type="number" min="1" class="form-control service-quantity" value="{{ $service->quantity }}" required /></td>
-                            <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required /></td>
-                            <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required /></td>
-                            <td><span class="service-sub-total">{{ $service->total }}</span></td>
+                            <td>
+                                <label for="service-name" class="d-md-none">@lang('Service/Product Name')</label>
+                                <input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" value="{{ $service->name }}" maxlength="255" required />
+                            </td>
+                            <td>
+                                <label for="serivce-units" class="d-md-none">@lang('Unit')</label>
+                                <input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" value="{{ $service->units }}" maxlength="255" required />
+                            </td>
+                            <td>
+                                <label for="service-quantity" class="d-md-none">@lang('Quantity')</label>
+                                <input type="number" min="1" class="form-control service-quantity" value="{{ $service->quantity }}" required />
+                            </td>
+                            <td>
+                                <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
+                                <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required />
+                            </td>
+                            <td>
+                                <label for="service-discount" class="d-md-none">@lang('Discount')</label>
+                                <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
+                            </td>
+                            <td>
+                                <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
+                                <span class="service-sub-total">{{ $service->total }}</span>
+                            </td>
                             <td>
                                 <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
                                 <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
@@ -72,12 +90,30 @@
                     @endforeach
                 @else
                     <tr class="service-row mb-2">
-                        <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
-                        <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
-                        <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                        <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required /></td>
-                        <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
-                        <td><span class="service-sub-total">0</span></td>
+                        <td>
+                            <label for="service-name" class="d-md-none">@lang('Service/Product Name')</label>
+                            <input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required />
+                        </td>
+                        <td>
+                            <label for="serivce-units" class="d-md-none">@lang('Unit')</label>
+                            <input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required />
+                        </td>
+                        <td>
+                            <label for="service-quantity" class="d-md-none">@lang('Quantity')</label>
+                            <input type="number" min="1" class="form-control service-quantity" required />
+                        </td>
+                        <td>
+                            <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
+                            <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                        </td>
+                        <td>
+                            <label for="service-discount" class="d-md-none">@lang('Discount')</label>
+                            <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                        </td>
+                        <td>
+                            <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
+                            <span class="service-sub-total">0</span>
+                        </td>
                         <td><button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
                     </tr>
                 @endif
@@ -180,12 +216,30 @@
     function addServiceRow() {
         $("#services").append(`
             <tr class="service-row mb-2">
-                <td><input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required /></td>
-                <td><input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required /></td>
-                <td><input type="number" min="1" class="form-control service-quantity" required /></td>
-                <td><input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required /></td>
-                <td><input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required /></td>
-                <td><span class="service-sub-total">0</span></td>
+                <td>
+                    <label for="service-name" class="d-md-none">@lang('Service/Product Name')</label>
+                    <input type="text" class="form-control service-name" placeholder="{{ __('IT Services, Consulting...') }}" maxlength="255" required />
+                </td>
+                <td>
+                    <label for="serivce-units" class="d-md-none">@lang('Unit')</label>
+                    <input type="text" class="form-control service-units" placeholder="{{ __('Hours, Kg...') }}" maxlength="255" required />
+                </td>
+                <td>
+                    <label for="service-quantity" class="d-md-none">@lang('Quantity')</label>
+                    <input type="number" min="1" class="form-control service-quantity" required />
+                </td>
+                <td>
+                    <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
+                    <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                </td>
+                <td>
+                    <label for="service-discount" class="d-md-none">@lang('Discount')</label>
+                    <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                </td>
+                <td>
+                    <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
+                    <span class="service-sub-total">0</span>
+                </td>
                 <td>
                     <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
                     <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
