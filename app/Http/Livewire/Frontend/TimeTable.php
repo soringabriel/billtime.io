@@ -203,7 +203,7 @@ class TimeTable extends TableComponentExtended
     public function customFilters()
     {
         return $this->html('
-        <div class="col">
+        <div class="col col-md-3">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <label class="input-group-text">' . __('Billed') . '</label>
@@ -220,8 +220,11 @@ class TimeTable extends TableComponentExtended
                 </select>
             </div>
         </div>
-        <div class="col">
+        <div class="col col-md-5">
             <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">' . __('Range') . '</label>
+                </div>
                 <input class="form-control" type="date"
                     wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.start"
                     wire:model.lazy="customFilters.start"
@@ -259,6 +262,14 @@ class TimeTable extends TableComponentExtended
             ColumnExtended::make(__('Start Time'))
                 ->sortable()
                 ->withFilter()
+                ->filterHtml(function ($column) {
+                    return $this->html('
+                        <input class="form-control" type="date" 
+                            wire:model.lazy="filters.' . $column->getText() . '"
+                            wire:loading.attr="disabled"
+                        >
+                    ');
+                })
                 ->format(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS F Y H:i');
                 })
@@ -268,6 +279,14 @@ class TimeTable extends TableComponentExtended
             ColumnExtended::make(__('End Time'))
                 ->sortable()
                 ->withFilter()
+                ->filterHtml(function ($column) {
+                    return $this->html('
+                        <input class="form-control" type="date" 
+                            wire:model.lazy="filters.' . $column->getText() . '"
+                            wire:loading.attr="disabled"
+                        >
+                    ');
+                })
                 ->format(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS F Y H:i');
                 })
@@ -279,6 +298,24 @@ class TimeTable extends TableComponentExtended
                     $users = User::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
                     return $builder->whereIn('user_id', $users);
                 })
+                ->filterHtml(function ($column) {
+                    $html = '<select class="form-control"
+                        wire:model.lazy="filters.' . $column->getText() . '"
+                        wire:loading.attr="disabled"
+                    ><option value="">' . __('All') . '</option>';
+
+                    $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
+                    $user_ids = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+                    $users = User::whereIn('id', $user_ids)->get();
+
+                    foreach ($users as $user) {
+                        $html .= '<option value="' . $user->name . '">' . $user->name . '</option>';
+                    }
+
+                    $html .= '</select>';
+
+                    return $this->html($html);
+                })
                 ->format(function (Time $model) {
                     return $model->user->name;
                 }),
@@ -286,6 +323,22 @@ class TimeTable extends TableComponentExtended
                 ->withFilter(function ($builder, $term) {
                     $projects = Project::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
                     return $builder->whereIn('project_id', $projects);
+                })
+                ->filterHtml(function ($column) {
+                    $html = '<select class="form-control"
+                        wire:model.lazy="filters.' . $column->getText() . '"
+                        wire:loading.attr="disabled"
+                    ><option value="">' . __('All') . '</option>';
+
+                    $projects = auth()->user()->projects()->get();
+
+                    foreach ($projects as $project) {
+                        $html .= '<option value="' . $project->name . '">' . $project->name . '</option>';
+                    }
+
+                    $html .= '</select>';
+
+                    return $this->html($html);
                 })
                 ->format(function (Time $model) {
                     return $model->project->name;

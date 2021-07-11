@@ -41,11 +41,15 @@
                     </span>
 
                     @if ($column->hasFilter())
-                        <input class="form-control" type="text" 
-                            wire:model.debounce.{{ $filtersDebounce }}ms="filters.{{ $column->getText() }}"
-                            wire:model.lazy="filters.{{ $column->getText() }}"
-                            wire:loading.attr="disabled"
-                        >
+                        @if ($column->hasFilterHTML())
+                            {{ $column->filterHTMLCallback() }}
+                        @else 
+                            <input class="form-control" type="text" 
+                                wire:model.debounce.{{ $filtersDebounce }}ms="filters.{{ $column->getText() }}"
+                                wire:model.lazy="filters.{{ $column->getText() }}"
+                                wire:loading.attr="disabled"
+                            >
+                        @endif
                     @endif
                 </th>
             @else
@@ -59,11 +63,15 @@
                     {{ $column->getText() }}
 
                     @if ($column->hasFilter())
-                        <input class="form-control" type="text" 
-                            wire:model.debounce.{{ $filtersDebounce }}ms="filters.{{ $column->getText() }}"
-                            wire:model.lazy="filters.{{ $column->getText() }}"
-                            wire:loading.attr="disabled"
-                        >
+                        @if ($column->hasFilterHTML())
+                            {{ $column->filterHTMLCallback() }}
+                        @else 
+                            <input class="form-control" type="text" 
+                                wire:model.debounce.{{ $filtersDebounce }}ms="filters.{{ $column->getText() }}"
+                                wire:model.lazy="filters.{{ $column->getText() }}"
+                                wire:loading.attr="disabled"
+                            >
+                        @endif
                     @endif
                 </th>
             @endif

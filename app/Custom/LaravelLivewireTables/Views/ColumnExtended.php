@@ -20,6 +20,11 @@ class ColumnExtended extends Column
     protected $hasFilter = false;
 
     /**
+     * @var bool
+     */
+    protected $hasFilterHTML = false;
+
+    /**
      * @var
      */
     protected $totalableCallback;
@@ -30,11 +35,24 @@ class ColumnExtended extends Column
     protected $filterCallback;
 
     /**
+     * @var
+     */
+    protected $filterHTMLCallback;
+
+    /**
      * @return bool
      */
     public function hasFilter(): bool
     {
         return $this->hasFilter === true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFilterHTML(): bool
+    {
+        return $this->hasFilterHTML === true;
     }
 
     /**
@@ -46,6 +64,19 @@ class ColumnExtended extends Column
     {
         $this->filterCallback = $callable;
         $this->hasFilter = true;
+
+        return $this;
+    }
+
+    /**
+     * @param  callable|null  $callable
+     *
+     * @return $this
+     */
+    public function filterHTML(callable $callable = null): self
+    {
+        $this->filterHTMLCallback = $callable;
+        $this->hasFilterHTML = true;
 
         return $this;
     }
@@ -88,5 +119,13 @@ class ColumnExtended extends Column
     public function getFilterCallback()
     {
         return $this->filterCallback;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function filterHTMLCallback()
+    {
+        return app()->call($this->filterHTMLCallback, ['column' => $this]);
     }
 }

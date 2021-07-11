@@ -94,22 +94,39 @@ class InvoicesTable extends TableComponentExtended
             ColumnExtended::make(__('Price'))
                 ->searchable()
                 ->sortable()
-                ->withFilter(),
-            ColumnExtended::make(__('Currency'))
-                ->searchable()
-                ->sortable()
-                ->withFilter(),
+                ->withFilter()
+                ->format(function (Invoice $model) {
+                    return $model->price . ' ' . $model->currency;
+                }),
             ColumnExtended::make(__('Due Date'))
                 ->searchable()
                 ->sortable()
                 ->withFilter()
+                ->filterHtml(function ($column) {
+                    return $this->html('
+                        <input class="form-control" type="date" 
+                            wire:model.debounce.' . $this->filtersDebounce . 'ms="filters.' . $column->getText() . '"
+                            wire:model.lazy="filters.' . $column->getText() . '"
+                            wire:loading.attr="disabled"
+                        >
+                    ');
+                })
                 ->format(function (Invoice $model) {
                     return $model->due_date ?? __('N/A');
                 }),
             ColumnExtended::make(__('Date'))
                 ->searchable()
                 ->sortable()
-                ->withFilter(),
+                ->withFilter()
+                ->filterHtml(function ($column) {
+                    return $this->html('
+                        <input class="form-control" type="date" 
+                            wire:model.debounce.' . $this->filtersDebounce . 'ms="filters.' . $column->getText() . '"
+                            wire:model.lazy="filters.' . $column->getText() . '"
+                            wire:loading.attr="disabled"
+                        >
+                    ');
+                }),
             ColumnExtended::make(__('Actions'))
                 ->format(function (Invoice $model) {
                     return view('frontend.invoices.includes.actions', ['model' => $model]);
