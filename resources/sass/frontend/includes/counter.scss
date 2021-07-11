@@ -14,6 +14,10 @@
     }
     h6 {
         margin-bottom: 0;
+
+        @include desktop-1100 {
+            font-size: 18px;
+        }
     }
     .actions {
         width: 100%;
