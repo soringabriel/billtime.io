@@ -26,6 +26,14 @@
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
+                        :href="route('frontend.time.calendar')"
+                        :active="activeClass(Route::is('frontend.time.calendar'), 'c-active')"
+                        :text="__('Calendar View')"
+                        class="c-sidebar-nav-link"
+                        permission="user.access.times.access" />
+                </li>    
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
                         :href="route('frontend.time.index')"
                         :active="activeClass(Route::is('frontend.time.index'), 'c-active')"
                         :text="__('Time Records List')"

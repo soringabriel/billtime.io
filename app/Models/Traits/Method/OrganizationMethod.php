@@ -72,4 +72,34 @@ trait OrganizationMethod
             'monthly' => $monthly,
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getOrganizationTimeSources(): array
+    {
+        $result = [];
+        $organization_users = $this->users()->get();
+        foreach ($organization_users as $user) {
+            $times = Time::where('user_id', $user->id)->orderBy('start_time')->get();
+            $result[$user->email] = [];
+            foreach ($times as $time) {
+                $result[$user->email][] = [
+                    'title' => $time->project()->first()->name . ' - ' . substr($time->details, 0, 50) . (strlen($time->details) > 0 ? '...' : ''),
+                    'start' => $time->start_time,
+                    'end' => $time->end_time,
+                    'color' => $time->billed ? '#ffed4a' : '#38c172',
+                    'extendedProps' => [
+                        'project' => $time->project()->first()->name,
+                        'task' => $time->task,
+                        'details' => $time->details,
+                        'billed' => $time->billed,
+                        'edit_url' => route('frontend.time.edit', $time),
+                        'delete_url' => route('frontend.time.destroy', $time),
+                    ]
+                ];
+            }
+        }
+        return $result;
+    }
 }

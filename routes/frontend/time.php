@@ -16,6 +16,13 @@ Route::group([
                 ->push(__('Time Managment'), route('frontend.time.index'));
     });
 
+    Route::get('/calendar', [TimeController::class, 'calendar'])
+        ->name('calendar')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.dashboard')
+                ->push(__('Calendar View'), route('frontend.time.calendar'));
+    });
+
     Route::get('create', [TimeController::class, 'create'])
         ->name('create')
         ->breadcrumbs(function (Trail $trail) {

@@ -173,4 +173,12 @@ class TimeController extends Controller
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time records were successfully deleted.'));
     }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function calendar()
+    {
+        return view('frontend.time.calendar');
+    }
 }
