@@ -21,7 +21,7 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => ['required', 'max:6'],
+            'number' => ['required', 'max:50'],
             'buyer_company_name' => ['required', 'max:255'],
             'buyer_tax_number' => ['max:255'],
             'buyer_vat_number' => ['max:255'],
@@ -33,8 +33,8 @@ class UpdateInvoiceRequest extends FormRequest
             'seller_bank_name' => ['max:255'],
             'seller_bank_account' => ['max:255'],
             'services' => ['required', 'json'],
-            'tax' => ['required', 'integer', 'between:0,100'],
-            'shipping' => ['nullable', 'min:0'],
+            'tax' => ['required', 'numeric', 'between:0,100'],
+            'shipping' => ['nullable', 'numeric', 'min:0'],
             'currency' => ['required', 'max:3'],
             'date' => ['required', 'date_format:Y-m-d'],
             'due_date' => ['nullable', 'date_format:Y-m-d'],
