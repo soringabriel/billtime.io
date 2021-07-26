@@ -72,11 +72,11 @@
                             </td>
                             <td>
                                 <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                                <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required />
+                                <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required />
                             </td>
                             <td>
                                 <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                                <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
+                                <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
                             </td>
                             <td>
                                 <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
@@ -104,11 +104,11 @@
                         </td>
                         <td>
                             <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                            <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                            <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
                         </td>
                         <td>
                             <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                            <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                            <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
                         </td>
                         <td>
                             <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
@@ -130,14 +130,14 @@
                 <span class="required-field">@lang('Tax Percentage')</span>
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
             </label>
-            <input id="tax" type="number" min="0" max="100" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" value="{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}" required />
+            <input id="tax" type="number" min="0" max="100" step="0.01" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" value="{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}" required />
         </div>
         <div class="field-group field-group-required">
             <label for="shipping" class="col-form-label">
                 @lang('Shipping')
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The cost for shipping. This sum will be added to the total amount of the invoice') }}"></i>
             </label>
-            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
+            <input id="shipping" type="number" min="0" step="0.01" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
         </div>
     </div>
     <div class="col-md-4 offset-md-4">
@@ -230,11 +230,11 @@
                 </td>
                 <td>
                     <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                    <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                    <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
                 </td>
                 <td>
                     <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                    <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                    <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
                 </td>
                 <td>
                     <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
