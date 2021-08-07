@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('plan:expire')->everyMinute();
         if (!App::environment('local')) {
             $schedule->command('sender:integration')->hourly();
+            $schedule->command('sender:workflows')->daily()->at('18:00');
         }
         $schedule->command('backup:clean')->daily()->at('01:00');
         $schedule->command('backup:run')->daily()->at('01:30');
