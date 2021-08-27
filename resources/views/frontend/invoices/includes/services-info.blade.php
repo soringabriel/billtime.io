@@ -6,9 +6,9 @@
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The currency of the amount of the invoice') }}"></i>
             </label>
 
-            <select name="currency" class="form-control" x-model="currency" required>
-                @foreach ($currencies as $code => $symbol)
-                    <option value="{{ $code }}">{{ $code }}</option>
+            <select name="currency" class="form-control select2" x-model="currency" required>
+                @foreach ($currencies as $currency => $symbol)
+                    <option value="{{ currencyCode($currency) }}">{{ $currency }}</option>
                 @endforeach
             </select>
         </div>
