@@ -229,41 +229,57 @@
     <section id="screenshots" class="screenshots-area mt-5 mb-5">
         <div class="container">
             <div class="row">
-                <div id="screenshotsCarousel" class="carousel slide" data-ride="carousel">
+                <div class="section-title w-100 mt-5">
+                    <h4 class="title text-center mb-5 w-100">@lang('Steps and features')</h3>
+                </div>
+                <div id="screenshotsCarousel" class="carousel slide mb-5" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <picture class="d-block w-100">
-                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/times.webp#full') }}">
-                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/times.png#full') }}">
-                                <img src="{{ asset('img/presentation/screenshots/times.png#full') }}" alt="{{ __('Times') }}">
+                            <p class="text-center mb-5 lead">@lang('Sign up for your free account, no credit card required')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/register.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/register.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/register.png#full') }}" alt="{{ __('Register') }}">
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <picture class="d-block w-100">
+                            <p class="text-center mb-5 lead">@lang('After activation, check out your dashboard, which will lead you through your first steps on Timo-Track')</p>
+                            <picture class="d-block w-100 border border-dark">
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/dashboard.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/dashboard.png#full') }}">
                                 <img src="{{ asset('img/presentation/screenshots/dashboard.png#full') }}" alt="{{ __('Dasbhoard') }}">
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <picture class="d-block w-100">
-                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/create-invoice.webp#full') }}">
-                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/create-invoice.png#full') }}">
-                                <img src="{{ asset('img/presentation/screenshots/create-invoice.png#full') }}" alt="{{ __('Invoice') }}">
+                            <p class="text-center mb-5 lead">@lang('Start adding your times, either by starting the counter or adding manual times from the past')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/add-time.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/add-time.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/add-time.png#full') }}" alt="{{ __('Add Time') }}">
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <picture class="d-block w-100">
-                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/create-user.webp#full') }}">
-                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/create-user.png#full') }}">
-                                <img src="{{ asset('img/presentation/screenshots/create-user.png#full') }}" alt="{{ __('Users') }}">
+                            <p class="text-center mb-5 lead">@lang('Bill your clients in a matter of minutes while keeping track of the times you bill')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/add-invoice.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/add-invoice.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/add-invoice.png#full') }}" alt="{{ __('Add Invoice') }}">
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <picture class="d-block w-100">
-                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/account.webp#full') }}">
-                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/account.png#full') }}">
-                                <img src="{{ asset('img/presentation/screenshots/account.png#full') }}" alt="{{ __('Account') }}">
+                            <p class="text-center mb-5 lead">@lang('Download your first invoice created as a PDF')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/invoice-example.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/invoice-example.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/invoice-example.png#full') }}" alt="{{ __('Invoice Example') }}">
+                            </picture>
+                        </div>
+                        <div class="carousel-item">
+                            <p class="text-center mb-5 lead">@lang('Add team members to your organization')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/team-members.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/team-members.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/team-members.png#full') }}" alt="{{ __('Team Members') }}">
                             </picture>
                         </div>
                     </div>
