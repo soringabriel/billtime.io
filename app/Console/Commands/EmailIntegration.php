@@ -6,22 +6,28 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Domains\Auth\Models\User;
 use Illuminate\Support\Facades\Http;
+use App\Domains\Auth\Notifications\Frontend\Activity;
+use App\Domains\Auth\Notifications\Frontend\InitialFeedback;
+use App\Domains\Auth\Notifications\Frontend\OneMonthInactivity;
+use App\Domains\Auth\Notifications\Frontend\OneWeekFeedback;
+use App\Domains\Auth\Notifications\Frontend\TrialCancelation;
+use App\Domains\Auth\Notifications\Frontend\TrialCancelationWarning;
 
-class SenderWorkflows extends Command
+class EmailIntegration extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sender:workflows';
+    protected $signature = 'emails:send';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Calls sender workflows';
+    protected $description = 'Send marketing emails to users';
 
     /**
      * Create a new command instance.
@@ -40,12 +46,9 @@ class SenderWorkflows extends Command
      */
     public function handle()
     {
-        $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTllYWQ3YzZkYjZmZDhiODMyMDRkYTU2MmEzMWJiMGM3Nzg1NDA5OGE0OGRhYzUyZGJjY2QwM2M3NWZjNzI3OGIxNzcwNTVhZDAwMzA1OTUiLCJpYXQiOiIxNjI1Mzk4NDUyLjY2NDAxOCIsIm5iZiI6IjE2MjUzOTg0NTIuNjY0MDI0IiwiZXhwIjoiNDc3OTAwMjA1Mi42NjE2ODYiLCJzdWIiOiI5OTk4MSIsInNjb3BlcyI6W119.Gp8lncM5F04ZvqVGJFpm7IctIANJFuxPjQt2Ssg31OTg_iMp0IVX4FysFHNdjcvfj6DmZeMh_QUCr-uLC6FPQQ";
         $users = User::users()->get();
         foreach ($users as $user) {
             $organization = $user->organization()->first();
-            $workflows = [];
-
             $created_at = is_null($user->created_at) ? null : Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at);
             $last_login_at = is_null($user->last_login_at) ? null : Carbon::createFromFormat('Y-m-d H:i:s', $user->last_login_at);
             $organization_plan_expire = null;
@@ -54,33 +57,22 @@ class SenderWorkflows extends Command
             }
 
             if (!is_null($created_at) && $created_at->addDay()->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "epLy2e";
+                $user->notify(new InitialFeedback());
             }
             if (!is_null($created_at) && $created_at->addWeek()->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "egMlYb";
+                $user->notify(new OneWeekFeedback());
             }
             if (!is_null($last_login_at) && $last_login_at->addMonth()->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "e0DGve";
+                $user->notify(new OneMonthInactivity());
             }
             if (!is_null($organization_plan_expire) && $organization_plan_expire->subDay()->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "e5KNBb";
+                $user->notify(new TrialCancelation());
             }
             if (!is_null($organization_plan_expire) && $organization_plan_expire->subDays(3)->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "axLK9a";
+                $user->notify(new TrialCancelationWarning());
             }
             if (!is_null($created_at) && $created_at->addDays(3)->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                $workflows[] = "bqLz2a";
-            }
-        
-            echo json_encode($workflows);
-            foreach ($workflows as $workflow) {
-                $start_workflow = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . $token,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ])->post('https://api.sender.net/v2/workflows/' . $workflow . '/start', [
-                    'email' => $user->email,
-                ]);
+                $user->notify(new Activity());
             }
         }
         return 0;
