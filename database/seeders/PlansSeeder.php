@@ -30,11 +30,7 @@ class PlansSeeder extends Seeder
         ]);
 
         $free->syncPermissions([
-            Permission::where('name', 'user.access.times.access')->first()->id,
-            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
-            Permission::where('name', 'user.access.times.mark-billed')->first()->id, 
-            Permission::where('name', 'user.access.times.delete-all')->first()->id, 
-            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times')->first()->id,
             Permission::where('name', 'user.access.clients')->first()->id,
             Permission::where('name', 'user.access.projects')->first()->id,
         ]);
