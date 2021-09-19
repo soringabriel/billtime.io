@@ -1,17 +1,17 @@
 @inject('projectModel', '\App\Models\Project')
 
-<nav class="sticky-top navbar navbar-expand-md navbar-light bg-dark text-white shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
+<nav class="sticky-top navbar navbar-expand-md navbar-light bg-light text-dark shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
     <div class="container-fluid pt-2 pb-2 pl-3 pr-3">
         <span class="counter" x-text="counter"></span>
         <h6 class="d-md-block d-none">@lang('Track your time using the buttons on the right!')</h6>
         <div class="actions">
-            <button class="btn btn-danger" @click="cancelCounter()" x-show="showCancelButton()">
+            <button class="btn btn-outline-danger" @click="cancelCounter()" x-show="showCancelButton()">
                 <i class="fas fa-times mr-1"></i> @lang('Cancel')
             </button>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">
                 <i class="far fa-save mr-1"></i> @lang('Stop & Save')
             </button>
-            <button class="btn btn-primary" @click="startCounter()" x-show="showStartButton()">
+            <button class="btn btn-outline-dark" @click="startCounter()" x-show="showStartButton()">
                 <i class="fas fa-play-circle mr-1"></i> @lang('Record Time')
             </button>
         </div>

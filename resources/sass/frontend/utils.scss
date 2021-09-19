@@ -92,6 +92,7 @@ li.page-item {
 
 .w-md-25 {
     width: 100%;
+    
     @include tablet-up {
         width: 25%;
     }
