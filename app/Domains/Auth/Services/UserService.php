@@ -100,7 +100,7 @@ class UserService extends BaseService
 
             try {
                 $user = $this->createUser([
-                    'name' => $info->name,
+                    'name' => $info->name ?? $info->nickname,
                     'email' => $info->email,
                     'provider' => $provider,
                     'provider_id' => $info->id,
