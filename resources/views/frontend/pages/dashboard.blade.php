@@ -10,11 +10,6 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center pb-5">
-                @if (($organization->times()->count() == 0 && $logged_in_user->can('user.access.times')) || 
-                    ($logged_in_user->invoices()->count() == 0 && $logged_in_user->can('user.access.invoices.create')) || 
-                    ($organization->start_period && $logged_in_user->isOrganizationOwner()))
-                    <h5 class="mt-3 mb-5 alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
-                @endif
                 <div class="d-flex flex-column flex-md-row justify-content-between">
                     <div class="shorcuts card w-md-25 mr-3 p-4">
                         <h3 class="text-left mb-3">@lang('Shorcuts')</h3>
