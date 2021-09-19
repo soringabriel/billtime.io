@@ -35,7 +35,7 @@
             @endif
             <div class="col-md-12">
                 <div class="row justify-content-center">
-                    <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Free')</h5>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="pricing-list">
                                 <ul>
-                                    <li><i class="fas fa-check"></i> @lang('Manual Time Tracking')</li>
+                                    <li><i class="fas fa-check"></i> @lang('Time Tracking')</li>
                                     <li><i class="fas fa-times"></i> @lang('No Data Exports')</li>
                                     <li><i class="fas fa-times"></i> @lang('No Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
@@ -60,7 +60,7 @@
                         </div> <!-- single pricing -->
                     </div>
 
-                    <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Freelancer')</h5>
@@ -85,7 +85,7 @@
                         </div> <!-- single pricing -->
                     </div>
 
-                    <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Startup')</h5>
@@ -110,7 +110,7 @@
                         </div> <!-- single pricing -->
                     </div>
                     
-                    <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
+                    <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9 pl-4 pr-4">
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Company')</h5>

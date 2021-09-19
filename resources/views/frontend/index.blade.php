@@ -311,7 +311,7 @@
                 </div>
             </div> <!-- row -->
             <div class="row justify-content-center">
-                <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9">
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Free')</h5>
@@ -336,7 +336,7 @@
                     </div> <!-- single pricing -->
                 </div>
 
-                <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9">
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Freelancer')</h5>
@@ -361,7 +361,7 @@
                     </div> <!-- single pricing -->
                 </div>
 
-                <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9">
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Startup')</h5>
@@ -386,7 +386,7 @@
                     </div> <!-- single pricing -->
                 </div>
                 
-                <div class="col-xl-3 col-lg-5 col-md-7 col-sm-9">
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title">@lang('Company')</h5>
