@@ -72,4 +72,15 @@ trait OrganizationMethod
             'monthly' => $monthly,
         ];
     }
+
+    /**
+     * @return Carbon
+     */
+    public function getPlanExpireCarbon(): Carbon
+    {
+        if (!is_null($this->plan_expire)) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', $this->plan_expire);
+        }
+        return null;
+    }
 }

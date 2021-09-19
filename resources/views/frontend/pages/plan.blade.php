@@ -27,6 +27,10 @@
                 <div class="col-md-12 text-center mt-3 mb-3 h5">
                     @lang('Your next payment is on') {{ $nextPayment->date()->format('F j, Y')}} @lang('when you will be charged') {{ $nextPayment->amount() }}
                 </div>
+            @elseif (!is_null($organization->plan_expire))
+                <div class="col-md-12 text-center mt-3 mb-3 h5">
+                    @lang('Your next billing date is on') {{ $organization->getPlanExpireCarbon()->format('F j, Y')}}
+                </div>
             @endif
             <div class="col-md-12">
                 <div class="row justify-content-center">
