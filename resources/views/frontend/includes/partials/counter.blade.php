@@ -5,9 +5,15 @@
         <span class="counter" x-text="counter"></span>
         <h6 class="d-md-block d-none">@lang('Track your time using the buttons on the right!')</h6>
         <div class="actions">
-            <button class="btn btn-danger" @click="cancelCounter()" x-show="showCancelButton()">@lang('Cancel')</button>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">@lang('Stop & Save')</button>
-            <button class="btn btn-primary" @click="startCounter()" x-show="showStartButton()">@lang('Start Tracking Time')</button>
+            <button class="btn btn-danger" @click="cancelCounter()" x-show="showCancelButton()">
+                <i class="fas fa-times mr-1"></i> @lang('Cancel')
+            </button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">
+                <i class="far fa-save mr-1"></i> @lang('Stop & Save')
+            </button>
+            <button class="btn btn-primary" @click="startCounter()" x-show="showStartButton()">
+                <i class="fas fa-play-circle mr-1"></i> @lang('Record Time')
+            </button>
         </div>
     </div>
 </nav>

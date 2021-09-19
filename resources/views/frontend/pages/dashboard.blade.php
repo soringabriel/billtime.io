@@ -15,60 +15,126 @@
                     ($organization->start_period && $logged_in_user->isOrganizationOwner()))
                     <h5 class="mt-3 mb-5 alert alert-success">@lang('As a newly created organization, you benefit of all the features for') <strong>{{ now()->diffInDays($organization->plan_expire) + 1 }}</strong> @lang('more days')</h5>
                 @endif
-                @if ((!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner()))
-                    <div id="onboarding">
-                        <h1 class="mt-3 mb-5">@lang('Welcome to Timo-Track')</h1>
-                        <h4 class="mb-5">@lang('As a new user there is a list of things you should complete, to have a better experience on the app:')</h4>
-
-                        <ol class="stepper">
-                            @if ($organization->times()->count() == 0 && $logged_in_user->can('user.access.times'))
-                                <li>
-                                    <x-utils.link
-                                        :href="route('frontend.time.create')"
-                                        :text="__('Track your first manual time')"
-                                        permission="user.access.times"
-                                    />
-                                </li>
-                            @endif
-                            @if ($logged_in_user->invoices()->count() == 0 && $logged_in_user->can('user.access.invoices.create'))
-                                <li>
-                                    <x-utils.link
-                                        :href="route('frontend.invoices.create')"
-                                        :text="__('Generate your first invoice')"
-                                        permission="user.access.invoices.create"
-                                    />
-                                </li>
-                            @endif
+                <div class="d-flex flex-column flex-md-row justify-content-between">
+                    <div class="shorcuts card w-md-25 mr-3 p-4">
+                        <h3 class="text-left mb-3">@lang('Shorcuts')</h3>
+                        <div class="list-group">
+                            <x-utils.link
+                                :href="route('frontend.time.create')"
+                                :text="__('Add a time record')"
+                                class="list-group-item list-group-item-action"
+                                permission="user.access.times"
+                            />
+                            <x-utils.link
+                                :href="route('frontend.invoices.create')"
+                                :text="__('Generate an invoice')"
+                                class="list-group-item list-group-item-action"
+                                permission="user.access.invoices.create"
+                            />
+                            <x-utils.link
+                                :href="route('frontend.clients.create')"
+                                :text="__('Add a client')"
+                                class="list-group-item list-group-item-action"
+                                permission="user.access.clients.create"
+                            />
+                            <x-utils.link
+                                :href="route('frontend.projects.create')"
+                                :text="__('Add a project')"
+                                class="list-group-item list-group-item-action"
+                                permission="user.access.projects.create"
+                            />
                             @if (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner())
-                                <li>
-                                    <x-utils.link
-                                        :href="route('frontend.user.account') . '#organization'"
-                                        :text="__('Update organization details')" />
-                                </li>
+                                <x-utils.link
+                                    class="list-group-item list-group-item-action"
+                                    :href="route('frontend.user.account') . '#organization'"
+                                    :text="__('Update organization details')" />
                             @endif
-                        </ul>
+                        </div>
                     </div>
-                @endif
+                    <div class="card w-md-25 mr-3">
+                        <div class="card-header bg-white p-4">
+                            <h5 class="card-title w-100 mb-0">@lang('Step 1')</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@lang('Start tracking your times. To do so you can choose either to use the automatic time tracking present at the top of each page, or to add manual time tracking records.')</p>
+                        </div>
+                        <div class="card-footer bg-white p-4">
+                            <x-utils.link
+                                :href="route('frontend.time.create')"
+                                :text="__('Add a time record')"
+                                class="btn btn-block btn-outline-primary"
+                                permission="user.access.times"
+                            />
+                        </div>
+                    </div>
+                    <div class="card w-md-25 mr-3">
+                        <div class="card-header bg-white p-4">
+                            <h5 class="card-title w-100 mb-0">@lang('Step 2')</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@lang('Bill the times you recorded and easily generate invoices for your clients which can be downloaded in multiple languages')</p>
+                        </div>
+                        <div class="card-footer bg-white p-4">
+                            <x-utils.link
+                                :href="route('frontend.invoices.create')"
+                                :text="__('Generate an invoice')"
+                                class="btn btn-block btn-outline-primary"
+                                permission="user.access.invoices.create"
+                            />
+                        </div>
+                    </div>
+                    <div class="card w-md-25">
+                        <div class="card-header bg-white p-4">
+                            <h5 class="card-title w-100 mb-0">@lang('Step 3')</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">@lang('Check out the documentation anytime you encounter a problem')</p>
+                        </div>
+                        <div class="card-footer bg-white p-4">
+                            <x-utils.link
+                                :href="route('frontend.pages.faq')"
+                                :text="__('Documentation & FAQ')"
+                                class="btn btn-block btn-outline-primary"
+                            />
+                        </div>
+                    </div>
+                </div>
                 @if ($logged_in_user->can('user.access.times.access'))
                     @if ($logged_in_user->times()->count())
-                        <div id="userTimesChart">
-                            <h1 class="mt-5 mb-5">@lang('Your Times')</h1>
+                        <div id="userTimesChart" class="card p-4">
+                            <h1 class="mb-3 text-left">@lang('Personal Reports')</h1>
 
                             <div class="row">
-                                <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerDay" width="400" height="300"></canvas></div>
-                                <div class="col-md-6 pl-5 pr-5"><canvas id="userTimePerMonth" width="400" height="300"></canvas></div>
+                                <div class="tabs col-12" x-data="{tab: 'daily'}">
+                                    <div class="tab-buttons text-left">
+                                        <button class="btn btn-outline-primary mr-2" @click="tab = 'daily'" :class="{'active': tab == 'daily'}">@lang('Daily')</button>
+                                        <button class="btn btn-outline-primary" @click="tab = 'monthly'" :class="{'active': tab == 'monthly'}">@lang('Monthly')</button>
+                                    </div>
+                                    <div class="charts mt-3">
+                                        <canvas x-show="tab == 'daily'" id="userTimePerDay" class="w-100" width="400" height="150"></canvas>
+                                        <canvas x-show="tab == 'monthly'" id="userTimePerMonth" class="w-100" width="400" height="150"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @else
                         <h3 class="mt-5">@lang('You don\'t have any tracked times yet!')</h3>
                     @endif
                     @if ($logged_in_user->can('user.access.times.show-all') && $logged_in_user->organization()->first()->times()->count())
-                        <div id="organizationTimesChart">
-                            <h1 class="mt-5 mb-5">@lang('Organization Times')</h1>
+                        <div id="organizationTimesChart" class="card p-4">
+                            <h1 class="mb-3 text-left">@lang('Team Reports')</h1>
 
                             <div class="row">
-                                <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerDay" width="400" height="300"></canvas></div>
-                                <div class="col-md-6 pl-5 pr-5"><canvas id="organizationTimePerMonth" width="400" height="300"></canvas></div>
+                                <div class="tabs col-12" x-data="{tab: 'daily'}">
+                                    <div class="tab-buttons text-left">
+                                        <button class="btn btn-outline-primary mr-2" @click="tab = 'daily'" :class="{'active': tab == 'daily'}">@lang('Daily')</button>
+                                        <button class="btn btn-outline-primary" @click="tab = 'monthly'" :class="{'active': tab == 'monthly'}">@lang('Monthly')</button>
+                                    </div>
+                                    <div class="charts mt-3">
+                                        <canvas x-show="tab == 'daily'" id="organizationTimePerDay" class="w-100" width="400" height="150"></canvas>
+                                        <canvas x-show="tab == 'monthly'" id="organizationTimePerMonth" class="w-100" width="400" height="150"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endif
