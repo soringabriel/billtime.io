@@ -97,3 +97,11 @@ li.page-item {
         width: 25%;
     }
 }
+
+a.task {
+    overflow: hidden;
+    max-width: 100px;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+}

@@ -83,8 +83,8 @@
                                 <span class="service-sub-total">{{ $service->total }}</span>
                             </td>
                             <td>
-                                <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
-                                <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-outline-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                                <button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -114,7 +114,7 @@
                             <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
                             <span class="service-sub-total">0</span>
                         </td>
-                        <td><button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
+                        <td><button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
                     </tr>
                 @endif
             </table>
@@ -241,14 +241,14 @@
                     <span class="service-sub-total">0</span>
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
-                    <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-outline-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                 </td>
             </tr>
         `);
         if ($(".service-row").first().find(".remove-service-row").length == 0) {
             $(".service-row").first().find("td").last().prepend(`
-                <button class="btn btn-danger btn-sm remove-service-row mr-1"><i class="fas fa-times"></i></button>
+                <button class="btn btn-outline-danger btn-sm remove-service-row mr-1"><i class="fas fa-times"></i></button>
             `);
             $(".service-row").first().find(".remove-service-row").first().on('click', function(e){
                 e.preventDefault();

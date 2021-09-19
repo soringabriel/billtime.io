@@ -5,7 +5,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-past-due"
-                button-class="btn btn-danger btn-sm"
+                button-class="btn btn-outline-danger btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
             >
                 @lang('Mark as Past Due')
@@ -16,7 +16,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-paid"
-                button-class="btn btn-success btn-sm"
+                button-class="btn btn-outline-success btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
             >
                 @lang('Mark as Paid')
@@ -27,15 +27,15 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-pending"
-                button-class="btn btn-dark btn-sm"
+                button-class="btn btn-outline-dark btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
             >
                 @lang('Mark as Pending')
             </x-utils.form-button>
         @endif
-        <!-- <x-utils.link :href="route('frontend.invoices.download', $model)" class="btn btn-info btn-sm" icon="fas fa-download" :text="__('Download')" /> -->
-        <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#invoiceModal{{ $model->id }}">@lang('Download')</button> -->
-        <x-utils.link class="btn btn-info btn-sm" data-toggle="modal" data-target="#invoiceModal{{ $model->id }}" icon="fas fa-download" :text="__('Download')" />
+        <!-- <x-utils.link :href="route('frontend.invoices.download', $model)" class="btn btn-outline-info btn-sm" icon="fas fa-download" :text="__('Download')" /> -->
+        <!-- <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#invoiceModal{{ $model->id }}">@lang('Download')</button> -->
+        <x-utils.link class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#invoiceModal{{ $model->id }}" icon="fas fa-download" :text="__('Download')" />
         <div class="modal fade" id="invoiceModal{{ $model->id }}" tabindex="-1" role="dialog" aria-labelledby="invoiceModal{{ $model->id }}Label" aria-hidden="true">
             <div class="modal-dialog" role="document" x-data="{locale:'en'}">
                 <div class="modal-content">
@@ -55,8 +55,8 @@
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary w-auto" data-dismiss="modal">@lang('Close')</button>
-                        <x-utils.link x-bind:href="'{{ route('frontend.invoices.download', $model) }}' + '?locale=' + locale" class="btn btn-primary w-auto" icon="fas fa-download" :text="__('Download')" />
+                        <button type="button" class="btn btn-outline-secondary w-auto" data-dismiss="modal">@lang('Close')</button>
+                        <x-utils.link x-bind:href="'{{ route('frontend.invoices.download', $model) }}' + '?locale=' + locale" class="btn btn-outline-primary w-auto" icon="fas fa-download" :text="__('Download')" />
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-past-due"
-                button-class="btn btn-danger btn-sm"
+                button-class="btn btn-outline-danger btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
                 permission="user.access.invoices.update-status-all"
             >
@@ -81,7 +81,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-paid"
-                button-class="btn btn-success btn-sm"
+                button-class="btn btn-outline-success btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
                 permission="user.access.invoices.update-status-all"
             >
@@ -93,14 +93,14 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-pending"
-                button-class="btn btn-dark btn-sm"
+                button-class="btn btn-outline-dark btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
                 permission="user.access.invoices.update-status-all"
             >
                 @lang('Mark as Pending')
             </x-utils.form-button>
         @endif
-        <x-utils.link :href="route('frontend.invoices.download', $model)" class="btn btn-info btn-sm" icon="fas fa-download" :text="__('Download')" permission="user.access.invoices.show-all" />
+        <x-utils.link :href="route('frontend.invoices.download', $model)" class="btn btn-outline-info btn-sm" icon="fas fa-download" :text="__('Download')" permission="user.access.invoices.show-all" />
         <x-utils.edit-button :href="route('frontend.invoices.edit', $model)" permission="user.access.invoices.edit-all" />
         <x-utils.delete-button :href="route('frontend.invoices.destroy', $model)" permission="user.access.invoices.delete-all" />
     @endif

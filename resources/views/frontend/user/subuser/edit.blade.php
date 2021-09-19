@@ -43,8 +43,8 @@
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-primary float-right" type="submit">@lang('Update User')</button>
-                            <x-utils.link class="btn btn-danger float-right mr-3" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" permission="user.access.users.access" />
+                            <button class="btn btn-outline-primary float-right" type="submit">@lang('Update User')</button>
+                            <x-utils.link class="btn btn-outline-danger float-right mr-3" :href="route('frontend.user.subuser.index')" :text="__('Cancel')" permission="user.access.users.access" />
                         </x-slot>
                     </x-frontend.card>
                 </x-forms.patch>

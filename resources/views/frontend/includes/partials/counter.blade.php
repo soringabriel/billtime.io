@@ -79,8 +79,8 @@
                     <div id="alertsWrapper"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('Add Time')</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-outline-primary">@lang('Add Time')</button>
                 </div>
             </div>
         </x-forms>
