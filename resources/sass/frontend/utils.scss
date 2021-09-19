@@ -105,3 +105,10 @@ a.task {
     display: block;
     text-overflow: ellipsis;
 }
+
+.col-xxl-3 {
+    @include desktop-1400 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
