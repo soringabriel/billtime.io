@@ -43,7 +43,7 @@ class PlansSeeder extends Seeder
             'subusers_quota' => 0,
         ]);
 
-        $freelancer_pro->syncPermissions([
+        $freelancer->syncPermissions([
             Permission::where('name', 'user.access.times')->first()->id,
             Permission::where('name', 'user.access.invoices')->first()->id,
             Permission::where('name', 'user.access.clients')->first()->id,
