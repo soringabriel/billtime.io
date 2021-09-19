@@ -31,6 +31,9 @@ trait PlanMethod
      */
     public function getButton(Plan $plan, Plan $nextPlan): HtmlString
     {
+        echo $plan->name;
+        echo $nextPlan->name;
+        echo '<br>';
         $organization = auth()->user()->organization()->first();
         $organization_subscription = $organization->subscription('default');
         if ($plan->id == $nextPlan->id) {
