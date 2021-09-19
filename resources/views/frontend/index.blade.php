@@ -320,7 +320,7 @@
                         </div>
                         <div class="pricing-list">
                             <ul>
-                                <li><i class="lni-check-mark-circle"></i> @lang('Manual Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
                                 <li><i class="lni lni-ban"></i> @lang('No Data Exports')</li>
                                 <li><i class="lni lni-ban"></i> @lang('No Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
