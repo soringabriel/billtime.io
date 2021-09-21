@@ -10,6 +10,8 @@ use App\Http\Requests\Frontend\Time\ToggleBilledRequest;
 use App\Http\Requests\Frontend\Time\BulkToggleBilledRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimeRequest;
 use App\Http\Requests\Frontend\Time\DeleteTimesRequest;
+use App\Services\ClientService;
+use App\Services\ProjectService;
 use App\Services\TimeService;
 use App\Models\Time;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,16 @@ use Illuminate\Support\Facades\Auth;
 class TimeController extends Controller
 {
     /**
+     * @var ClientService
+     */
+    protected $clientService;
+
+    /**
+     * @var ProjectService
+     */
+    protected $projectService;
+
+    /**
      * @var TimeService
      */
     protected $timeService;
@@ -27,10 +39,14 @@ class TimeController extends Controller
     /**
      * TimeController constructor.
      *
+     * @param  ClientService  $clientService
+     * @param  ProjectService  $projectService
      * @param  TimeService  $timeService
      */
-    public function __construct(TimeService $timeService)
+    public function __construct(ClientService $clientService, ProjectService $projectService, TimeService $timeService)
     {
+        $this->clientService = $clientService;
+        $this->projectService = $projectService;
         $this->timeService = $timeService;
     }
 
@@ -50,7 +66,8 @@ class TimeController extends Controller
         $last_time = auth()->user()->times()->orderBy('created_at', 'desc')->first();
         return view('frontend.time.create')
             ->withLastTime($last_time)
-            ->withProjects(auth()->user()->organization()->first()->projects()->get());
+            ->withProjects(auth()->user()->organization()->first()->projects()->get())
+            ->withClients(auth()->user()->organization()->first()->clients()->get());
     }
 
     /**
@@ -62,8 +79,26 @@ class TimeController extends Controller
      */
     public function store(StoreTimeRequest $request)
     {
-        $result = $this->timeService->store($request->validated());
-
+        $validated_request = $request->validated();
+        if ($validated_request['new_client']) {
+            $client = $this->clientService->store([
+                'name' => $data['client_name'],
+                'company_name' => $data['client_company_name'],
+                'tax_number' => $data['client_tax_number'],
+                'vat_number' => $data['client_vat_number'],
+                'address' => $data['client_address'],
+                'bank_account' => $data['client_bank_account'],
+            ]);
+            $validated_request['project_client_id'] = $client->id;
+        }
+        if ($validated_request['new_project']) {
+            $project = $this->projectService->store([
+                'name' => $data['project_name'],
+                'project_client_id' => $data['project_client_id'],
+            ]);
+            $validated_request['project_id'] = $project->id;
+        }
+        $result = $this->timeService->store($validated_request);
         if (Auth::guard('api')->check()) {
             return response()->json([
                 'success' => true,
@@ -84,7 +119,8 @@ class TimeController extends Controller
     {
         return view('frontend.time.edit')
             ->withTime($time)
-            ->withProjects(auth()->user()->organization()->first()->projects()->get());
+            ->withProjects(auth()->user()->organization()->first()->projects()->get())
+            ->withClients(auth()->user()->organization()->first()->clients()->get());
     }
 
     /**
@@ -97,7 +133,26 @@ class TimeController extends Controller
      */
     public function update(UpdateTimeRequest $request, Time $time)
     {
-        $this->timeService->update($time, $request->validated());
+        $validated_request = $request->validated();
+        if ($validated_request['new_client']) {
+            $client = $this->clientService->store([
+                'name' => $data['client_name'],
+                'company_name' => $data['client_company_name'],
+                'tax_number' => $data['client_tax_number'],
+                'vat_number' => $data['client_vat_number'],
+                'address' => $data['client_address'],
+                'bank_account' => $data['client_bank_account'],
+            ]);
+            $validated_request['project_client_id'] = $client->id;
+        }
+        if ($validated_request['new_project']) {
+            $project = $this->projectService->store([
+                'name' => $data['project_name'],
+                'project_client_id' => $data['project_client_id'],
+            ]);
+            $validated_request['project_id'] = $project->id;
+        }
+        $this->timeService->update($time, $validated_request);
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
     }
