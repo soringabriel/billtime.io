@@ -44,7 +44,7 @@
                             <div class="pricing-list">
                                 <ul>
                                     <li><i class="fas fa-check"></i> @lang('Time Tracking')</li>
-                                    <li><i class="fas fa-times"></i> @lang('No Data Exports')</li>
+                                    <li><i class="fas fa-check"></i> @lang('Data Exports')</li>
                                     <li><i class="fas fa-times"></i> @lang('No Invoicing')</li>
                                     <li><i class="fas fa-check"></i> @lang('One user only')</li>
                                 </ul>
