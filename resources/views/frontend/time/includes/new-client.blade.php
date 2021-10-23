@@ -7,7 +7,7 @@
         </label>
 
         <div class="col-md-10">
-            <input type="text" name="client_name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" required />
+            <input type="text" name="client_name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" x-bind:required="new_client" />
         </div>
     </div><!--form-group-->
 

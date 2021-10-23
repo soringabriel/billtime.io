@@ -82,19 +82,19 @@ class TimeController extends Controller
         $validated_request = $request->validated();
         if ($validated_request['new_client']) {
             $client = $this->clientService->store([
-                'name' => $data['client_name'],
-                'company_name' => $data['client_company_name'],
-                'tax_number' => $data['client_tax_number'],
-                'vat_number' => $data['client_vat_number'],
-                'address' => $data['client_address'],
-                'bank_account' => $data['client_bank_account'],
+                'name' => $validated_request['client_name'],
+                'company_name' => $validated_request['client_company_name'],
+                'tax_number' => $validated_request['client_tax_number'],
+                'vat_number' => $validated_request['client_vat_number'],
+                'address' => $validated_request['client_address'],
+                'bank_account' => $validated_request['client_bank_account'],
             ]);
             $validated_request['project_client_id'] = $client->id;
         }
         if ($validated_request['new_project']) {
             $project = $this->projectService->store([
-                'name' => $data['project_name'],
-                'project_client_id' => $data['project_client_id'],
+                'name' => $validated_request['project_name'],
+                'client_id' => $validated_request['project_client_id'],
             ]);
             $validated_request['project_id'] = $project->id;
         }
@@ -136,19 +136,19 @@ class TimeController extends Controller
         $validated_request = $request->validated();
         if ($validated_request['new_client']) {
             $client = $this->clientService->store([
-                'name' => $data['client_name'],
-                'company_name' => $data['client_company_name'],
-                'tax_number' => $data['client_tax_number'],
-                'vat_number' => $data['client_vat_number'],
-                'address' => $data['client_address'],
-                'bank_account' => $data['client_bank_account'],
+                'name' => $validated_request['client_name'],
+                'company_name' => $validated_request['client_company_name'],
+                'tax_number' => $validated_request['client_tax_number'],
+                'vat_number' => $validated_request['client_vat_number'],
+                'address' => $validated_request['client_address'],
+                'bank_account' => $validated_request['client_bank_account'],
             ]);
             $validated_request['project_client_id'] = $client->id;
         }
         if ($validated_request['new_project']) {
             $project = $this->projectService->store([
-                'name' => $data['project_name'],
-                'project_client_id' => $data['project_client_id'],
+                'name' => $validated_request['project_name'],
+                'client_id' => $validated_request['project_client_id'],
             ]);
             $validated_request['project_id'] = $project->id;
         }

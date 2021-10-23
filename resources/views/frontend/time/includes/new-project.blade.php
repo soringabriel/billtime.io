@@ -7,7 +7,7 @@
         </label>
 
         <div class="col-md-10">
-            <input type="text" name="project_name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" required />
+            <input type="text" name="project_name" class="form-control" placeholder="{{ __('Name') }}" maxlength="255" x-bind:required="new_project" />
         </div>
     </div><!--form-group-->
 
@@ -26,13 +26,25 @@
             <x-utils.link
                 icon="c-icon cil-plus"
                 class="card-header-action"
+                href="javascript:void(0);"
                 :text="__('Add Client')"
                 @click="new_client = !new_client"
                 permission="user.access.clients.create"
+                x-show="!new_client"
+            />
+            <x-utils.link
+                icon="c-icon cil-minus"
+                class="card-header-action"
+                href="javascript:void(0);"
+                :text="__('Choose From Existing Clients')"
+                @click="new_client = !new_client"
+                permission="user.access.clients.create"
+                x-show="new_client"
             />
         </div>
 
         <div class="col-md-12 mt-2" x-show="new_client">
+            <input type="hidden" name="new_client" x-bind:value="new_client ? 1 : 0">
             @include('frontend.time.includes.new-client')
         </div>
     </div><!--form-group-->

@@ -40,7 +40,7 @@
                                     </div>
                                 </div><!--form-group-->
 
-                                <div class="form-group row">
+                                <div class="form-group row" x-data="{new_project: false}">
                                     <label for="project_id" class="col-md-2 col-form-label">
                                         <span class="required-field">@lang('Project')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
@@ -55,10 +55,14 @@
                                         <x-utils.link
                                             icon="c-icon cil-plus"
                                             class="card-header-action"
-                                            :href="route('frontend.projects.create')"
                                             :text="__('Add New Project')"
+                                            @click="new_project = !new_project"
                                             permission="user.access.projects.create"
                                         />
+                                    </div>
+                                    
+                                    <div class="col-md-12 mt-2" x-show="new_project">
+                                        @include('frontend.time.includes.new-project')
                                     </div>
                                 </div><!--form-group-->
 

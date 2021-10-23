@@ -34,7 +34,7 @@ class UpdateTimeRequest extends FormRequest
                 (!empty(FormRequest::input('end_time')) ? 'after:' . Carbon::createFromFormat('Y-m-d H:i', FormRequest::input('end_time'))->subDay() : '')
             ],
             'end_time' => ['required', 'date_format:Y-m-d H:i', 'before_or_equal:' . Carbon::now()->timezone(auth()->user()->timezone)],
-            'project_id' => ['required_if:new_project,null', Rule::exists('projects', 'id')->where('organization_id', auth()->user()->organization()->first()->id)],
+            'project_id' => ['required_if:new_project,0', Rule::exists('projects', 'id')->where('organization_id', auth()->user()->organization()->first()->id)],
             'task' => ['max:255'],
             'details' => ['max:255'],
             'new_project' => ['sometimes', 'boolean'],
