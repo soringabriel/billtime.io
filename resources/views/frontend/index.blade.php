@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ appName() }} | @lang('Time tracking and billing software')</title>
-    <meta name="description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="description" content="{{ __('Easy to use software, that allows you and your employees to track and bill your working hours easily.') }}">
     <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     <meta name="theme-color" content="#1B99A9">
     <meta name="keywords" content="timetracker,time tracking,time tracker,business managment,invoice creator,billing tool,invoice tool,invoicing tool">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
     <meta name="twitter:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
-    <meta name="twitter:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}">
+    <meta name="twitter:description" content="{{ __('Easy to use software, that allows you and your employees to track and bill your working hours easily.') }}">
     <meta name="twitter:site" content="{{ env('APP_URL') }}">
     <meta name="twitter:image" content="{{ asset('img/presentation/social-image.png#full') }}">
-    <meta property="og:description" content="{{ __('Timo-Track is a business managment tool that allows you and your employees to track and bill your working hours easily. Try out our tool for free and see for yourself how it will improve your business!') }}" />
+    <meta property="og:description" content="{{ __('Easy to use software, that allows you and your employees to track and bill your working hours easily.') }}" />
     <meta property="og:image" content="{{ asset('img/presentation/social-image.png#full') }}" />
     <meta property="og:url" content="{{ env('APP_URL') }}" />
     <meta property="fb:app_id" content="579550796341146" />
@@ -122,8 +122,8 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h1 class="header-title">@lang('Timo-Track')</h1>
-                            <p class="text">@lang('Time tracking and invoicing solution for your business')</p>
+                            <h2 class="header-title">@lang('Timo-Track')</h2>
+                            <h1 class="text font-weight-normal">@lang('Time tracking and invoicing software')</h1>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a></li>
                                 <li><a class="main-btn btn-two page-scroll" href="#about">@lang('Read more about us')</a></li>
@@ -148,7 +148,7 @@
                 <div class="col-lg-6">
                     <div class="section-title pb-10">
                         <h4 class="title">@lang('Our Services')</h4>
-                        <p class="text">@lang('Start tracking and billing time without worries')</p>
+                        <h3 class="text font-weight-normal">@lang('Start tracking and billing time without worries')</h3>
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="services-content media-body">
                                     <h4 class="services-title">@lang('Time Tracking')</h4>
-                                    <p class="text">@lang('Track time for you and your employees, and associate it to projects and tasks.')</p>
+                                    <h3 class="text font-weight-normal">@lang('Track time for you and your employees, and associate it to projects and tasks.')</h3>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="services-content media-body">
                                     <h4 class="services-title">@lang('Invoicing')</h4>
-                                    <p class="text">@lang('Start invoicing your clients in a matter of just a few seconds')</p>
+                                    <h3 class="text font-weight-normal">@lang('Start invoicing your clients in a matter of seconds')</h3>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="services-content media-body">
                                     <h4 class="services-title">@lang('Employees')</h4>
-                                    <p class="text">@lang('Create and edit multiple employees accounts and their permissions, according to your plan')</p>
+                                    <h3 class="text font-weight-normal">@lang('Create and edit multiple employees accounts and their permissions, according to your needs')</h3>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="services-content media-body">
                                     <h4 class="services-title">@lang('Support')</h4>
-                                    <p class="text">@lang('Continuous support for all our users and developing our platform according to your feedback')</p>
+                                    <h3 class="text font-weight-normal">@lang('Continuous support for all our users and developing our platform according to your feedback')</h3>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -219,7 +219,7 @@
     <div class="container align-items-center mb-5">
         <div class="row">
             <div class="offset-md-2 col-md-8 mb-5">
-                <a class="btn btn-lg btn-block text-center btn-primary" href="{{ route('frontend.auth.register') }}">@lang('Start now! It\'s free!')</a>
+                <a class="btn btn-lg btn-block text-center btn-primary" href="{{ route('frontend.auth.register') }}">@lang('Start now, it\'s free!')</a>
             </div>
         </div>
     </div>
@@ -230,7 +230,7 @@
         <div class="container">
             <div class="row">
                 <div class="section-title w-100 mt-5">
-                    <h4 class="title text-center mb-5 w-100">@lang('Steps and features')</h3>
+                    <h4 class="title text-center mb-5 w-100">@lang('A glance in our software')</h3>
                 </div>
                 <div id="screenshotsCarousel" class="carousel slide mb-5" data-ride="carousel">
                     <div class="carousel-inner">
@@ -251,7 +251,7 @@
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <p class="text-center mb-5 lead">@lang('Start adding your times, either by starting the counter or adding manual times from the past')</p>
+                            <p class="text-center mb-5 lead">@lang('Start adding your times, either by starting the counter or adding manual times')</p>
                             <picture class="d-block w-100 border border-dark">
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/add-time.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/add-time.png#full') }}">
@@ -259,7 +259,7 @@
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <p class="text-center mb-5 lead">@lang('Bill your clients in a matter of minutes while keeping track of the times you bill')</p>
+                            <p class="text-center mb-5 lead">@lang('Bill your clients in a matter of seconds while keeping track of the times you bill')</p>
                             <picture class="d-block w-100 border border-dark">
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/add-invoice.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/add-invoice.png#full') }}">
@@ -267,7 +267,7 @@
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <p class="text-center mb-5 lead">@lang('Download your first invoice created as a PDF')</p>
+                            <p class="text-center mb-5 lead">@lang('Download your first invoice created, as a PDF')</p>
                             <picture class="d-block w-100 border border-dark">
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/invoice-example.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/invoice-example.png#full') }}">
@@ -321,14 +321,13 @@
                         <div class="pricing-list">
                             <ul>
                                 <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
-                                <li><i class="lni lni-ban"></i> @lang('No Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
                                 <li><i class="lni lni-ban"></i> @lang('No Invoicing')</li>
                                 <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
                             <p class="mb-4 text-secondary">@lang('Least amount of benefits')</p>
-                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
@@ -353,7 +352,6 @@
                         </div>
                         <div class="pricing-btn text-center">
                             <p class="mb-4 text-secondary">@lang('$3,99 in total, per month')</p>
-                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
@@ -378,7 +376,6 @@
                         </div>
                         <div class="pricing-btn text-center">
                             <p class="mb-4 text-secondary">@lang('$19,99 in total, per month')</p>
-                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
@@ -403,7 +400,6 @@
                         </div>
                         <div class="pricing-btn text-center">
                             <p class="mb-4 text-secondary">@lang('$49,99 in total, per month')</p>
-                            <a class="main-btn" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
@@ -428,9 +424,9 @@
                 </div>
             </div> 
             <div class="row text-center paragraphs">
-                <p>@lang('Timo-Track it\'s a tool that wants to come to the help of all businesses, small or large, and provide them a platform to manage their business')</p>
-                <p>@lang('Our product it\'s in continous development and we seek to improve our services all the time')</p>
-                <p>@lang('Any sugestions will be welcomed and we will always put customer experience at the top of our priorities!')</p>
+                <p>@lang('Timo-Track it\'s a tool that wants to take away all the troubles and discomfort that comes from time tracking and invoicing.')</p>
+                <p>@lang('Our product will be successful once our customers will use it with pleasure, and they will notice the value that it brings.')
+                <p>@lang('Any feedback will be welcomed, and we will always put customer experience at the top of our priorities!')</p>
             </div> 
         </div> 
     </section>
@@ -457,8 +453,8 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Services')</h6>
                             <ul>
-                                <li><a class="page-scroll" href="#service">@lang('Services')</a></li>
-                                <li><a href="{{ route('frontend.auth.register') }}">@lang('Try Now For Free')</a></li>
+                                <li><a class="page-scroll" href="#service">@lang('Our Services')</a></li>
+                                <li><a href="{{ route('frontend.auth.register') }}">@lang('Register For Free')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
@@ -474,7 +470,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-7">
                         <div class="footer-logo-support d-md-flex align-items-end justify-content-between">
                             <div class="footer-logo d-flex align-items-end">
-                                <a class="mt-30" href="index.html"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
+                                <a class="mt-30" href="#"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
                             </div> <!-- footer logo -->
                             
                         </div> <!-- footer logo support -->

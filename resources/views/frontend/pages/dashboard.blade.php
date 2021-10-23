@@ -17,30 +17,30 @@
                             <x-utils.link
                                 :href="route('frontend.time.create')"
                                 :text="__('Add a time record')"
-                                class="list-group-item list-group-item-action"
+                                class="list-group-item list-group-item-action font-weight-bold"
                                 permission="user.access.times"
                             />
                             <x-utils.link
                                 :href="route('frontend.invoices.create')"
                                 :text="__('Generate an invoice')"
-                                class="list-group-item list-group-item-action"
+                                class="list-group-item list-group-item-action font-weight-bold"
                                 permission="user.access.invoices.create"
                             />
                             <x-utils.link
                                 :href="route('frontend.clients.create')"
                                 :text="__('Add a client')"
-                                class="list-group-item list-group-item-action"
+                                class="list-group-item list-group-item-action font-weight-bold"
                                 permission="user.access.clients.create"
                             />
                             <x-utils.link
                                 :href="route('frontend.projects.create')"
                                 :text="__('Add a project')"
-                                class="list-group-item list-group-item-action"
+                                class="list-group-item list-group-item-action font-weight-bold"
                                 permission="user.access.projects.create"
                             />
                             @if (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner())
                                 <x-utils.link
-                                    class="list-group-item list-group-item-action"
+                                    class="list-group-item list-group-item-action font-weight-bold"
                                     :href="route('frontend.user.account') . '#organization'"
                                     :text="__('Update organization details')" />
                             @endif
