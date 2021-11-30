@@ -414,6 +414,8 @@ class TimeTable extends TableComponentExtended
             $builder->where('billed', $this->customFilters['billed']);
         }
 
+        $builder->orderBy('start_time', 'desc');
+
         return $builder;
     }
 

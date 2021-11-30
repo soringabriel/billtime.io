@@ -80,7 +80,7 @@ class TimeController extends Controller
     public function store(StoreTimeRequest $request)
     {
         $validated_request = $request->validated();
-        if ($validated_request['new_client']) {
+        if (isset($validated_request['new_client']) && $validated_request['new_client']) {
             $client = $this->clientService->store([
                 'name' => $validated_request['client_name'],
                 'company_name' => $validated_request['client_company_name'],
@@ -91,7 +91,7 @@ class TimeController extends Controller
             ]);
             $validated_request['project_client_id'] = $client->id;
         }
-        if ($validated_request['new_project']) {
+        if (isset($validated_request['new_project']) && $validated_request['new_project']) {
             $project = $this->projectService->store([
                 'name' => $validated_request['project_name'],
                 'client_id' => $validated_request['project_client_id'],
@@ -134,7 +134,7 @@ class TimeController extends Controller
     public function update(UpdateTimeRequest $request, Time $time)
     {
         $validated_request = $request->validated();
-        if ($validated_request['new_client']) {
+        if (isset($validated_request['new_client']) && $validated_request['new_client']) {
             $client = $this->clientService->store([
                 'name' => $validated_request['client_name'],
                 'company_name' => $validated_request['client_company_name'],
@@ -145,7 +145,7 @@ class TimeController extends Controller
             ]);
             $validated_request['project_client_id'] = $client->id;
         }
-        if ($validated_request['new_project']) {
+        if (isset($validated_request['new_project']) && $validated_request['new_project']) {
             $project = $this->projectService->store([
                 'name' => $validated_request['project_name'],
                 'client_id' => $validated_request['project_client_id'],

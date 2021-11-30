@@ -55,14 +55,28 @@
                                         <x-utils.link
                                             icon="c-icon cil-plus"
                                             class="card-header-action"
+                                            role="button"
+                                            href="javascript:void(0);"
                                             :text="__('Add New Project')"
                                             @click="new_project = !new_project"
                                             permission="user.access.projects.create"
+                                            x-show="!new_project"
+                                        />
+                                        <x-utils.link
+                                            icon="c-icon cil-minus"
+                                            class="card-header-action"
+                                            role="button"
+                                            href="javascript:void(0);"
+                                            :text="__('Select From Existing Projects')"
+                                            @click="new_project = !new_project"
+                                            permission="user.access.projects.create"
+                                            x-show="new_project"
                                         />
                                     </div>
                                     
                                     <div class="col-md-12 mt-2" x-show="new_project">
-                                        @include('frontend.time.includes.new-project')
+                                        <input type="hidden" name="new_project" x-bind:value="new_project ? 1 : 0">
+                                        @include('frontend.includes.partials.new-project')
                                     </div>
                                 </div><!--form-group-->
 

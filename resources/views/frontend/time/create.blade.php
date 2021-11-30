@@ -47,7 +47,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select name="project_id" class="form-control select2-project mb-2">
+                                        <select name="project_id" x-show="!new_project" class="form-control select2-project mb-2">
                                             @foreach ($projects as $project) 
                                                 <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                             @endforeach
@@ -76,7 +76,7 @@
 
                                     <div class="col-md-12 mt-2" x-show="new_project">
                                         <input type="hidden" name="new_project" x-bind:value="new_project ? 1 : 0">
-                                        @include('frontend.time.includes.new-project')
+                                        @include('frontend.includes.partials.new-project')
                                     </div>
                                 </div><!--form-group-->
 
