@@ -67,11 +67,11 @@ class ProjectController extends Controller
         if (isset($validated_request['new_client']) && $validated_request['new_client']) {
             $client = $this->clientService->store([
                 'name' => $validated_request['client_name'],
-                'company_name' => $validated_request['client_company_name'],
-                'tax_number' => $validated_request['client_tax_number'],
-                'vat_number' => $validated_request['client_vat_number'],
-                'address' => $validated_request['client_address'],
-                'bank_account' => $validated_request['client_bank_account'],
+                'company_name' => $validated_request['client_company_name'] ?? '',
+                'tax_number' => $validated_request['client_tax_number'] ?? '',
+                'vat_number' => $validated_request['client_vat_number'] ?? '',
+                'address' => $validated_request['client_address'] ?? '',
+                'bank_account' => $validated_request['client_bank_account'] ?? '',
             ]);
             $validated_request['client_id'] = $client->id;
         }
@@ -107,11 +107,11 @@ class ProjectController extends Controller
         if (isset($validated_request['new_client']) && $validated_request['new_client']) {
             $client = $this->clientService->store([
                 'name' => $validated_request['client_name'],
-                'company_name' => $validated_request['client_company_name'],
-                'tax_number' => $validated_request['client_tax_number'],
-                'vat_number' => $validated_request['client_vat_number'],
-                'address' => $validated_request['client_address'],
-                'bank_account' => $validated_request['client_bank_account'],
+                'company_name' => $validated_request['client_company_name'] ?? '',
+                'tax_number' => $validated_request['client_tax_number'] ?? '',
+                'vat_number' => $validated_request['client_vat_number'] ?? '',
+                'address' => $validated_request['client_address'] ?? '',
+                'bank_account' => $validated_request['client_bank_account'] ?? '',
             ]);
             $validated_request['client_id'] = $client->id;
         }

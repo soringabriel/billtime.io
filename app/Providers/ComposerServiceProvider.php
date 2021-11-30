@@ -20,7 +20,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $view->with('logged_in_user', auth()->user());
-            if (is_null(auth()->user())) {
+            if (is_null(auth()->user()) || is_null(auth()->user()->organization()->first())) {
                 $view->with('clients', []);
                 $view->with('projects', []);
             } else {
