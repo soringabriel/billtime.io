@@ -61,6 +61,7 @@
                 </div>
             </div>
         </div>
+        <x-utils.link :href="route('frontend.invoices.clone', $model)" class="btn btn-outline-info btn-sm" icon="fas fa-clone" :text="__('Clone')" permission="user.access.invoices.create"/>
         <x-utils.edit-button :href="route('frontend.invoices.edit', $model)" />
         <x-utils.delete-button :href="route('frontend.invoices.destroy', $model)" />
     @else
@@ -101,6 +102,7 @@
             </x-utils.form-button>
         @endif
         <x-utils.link :href="route('frontend.invoices.download', $model)" class="btn btn-outline-info btn-sm" icon="fas fa-download" :text="__('Download')" permission="user.access.invoices.show-all" />
+        <x-utils.link :href="route('frontend.invoices.clone', $model)" class="btn btn-outline-info btn-sm" icon="fas fa-clone" :text="__('Clone')" permission="user.access.invoices.create"/>
         <x-utils.edit-button :href="route('frontend.invoices.edit', $model)" permission="user.access.invoices.edit-all" />
         <x-utils.delete-button :href="route('frontend.invoices.destroy', $model)" permission="user.access.invoices.delete-all" />
     @endif
