@@ -9,6 +9,7 @@ use App\Http\Requests\Frontend\Invoice\UpdateInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\UpdateInvoiceStatusRequest;
 use App\Http\Requests\Frontend\Invoice\DeleteInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\DownloadInvoiceRequest;
+use App\Http\Requests\Frontend\Invoice\CloneInvoiceRequest;
 use App\Services\InvoiceService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
@@ -137,5 +138,19 @@ class InvoiceController extends Controller
         $this->invoiceService->destroy($invoice);
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully deleted.'));
+    }
+
+    /**
+     * @param  CloneInvoiceRequest  $request
+     * @param  Invoice  $invoice
+     *
+     * @return mixed
+     */
+    public function clone(CloneInvoiceRequest $request, Invoice $invoice)
+    {
+        return view('frontend.invoices.clone')
+            ->withCurrencies(currencyToSymbol())
+            ->withOrganization(auth()->user()->organization()->first())
+            ->withInvoice($invoice);
     }
 }

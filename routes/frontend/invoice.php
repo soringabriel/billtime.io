@@ -34,6 +34,13 @@ Route::group([
                 $trail->parent('frontend.invoices.index')
                     ->push(__('Editing :invoice', ['invoice' => $invoice->name]), route('frontend.invoices.edit', $invoice));
         });
+        Route::get('clone', [InvoiceController::class, 'clone'])
+            ->name('clone')
+            ->middleware(['model_belongs_to_user:invoice,user.access.invoices.show-all', 'permission:user.access.invoices.create'])
+            ->breadcrumbs(function (Trail $trail, Invoice $invoice) {
+                $trail->parent('frontend.invoices.index')
+                    ->push(__('Duplicating :invoice', ['invoice' => $invoice->name]), route('frontend.invoices.clone', $invoice));
+        });
         Route::get('download', [InvoiceController::class, 'download'])->middleware('model_belongs_to_user:invoice,user.access.invoices.show-all')->name('download');
         Route::patch('/', [InvoiceController::class, 'update'])->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')->name('update');
         Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->middleware('model_belongs_to_user:invoice,user.access.invoices.update-status-all')->name('updateStatus');
