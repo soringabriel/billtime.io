@@ -20,6 +20,13 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $view->with('logged_in_user', auth()->user());
+            if (is_null(auth()->user())) {
+                $view->with('clients', []);
+                $view->with('projects', []);
+            } else {
+                $view->with('clients', auth()->user()->organization()->first()->clients()->get());
+                $view->with('projects', auth()->user()->organization()->first()->projects()->get());
+            }
         });
 
         View::composer(['frontend.index', 'frontend.layouts.app'], function ($view) use ($announcementService) {

@@ -48,7 +48,6 @@ class InvoiceController extends Controller
     {
         return view('frontend.invoices.create')
                     ->withCurrencies(currencyToSymbol())
-                    ->withClients(auth()->user()->organization()->first()->clients()->get())
                     ->withOrganization(auth()->user()->organization()->first());
     }
 

@@ -51,8 +51,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('frontend.projects.create')
-            ->withClients(auth()->user()->organization()->first()->clients()->get());
+        return view('frontend.projects.create');
     }
 
     /**
@@ -74,7 +73,7 @@ class ProjectController extends Controller
                 'address' => $validated_request['client_address'],
                 'bank_account' => $validated_request['client_bank_account'],
             ]);
-            $validated_request['project_client_id'] = $client->id;
+            $validated_request['client_id'] = $client->id;
         }
 
         $this->projectService->store($validated_request);
@@ -91,8 +90,7 @@ class ProjectController extends Controller
     public function edit(EditProjectRequest $request, Project $project)
     {
         return view('frontend.projects.edit')
-            ->withProject($project)
-            ->withClients(auth()->user()->organization()->first()->clients()->get());
+            ->withProject($project);
     }
 
     /**
@@ -115,7 +113,7 @@ class ProjectController extends Controller
                 'address' => $validated_request['client_address'],
                 'bank_account' => $validated_request['client_bank_account'],
             ]);
-            $validated_request['project_client_id'] = $client->id;
+            $validated_request['client_id'] = $client->id;
         }
 
         $this->projectService->update($project, $validated_request);
