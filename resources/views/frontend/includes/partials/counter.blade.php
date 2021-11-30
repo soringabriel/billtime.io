@@ -32,14 +32,14 @@
                     <input type="hidden" id="counterStartTime" name="start_time" />
                     <input type="hidden" id="counterEndTime" name="end_time" />
 
-                    <div class="form-group row">
+                    <div class="form-group row" x-data="{new_project: false}">
                         <label for="project_id" class="col-md-3 col-form-label">
                             <span class="required-field">@lang('Project')</span>
                             <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
                         </label>
 
                         <div class="col-md-9">
-                            <select name="project_id" class="form-control select2-project mb-2">
+                            <select name="project_id" x-show="!new_project" class="form-control select2-project mb-2">
                                 @foreach ($projectModel::where('organization_id', $logged_in_user->organization_id)->get() as $project) 
                                     <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                 @endforeach
@@ -48,9 +48,28 @@
                                 icon="c-icon cil-plus"
                                 class="card-header-action"
                                 :href="route('frontend.projects.create')"
+                                role="button"
+                                href="javascript:void(0);"
                                 :text="__('Add New Project')"
+                                @click="new_project = !new_project"
                                 permission="user.access.projects.create"
+                                x-show="!new_project"
                             />
+                            <x-utils.link
+                                icon="c-icon cil-minus"
+                                class="card-header-action"
+                                role="button"
+                                href="javascript:void(0);"
+                                :text="__('Select From Existing Projects')"
+                                @click="new_project = !new_project"
+                                permission="user.access.projects.create"
+                                x-show="new_project"
+                            />
+                        </div>
+
+                        <div class="col-md-12 mt-2" x-show="new_project">
+                            <input type="hidden" name="new_project" x-bind:value="new_project ? 1 : 0">
+                            @include('frontend.includes.partials.new-project')
                         </div>
                     </div><!--form-group-->
 

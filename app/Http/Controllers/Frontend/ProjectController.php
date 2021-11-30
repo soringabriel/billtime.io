@@ -7,6 +7,7 @@ use App\Http\Requests\Frontend\Project\StoreProjectRequest;
 use App\Http\Requests\Frontend\Project\EditProjectRequest;
 use App\Http\Requests\Frontend\Project\UpdateProjectRequest;
 use App\Http\Requests\Frontend\Project\DeleteProjectRequest;
+use App\Services\ClientService;
 use App\Services\ProjectService;
 use App\Models\Project;
 
@@ -16,6 +17,11 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
     /**
+     * @var ClientService
+     */
+    protected $clientService;
+
+    /**
      * @var ProjectService
      */
     protected $projectService;
@@ -23,10 +29,12 @@ class ProjectController extends Controller
     /**
      * ProjectController constructor.
      *
+     * @param  ClientService  $clientService
      * @param  ProjectService  $projectService
      */
-    public function __construct(ProjectService $projectService)
+    public function __construct(ClientService $clientService, ProjectService $projectService)
     {
+        $this->clientService = $clientService;
         $this->projectService = $projectService;
     }
 
@@ -43,8 +51,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('frontend.projects.create')
-            ->withClients(auth()->user()->organization()->first()->clients()->get());
+        return view('frontend.projects.create');
     }
 
     /**
@@ -56,7 +63,20 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        $this->projectService->store($request->validated());
+        $validated_request = $request->validated();
+        if (isset($validated_request['new_client']) && $validated_request['new_client']) {
+            $client = $this->clientService->store([
+                'name' => $validated_request['client_name'],
+                'company_name' => $validated_request['client_company_name'] ?? '',
+                'tax_number' => $validated_request['client_tax_number'] ?? '',
+                'vat_number' => $validated_request['client_vat_number'] ?? '',
+                'address' => $validated_request['client_address'] ?? '',
+                'bank_account' => $validated_request['client_bank_account'] ?? '',
+            ]);
+            $validated_request['client_id'] = $client->id;
+        }
+
+        $this->projectService->store($validated_request);
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was added.'));
     }
@@ -70,8 +90,7 @@ class ProjectController extends Controller
     public function edit(EditProjectRequest $request, Project $project)
     {
         return view('frontend.projects.edit')
-            ->withProject($project)
-            ->withClients(auth()->user()->organization()->first()->clients()->get());
+            ->withProject($project);
     }
 
     /**
@@ -84,7 +103,20 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $this->projectService->update($project, $request->validated());
+        $validated_request = $request->validated();
+        if (isset($validated_request['new_client']) && $validated_request['new_client']) {
+            $client = $this->clientService->store([
+                'name' => $validated_request['client_name'],
+                'company_name' => $validated_request['client_company_name'] ?? '',
+                'tax_number' => $validated_request['client_tax_number'] ?? '',
+                'vat_number' => $validated_request['client_vat_number'] ?? '',
+                'address' => $validated_request['client_address'] ?? '',
+                'bank_account' => $validated_request['client_bank_account'] ?? '',
+            ]);
+            $validated_request['client_id'] = $client->id;
+        }
+
+        $this->projectService->update($project, $validated_request);
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully updated.'));
     }
