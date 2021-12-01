@@ -202,7 +202,7 @@ class TimeController extends Controller
     {
         $this->timeService->destroy($time);
 
-        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully deleted.'));
+        return redirect()->back()->withFlashSuccess(__('The time record was successfully deleted.'));
     }
 
     /**

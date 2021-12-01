@@ -5,6 +5,7 @@ namespace App\Models\Traits\Method;
 use App\Models\Time;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Illuminate\View\ComponentAttributeBag;
 
 /**
  * Trait OrganizationMethod.
@@ -80,7 +81,8 @@ trait OrganizationMethod
     {
         $result = [];
         $organization_users = $this->users()->get();
-        foreach ($organization_users as $user) {
+        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()];
+        foreach ($users as $user) {
             $times = Time::where('user_id', $user->id)->orderBy('start_time')->get();
             $result[$user->email] = [];
             foreach ($times as $time) {
@@ -90,12 +92,24 @@ trait OrganizationMethod
                     'end' => $time->end_time,
                     'color' => $time->billed ? '#ffed4a' : '#38c172',
                     'extendedProps' => [
+                        'start' => $time->start_time,
+                        'end' => $time->end_time,
+                        'timezone' => auth()->user()->timezone,
                         'project' => $time->project()->first()->name,
                         'task' => $time->task,
                         'details' => $time->details,
                         'billed' => $time->billed,
-                        'edit_url' => route('frontend.time.edit', $time),
-                        'delete_url' => route('frontend.time.destroy', $time),
+                        'edit_url' => view('components.utils.edit-button', [
+                            'attributes' => new ComponentAttributeBag([]),
+                            'href' => route('frontend.time.edit', $time),
+                            'title' => __('Edit'),
+                        ])->render(),
+                        'delete_url' => view('components.utils.delete-button', [
+                            'attributes' => new ComponentAttributeBag([]),
+                            'href' => route('frontend.time.destroy', $time),
+                            'title' => __('Delete'),
+                            'name' => 'delete-item-no-confirmation',
+                        ])->render(),
                     ]
                 ];
             }

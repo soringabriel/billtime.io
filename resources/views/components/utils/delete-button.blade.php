@@ -3,7 +3,7 @@
 <x-utils.form-button
     :action="$href"
     method="delete"
-    name="delete-item"
+    name="{{ $name ?? 'delete-item' }}"
     button-class="btn btn-outline-danger btn-sm"
     permission="{{ $permission }}"
     hiddenData="{!! ($attributes['hiddenData'] ?? '[]') !!}"
