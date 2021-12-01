@@ -87,7 +87,7 @@ trait OrganizationMethod
             $result[$user->email] = [];
             foreach ($times as $time) {
                 $result[$user->email][] = [
-                    'title' => $time->project()->first()->name . ' - ' . substr($time->details, 0, 50) . (strlen($time->details) > 0 ? '...' : ''),
+                    'title' => $time->project()->first()->name . ' - ' . substr($time->details, 0, 50) . (strlen($time->details) > 50 ? '...' : ''),
                     'start' => $time->start_time,
                     'end' => $time->end_time,
                     'color' => $time->billed ? '#ffed4a' : '#38c172',
