@@ -63,10 +63,9 @@
                                 (info.event.extendedProps.billed ? '<span class="bg-success text-white text-nowrap rounded p-1">@lang("Billed")' : '<span class="bg-dark text-white text-nowrap rounded p-1">@lang("Not Billed")</span>') + 
                             '</div></div>' + 
                             '<div class="row align-center pt-1"><div class="col-md-4 text-left">@lang("Details")</div><div class="col-md-8 text-right">' + (info.event.extendedProps.details ?? 'Unknown') + '</div></div></span>',
-                        footer: info.event.extendedProps.edit_url + '&nbsp;&nbsp;' + info.event.extendedProps.delete_url,
                         showCloseButton: false,
                         showCancelButton: false,
-                        showConfirmButton: false,
+                        showConfirmButton: true,
                         icon: 'info'
                     });
                 }
