@@ -263,7 +263,7 @@ class InvoiceService extends BaseService
                     ->dateFormat('M j, Y')
                     ->currencySymbol(currencyToSymbol($invoice_data['currency']))
                     ->currencyCode($invoice_data['currency'])
-                    ->currencyFormat('{SYMBOL}{VALUE}')
+                    ->currencyFormat('{VALUE}{SYMBOL}')
                     ->currencyThousandsSeparator('.')
                     ->currencyDecimalPoint(',')
                     ->taxRate($invoice_data['tax'])

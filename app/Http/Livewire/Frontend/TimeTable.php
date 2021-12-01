@@ -271,7 +271,7 @@ class TimeTable extends TableComponentExtended
                     ');
                 })
                 ->format(function (Time $model) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS F Y H:i');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS M Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('m-d-Y H:i');
@@ -288,7 +288,7 @@ class TimeTable extends TableComponentExtended
                     ');
                 })
                 ->format(function (Time $model) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS F Y H:i');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS M Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('m-d-Y H:i');
@@ -349,7 +349,7 @@ class TimeTable extends TableComponentExtended
                 ->format(function (Time $model) {
                     $task_array = explode("/", $model->task);
                     $task_title = end($task_array);
-                    return $this->html('<a href="' . $model->task . '" target="_blank">' . $task_title . '</a>');
+                    return $this->html('<a class="task" href="' . $model->task . '" target="_blank">' . $task_title . '</a>');
                 })
                 ->exportFormat(function (Time $model) {
                     return $model->task;
@@ -413,6 +413,8 @@ class TimeTable extends TableComponentExtended
         if (isset($this->customFilters['billed']) && $this->customFilters['billed'] != "") {
             $builder->where('billed', $this->customFilters['billed']);
         }
+
+        $builder->orderBy('start_time', 'desc');
 
         return $builder;
     }

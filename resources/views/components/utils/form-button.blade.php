@@ -6,6 +6,7 @@
     'buttonClass' => '',
     'icon' => false,
     'permission' => false,
+    'title' => '',
 ])
 
 @if ($permission)
@@ -20,7 +21,7 @@
                 @endforeach
             @endif
 
-            <button type="submit" class="{{ $buttonClass }}">
+            <button type="submit" class="{{ $buttonClass }}" title="{{ $title }}">
                 @if ($icon)<i class="{{ $icon }}"></i> @endif{{ $slot }}
             </button>
         </form>
@@ -36,7 +37,7 @@
             @endforeach
         @endif
 
-        <button type="submit" class="{{ $buttonClass }}">
+        <button type="submit" class="{{ $buttonClass }}" title="{{ $title }}">
             @if ($icon)<i class="{{ $icon }}"></i> @endif{{ $slot }}
         </button>
     </form>

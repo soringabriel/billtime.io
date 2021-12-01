@@ -49,7 +49,7 @@
 
     <div class="form-group row mb-0">
         <div class="col-md-12 text-right">
-            <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update')</button>
+            <button class="btn btn-sm btn-outline-primary float-right" type="submit">@lang('Update')</button>
         </div>
     </div><!--form-group-->
 </x-forms.patch>

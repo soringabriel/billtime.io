@@ -37,6 +37,7 @@
                         :href="route('frontend.time.index')"
                         :active="activeClass(Route::is('frontend.time.index'), 'c-active')"
                         :text="__('Time Records List')"
+                        icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         permission="user.access.times.access" />
                 </li>
@@ -45,6 +46,7 @@
                         :href="route('frontend.time.create')"
                         :active="activeClass(Route::is('frontend.time.create'), 'c-active')"
                         :text="__('Add Manual Time')"
+                        icon="c-sidebar-nav-icon cil-plus"
                         class="c-sidebar-nav-link" />
                 </li>
             </ul>
@@ -65,6 +67,7 @@
                         :href="route('frontend.invoices.index')"
                         :active="activeClass(Route::is('frontend.invoices.index'), 'c-active')"
                         :text="__('Invoices List')"
+                        icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         permission="user.access.invoices.access" />
                 </li>
@@ -73,6 +76,7 @@
                         :href="route('frontend.invoices.create')"
                         :active="activeClass(Route::is('frontend.invoices.create'), 'c-active')"
                         :text="__('Create Invoice')"
+                        icon="c-sidebar-nav-icon cil-plus"
                         class="c-sidebar-nav-link"
                         permission="user.access.invoices.create" />
                 </li>
@@ -94,6 +98,7 @@
                         :href="route('frontend.user.subuser.index')"
                         :active="activeClass(Route::is('frontend.user.subuser.index'), 'c-active')"
                         :text="__('Team Members')"
+                        icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         permission="user.access.users.access" />
                 </li>
@@ -102,6 +107,7 @@
                         :href="route('frontend.user.subuser.create')"
                         :active="activeClass(Route::is('frontend.user.subuser.create'), 'c-active')"
                         :text="__('Add Team Member')"
+                        icon="c-sidebar-nav-icon cil-plus"
                         class="c-sidebar-nav-link"
                         permission="user.access.users.create" />
                 </li>
@@ -110,6 +116,7 @@
                         :href="route('frontend.user.subuser.deleted')"
                         :active="activeClass(Route::is('frontend.user.subuser.deleted'), 'c-active')"
                         :text="__('Deleted Team Members')"
+                        icon="c-sidebar-nav-icon cil-trash"
                         class="c-sidebar-nav-link"
                         permission="user.access.users.delete" />
                 </li>
@@ -131,6 +138,7 @@
                         :href="route('frontend.clients.index')"
                         :active="activeClass(Route::is('frontend.clients.index'), 'c-active')"
                         :text="__('Clients List')"
+                        icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         permission="user.access.clients.access" />
                 </li>
@@ -139,6 +147,7 @@
                         :href="route('frontend.clients.create')"
                         :active="activeClass(Route::is('frontend.clients.create'), 'c-active')"
                         :text="__('Add Client')"
+                        icon="c-sidebar-nav-icon cil-plus"
                         class="c-sidebar-nav-link"
                         permission="user.access.clients.create" />
                 </li>
@@ -160,6 +169,7 @@
                         :href="route('frontend.projects.index')"
                         :active="activeClass(Route::is('frontend.projects.index'), 'c-active')"
                         :text="__('Projects List')"
+                        icon="c-sidebar-nav-icon cil-list"
                         class="c-sidebar-nav-link"
                         permission="user.access.projects.access" />
                 </li>
@@ -168,6 +178,7 @@
                         :href="route('frontend.projects.create')"
                         :active="activeClass(Route::is('frontend.projects.create'), 'c-active')"
                         :text="__('Add Project')"
+                        icon="c-sidebar-nav-icon cil-plus"
                         class="c-sidebar-nav-link"
                         permission="user.access.projects.create" />
                 </li>

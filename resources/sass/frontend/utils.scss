@@ -89,3 +89,26 @@ li.page-item {
 .page-item.disabled {
     display: block;
 }
+
+.w-md-25 {
+    width: 100%;
+    
+    @include tablet-up {
+        width: 25%;
+    }
+}
+
+a.task {
+    overflow: hidden;
+    max-width: 100px;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.col-xxl-3 {
+    @include desktop-1400 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}

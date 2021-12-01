@@ -21,33 +21,29 @@ class PlansSeeder extends Seeder
     {
         $this->disableForeignKeys();
 
-        $freelancer = Plan::create([
-            'name' => 'Freelancer',
+        $free = Plan::create([
+            'name' => 'Free',
             'price' => 0,
             'currency' => 'USD',
             'billing_type' => Plan::BILLING_TYPE_NONE,
             'subusers_quota' => 0,
         ]);
 
-        $freelancer->syncPermissions([
-            Permission::where('name', 'user.access.times.access')->first()->id,
-            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
-            Permission::where('name', 'user.access.times.mark-billed')->first()->id, 
-            Permission::where('name', 'user.access.times.delete-all')->first()->id, 
-            Permission::where('name', 'user.access.times.access')->first()->id, 
+        $free->syncPermissions([
+            Permission::where('name', 'user.access.times')->first()->id,
             Permission::where('name', 'user.access.clients')->first()->id,
             Permission::where('name', 'user.access.projects')->first()->id,
         ]);
 
-        $freelancer_pro = Plan::create([
-            'name' => 'Freelancer Pro',
+        $freelancer = Plan::create([
+            'name' => 'Freelancer',
             'price' => 3.99,
             'currency' => 'USD',
             'billing_type' => Plan::BILLING_TYPE_MONTHLY,
             'subusers_quota' => 0,
         ]);
 
-        $freelancer_pro->syncPermissions([
+        $freelancer->syncPermissions([
             Permission::where('name', 'user.access.times')->first()->id,
             Permission::where('name', 'user.access.invoices')->first()->id,
             Permission::where('name', 'user.access.clients')->first()->id,
@@ -56,10 +52,10 @@ class PlansSeeder extends Seeder
 
         $startup = Plan::create([
             'name' => 'Startup',
-            'price' => 9.99,
+            'price' => 19.99,
             'currency' => 'USD',
             'billing_type' => Plan::BILLING_TYPE_MONTHLY,
-            'subusers_quota' => 3,
+            'subusers_quota' => 20,
         ]);
 
         $startup->syncPermissions([
@@ -70,47 +66,15 @@ class PlansSeeder extends Seeder
             Permission::where('name', 'user.access.users')->first()->id,
         ]);
 
-        $small_team = Plan::create([
-            'name' => 'Small Team',
-            'price' => 24.99,
-            'currency' => 'USD',
-            'billing_type' => Plan::BILLING_TYPE_MONTHLY,
-            'subusers_quota' => 10,
-        ]);
-
-        $small_team->syncPermissions([
-            Permission::where('name', 'user.access.times')->first()->id,
-            Permission::where('name', 'user.access.invoices')->first()->id,
-            Permission::where('name', 'user.access.clients')->first()->id,
-            Permission::where('name', 'user.access.projects')->first()->id,
-            Permission::where('name', 'user.access.users')->first()->id,
-        ]);
-
-        $regular = Plan::create([
-            'name' => 'Regular',
+        $company = Plan::create([
+            'name' => 'Company',
             'price' => 49.99,
             'currency' => 'USD',
             'billing_type' => Plan::BILLING_TYPE_MONTHLY,
-            'subusers_quota' => 50,
+            'subusers_quota' => -1,
         ]);
 
-        $regular->syncPermissions([
-            Permission::where('name', 'user.access.times')->first()->id,
-            Permission::where('name', 'user.access.invoices')->first()->id,
-            Permission::where('name', 'user.access.clients')->first()->id,
-            Permission::where('name', 'user.access.projects')->first()->id,
-            Permission::where('name', 'user.access.users')->first()->id,
-        ]);
-
-        $unlimited = Plan::create([
-            'name' => 'Unlimited',
-            'price' => 9.99,
-            'currency' => 'USD',
-            'billing_type' => Plan::BILLING_TYPE_MONTHLY,
-            'subusers_quota' => 3,
-        ]);
-
-        $unlimited->syncPermissions([
+        $company->syncPermissions([
             Permission::where('name', 'user.access.times')->first()->id,
             Permission::where('name', 'user.access.invoices')->first()->id,
             Permission::where('name', 'user.access.clients')->first()->id,

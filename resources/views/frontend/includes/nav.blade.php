@@ -16,7 +16,7 @@
             <div id="navbarSupportedContent" class="ml-auto">
                 <ul class="navbar-nav ml-auto align-items-center flex-row justify-content-between">
                     @auth
-                        @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->plan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
+                        @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->nextPlan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
                             <li class="nav-item mr-3">
                                 <x-utils.link
                                     :href="route('frontend.plan')"

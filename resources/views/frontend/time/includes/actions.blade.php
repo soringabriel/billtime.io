@@ -1,8 +1,8 @@
-<div class="action-buttons">
+<div class="action-buttons time-action-buttons">
     @php 
         /*
         @if (($logged_in_user->can('user.access.invoices.show-all') && $model->invoices()->count()))
-            <button class="btn btn-secondary" data-toggle="modal" data-target="#{{ $model->id }}-invoices-modal">@lang('Invoices')</button>
+            <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#{{ $model->id }}-invoices-modal">@lang('Invoices')</button>
             <div class="modal fade" id="{{ $model->id }}-invoices-modal" tabindex="-1" role="dialog" aria-labelledby="{{ $model->id }}-invoices-modalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         @elseif ($logged_in_user->can('user.access.invoices.access') && $model->invoices()->where('invoices.user_id', $logged_in_user->id)->count())
-            <button class="btn btn-secondary" data-toggle="modal" data-target="#{{ $model->id }}-invoices-modal">@lang('Invoices')</button>
+            <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#{{ $model->id }}-invoices-modal">@lang('Invoices')</button>
             <div class="modal fade" id="{{ $model->id }}-invoices-modal" tabindex="-1" role="dialog" aria-labelledby="{{ $model->id }}-invoices-modalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -46,30 +46,28 @@
         <x-utils.form-button
             :action="route('frontend.time.toggleBilled', $model)"
             method="patch"
-            button-class="btn btn-warning btn-sm"
+            button-class="btn btn-outline-warning btn-sm"
             icon="fas fa-dollar-sign"
             name="confirm-item"
+            :title="__('Mark as not billed')"
             permission="user.access.times.mark-billed"
-        >
-            @lang('Mark as not billed')
-        </x-utils.form-button>
+        />
     @else 
         <x-utils.form-button
             :action="route('frontend.time.toggleBilled', $model)"
+            :title="__('Mark as billed')"
             method="patch"
-            button-class="btn btn-success btn-sm"
+            button-class="btn btn-outline-success btn-sm"
             icon="fas fa-dollar-sign"
             name="confirm-item"
             permission="user.access.times.mark-billed"
-        >
-            @lang('Mark as billed')
-        </x-utils.form-button>
+        />
     @endif
     @if ($model->user()->first()->id == $logged_in_user->id)
-        <x-utils.edit-button :href="route('frontend.time.edit', $model)" />
-        <x-utils.delete-button :href="route('frontend.time.destroy', $model)" />
+        <x-utils.edit-button :href="route('frontend.time.edit', $model)" :title="__('Edit')" text="" />
+        <x-utils.delete-button :href="route('frontend.time.destroy', $model)" :title="__('Delete')" text="" />
     @else
-        <x-utils.edit-button :href="route('frontend.time.edit', $model)" permission="user.access.times.edit-all" />
-        <x-utils.delete-button :href="route('frontend.time.destroy', $model)" permission="user.access.times.delete-all" />
+        <x-utils.edit-button :href="route('frontend.time.edit', $model)" permission="user.access.times.edit-all" :title="__('Edit')" text="" />
+        <x-utils.delete-button :href="route('frontend.time.destroy', $model)" permission="user.access.times.delete-all" :title="__('Delete')" text="" />
     @endif
 </div>

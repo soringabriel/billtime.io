@@ -5,6 +5,7 @@
  */
 
 import 'alpinejs'
+import 'select2';
 
 window.$ = window.jQuery = require('jquery');
 window.Swal = require('sweetalert2');

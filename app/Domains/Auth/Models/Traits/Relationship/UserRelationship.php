@@ -71,4 +71,13 @@ trait UserRelationship
         $organization = $this->organization()->first();
         return is_null($organization) ? null : $organization->plan();
     }
+    
+    /**
+     * @return mixed
+     */
+    public function nextPlan()
+    {
+        $organization = $this->organization()->first();
+        return is_null($organization) ? null : $organization->nextPlan();
+    }
 }

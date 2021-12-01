@@ -40,7 +40,7 @@
                                     </div>
                                 </div><!--form-group-->
 
-                                <div class="form-group row">
+                                <div class="form-group row" x-data="{new_project: false}">
                                     <label for="project_id" class="col-md-2 col-form-label">
                                         <span class="required-field">@lang('Project')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
@@ -55,10 +55,28 @@
                                         <x-utils.link
                                             icon="c-icon cil-plus"
                                             class="card-header-action"
-                                            :href="route('frontend.projects.create')"
+                                            role="button"
+                                            href="javascript:void(0);"
                                             :text="__('Add New Project')"
+                                            @click="new_project = !new_project"
                                             permission="user.access.projects.create"
+                                            x-show="!new_project"
                                         />
+                                        <x-utils.link
+                                            icon="c-icon cil-minus"
+                                            class="card-header-action"
+                                            role="button"
+                                            href="javascript:void(0);"
+                                            :text="__('Select From Existing Projects')"
+                                            @click="new_project = !new_project"
+                                            permission="user.access.projects.create"
+                                            x-show="new_project"
+                                        />
+                                    </div>
+                                    
+                                    <div class="col-md-12 mt-2" x-show="new_project">
+                                        <input type="hidden" name="new_project" x-bind:value="new_project ? 1 : 0">
+                                        @include('frontend.includes.partials.new-project')
                                     </div>
                                 </div><!--form-group-->
 
@@ -87,8 +105,8 @@
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-primary float-right" type="submit">@lang('Update Time Record')</button>
-                            <x-utils.link class="btn btn-danger float-right mr-3" :href="route('frontend.time.index')" :text="__('Cancel')" />
+                            <button class="btn btn-outline-primary float-right" type="submit">@lang('Update Time Record')</button>
+                            <x-utils.link class="btn btn-outline-danger float-right mr-3" :href="route('frontend.time.index')" :text="__('Cancel')" />
                         </x-slot>
                     </x-frontend.card>
                 </x-forms.patch>

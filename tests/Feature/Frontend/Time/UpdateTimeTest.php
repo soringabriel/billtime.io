@@ -338,4 +338,233 @@ class UpdateTimeTest extends TestCase
             'details' => $time->details,
         ]);
     }
+
+    /** @test */
+    public function updating_a_time_requires_validation_if_new_project_is_0()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+
+        $this->actingAs($user);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $response = $this->patch("/time/{$time->id}", [
+            'new_project' => 0
+        ]);
+
+        $response->assertSessionHasErrors(['project_id']);
+    }
+
+    /** @test */
+    public function updating_a_time_requires_validation_if_new_project_is_1()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+
+        $this->actingAs($user);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $response = $this->patch("/time/{$time->id}", [
+            'new_project' => 1
+        ]);
+
+        $response->assertSessionHasErrors(['project_name']);
+    }
+
+    /** @test */
+    public function updating_a_time_requires_validation_if_new_project_is_1_and_new_client_is_0()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+
+        $this->actingAs($user);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $response = $this->patch("/time/{$time->id}", [
+            'new_project' => 1,
+            'new_client' => 0,
+        ]);
+
+        $response->assertSessionHasErrors(['project_client_id']);
+    }
+
+    /** @test */
+    public function updating_a_time_requires_validation_if_new_project_is_1_and_new_client_is_1()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+
+        $this->actingAs($user);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+
+        $response = $this->patch("/time/{$time->id}", [
+            'new_project' => 1,
+            'new_client' => 1,
+        ]);
+
+        $response->assertSessionHasErrors(['client_name']);
+    }
+
+    /** @test */
+    public function a_time_can_be_updated_with_a_new_project()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+        
+        $this->actingAs($user);
+        
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+        
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+        
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+                
+        $this->patch("/time/{$time->id}", [
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
+            'task' => 'https://task.ro',
+            'details' => 'details',
+            'new_project' => 1,
+            'project_name' => 'newprojectforanexistingtime',
+            'project_client_id' => $client->id,
+        ]);
+        
+        $this->assertDatabaseHas('projects', [
+            'name' => 'newprojectforanexistingtime',
+            'client_id' => $client->id,
+        ]);
+
+        $new_project = Project::where('name', 'newprojectforanexistingtime')->first();
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
+            'project_id' => $new_project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+        
+        Event::assertDispatched(TimeUpdated::class);
+    }
+
+    /** @test */
+    public function a_time_can_be_updated_with_a_new_project_and_a_new_client()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.times.access')->first()->id, 
+            Permission::where('name', 'user.access.times.edit-all')->first()->id, 
+        ]);
+        
+        $this->actingAs($user);
+        
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+        
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+        
+        $time = Time::factory()->create([
+            'user_id' => $user->id, 
+            'project_id' => $project->id
+        ]);
+                
+        $this->patch("/time/{$time->id}", [
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
+            'task' => 'https://task.ro',
+            'details' => 'details',
+            'new_project' => 1,
+            'project_name' => 'newprojectforanexistingtime',
+            'new_client' => 1,
+            'client_name' => 'newclientfornewprojectforanexistingtime',
+        ]);
+
+        $this->assertDatabaseHas('clients', [
+            'name' => 'newclientfornewprojectforanexistingtime',
+        ]);
+
+        $client = Client::where('name', 'newclientfornewprojectforanexistingtime')->first();
+
+        $this->assertDatabaseHas('projects', [
+            'name' => 'newprojectforanexistingtime',
+            'client_id' => $client->id,
+        ]);
+
+        $project = Project::where('name', 'newprojectforanexistingtime')->first();
+
+        $this->assertDatabaseHas('time', [
+            'start_time' => '2020-12-01 00:00',
+            'end_time' => '2020-12-01 01:00',
+            'project_id' => $project->id,
+            'task' => 'https://task.ro',
+            'details' => 'details',
+        ]);
+        
+        Event::assertDispatched(TimeUpdated::class);
+    }
 }

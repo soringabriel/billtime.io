@@ -87,7 +87,7 @@ class UpdateProjectTest extends TestCase
 
         $response = $this->patch("/projects/{$project->id}");
 
-        $response->assertSessionHasErrors(['name', 'client_id']);
+        $response->assertSessionHasErrors(['name']);
     }
     
     /** @test */
@@ -189,5 +189,94 @@ class UpdateProjectTest extends TestCase
             'name' => $project->name,
             'client_id' => $client->id,
         ]);
+    }
+
+    /** @test */
+    public function updating_a_project_requires_validation_if_new_client_is_0()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $this->actingAs($user);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $response = $this->patch("/projects/{$project->id}", [
+            'new_client' => 0
+        ]);
+
+        $response->assertSessionHasErrors(['client_id']);
+    }
+
+    /** @test */
+    public function updating_a_project_requires_validation_if_new_client_is_1()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $this->actingAs($user);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $response = $this->patch("/projects/{$project->id}", [
+            'new_client' => 1
+        ]);
+
+        $response->assertSessionHasErrors(['client_name']);
+    }
+
+    /** @test */
+    public function a_project_can_be_updated_with_a_new_client()
+    {
+        Event::fake();
+
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+        $user->syncPermissions([
+            Permission::where('name', 'user.access.projects.access')->first()->id, 
+            Permission::where('name', 'user.access.projects.edit')->first()->id
+        ]);
+
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $this->actingAs($user);
+
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $another_client = Client::factory()->create(['organization_id' => $organization->id]);
+
+        $response = $this->patch("/projects/{$project->id}", [
+            'name' => 'name',
+            'new_client' => 1,
+            'client_name' => 'testnewclientprojectcreation'
+        ]);
+
+        $this->assertDatabaseHas('clients', [
+            'name' => 'testnewclientprojectcreation',
+        ]);
+
+        $new_client = Client::where('name', 'testnewclientprojectcreation')->first();
+
+        $this->assertDatabaseHas('projects', [
+            'name' => 'name',
+            'client_id' => $new_client->id,
+        ]);
+
+        Event::assertDispatched(ProjectUpdated::class);
     }
 }

@@ -209,6 +209,14 @@ $(function () {
         }, 1500);
     });
 
+    // All Select2
+    if(document.querySelector(".select2")) {
+        $('.select2').select2();
+        $('.select2').on('select2:select', function (e) {
+            $(this)[0].dispatchEvent(new Event('change'));
+        });
+    }
+
 });
 
 $(function () {

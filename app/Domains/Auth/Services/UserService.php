@@ -100,7 +100,7 @@ class UserService extends BaseService
 
             try {
                 $user = $this->createUser([
-                    'name' => $info->name,
+                    'name' => $info->name ?? $info->nickname,
                     'email' => $info->email,
                     'provider' => $provider,
                     'provider_id' => $info->id,
@@ -383,8 +383,11 @@ class UserService extends BaseService
         if (is_null($organization)) {
             $organization = $this->organizationService->store([
                 'owner_id' => $user->id,
-                'plan_expire' => Carbon::now()->addDays(14),
                 'subusers_quota' => -1,
+            ]);
+            $this->organizationService->update($organization, [
+                'plan_id' => Plan::orderBy('price', 'desc')->first()->id,
+                'plan_expire' => Carbon::now()->addDays(14),
             ]);
         }
         $client = $this->clientService->store([
@@ -401,8 +404,6 @@ class UserService extends BaseService
             'client_id' => $client->id,
             'name' => 'Untitled Project',
         ]);
-        $plan_permissions = Plan::orderBy('price', 'desc')->first()->permissions->modelKeys();
-        $user->syncPermissions($plan_permissions);
         return $user;
     }
 }

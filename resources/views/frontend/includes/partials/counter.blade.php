@@ -1,13 +1,19 @@
 @inject('projectModel', '\App\Models\Project')
 
-<nav class="sticky-top navbar navbar-expand-md navbar-light bg-dark text-white shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
+<nav class="sticky-top navbar navbar-expand-md navbar-light bg-light text-dark shadow-sm" x-data="counterInit()" x-init="counterUpdateInterval()" id="counterMenu">
     <div class="container-fluid pt-2 pb-2 pl-3 pr-3">
         <span class="counter" x-text="counter"></span>
         <h6 class="d-md-block d-none">@lang('Track your time using the buttons on the right!')</h6>
         <div class="actions">
-            <button class="btn btn-danger" @click="cancelCounter()" x-show="showCancelButton()">@lang('Cancel')</button>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">@lang('Stop & Save')</button>
-            <button class="btn btn-primary" @click="startCounter()" x-show="showStartButton()">@lang('Start Tracking Time')</button>
+            <button class="btn btn-outline-danger" @click="cancelCounter()" x-show="showCancelButton()">
+                <i class="fas fa-times mr-1"></i> @lang('Cancel')
+            </button>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#saveTimeModal" x-show="showStopButton()">
+                <i class="far fa-save mr-1"></i> @lang('Stop & Save')
+            </button>
+            <button class="btn btn-outline-dark" @click="startCounter()" x-show="showStartButton()">
+                <i class="fas fa-play-circle mr-1"></i> @lang('Record Time')
+            </button>
         </div>
     </div>
 </nav>
@@ -26,14 +32,14 @@
                     <input type="hidden" id="counterStartTime" name="start_time" />
                     <input type="hidden" id="counterEndTime" name="end_time" />
 
-                    <div class="form-group row">
+                    <div class="form-group row" x-data="{new_project: false}">
                         <label for="project_id" class="col-md-3 col-form-label">
                             <span class="required-field">@lang('Project')</span>
                             <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The project you\'ve been working on') }}"></i>
                         </label>
 
                         <div class="col-md-9">
-                            <select name="project_id" class="form-control select2-project mb-2">
+                            <select name="project_id" x-show="!new_project" class="form-control select2-project mb-2">
                                 @foreach ($projectModel::where('organization_id', $logged_in_user->organization_id)->get() as $project) 
                                     <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                 @endforeach
@@ -42,9 +48,28 @@
                                 icon="c-icon cil-plus"
                                 class="card-header-action"
                                 :href="route('frontend.projects.create')"
+                                role="button"
+                                href="javascript:void(0);"
                                 :text="__('Add New Project')"
+                                @click="new_project = !new_project"
                                 permission="user.access.projects.create"
+                                x-show="!new_project"
                             />
+                            <x-utils.link
+                                icon="c-icon cil-minus"
+                                class="card-header-action"
+                                role="button"
+                                href="javascript:void(0);"
+                                :text="__('Select From Existing Projects')"
+                                @click="new_project = !new_project"
+                                permission="user.access.projects.create"
+                                x-show="new_project"
+                            />
+                        </div>
+
+                        <div class="col-md-12 mt-2" x-show="new_project">
+                            <input type="hidden" name="new_project" x-bind:value="new_project ? 1 : 0">
+                            @include('frontend.includes.partials.new-project')
                         </div>
                     </div><!--form-group-->
 
@@ -73,8 +98,8 @@
                     <div id="alertsWrapper"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('Add Time')</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-outline-primary">@lang('Add Time')</button>
                 </div>
             </div>
         </x-forms>

@@ -6,9 +6,9 @@
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The currency of the amount of the invoice') }}"></i>
             </label>
 
-            <select name="currency" class="form-control" x-model="currency" required>
-                @foreach ($currencies as $code => $symbol)
-                    <option value="{{ $code }}">{{ $code }}</option>
+            <select name="currency" class="form-control select2" x-model="currency" required>
+                @foreach ($currencies as $currency => $symbol)
+                    <option value="{{ currencyCode($currency) }}">{{ $currency }}</option>
                 @endforeach
             </select>
         </div>
@@ -72,19 +72,19 @@
                             </td>
                             <td>
                                 <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                                <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required />
+                                <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" value="{{ $service->price }}" required />
                             </td>
                             <td>
                                 <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                                <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
+                                <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" value="{{ $service->discount }}" required />
                             </td>
                             <td>
                                 <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
                                 <span class="service-sub-total">{{ $service->total }}</span>
                             </td>
                             <td>
-                                <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
-                                <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-outline-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                                <button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -104,17 +104,17 @@
                         </td>
                         <td>
                             <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                            <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                            <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
                         </td>
                         <td>
                             <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                            <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                            <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
                         </td>
                         <td>
                             <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
                             <span class="service-sub-total">0</span>
                         </td>
-                        <td><button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
+                        <td><button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button></td>
                     </tr>
                 @endif
             </table>
@@ -130,14 +130,14 @@
                 <span class="required-field">@lang('Tax Percentage')</span>
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
             </label>
-            <input id="tax" type="number" min="0" max="100" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" value="{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}" required />
+            <input id="tax" type="number" min="0" max="100" step="0.01" name="tax" class="form-control" placeholder="{{ __('Tax perecentage') }}" x-model="tax" value="{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}" required />
         </div>
         <div class="field-group field-group-required">
             <label for="shipping" class="col-form-label">
                 @lang('Shipping')
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The cost for shipping. This sum will be added to the total amount of the invoice') }}"></i>
             </label>
-            <input id="shipping" type="number" min="0" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
+            <input id="shipping" type="number" min="0" step="0.01" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
         </div>
     </div>
     <div class="col-md-4 offset-md-4">
@@ -230,25 +230,25 @@
                 </td>
                 <td>
                     <label for="service-price" class="d-md-none">@lang('Price per unit')</label>    
-                    <input type="number" min="0" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
+                    <input type="number" min="0" step="0.01" class="form-control service-price" placeholder="{{ __('Gross price for one unit') }}" required />
                 </td>
                 <td>
                     <label for="service-discount" class="d-md-none">@lang('Discount')</label>
-                    <input type="number" min="0" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
+                    <input type="number" min="0" step="0.01" class="form-control service-discount" placeholder="{{ __('Discount') }}" required />
                 </td>
                 <td>
                     <label for="service-sub-total" class="d-md-none">@lang('Sub Total')</label>
                     <span class="service-sub-total">0</span>
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
-                    <button class="btn btn-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-outline-danger btn-sm remove-service-row mr-1" title="{{ __('Remove Row') }}"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-outline-success btn-sm add-service-row" title="{{ __('Add Row') }}"><i class="fas fa-plus"></i></button>
                 </td>
             </tr>
         `);
         if ($(".service-row").first().find(".remove-service-row").length == 0) {
             $(".service-row").first().find("td").last().prepend(`
-                <button class="btn btn-danger btn-sm remove-service-row mr-1"><i class="fas fa-times"></i></button>
+                <button class="btn btn-outline-danger btn-sm remove-service-row mr-1"><i class="fas fa-times"></i></button>
             `);
             $(".service-row").first().find(".remove-service-row").first().on('click', function(e){
                 e.preventDefault();

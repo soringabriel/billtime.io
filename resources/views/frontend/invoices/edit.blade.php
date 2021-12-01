@@ -205,8 +205,8 @@
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-primary float-right" type="submit">@lang('Update Invoice')</button>
-                            <x-utils.link class="btn btn-danger float-right mr-3" :href="route('frontend.invoices.index')" :text="__('Cancel')" permission="user.access.invoices.access" />
+                            <button class="btn btn-outline-primary float-right" type="submit">@lang('Update Invoice')</button>
+                            <x-utils.link class="btn btn-outline-danger float-right mr-3" :href="route('frontend.invoices.index')" :text="__('Cancel')" permission="user.access.invoices.access" />
                         </x-slot>
                     </x-frontend.card>
                 </x-forms.patch>

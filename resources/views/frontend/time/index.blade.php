@@ -13,7 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="btn btn-primary"
+                            class="btn btn-outline-primary"
                             :href="route('frontend.time.create')"
                             :text="__('Add Manual Time')"
                         />

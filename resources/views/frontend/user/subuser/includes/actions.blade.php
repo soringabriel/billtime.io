@@ -3,7 +3,7 @@
         <x-utils.form-button
             :action="route('frontend.user.subuser.restore', $user)"
             method="patch"
-            button-class="btn btn-info btn-sm"
+            button-class="btn btn-outline-info btn-sm"
             icon="fas fa-sync-alt"
             name="confirm-item"
             permission="user.access.users.delete"
@@ -25,7 +25,7 @@
             <x-utils.form-button
                 :action="route('frontend.user.subuser.mark', [$user, 1])"
                 method="patch"
-                button-class="btn btn-primary btn-sm"
+                button-class="btn btn-outline-primary btn-sm"
                 icon="fas fa-sync-alt"
                 name="confirm-item"
                 permission="user.access.users.delete"
