@@ -35,6 +35,15 @@
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
+                        :href="route('frontend.time.calendar')"
+                        :active="activeClass(Route::is('frontend.time.calendar'), 'c-active')"
+                        :text="__('Calendar View')"
+                        icon="c-sidebar-nav-icon cil-calendar"
+                        class="c-sidebar-nav-link"
+                        permission="user.access.times.access" />
+                </li>    
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
                         :href="route('frontend.time.create')"
                         :active="activeClass(Route::is('frontend.time.create'), 'c-active')"
                         :text="__('Add Manual Time')"

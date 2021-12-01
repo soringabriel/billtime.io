@@ -202,7 +202,7 @@ class TimeController extends Controller
     {
         $this->timeService->destroy($time);
 
-        return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully deleted.'));
+        return redirect()->back()->withFlashSuccess(__('The time record was successfully deleted.'));
     }
 
     /**
@@ -223,5 +223,13 @@ class TimeController extends Controller
         }
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time records were successfully deleted.'));
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function calendar()
+    {
+        return view('frontend.time.calendar');
     }
 }
