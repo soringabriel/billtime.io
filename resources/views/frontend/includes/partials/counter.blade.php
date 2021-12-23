@@ -107,6 +107,14 @@
 </div>
 
 <script>
+    function changeTimezone(date, ianatz) {
+        var invdate = new Date(date.toLocaleString('en-US', {
+            timeZone: ianatz
+        }));
+        var diff = date.getTime() - invdate.getTime();
+        return new Date(date.getTime() - diff);
+    }
+
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -151,6 +159,8 @@
 
     let startTime = getCookie('counterStartTime');
 
+    let timezone = '{{ $logged_in_user->timezone }}';
+
     (function(){
         setTimeout(() => {
             $("#saveTimeModal").on('show.bs.modal', function() {
@@ -167,8 +177,11 @@
         addTimeForm.addEventListener("submit", function(e){
             e.preventDefault();
 
-            document.getElementById("counterStartTime").value = dateToYYYYMMDDHHIISS(new Date(startTime));
-            document.getElementById("counterEndTime").value = dateToYYYYMMDDHHIISS(new Date());
+            let correctStartTime = changeTimezone(new Date(startTime), timezone)
+            let correctEndTime = changeTimezone(new Date(), timezone)
+
+            document.getElementById("counterStartTime").value = dateToYYYYMMDDHHIISS(correctStartTime);
+            document.getElementById("counterEndTime").value = dateToYYYYMMDDHHIISS(correctEndTime);
 
             fetch("{{ route('user.api.time.store') }}", {
                 method: 'POST',
