@@ -43,9 +43,9 @@ class TimeService extends BaseService
             $time = $this->model::create(
                 [
                     'user_id' => auth()->id(),
-                    'start_time' => $data['start_time'] ?? null,
-                    'end_time' => $data['end_time'] ?? null,
-                    'project_id' => $data['project_id'] ?? null,
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
+                    'project_id' => $data['project_id'],
                     'task' => $data['task'] ?? null,
                     'details' => $data['details'] ?? null,
                 ]
@@ -82,8 +82,8 @@ class TimeService extends BaseService
                     'start_time' => $data['start_time'],
                     'end_time' => $data['end_time'],
                     'project_id' => $data['project_id'],
-                    'task' => $data['task'],
-                    'details' => $data['details'],
+                    'task' => $data['task'] ?? null,
+                    'details' => $data['details'] ?? null,
                 ]
             );
             $time->tags()->sync($data['tags'] ?? []);
