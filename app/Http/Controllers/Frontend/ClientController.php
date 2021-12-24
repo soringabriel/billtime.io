@@ -100,4 +100,27 @@ class ClientController extends Controller
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was successfully deleted.'));
     }
+
+    /**
+     * @return mixed
+     */
+    public function getClients()
+    {
+        $clients = Client::query()->where('organization_id', auth()->user()->organization()->first()->id);
+        $result = [];
+        foreach ($clients as $client) {
+            $result[] = $client->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Client  $client
+     *
+     * @return mixed
+     */
+    public function get(Client $client)
+    {
+        return $client->apiProperties();
+    }
 }

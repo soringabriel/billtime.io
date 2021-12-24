@@ -134,4 +134,27 @@ class ProjectController extends Controller
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully deleted.'));
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProjects()
+    {
+        $projects = Project::query()->where('organization_id', auth()->user()->organization()->first()->id);
+        $result = [];
+        foreach ($projects as $project) {
+            $result[] = $project->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Project  $project
+     *
+     * @return mixed
+     */
+    public function get(Project $project)
+    {
+        return $project->apiProperties();
+    }
 }
