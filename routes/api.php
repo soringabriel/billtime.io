@@ -26,5 +26,13 @@ Route::group(['as' => 'user.api.time.', 'middleware' => [
         config('boilerplate.access.middleware.verified')
     ]
 ], function () {
+    Route::get('/get-times', [TimeController::class, 'getTimes'])->name('getTimes');
     Route::post('/store-time', [TimeController::class, 'store'])->name('store');
+
+    Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user_organization:time'], function () {
+        Route::get('/get-time', [TimeController::class, 'get'])->middleware('model_belongs_to_user:time,user.access.times.edit-all')->name('get');
+        Route::patch('/update-time', [TimeController::class, 'update'])->middleware('model_belongs_to_user:time,user.access.times.edit-all')->name('update');
+        Route::patch('/toggleBilled-time', [TimeController::class, 'toggleBilled'])->middleware('permission:user.access.times.mark-billed')->name('toggleBilled');
+        Route::delete('/delete-time', [TimeController::class, 'destroy'])->middleware('model_belongs_to_user:time,user.access.times.delete-all')->name('destroy');
+    });
 }); 

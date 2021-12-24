@@ -232,4 +232,29 @@ class TimeController extends Controller
     {
         return view('frontend.time.calendar');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes()
+    {
+        $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
+        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+        $times = Time::query()->whereIn('user_id', $users)->get();
+        $result = [];
+        foreach ($times as $time) {
+            $result[] = $time->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Time  $time
+     *
+     * @return mixed
+     */
+    public function get(Time $time)
+    {
+        return $time->apiProperties();
+    }
 }
