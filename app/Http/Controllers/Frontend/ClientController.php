@@ -55,7 +55,14 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $this->clientService->store($request->validated());
+        $result = $this->clientService->store($request->validated());
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was added.'));
     }
@@ -82,7 +89,14 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $this->clientService->update($client, $request->validated());
+        $result = $this->clientService->update($client, $request->validated());
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was successfully updated.'));
     }
@@ -97,6 +111,12 @@ class ClientController extends Controller
     public function destroy(DeleteClientRequest $request, Client $client)
     {
         $this->clientService->destroy($client);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was successfully deleted.'));
     }

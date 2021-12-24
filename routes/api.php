@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Frontend\TimeController;
 use App\Http\Controllers\Frontend\ClientController;
 use App\Http\Controllers\Frontend\ProjectController;
+use App\Http\Controllers\Frontend\InvoiceController;
+use App\Http\Controllers\Frontend\User\SubuserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,5 +71,41 @@ Route::group(['as' => 'user.api.projects.', 'middleware' => [
         Route::get('/get-project', [ProjectController::class, 'get'])->name('get');
         Route::patch('/update-project', [ProjectController::class, 'update'])->middleware('permission:user.access.projects.edit')->name('update');
         Route::delete('/delete-project', [ProjectController::class, 'destroy'])->middleware('permission:user.access.projects.delete')->name('destroy');
+    });
+}); 
+
+Route::group(['as' => 'user.api.projects.', 'middleware' => [
+    'permission:user.access.projects.access', 
+    'auth:api', 
+    'password.expires', 
+    config('boilerplate.access.middleware.verified')
+]
+], function () {
+    Route::get('/get-projects', [ProjectController::class, 'getProjects'])->name('getProjects');
+    Route::post('/store-project', [ProjectController::class, 'store'])->middleware('permission:user.access.projects.create')->name('store');
+
+    Route::group(['prefix' => '{project}', 'middleware' => 'model_belongs_to_user_organization:project'], function () {
+        Route::get('/get-project', [ProjectController::class, 'get'])->name('get');
+        Route::patch('/update-project', [ProjectController::class, 'update'])->middleware('permission:user.access.projects.edit')->name('update');
+        Route::delete('/delete-project', [ProjectController::class, 'destroy'])->middleware('permission:user.access.projects.delete')->name('destroy');
+    });
+}); 
+
+Route::group(['as' => 'user.api.invoices.', 'middleware' => [
+    'permission:user.access.invoices.access', 
+    'auth:api', 
+    'password.expires', 
+    config('boilerplate.access.middleware.verified')
+]
+], function () {
+    Route::get('/get-invoices', [InvoiceController::class, 'getInvoices'])->name('getInvoices');
+    Route::post('/store-invoice', [InvoiceController::class, 'store'])->middleware('permission:user.access.invoices.create')->name('store');
+
+    Route::group(['prefix' => '{invoice}', 'middleware' => 'model_belongs_to_user_organization:invoice'], function () {
+        Route::get('/get-invoice', [InvoiceController::class, 'get'])->name('get');
+        Route::get('/download', [InvoiceController::class, 'download'])->middleware('model_belongs_to_user:invoice,user.access.invoices.show-all')->name('download');
+        Route::patch('/update-invoice', [InvoiceController::class, 'update'])->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')->name('update');
+        Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->middleware('model_belongs_to_user:invoice,user.access.invoices.update-status-all')->name('updateStatus');
+        Route::delete('/delete-invoice', [InvoiceController::class, 'destroy'])->middleware('model_belongs_to_user:invoice,user.access.invoices.delete-all')->name('destroy');
     });
 }); 

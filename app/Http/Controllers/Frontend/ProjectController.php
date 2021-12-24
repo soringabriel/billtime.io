@@ -76,7 +76,14 @@ class ProjectController extends Controller
             $validated_request['client_id'] = $client->id;
         }
 
-        $this->projectService->store($validated_request);
+        $result = $this->projectService->store($validated_request);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was added.'));
     }
@@ -116,7 +123,14 @@ class ProjectController extends Controller
             $validated_request['client_id'] = $client->id;
         }
 
-        $this->projectService->update($project, $validated_request);
+        $result = $this->projectService->update($project, $validated_request);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully updated.'));
     }
@@ -131,6 +145,12 @@ class ProjectController extends Controller
     public function destroy(DeleteProjectRequest $request, Project $project)
     {
         $this->projectService->destroy($project);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully deleted.'));
     }
