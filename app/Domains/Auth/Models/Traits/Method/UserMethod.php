@@ -118,7 +118,7 @@ trait UserMethod
      */
     public function getTimesChartData(): array
     {
-        $times = $this->times()->orderBy('start_time')->get();
+        $times = $this->times()->where('start_time', '>=', now()->subYear()->toDateTimeString())->orderBy('start_time')->get();
         $daily = [];
         $monthly = [];
         CarbonInterval::setCascadeFactors([
