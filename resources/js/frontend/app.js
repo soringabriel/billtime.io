@@ -15,3 +15,5 @@ var $ = window.$;
 require('../bootstrap');
 require('@coreui/coreui');
 require('../plugins');
+
+require('./api/index');

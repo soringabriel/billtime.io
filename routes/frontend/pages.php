@@ -12,6 +12,14 @@ Route::group([
             $trail->push(__('Dashboard'), route('frontend.dashboard'));
         });
 
+    Route::get('/api-docs', [PagesController::class, 'api'])
+        ->name('api-docs')
+        ->middleware('permission:user.access.users.api')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.dashboard')
+                ->push(__('Api Docs'), route('frontend.api-docs'));
+        });
+
     Route::get('/plan', [PagesController::class, 'plan'])
         ->name('plan')
         ->middleware('organization_owner')

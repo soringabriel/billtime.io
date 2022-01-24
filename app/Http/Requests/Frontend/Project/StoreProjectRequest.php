@@ -20,7 +20,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'client_id' => ['required_if:new_client,0', Rule::exists('clients', 'id')->where(function ($query) {
+            'client_id' => ['required_if:new_client,0,null', Rule::exists('clients', 'id')->where(function ($query) {
                 return $query->where('organization_id', auth()->user()->organization()->first()->id);
             })],
             'new_client' => ['sometimes', 'boolean'],

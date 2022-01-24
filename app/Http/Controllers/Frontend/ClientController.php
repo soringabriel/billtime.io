@@ -9,6 +9,7 @@ use App\Http\Requests\Frontend\Client\UpdateClientRequest;
 use App\Http\Requests\Frontend\Client\DeleteClientRequest;
 use App\Services\ClientService;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ClientController.
@@ -55,7 +56,14 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $this->clientService->store($request->validated());
+        $result = $this->clientService->store($request->validated());
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was added.'));
     }
@@ -82,7 +90,14 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $this->clientService->update($client, $request->validated());
+        $result = $this->clientService->update($client, $request->validated());
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was successfully updated.'));
     }
@@ -98,6 +113,35 @@ class ClientController extends Controller
     {
         $this->clientService->destroy($client);
 
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
         return redirect()->route('frontend.clients.index')->withFlashSuccess(__('The client was successfully deleted.'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClients()
+    {
+        $clients = Client::query()->where('organization_id', auth()->user()->organization()->first()->id)->get();
+        $result = [];
+        foreach ($clients as $client) {
+            $result[] = $client->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Client  $client
+     *
+     * @return mixed
+     */
+    public function get(Client $client)
+    {
+        return $client->apiProperties();
     }
 }

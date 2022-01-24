@@ -100,7 +100,7 @@ class TimeController extends Controller
         if (Auth::guard('api')->check()) {
             return response()->json([
                 'success' => true,
-                'model' => $result
+                'model' => $result->apiProperties(),
             ]);
         }
 
@@ -148,7 +148,13 @@ class TimeController extends Controller
             ]);
             $validated_request['project_id'] = $project->id;
         }
-        $this->timeService->update($time, $validated_request);
+        $result = $this->timeService->update($time, $validated_request);
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
     }
@@ -164,7 +170,14 @@ class TimeController extends Controller
     {
         $data = $request->validated();
             
-        $this->timeService->toggleBilled($time);
+        $result = $this->timeService->toggleBilled($time);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.time.index')->withFlashSuccess(__('The time record was successfully updated.'));
     }
@@ -202,6 +215,12 @@ class TimeController extends Controller
     {
         $this->timeService->destroy($time);
 
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
         return redirect()->back()->withFlashSuccess(__('The time record was successfully deleted.'));
     }
 
@@ -231,5 +250,30 @@ class TimeController extends Controller
     public function calendar()
     {
         return view('frontend.time.calendar');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes()
+    {
+        $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
+        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+        $times = Time::query()->whereIn('user_id', $users)->get();
+        $result = [];
+        foreach ($times as $time) {
+            $result[] = $time->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Time  $time
+     *
+     * @return mixed
+     */
+    public function get(Time $time)
+    {
+        return $time->apiProperties();
     }
 }

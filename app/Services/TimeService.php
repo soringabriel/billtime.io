@@ -46,8 +46,8 @@ class TimeService extends BaseService
                     'start_time' => $data['start_time'],
                     'end_time' => $data['end_time'],
                     'project_id' => $data['project_id'],
-                    'task' => $data['task'],
-                    'details' => $data['details'],
+                    'task' => $data['task'] ?? null,
+                    'details' => $data['details'] ?? null,
                 ]
             );
             $time->tags()->sync($data['tags'] ?? []);
@@ -82,8 +82,8 @@ class TimeService extends BaseService
                     'start_time' => $data['start_time'],
                     'end_time' => $data['end_time'],
                     'project_id' => $data['project_id'],
-                    'task' => $data['task'],
-                    'details' => $data['details'],
+                    'task' => $data['task'] ?? null,
+                    'details' => $data['details'] ?? null,
                 ]
             );
             $time->tags()->sync($data['tags'] ?? []);

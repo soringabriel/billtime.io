@@ -10,6 +10,7 @@ use App\Http\Requests\Frontend\Project\DeleteProjectRequest;
 use App\Services\ClientService;
 use App\Services\ProjectService;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ProjectController.
@@ -76,7 +77,14 @@ class ProjectController extends Controller
             $validated_request['client_id'] = $client->id;
         }
 
-        $this->projectService->store($validated_request);
+        $result = $this->projectService->store($validated_request);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was added.'));
     }
@@ -116,7 +124,14 @@ class ProjectController extends Controller
             $validated_request['client_id'] = $client->id;
         }
 
-        $this->projectService->update($project, $validated_request);
+        $result = $this->projectService->update($project, $validated_request);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully updated.'));
     }
@@ -132,6 +147,35 @@ class ProjectController extends Controller
     {
         $this->projectService->destroy($project);
 
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
         return redirect()->route('frontend.projects.index')->withFlashSuccess(__('The project was successfully deleted.'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjects()
+    {
+        $projects = Project::query()->where('organization_id', auth()->user()->organization()->first()->id)->get();
+        $result = [];
+        foreach ($projects as $project) {
+            $result[] = $project->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Project  $project
+     *
+     * @return mixed
+     */
+    public function get(Project $project)
+    {
+        return $project->apiProperties();
     }
 }

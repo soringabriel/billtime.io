@@ -13,6 +13,7 @@ use App\Http\Requests\Frontend\Invoice\CloneInvoiceRequest;
 use App\Services\InvoiceService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class InvoiceController.
@@ -63,7 +64,14 @@ class InvoiceController extends Controller
     {
         $data = $request->validated();
 
-        $this->invoiceService->store($data);
+        $result = $this->invoiceService->store($data);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully created.'));
     }
@@ -93,7 +101,14 @@ class InvoiceController extends Controller
     {
         $data = $request->validated();
 
-        $this->invoiceService->update($invoice, $data);
+        $result = $this->invoiceService->update($invoice, $data);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));
     }
@@ -108,7 +123,14 @@ class InvoiceController extends Controller
      */
     public function updateStatus(UpdateInvoiceStatusRequest $request, Invoice $invoice)
     {
-        $this->invoiceService->setStatus($invoice, $request->validated()['status']);
+        $result = $this->invoiceService->setStatus($invoice, $request->validated()['status']);
+
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+                'model' => $result->apiProperties(),
+            ]);
+        }
 
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully updated.'));
     }
@@ -137,6 +159,12 @@ class InvoiceController extends Controller
     {
         $this->invoiceService->destroy($invoice);
 
+        if (Auth::guard('api')->check()) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
         return redirect()->route('frontend.invoices.index')->withFlashSuccess(__('The invoice was successfully deleted.'));
     }
 
@@ -152,5 +180,33 @@ class InvoiceController extends Controller
             ->withCurrencies(currencyToSymbol())
             ->withOrganization(auth()->user()->organization()->first())
             ->withInvoice($invoice);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInvoices()
+    {
+        $invoices = [];
+        if (auth()->user()->can('user.access.invoices.show-all')) {
+            $invoices = Invoice::query()->whereIn('user_id', auth()->user()->organization()->first()->users()->pluck('id'))->get();
+        } else {
+            $invoices = Invoice::query()->where('user_id', auth()->user()->id)->get();
+        }
+        $result = [];
+        foreach ($invoices as $invoice) {
+            $result[] = $invoice->apiProperties();
+        }
+        return $result;
+    }
+
+    /**
+     * @param  Invoice  $invoice
+     *
+     * @return mixed
+     */
+    public function get(Invoice $invoice)
+    {
+        return $invoice->apiProperties();
     }
 }

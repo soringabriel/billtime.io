@@ -44,11 +44,11 @@ class ClientService extends BaseService
                 [
                     'organization_id' => $data['organization_id'] ?? auth()->user()->organization()->first()->id,
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
-                    'bank_account' => $data['bank_account'],
+                    'company_name' => $data['company_name'] ?? null,
+                    'tax_number' => $data['tax_number'] ?? null,
+                    'vat_number' => $data['vat_number'] ?? null,
+                    'address' => $data['address'] ?? null,
+                    'bank_account' => $data['bank_account'] ?? null,
                 ]
             );
         } catch (Exception $e) {
@@ -79,11 +79,11 @@ class ClientService extends BaseService
             $client->update(
                 [
                     'name' => $data['name'],
-                    'company_name' => $data['company_name'],
-                    'tax_number' => $data['tax_number'],
-                    'vat_number' => $data['vat_number'],
-                    'address' => $data['address'],
-                    'bank_account' => $data['bank_account'],
+                    'company_name' => $data['company_name'] ?? null,
+                    'tax_number' => $data['tax_number'] ?? null,
+                    'vat_number' => $data['vat_number'] ?? null,
+                    'address' => $data['address'] ?? null,
+                    'bank_account' => $data['bank_account'] ?? null,
                 ]
             );
         } catch (Exception $e) {

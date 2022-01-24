@@ -1,0 +1,124 @@
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/get-invoices</h2>
+<h4 class="short-description">@lang('Retrieves a list with all the invoices')</h4>
+
+<div class="test-api">
+    <h3>@lang('Send a Test Request')</h3>
+
+    <div class="test-api-playground">
+        <input type="text" class="url form-control mb-3" value="{{ route('user.api.invoices.getInvoices') }}">
+        <input type="hidden" class="method" value="GET">
+        <ul class="nav nav-tabs"  role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="headersListInvoices-tab" data-toggle="tab" href="#headersListInvoices" role="tab" aria-controls="profile" aria-selected="false">Headers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="codeListInvoices-tab" data-toggle="tab" href="#codeListInvoices" role="tab" aria-controls="profile" aria-selected="false">Code</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade headers show active" id="headersListInvoices" role="tabpanel" aria-labelledby="headersListInvoices-tab">
+                <div class="tab-content pt-3">
+                    <div class="parameter">
+                        <div class="checkbox"><input type="checkbox" checked></div>
+                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('header name') }}" value="authorization"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('header value') }}" value="Bearer {{ $logged_in_user->api_token }}"></div>
+                    </div>
+                    <div class="parameter">
+                        <div class="checkbox"><input type="checkbox" checked></div>
+                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('header name') }}" value="accept"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('header value') }}" value="application/json"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade code" id="codeListInvoices" role="tabpanel" aria-labelledby="codeListInvoices-tab">
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="code-sample-tab">
+                        <div>
+                            <div class="col-12">
+                                <div class="nav nav-pills" role="tablist">
+                                    <a class="nav-link tab-title active" id="listInvoices-curl" data-toggle="pill" href="#listInvoices-tab-curl" role="tab" aria-controls="listInvoices-tab-curl" aria-selected="true">
+                                        @lang('Curl')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-nodejs" data-toggle="pill" href="#listInvoices-tab-nodejs" role="tab" aria-controls="listInvoices-tab-nodejs" aria-selected="false">
+                                        @lang('NodeJS')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-python" data-toggle="pill" href="#listInvoices-tab-python" role="tab" aria-controls="listInvoices-tab-python" aria-selected="false">
+                                        @lang('Python')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-php" data-toggle="pill" href="#listInvoices-tab-php" role="tab" aria-controls="listInvoices-tab-php" aria-selected="false">
+                                        @lang('PHP')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-golang" data-toggle="pill" href="#listInvoices-tab-golang" role="tab" aria-controls="listInvoices-tab-golang" aria-selected="false">
+                                        @lang('Golang')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-java" data-toggle="pill" href="#listInvoices-tab-java" role="tab" aria-controls="listInvoices-tab-java" aria-selected="false">
+                                        @lang('Java')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-dotnet" data-toggle="pill" href="#listInvoices-tab-dotnet" role="tab" aria-controls="listInvoices-tab-dotnet" aria-selected="false">
+                                        @lang('.NET')
+                                    </a>
+                                    <a class="nav-link tab-title" id="listInvoices-ruby" data-toggle="pill" href="#listInvoices-tab-ruby" role="tab" aria-controls="listInvoices-tab-ruby" aria-selected="false">
+                                        @lang('Ruby')
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-12 pt-4">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="listInvoices-tab-curl" role="tabpanel" aria-labelledby="curl">
+                                        <div>
+                                            <pre class="language-curl"><code class="language-bash"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-nodejs" role="tabpanel" aria-labelledby="nodejs">
+                                        <div>
+                                            <pre class="language-nodejs"><code class="language-javascript"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-python" role="tabpanel" aria-labelledby="python">
+                                        <div>
+                                            <pre class="language-python"><code class="language-python"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-php" role="tabpanel" aria-labelledby="php">
+                                        <div>
+                                            <pre class="language-php"><code class="language-php"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-golang" role="tabpanel" aria-labelledby="golang">
+                                        <div>
+                                            <pre class="language-go"><code class="language-go"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-java" role="tabpanel" aria-labelledby="java">
+                                        <div>
+                                            <pre class="language-java"><code class="language-java"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-dotnet" role="tabpanel" aria-labelledby="dotnet">
+                                        <div>
+                                            <pre class="language-csharp "><code class="language-csharp"></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="listInvoices-tab-ruby" role="tabpanel" aria-labelledby="ruby">
+                                        <div>
+                                            <pre class="language-ruby"><code class="language-ruby"></code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="execute btn btn-primary">@lang('Send')</button>
+        <div class="result">
+            <h3>@lang('Response')</h3>
+            <div class="text-center loader">
+                <div class="container-loader"></div>
+                <p>@lang('Sending API request')...</p>
+            </div>
+            <div class="code-block"><code><pre></pre></code><span class="status"></span></div>
+        </div>
+    </div>
+</div>
