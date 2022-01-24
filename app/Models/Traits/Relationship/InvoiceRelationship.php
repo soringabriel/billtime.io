@@ -4,6 +4,7 @@ namespace App\Models\Traits\Relationship;
 
 use App\Models\Time;
 use App\Models\Project;
+use App\Models\Email;
 use App\Domains\Auth\Models\User;
 
 /**
@@ -33,5 +34,13 @@ trait InvoiceRelationship
     public function organization()
     {
         return $this->user()->first()->organization();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function emails()
+    {
+        return $this->hasMany(Email::class, 'invoice_id');
     }
 }

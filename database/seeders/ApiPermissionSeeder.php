@@ -8,7 +8,7 @@ use App\Domains\Auth\Models\User;
 use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
 
-class ApiPermission extends Seeder
+class ApiPermissionSeeder extends Seeder
 {
     use DisableForeignKeys;
 
