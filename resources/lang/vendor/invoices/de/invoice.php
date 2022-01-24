@@ -38,4 +38,5 @@ return [
     'vat_number'      => 'Umsatzsteuer-Identifikationsnummer',
     'bank_name'       => 'Bank Name',
     'bank_account'    => 'Bankkonto',
+    'service_fee'     => 'Servicegebühr',
 ];

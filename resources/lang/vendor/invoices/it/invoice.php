@@ -38,4 +38,5 @@ return [
     'vat_number'      => 'Partita IVA',
     'bank_name'       => 'Nome della banca',
     'bank_account'    => 'Conto bancario',
+    'service_fee'     => 'Costo del servizio',
 ];

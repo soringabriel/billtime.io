@@ -38,4 +38,5 @@ return [
     'vat_number'      => 'Numer VAT',
     'bank_name'       => 'Nazwa banku',
     'bank_account'    => 'Konto bankowe',
+    'service_fee'     => 'Opłata za usługę',
 ];
