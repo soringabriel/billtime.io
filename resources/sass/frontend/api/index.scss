@@ -1,0 +1,239 @@
+.api-docs {
+    h3 {
+        font-size: 24px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-weight: 300;
+    }
+
+    .token .api-token {
+        max-width: 500px;
+        font-weight: 600;
+        padding: 20px;
+    }
+
+    .endpoints-picker {
+        padding-bottom: 20px;
+
+        .select2 {
+            max-width: 500px;
+            font-weight: 600;
+        }
+    }
+
+    .endpoint-title {
+        .get-tag {
+            color: green;
+            font-weight: 400;
+        }
+        .post-tag {
+            color: blue;
+            font-weight: 400;
+        }
+        .delete-tag {
+            color: red;
+            font-weight: 400;
+        }
+        .patch-tag {
+            color: orange;
+            font-weight: 400;
+        }
+    }
+
+    h4.short-description {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .request-example {
+        h3 {
+            margin-top: 20px;
+        }
+    }
+
+    .usage-notes {
+        li {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+    }
+
+    .request-body {
+        .request-parameters {
+            list-style-type: none;
+            padding: 0;
+            border: 1px solid rgba(0,0,0,0.2);
+
+            li {
+                display: flex;
+                flex-wrap: wrap;
+                font-size: 16px;
+                padding: 15px 30px;
+                position: relative;
+
+                &:nth-child(even) {
+                    background: rgba(0,0,0,0.1);
+                }
+
+                .parameter {
+                    font-weight: 600;
+                }
+
+                .type {
+                    margin-left: 10px;
+
+                    &.type-string {
+                        color: green;
+                    }
+                    &.type-number {
+                        color: blue;
+                    }
+                    &.type-array {
+                        color: darkgoldenrod;
+                    }
+                }
+
+                .validation {
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                    font-weight: 600;
+                    font-size: 13px;
+                }
+
+                .description {
+                    flex: 1;
+                    flex-basis: auto;
+                    padding-top: 10px;
+                    line-height: 1.8;
+                    width: 100%;
+
+                    .highlighted {
+                        background: #234361;
+                        color: #fff;
+                        padding: 1px 5px;
+                        font-size: 14px;
+                        vertical-align: middle;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    .code-block {
+        overflow-y: auto;
+        max-height: 500px;
+
+        code {
+            -webkit-user-select: all;  /* Chrome 49+ */
+            -moz-user-select: all;     /* Firefox 43+ */
+            -ms-user-select: all;      /* No support yet */
+            user-select: all;          /* Likely future */   
+        }
+    }
+    
+    pre[class*=language-] {
+        overflow-y: auto;
+        max-height: 500px;
+        -webkit-user-select: all;  /* Chrome 49+ */
+        -moz-user-select: all;     /* Firefox 43+ */
+        -ms-user-select: all;      /* No support yet */
+        user-select: all;          /* Likely future */   
+    }
+
+    .test-api-playground {
+        padding-bottom: 50px;
+
+        .parameter {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            align-items: center;
+
+            .name, .value {
+                width: 45%;
+            }
+        }
+
+        & > .nav-tabs {
+            border-bottom: none;
+    
+            .nav-link{
+                color: #000;
+                border: none;
+        
+                &:hover:not(.active) {
+                    border: none;
+                }
+        
+                &.active {
+                    color: #000;
+                    background-color: transparent;
+                    border: 1px solid rgba(0,0,0,0.2);
+                    border-bottom: 1px solid #f9f9fb;
+                    border-radius: 0;
+                    font-weight: 600;
+                }
+            }
+        }
+    
+        & > .tab-content {            
+            & > .active {
+                padding-bottom: 20px;
+                border: 1px solid rgba(0,0,0,0.2);
+            }
+        }
+
+        .result {
+            display: none;
+            margin-top: 15px;
+
+            .code-block {
+                position: relative;
+            
+                code pre {
+                    color: inherit;
+                    margin: 0;
+                    line-height: inherit;
+                    font-size: 100%;
+                }
+
+                .status {
+                    position: absolute;
+                    background: transparent;
+                    right: 0;
+                    top: 0;
+                    color: #fff;
+                    padding: 10px 15px;
+                }
+            }
+
+            .loader {
+                display: none;
+            }
+        }
+    }
+
+    code {
+        line-height: 1.8;
+    }
+
+    .btn {
+        margin-top: 15px;
+        font-weight: 600;
+
+        span {
+            font-weight: 600;
+        }
+    }
+
+    .flex-reverse-mobile {
+        flex-direction: column-reverse;
+
+        @include desktop {
+            flex-direction: initial;
+        }
+    }
+}

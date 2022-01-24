@@ -1,0 +1,1 @@
+<h2 class="endpoint-title">@lang('Looks like your missing the permissions to access any of the endpoints. Please ask your organization owner to give you the required permissions')</h2>

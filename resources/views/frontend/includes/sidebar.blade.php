@@ -189,6 +189,15 @@
         <li class="c-sidebar-nav-item">
             <x-utils.link
                 class="c-sidebar-nav-link"
+                :href="route('frontend.api-docs')"
+                :active="activeClass(Route::is('frontend.api-docs'), 'c-active')"
+                icon="c-sidebar-nav-icon fas fa-code"
+                :text="__('API')" />
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <x-utils.link
+                class="c-sidebar-nav-link"
                 :href="route('frontend.pages.faq')"
                 :active="activeClass(Route::is('frontend.pages.faq'), 'c-active')"
                 icon="c-sidebar-nav-icon fas fa-question-circle"

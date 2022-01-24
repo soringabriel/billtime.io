@@ -24,13 +24,14 @@ use App\Http\Controllers\Frontend\User\SubuserController;
 
 Route::group(['as' => 'user.api.time.', 'middleware' => [
         'permission:user.access.times.access', 
+        'permission:user.access.users.api', 
         'auth:api', 
         'password.expires', 
         config('boilerplate.access.middleware.verified')
     ]
 ], function () {
     Route::get('/get-times', [TimeController::class, 'getTimes'])->name('getTimes');
-    Route::post('/store-time', [TimeController::class, 'store'])->name('store');
+    Route::post('/store-time', [TimeController::class, 'store'])->withoutMiddleware('permission:user.access.users.api')->name('store');
 
     Route::group(['prefix' => '{time}', 'middleware' => 'model_belongs_to_user_organization:time'], function () {
         Route::get('/get-time', [TimeController::class, 'get'])->name('get');
@@ -42,6 +43,7 @@ Route::group(['as' => 'user.api.time.', 'middleware' => [
 
 Route::group(['as' => 'user.api.clients.', 'middleware' => [
     'permission:user.access.clients.access', 
+    'permission:user.access.users.api', 
     'auth:api', 
     'password.expires', 
     config('boilerplate.access.middleware.verified')
@@ -59,23 +61,7 @@ Route::group(['as' => 'user.api.clients.', 'middleware' => [
 
 Route::group(['as' => 'user.api.projects.', 'middleware' => [
     'permission:user.access.projects.access', 
-    'auth:api', 
-    'password.expires', 
-    config('boilerplate.access.middleware.verified')
-]
-], function () {
-    Route::get('/get-projects', [ProjectController::class, 'getProjects'])->name('getProjects');
-    Route::post('/store-project', [ProjectController::class, 'store'])->middleware('permission:user.access.projects.create')->name('store');
-
-    Route::group(['prefix' => '{project}', 'middleware' => 'model_belongs_to_user_organization:project'], function () {
-        Route::get('/get-project', [ProjectController::class, 'get'])->name('get');
-        Route::patch('/update-project', [ProjectController::class, 'update'])->middleware('permission:user.access.projects.edit')->name('update');
-        Route::delete('/delete-project', [ProjectController::class, 'destroy'])->middleware('permission:user.access.projects.delete')->name('destroy');
-    });
-}); 
-
-Route::group(['as' => 'user.api.projects.', 'middleware' => [
-    'permission:user.access.projects.access', 
+    'permission:user.access.users.api', 
     'auth:api', 
     'password.expires', 
     config('boilerplate.access.middleware.verified')
@@ -93,6 +79,7 @@ Route::group(['as' => 'user.api.projects.', 'middleware' => [
 
 Route::group(['as' => 'user.api.invoices.', 'middleware' => [
     'permission:user.access.invoices.access', 
+    'permission:user.access.users.api', 
     'auth:api', 
     'password.expires', 
     config('boilerplate.access.middleware.verified')

@@ -32,6 +32,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "httpsnippet": "^2.0.0",
+        "prismjs": "^1.26.0",
         "select2": "^4.1.0-rc.0"
     }
 }
