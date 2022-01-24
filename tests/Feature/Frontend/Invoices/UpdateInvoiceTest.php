@@ -160,6 +160,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
             'times' => json_encode([$time->id]),
         ]);
 
@@ -176,6 +177,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => $invoice->price,
             'date' => $invoice->date,
             'due_date' => $invoice->due_date,
+            'service_fee' => $invoice->service_fee,
         ]);
     }
 
@@ -215,6 +217,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
         ]);
 
         $this->assertDatabaseHas('invoices', [
@@ -238,6 +241,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
         ]);
 
         Event::assertDispatched(InvoiceUpdated::class);
@@ -282,6 +286,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
         ]);
 
         $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
@@ -297,6 +302,7 @@ class UpdateInvoiceTest extends TestCase
             'price' => $invoice->price,
             'date' => $invoice->date,
             'due_date' => $invoice->due_date,
+            'service_fee' => $invoice->service_fee,
         ]);
     }
     

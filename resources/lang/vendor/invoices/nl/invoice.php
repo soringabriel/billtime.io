@@ -38,4 +38,5 @@ return [
     'vat_number'      => 'Btw-nummer',
     'bank_name'       => 'Banknaam',
     'bank_account'    => 'Bankrekening',
+    'service_fee'     => 'Servicekosten',
 ];

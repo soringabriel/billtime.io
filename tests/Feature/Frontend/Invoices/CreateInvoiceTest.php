@@ -108,6 +108,7 @@ class CreateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
             'times' => json_encode([$time->id]),
         ]);
 
@@ -134,6 +135,7 @@ class CreateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
             'times' => json_encode([$time->id]),
         ]);
     }
@@ -173,6 +175,7 @@ class CreateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
         ]);
 
         $this->assertDatabaseHas('invoices', [
@@ -196,6 +199,7 @@ class CreateInvoiceTest extends TestCase
             'price' => 1,
             'date' => '2021-04-04',
             'due_date' => '2021-08-20',
+            'service_fee' => 1.5,
         ]);
 
         Event::assertDispatched(InvoiceCreated::class);

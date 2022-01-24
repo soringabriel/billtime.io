@@ -38,4 +38,5 @@ return [
     'vat_number'      => 'VAT Number',
     'bank_name'       => 'Bank Name',
     'bank_account'    => 'Bank Account',
+    'service_fee'     => 'Service Fee',
 ];

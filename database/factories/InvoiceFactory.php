@@ -47,6 +47,7 @@ class InvoiceFactory extends Factory
             'due_date' => $this->faker->date(),
             'notes' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'status' => Invoice::STATUS_PENDING,
+            'service_fee' => $this->faker->randomFloat(2, 1, 100),
         ];
     }
 }

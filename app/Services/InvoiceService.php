@@ -69,6 +69,7 @@ class InvoiceService extends BaseService
                     'date' => $data['date'],
                     'due_date' => ($data['due_date'] ?? null),
                     'notes' => ($data['notes'] ?? null),
+                    'service_fee' => ($data['service_fee'] ?? null),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);
@@ -122,6 +123,7 @@ class InvoiceService extends BaseService
                     'date' => $data['date'],
                     'due_date' => ($data['due_date'] ?? null),
                     'notes' => ($data['notes'] ?? null),
+                    'service_fee' => ($data['service_fee'] ?? null),
                 ]
             );
             $invoice->times()->sync($data['times'] ?? []);
@@ -280,6 +282,10 @@ class InvoiceService extends BaseService
 
         if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
             $invoice->shipping($invoice_data['shipping']);
+        }
+
+        if (isset($invoice_data['service_fee']) && !is_null($invoice_data['service_fee']) && $invoice_data['service_fee'] > 0) {
+            $invoice->setCustomData(['service_fee' => $invoice_data['service_fee']]);
         }
 
         if (!is_null($locale)) {

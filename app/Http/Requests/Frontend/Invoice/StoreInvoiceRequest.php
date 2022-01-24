@@ -40,6 +40,7 @@ class StoreInvoiceRequest extends FormRequest
             'notes' => ['max:255'],
             'price' => ['required', 'numeric'],
             'times' => ['sometimes', 'nullable', 'json', new TimesInvoiceJson],
+            'service_fee' => ['sometimes', 'nullable', 'numeric', 'min:0'],
         ];
     }
 }

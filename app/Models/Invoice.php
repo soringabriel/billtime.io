@@ -60,6 +60,7 @@ class Invoice extends Model
         'due_date',
         'notes',
         'status',
+        'service_fee',
     ];
 
     /**
