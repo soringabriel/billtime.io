@@ -139,6 +139,13 @@
             </label>
             <input id="shipping" type="number" min="0" step="0.01" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
         </div>
+        <div class="field-group field-group-required">
+            <label for="service_fee" class="col-form-label">
+                @lang('Service Fee')
+                <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The service fee. This sum will be added to the total amount of the invoice but it will not be taxed.') }}"></i>
+            </label>
+            <input id="service_fee" type="number" min="0" step="0.01" name="service_fee" class="form-control" placeholder="{{ __('Service Fee') }}" x-model="service_fee" value="{{ isset($invoice) ? $invoice->service_fee : (old('service_fee') ?? 0) }}" />
+        </div>
     </div>
     <div class="col-md-4 offset-md-4">
         <div class="field-group field-group-required" x-show="tax > 0">
@@ -152,6 +159,10 @@
         <div class="field-group field-group-required" x-show="shipping > 0">
             <label for="totalTax" class="col-form-label">@lang('Shipping')</label>
             <span id="shippingVal"></span>
+        </div>
+        <div class="field-group field-group-required" x-show="service_fee > 0">
+            <label for="totalTax" class="col-form-label">@lang('Service Fee')</label>
+            <span id="serviceFeeVal"></span>
         </div>
         <div class="field-group field-group-required">
             <label for="totalTax" class="col-form-label">@lang('Total Amount')</label>
@@ -197,6 +208,13 @@
             servicesSum += shipping;
         } else {
             $("#shippingVal").html(0);
+        }
+        var serviceFee = parseFloat($("#service_fee").val());
+        if (!isNaN(serviceFee)) {
+            $("#serviceFeeVal").html(serviceFee);
+            servicesSum += serviceFee;
+        } else {
+            $("#serviceFeeVal").html(0);
         }
         $("#totalAmount").html(servicesSum);
         $("#totalAmountValue").val(servicesSum);
@@ -299,7 +317,7 @@
                 calculateTotal();
             })
 
-            $("#tax, #shipping").on('change', function(){
+            $("#tax, #shipping, $serviceFee").on('change', function(){
                 calculateTotal();
             })
 
@@ -316,6 +334,7 @@
             currencies: {!! json_encode($currencies) !!},
             tax: "{{ isset($invoice) ? $invoice->tax : (old('tax') ?? 0) }}",
             shipping: "{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}",
+            serviceFee: "{{ isset($invoice) ? $invoice->service_fee : (old('service_fee') ?? 0) }}",
             associatedTime: associatedTime,
             resetAssociatedTime() {
                 this.associatedTime = $("#checkedTimesValues").val();

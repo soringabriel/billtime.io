@@ -334,6 +334,16 @@
                         </td>
                     </tr>
                 @endif
+                @if(isset($invoice->userDefinedData['service_fee']))
+                    @php $invoice->total_amount += $invoice->userDefinedData['service_fee']; @endphp
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.service_fee') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->formatCurrency($invoice->userDefinedData['service_fee']) }}
+                        </td>
+                    </tr>
+                @endif
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
