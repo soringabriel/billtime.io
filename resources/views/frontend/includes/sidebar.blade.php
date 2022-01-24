@@ -74,6 +74,15 @@
                 </li>
                 <li class="c-sidebar-nav-item">
                     <x-utils.link
+                        :href="route('frontend.invoices.emails')"
+                        :active="activeClass(Route::is('frontend.invoices.emails'), 'c-active')"
+                        :text="__('Emails Sent List')"
+                        icon="c-sidebar-nav-icon cil-list"
+                        class="c-sidebar-nav-link"
+                        permission="user.access.invoices.emails" />
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
                         :href="route('frontend.invoices.create')"
                         :active="activeClass(Route::is('frontend.invoices.create'), 'c-active')"
                         :text="__('Create Invoice')"

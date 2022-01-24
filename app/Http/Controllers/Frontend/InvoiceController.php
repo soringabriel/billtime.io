@@ -16,6 +16,8 @@ use App\Services\EmailService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
 use Illuminate\Support\Facades\Auth;
+use Notification;
+use App\Domains\Auth\Notifications\Frontend\InvoiceEmail;
 
 /**
  * Class InvoiceController.
@@ -219,6 +221,15 @@ class InvoiceController extends Controller
         return $invoice->apiProperties();
     }
 
+    
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function emails()
+    {
+        return view('frontend.invoices.emails');
+    }
+
     /**
      * @param  SendEmailRequest  $request
      * @param  Invoice  $invoice
@@ -229,14 +240,13 @@ class InvoiceController extends Controller
     {
         $data = $request->validated();
 
-        $user = auth()->user()->first();
+        $user = auth()->user();
         $organization = $user->organization()->first();
         $data['name'] = $organization->company_name ?? $user->name;
         $data['invoice_id'] = $invoice->id;
+        $data['locale'] = $data['locale'] ?? config('app.locale');
 
-        Notification::route('mail', [
-            $data['from'] => $name,
-        ])->notify(new InvoiceEmail($this->invoiceService, $invoice, $data));
+        Notification::route('mail', $data['to'])->notify(new InvoiceEmail($this->invoiceService, $invoice, $data));
 
         $this->emailService->store($data);
 

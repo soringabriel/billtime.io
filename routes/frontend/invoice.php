@@ -16,6 +16,13 @@ Route::group([
                 ->push(__('Invoice Managment'), route('frontend.invoices.index'));
     });
 
+    Route::get('/emails', [InvoiceController::class, 'emails'])
+        ->name('emails')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.invoices.index')
+                ->push(__('Emails List'), route('frontend.invoices.emails'));
+    });
+
     Route::get('create', [InvoiceController::class, 'create'])
         ->name('create')
         ->middleware('permission:user.access.invoices.create')
@@ -41,6 +48,9 @@ Route::group([
                 $trail->parent('frontend.invoices.index')
                     ->push(__('Duplicating :invoice', ['invoice' => $invoice->name]), route('frontend.invoices.clone', $invoice));
         });
+        Route::post('sendEmail', [InvoiceController::class, 'sendEmail'])
+            ->name('sendEmail')
+            ->middleware(['throttle:10,30', 'model_belongs_to_user:invoice,user.access.invoices.show-all', 'permission:user.access.invoices.emails']);
         Route::get('download', [InvoiceController::class, 'download'])->middleware('model_belongs_to_user:invoice,user.access.invoices.show-all')->name('download');
         Route::patch('/', [InvoiceController::class, 'update'])->middleware('model_belongs_to_user:invoice,user.access.invoices.edit-all')->name('update');
         Route::patch('/updateStatus', [InvoiceController::class, 'updateStatus'])->middleware('model_belongs_to_user:invoice,user.access.invoices.update-status-all')->name('updateStatus');
