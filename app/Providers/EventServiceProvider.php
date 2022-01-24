@@ -12,6 +12,7 @@ use App\Listeners\ClientEventListener;
 use App\Listeners\OrganizationEventListener;
 use App\Listeners\PlanEventListener;
 use App\Listeners\CashierPaddleEventListener;
+use App\Listeners\EmailEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -48,6 +49,7 @@ class EventServiceProvider extends ServiceProvider
         OrganizationEventListener::class,
         PlanEventListener::class,
         CashierPaddleEventListener::class,
+        EmailEventListener::class,
     ];
 
     /**

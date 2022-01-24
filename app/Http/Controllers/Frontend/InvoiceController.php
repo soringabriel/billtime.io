@@ -10,7 +10,9 @@ use App\Http\Requests\Frontend\Invoice\UpdateInvoiceStatusRequest;
 use App\Http\Requests\Frontend\Invoice\DeleteInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\DownloadInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\CloneInvoiceRequest;
+use App\Http\Requests\Frontend\Invoice\SendEmailRequest;
 use App\Services\InvoiceService;
+use App\Services\EmailService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
 use Illuminate\Support\Facades\Auth;
@@ -26,13 +28,20 @@ class InvoiceController extends Controller
     protected $invoiceService;
 
     /**
+     * @var EmailService
+     */
+    protected $emailService;
+
+    /**
      * InvoiceController constructor.
      *
      * @param  InvoiceService  $invoiceService
+     * @param  EmailService    $emailService
      */
-    public function __construct(InvoiceService $invoiceService)
+    public function __construct(InvoiceService $invoiceService, EmailService $emailService)
     {
         $this->invoiceService = $invoiceService;
+        $this->emailService = $emailService;
     }
 
     /**
@@ -208,5 +217,29 @@ class InvoiceController extends Controller
     public function get(Invoice $invoice)
     {
         return $invoice->apiProperties();
+    }
+
+    /**
+     * @param  SendEmailRequest  $request
+     * @param  Invoice  $invoice
+     *
+     * @return mixed
+     */
+    public function sendEmail(SendEmailRequest $request, Invoice $invoice)
+    {
+        $data = $request->validated();
+
+        $user = auth()->user()->first();
+        $organization = $user->organization()->first();
+        $data['name'] = $organization->company_name ?? $user->name;
+        $data['invoice_id'] = $invoice->id;
+
+        Notification::route('mail', [
+            $data['from'] => $name,
+        ])->notify(new InvoiceEmail($this->invoiceService, $invoice, $data));
+
+        $this->emailService->store($data);
+
+        return view('frontend.invoices.emails');
     }
 }
