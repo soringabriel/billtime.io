@@ -387,7 +387,6 @@ class UserService extends BaseService
             ]);
             $this->organizationService->update($organization, [
                 'plan_id' => Plan::orderBy('price', 'desc')->first()->id,
-                'plan_expire' => Carbon::now()->addDays(14),
             ]);
         }
         $client = $this->clientService->store([

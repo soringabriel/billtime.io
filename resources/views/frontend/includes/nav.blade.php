@@ -15,17 +15,6 @@
 
             <div id="navbarSupportedContent" class="ml-auto">
                 <ul class="navbar-nav ml-auto align-items-center flex-row justify-content-between">
-                    @auth
-                        @if (!is_null($logged_in_user->organization()->first()) && !$logged_in_user->nextPlan()->first()->isBiggest() && $logged_in_user->isOrganizationOwner())
-                            <li class="nav-item mr-3">
-                                <x-utils.link
-                                    :href="route('frontend.plan')"
-                                    :text="__('Upgrade')"
-                                    class="btn btn-success d-none d-md-block" />
-                            </li>
-                        @endif
-                    @endauth
-
                     @php 
                         /*
                             @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
@@ -86,20 +75,6 @@
                                     <x-utils.link
                                         :href="route('admin.dashboard')"
                                         :text="__('Administration')"
-                                        class="dropdown-item" />
-                                @endif
-
-                                @if ($logged_in_user->isOrganizationOwner())
-                                    <x-utils.link
-                                        :href="route('frontend.plan')"
-                                        :active="activeClass(Route::is('frontend.plan'))"
-                                        :text="__('Plan')"
-                                        class="dropdown-item" />
-
-                                    <x-utils.link
-                                        :href="route('frontend.receipts')"
-                                        :active="activeClass(Route::is('frontend.receipts'))"
-                                        :text="__('Receipts')"
                                         class="dropdown-item" />
                                 @endif
 
