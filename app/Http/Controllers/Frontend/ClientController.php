@@ -9,6 +9,7 @@ use App\Http\Requests\Frontend\Client\UpdateClientRequest;
 use App\Http\Requests\Frontend\Client\DeleteClientRequest;
 use App\Services\ClientService;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ClientController.
@@ -126,7 +127,7 @@ class ClientController extends Controller
      */
     public function getClients()
     {
-        $clients = Client::query()->where('organization_id', auth()->user()->organization()->first()->id);
+        $clients = Client::query()->where('organization_id', auth()->user()->organization()->first()->id)->get();
         $result = [];
         foreach ($clients as $client) {
             $result[] = $client->apiProperties();

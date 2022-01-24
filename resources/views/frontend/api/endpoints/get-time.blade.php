@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/time/{time_id}</h2>
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/{time_id}/get-time</h2>
 <h4 class="short-description">@lang('Retrieves a specific time')</h4>
 
 <div class="test-api">

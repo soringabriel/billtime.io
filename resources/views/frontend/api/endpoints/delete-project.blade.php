@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="delete-tag">DELETE</span> /api/project/{project_id}</h2>
+<h2 class="endpoint-title"><span class="delete-tag">DELETE</span> /api/{project_id}/delete-project</h2>
 <h4 class="short-description">@lang('Deletes a project')</h4>
 
 <div class="test-api">

@@ -17,7 +17,6 @@ trait ClientMethod
     {
         return [
             "id" => $this->id,
-            "organization_id" => $this->organization_id,
             "name" => $this->name,
             "company_name"=> $this->company_name,
             "tax_number"=> $this->tax_number,

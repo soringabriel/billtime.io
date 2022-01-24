@@ -17,7 +17,6 @@ trait ProjectMethod
     {
         return [
             "id" => $this->id,
-            "organization_id" => $this->organization_id,
             "client_id"=> $this->client_id,
             "name" => $this->name,
             "created_at"=> $this->created_at,

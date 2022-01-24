@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/time/{time_id}/toggleBilled</h2>
+<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/{time_id}/toggleBilled-time</h2>
 <h4 class="short-description">@lang('Updates the billed status of a specific time record')</h4>
 
 <div class="test-api">

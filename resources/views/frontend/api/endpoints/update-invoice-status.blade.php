@@ -1,6 +1,6 @@
 @inject('invoice', '\App\Models\Invoice')
 
-<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/invoice/{invoice_id}/update-status</h2>
+<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/{invoice_id}/updateStatus</h2>
 <h4 class="short-description">@lang('Updates the status of a specific invoice')</h4>
 
 <div class="request-body">

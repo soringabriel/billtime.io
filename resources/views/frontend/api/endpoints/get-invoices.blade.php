@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/invoice</h2>
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/get-invoices</h2>
 <h4 class="short-description">@lang('Retrieves a list with all the invoices')</h4>
 
 <div class="test-api">
@@ -9,9 +9,6 @@
         <input type="hidden" class="method" value="GET">
         <ul class="nav nav-tabs"  role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="bodyListInvoices-tab" data-toggle="tab" href="#bodyListInvoices" role="tab" aria-controls="home" aria-selected="true">Body</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" id="headersListInvoices-tab" data-toggle="tab" href="#headersListInvoices" role="tab" aria-controls="profile" aria-selected="false">Headers</a>
             </li>
             <li class="nav-item">
@@ -19,31 +16,7 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade params show active" id="bodyListInvoices" role="tabpanel" aria-labelledby="bodyListInvoices-tab">
-                <div class="tab-content pt-3">
-                    <div class="parameter">
-                        <div class="checkbox"><input type="checkbox"></div>
-                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="search"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value=""></div>
-                    </div>
-                    <div class="parameter">
-                        <div class="checkbox"><input type="checkbox"></div>
-                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="sort_field"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="username"></div>
-                    </div>
-                    <div class="parameter">
-                        <div class="checkbox"><input type="checkbox"></div>
-                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="sort_direction"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="asc"></div>
-                    </div>
-                    <div class="parameter">
-                        <div class="checkbox"><input type="checkbox"></div>
-                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="page"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="1"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade headers" id="headersListInvoices" role="tabpanel" aria-labelledby="headersListInvoices-tab">
+            <div class="tab-pane fade headers show active" id="headersListInvoices" role="tabpanel" aria-labelledby="headersListInvoices-tab">
                 <div class="tab-content pt-3">
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>

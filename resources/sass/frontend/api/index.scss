@@ -17,6 +17,7 @@
 
         .select2 {
             max-width: 500px;
+            min-width: 300px;
             font-weight: 600;
         }
     }
@@ -125,8 +126,12 @@
     .code-block {
         overflow-y: auto;
         max-height: 500px;
+        background: #000;
+        color: #fff;
+        padding: 10px 15px;
 
         code {
+            color: #fff;
             -webkit-user-select: all;  /* Chrome 49+ */
             -moz-user-select: all;     /* Firefox 43+ */
             -ms-user-select: all;      /* No support yet */
@@ -135,6 +140,9 @@
     }
     
     pre[class*=language-] {
+        background: #000;
+        color: #fff;
+        padding: 10px 15px;
         overflow-y: auto;
         max-height: 500px;
         -webkit-user-select: all;  /* Chrome 49+ */

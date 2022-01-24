@@ -1,16 +1,16 @@
-<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/time/{time_id}</h2>
+<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/{time_id}/update-time</h2>
 <h4 class="short-description">@lang('Updates a specific time record')</h4>
 
 <div class="request-body">
     <h3>@lang('Request Body')</h3>
 
     <ul class="request-parameters">
-        <li>
+    <li>
             <span class="parameter">start_time</span>
             <span class="type type-string">string</span>
             <span class="validation">@lang('required')</span>
             <span class="description">
-                @lang('The start time.')
+                @lang('The start time in format Y-m-d H:i.')
             </span>
         </li>
         <li>
@@ -18,7 +18,7 @@
             <span class="type type-string">string</span>
             <span class="validation">@lang('required')</span>
             <span class="description">
-                @lang('The end time.')
+                @lang('The end time in format Y-m-d H:i.')
             </span>
         </li>
         <li>
@@ -71,12 +71,12 @@
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>
                         <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="start_time"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="{{ now()->subHour()->toDateTimeString() }}"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="{{ now()->subHour()->format('Y-m-d H:i') }}"></div>
                     </div>
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>
                         <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="end_time"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="{{ now()->toDateTimeString() }}"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="{{ now()->format('Y-m-d H:i') }}"></div>
                     </div>
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>

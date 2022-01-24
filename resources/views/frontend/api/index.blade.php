@@ -4,7 +4,7 @@
 
 @section('content')
     <div>
-        <div class="row justify-content-center">
+        <div class="container row justify-content-center">
             <div class="col-12">
                 <div class="api-docs" x-data="init()">
                     <div class="row flex-reverse-mobile">
@@ -53,7 +53,7 @@
                                             <option value="get-invoices">@lang('Get Invoices')</option>
                                             <option value="store-invoice">@lang('Store Invoice')</option>
                                             <option value="get-invoice">@lang('Get Invoice')</option>
-                                            <option value="download-invoice">@lang('Download Invoice')</option>
+                                            <!-- <option value="download-invoice">@lang('Download Invoice')</option> -->
                                             <option value="update-invoice">@lang('Update Invoice')</option>
                                             <option value="update-invoice-status">@lang('Update Invoice Status')</option>
                                             <option value="delete-invoice">@lang('Delete Invoice')</option>
@@ -98,7 +98,7 @@
                             <div class="endpoint" x-show="endpoint == 'get-invoices'">@include('frontend.api.endpoints.get-invoices')</div>
                             <div class="endpoint" x-show="endpoint == 'store-invoice'">@include('frontend.api.endpoints.store-invoice')</div>
                             <div class="endpoint" x-show="endpoint == 'get-invoice'">@include('frontend.api.endpoints.get-invoice')</div>
-                            <div class="endpoint" x-show="endpoint == 'download-invoice'">@include('frontend.api.endpoints.download-invoice')</div>
+                            <!-- <div class="endpoint" x-show="endpoint == 'download-invoice'">@include('frontend.api.endpoints.download-invoice')</div> -->
                             <div class="endpoint" x-show="endpoint == 'update-invoice'">@include('frontend.api.endpoints.update-invoice')</div>
                             <div class="endpoint" x-show="endpoint == 'update-invoice-status'">@include('frontend.api.endpoints.update-invoice-status')</div>
                             <div class="endpoint" x-show="endpoint == 'delete-invoice'">@include('frontend.api.endpoints.delete-invoice')</div>
@@ -111,17 +111,17 @@
 
     <script>
         let defaultEndpoint = 'no-permissions'
-        @if ($logged_in_user->can('user.access.times.access'))
-            defaultEndpoint = 'get-times'
-        @endif
-        @if ($logged_in_user->can('user.access.clients.access'))
-            defaultEndpoint = 'get-clients'
+        @if ($logged_in_user->can('user.access.invoices.access'))
+            defaultEndpoint = 'get-invoices'
         @endif
         @if ($logged_in_user->can('user.access.projects.access'))
             defaultEndpoint = 'get-projects'
         @endif
-        @if ($logged_in_user->can('user.access.invoices.access'))
-            defaultEndpoint = 'get-invoices'
+        @if ($logged_in_user->can('user.access.clients.access'))
+            defaultEndpoint = 'get-clients'
+        @endif
+        @if ($logged_in_user->can('user.access.times.access'))
+            defaultEndpoint = 'get-times'
         @endif
         function init() {
             return {

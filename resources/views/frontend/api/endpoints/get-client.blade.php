@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/client/{client_id}</h2>
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/{client_id}/get-client</h2>
 <h4 class="short-description">@lang('Retrieves a specific client')</h4>
 
 <div class="test-api">

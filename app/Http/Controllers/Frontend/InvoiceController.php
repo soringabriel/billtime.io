@@ -13,6 +13,7 @@ use App\Http\Requests\Frontend\Invoice\CloneInvoiceRequest;
 use App\Services\InvoiceService;
 use App\Models\Invoice;
 use LaravelDaily\Invoices\Invoice as LaravelInvoice;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class InvoiceController.
@@ -188,9 +189,9 @@ class InvoiceController extends Controller
     {
         $invoices = [];
         if (auth()->user()->can('user.access.invoices.show-all')) {
-            $invoices = Invoice::query()->whereIn('user_id', auth()->user()->organization()->first()->users()->pluck('id'));
+            $invoices = Invoice::query()->whereIn('user_id', auth()->user()->organization()->first()->users()->pluck('id'))->get();
         } else {
-            $invoices = Invoice::query()->where('user_id', auth()->user()->id);
+            $invoices = Invoice::query()->where('user_id', auth()->user()->id)->get();
         }
         $result = [];
         foreach ($invoices as $invoice) {

@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/client/{client_id}</h2>
+<h2 class="endpoint-title"><span class="patch-tag">PATCH</span> /api/{client_id}/update-client</h2>
 <h4 class="short-description">@lang('Updates a specific client')</h4>
 
 <div class="request-body">

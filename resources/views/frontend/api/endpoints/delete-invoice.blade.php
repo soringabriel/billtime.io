@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="delete-tag">DELETE</span> /api/invoice/{invoice_id}</h2>
+<h2 class="endpoint-title"><span class="delete-tag">DELETE</span> /api/{invoice_id}/delete-invoice</h2>
 <h4 class="short-description">@lang('Deletes a invoice')</h4>
 
 <div class="test-api">

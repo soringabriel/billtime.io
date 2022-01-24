@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="post-tag">POST</span> /api/client</h2>
+<h2 class="endpoint-title"><span class="post-tag">POST</span> /api/store-client</h2>
 <h4 class="short-description">@lang('Create a client')</h4>
 
 <div class="request-body">

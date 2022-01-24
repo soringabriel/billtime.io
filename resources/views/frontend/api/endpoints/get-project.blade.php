@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/project/{project_id}</h2>
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/{project_id}/get-project</h2>
 <h4 class="short-description">@lang('Retrieves a specific project')</h4>
 
 <div class="test-api">

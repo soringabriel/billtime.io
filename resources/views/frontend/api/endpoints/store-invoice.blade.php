@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="post-tag">POST</span> /api/invoice</h2>
+<h2 class="endpoint-title"><span class="post-tag">POST</span> /api/store-invoice</h2>
 <h4 class="short-description">@lang('Create a invoice')</h4>
 
 <div class="request-body">
@@ -120,6 +120,14 @@
             </span>
         </li>
         <li>
+            <span class="parameter">service_fee</span>
+            <span class="type type-number">number</span>
+            <span class="validation">@lang('optional')</span>
+            <span class="description">
+                @lang('The service fee, if any.')
+            </span>
+        </li>
+        <li>
             <span class="parameter">currency</span>
             <span class="type type-string">string</span>
             <span class="validation">@lang('required')</span>
@@ -184,8 +192,8 @@
                 <div class="tab-content pt-3">
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>
-                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="name"></div>
-                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="johndoe"></div>
+                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="number"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="INVOICE01"></div>
                     </div>
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>
@@ -251,6 +259,11 @@
                         <div class="checkbox"><input type="checkbox"></div>
                         <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="shipping"></div>
                         <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="5"></div>
+                    </div>
+                    <div class="parameter">
+                        <div class="checkbox"><input type="checkbox"></div>
+                        <div class="name"><input type="text" class="form-control" placeholder="{{ __('parameter name') }}" value="service_fee"></div>
+                        <div class="value"><input type="text" class="form-control" placeholder="{{ __('parameter value') }}" value="5.5"></div>
                     </div>
                     <div class="parameter">
                         <div class="checkbox"><input type="checkbox" checked></div>

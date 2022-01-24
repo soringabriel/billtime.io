@@ -1,4 +1,4 @@
-<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/invoice/{invoice_id}/download</h2>
+<h2 class="endpoint-title"><span class="get-tag">GET</span> /api/{invoice_id}/download</h2>
 <h4 class="short-description">@lang('Downloads a specific invoice')</h4>
 
 <div class="request-body">

@@ -10,6 +10,7 @@ use App\Http\Requests\Frontend\Project\DeleteProjectRequest;
 use App\Services\ClientService;
 use App\Services\ProjectService;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ProjectController.
@@ -160,7 +161,7 @@ class ProjectController extends Controller
      */
     public function getProjects()
     {
-        $projects = Project::query()->where('organization_id', auth()->user()->organization()->first()->id);
+        $projects = Project::query()->where('organization_id', auth()->user()->organization()->first()->id)->get();
         $result = [];
         foreach ($projects as $project) {
             $result[] = $project->apiProperties();
