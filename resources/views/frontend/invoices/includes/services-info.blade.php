@@ -140,11 +140,11 @@
             <input id="shipping" type="number" min="0" step="0.01" name="shipping" class="form-control" placeholder="{{ __('Shipping') }}" x-model="shipping" value="{{ isset($invoice) ? $invoice->shipping : (old('shipping') ?? 0) }}" />
         </div>
         <div class="field-group field-group-required">
-            <label for="service_fee" class="col-form-label">
+            <label for="serviceFee" class="col-form-label">
                 @lang('Service Fee')
                 <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The service fee. This sum will be added to the total amount of the invoice but it will not be taxed.') }}"></i>
             </label>
-            <input id="service_fee" type="number" min="0" step="0.01" name="service_fee" class="form-control" placeholder="{{ __('Service Fee') }}" x-model="service_fee" value="{{ isset($invoice) ? $invoice->service_fee : (old('service_fee') ?? 0) }}" />
+            <input id="serviceFee" type="number" min="0" step="0.01" name="service_fee" class="form-control" placeholder="{{ __('Service Fee') }}" x-model="service_fee" value="{{ isset($invoice) ? $invoice->service_fee : (old('service_fee') ?? 0) }}" />
         </div>
     </div>
     <div class="col-md-4 offset-md-4">
@@ -209,14 +209,15 @@
         } else {
             $("#shippingVal").html(0);
         }
-        var serviceFee = parseFloat($("#service_fee").val());
+        var servicesSumDisplayed = servicesSum;
+        var serviceFee = parseFloat($("#serviceFee").val());
         if (!isNaN(serviceFee)) {
             $("#serviceFeeVal").html(serviceFee);
-            servicesSum += serviceFee;
+            servicesSumDisplayed += serviceFee;
         } else {
             $("#serviceFeeVal").html(0);
         }
-        $("#totalAmount").html(servicesSum);
+        $("#totalAmount").html(servicesSumDisplayed);
         $("#totalAmountValue").val(servicesSum);
         setServices();
     }
@@ -317,7 +318,7 @@
                 calculateTotal();
             })
 
-            $("#tax, #shipping, $serviceFee").on('change', function(){
+            $("#tax, #shipping, #serviceFee").on('change', function(){
                 calculateTotal();
             })
 

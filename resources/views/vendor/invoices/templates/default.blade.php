@@ -334,13 +334,17 @@
                         </td>
                     </tr>
                 @endif
-                @if(isset($invoice->userDefinedData['service_fee']))
-                    @php $invoice->total_amount += $invoice->userDefinedData['service_fee']; @endphp
+                @php 
+                    $custom_data = $invoice->getCustomData();
+                    $service_fee = $custom_data['service_fee'] ?? null;
+                    $invoice->total_amount += is_null($service_fee) ? 0 : $service_fee;
+                @endphp
+                @if(!is_null($service_fee))
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.service_fee') }}</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->userDefinedData['service_fee']) }}
+                            {{ $invoice->formatCurrency($service_fee) }}
                         </td>
                     </tr>
                 @endif
