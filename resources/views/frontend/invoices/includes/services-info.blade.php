@@ -209,14 +209,14 @@
         } else {
             $("#shippingVal").html(0);
         }
-        var servicesSumDisplayed = servicesSum;
         var serviceFee = parseFloat($("#serviceFee").val());
         if (!isNaN(serviceFee)) {
             $("#serviceFeeVal").html(serviceFee);
-            servicesSumDisplayed += serviceFee;
+            servicesSum += serviceFee;
         } else {
             $("#serviceFeeVal").html(0);
         }
+        var servicesSumDisplayed = servicesSum;
         $("#totalAmount").html(servicesSumDisplayed);
         $("#totalAmountValue").val(servicesSum);
         setServices();

@@ -271,7 +271,6 @@ class InvoiceService extends BaseService
                     ->taxRate($invoice_data['tax'])
                     ->addItems($items)
                     ->notes($notes)
-                    ->setCustomData(['service_fee' => $invoice_data['service_fee']])
                     ->filename("invoice_" . $invoice_data['number'] . "_" . $locale);
 
         if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
@@ -283,6 +282,10 @@ class InvoiceService extends BaseService
 
         if (isset($invoice_data['shipping']) && !is_null($invoice_data['shipping'])) {
             $invoice->shipping($invoice_data['shipping']);
+        }
+
+        if (isset($invoice_data['service_fee']) && !is_null($invoice_data['service_fee']) && $invoice_data['service_fee'] > 0) {
+            $invoice->setCustomData(['service_fee' => $invoice_data['service_fee']]);
         }
 
         if (!is_null($locale)) {
