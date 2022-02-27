@@ -37,6 +37,8 @@ class Project extends Model
         'name',
         'organization_id',
         'client_id',
+        'price',
+        'price_currency',
     ];
 
     /**
