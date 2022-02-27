@@ -73,4 +73,52 @@ class PagesController extends Controller
     {
         return view('frontend.api.index');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reports()
+    {
+        $time_charts_data = auth()->user()->organization()->first()->getTimesChartData();
+        $charts = [
+            [
+                'html_id' => 'organizationTimePerDay',
+                'labels' => array_keys($time_charts_data['daily']),
+                'values' => array_values($time_charts_data['daily']),
+                'charts_js_opts' => [
+                    'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
+                    'borderColor' => 'rgb(153, 102, 255)'
+                ]
+            ],
+            [
+                'html_id' => 'organizationTimePerMonth',
+                'labels' => array_keys($time_charts_data['monthly']),
+                'values' => array_values($time_charts_data['monthly']),
+                'charts_js_opts' => [
+                    'backgroundColor' => [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    'borderColor' => [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ]
+                ]
+            ]
+        ];
+
+        return view('frontend.pages.reports')
+            ->withOrganization(auth()->user()->organization()->first())
+            ->withCharts($charts);
+    }
 }

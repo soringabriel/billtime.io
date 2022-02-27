@@ -3,6 +3,7 @@
 namespace App\Models\Traits\Method;
 
 use App\Models\Time;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\View\ComponentAttributeBag;
@@ -28,10 +29,45 @@ trait OrganizationMethod
     /**
      * @return array
      */
+    public function getInvoicesChartData(): array
+    {
+        $invoices = Invoice::whereIn('user_id', $this->users()->pluck('id'))->get();
+        $daily = [];
+        $monthly = [];
+        foreach ($invoices as $invoice) {
+            $date = Carbon::createFromFormat('Y-m-d', $invoice->date);
+            $currency = $invoice->currency;
+            if (isset($daily[$currency]) && isset($daily[$currency][$date->format('M j')])) {
+                $daily[$currency][$date->format('M j')] += $invoice->price;
+            } else {
+                if (!isset($daily[$currency])) {
+                    $daily[$currency] = [];
+                }
+                $daily[$currency][$date->format('M j')] = $invoice->price;
+            }
+            if (isset($monthly[$currency]) && isset($monthly[$currency][$date->format('M Y')])) {
+                $monthly[$currency][$date->format('M Y')] += $invoice->price;
+            } else {
+                if (!isset($monthly[$currency])) {
+                    $monthly[$currency] = [];
+                }
+                $monthly[$currency][$date->format('M Y')] = $invoice->price;
+            }
+        }
+
+        return [
+            'daily' => $daily,
+            'monthly' => $monthly,
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function getTimesChartData(): array
     {
         $organization_users = $this->users()->pluck('id')->toArray();        
-        $times = Time::whereIn('user_id', $organization_users)->orderBy('start_time')->get();
+        $times = Time::whereIn('user_id', $organization_users)->where('start_time', '>=', now()->subYear()->toDateTimeString())->orderBy('start_time')->get();
         $daily = [];
         $monthly = [];
         CarbonInterval::setCascadeFactors([

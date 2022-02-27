@@ -69,4 +69,18 @@ class PagesTest extends TestCase
 
         $this->get('/receipts')->assertOk();
     }
+
+    /** @test */
+    public function the_reports_page_can_be_accesed_only_by_logged_in_users()
+    {
+        $user = User::factory()->user()->create();
+        $organization = Organization::factory()->create(['owner_id' => $user->id]);
+        $user->update(['organization_id' => $organization->id]);
+
+        $this->get('/reports')->assertRedirect('/login');
+
+        $this->actingAs($user);
+
+        $this->get('/reports')->assertOk();
+    }
 }
