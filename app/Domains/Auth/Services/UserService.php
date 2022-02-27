@@ -148,7 +148,7 @@ class UserService extends BaseService
         } catch (Exception $e) {
             DB::rollBack();
 
-            throw new GeneralException(__('There was a problem creating this user. Please try again.'));
+            throw new GeneralException(__('There was a problem creating this user. Please try again.' . $e->getMessage()));
         }
 
         event(new UserCreated($user));
