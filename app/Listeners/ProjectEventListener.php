@@ -21,6 +21,8 @@ class ProjectEventListener
             ->withProperties([
                 'project' => [
                     'name' => $event->project->name,
+                    'price' => $event->project->price,
+                    'price_currency' => $event->project->price_currency,
                 ],
             ])
             ->log(':causer.name created project :subject.name');
@@ -36,6 +38,8 @@ class ProjectEventListener
             ->withProperties([
                 'project' => [
                     'name' => $event->project->name,
+                    'price' => $event->project->price,
+                    'price_currency' => $event->project->price_currency,
                 ],
             ])
             ->log(':causer.name updated project :subject.name');

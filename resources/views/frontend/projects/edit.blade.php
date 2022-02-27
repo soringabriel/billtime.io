@@ -66,6 +66,28 @@
                                         @include('frontend.includes.partials.new-client')
                                     </div>
                                 </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="price" class="col-md-2 col-form-label">
+                                        <span>@lang('Price per hour')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Price per hour that the client pays for the project') }}"></i>
+                                    </label>
+
+                                    <div class="col-md-10">
+                                        <input type="number" name="price" class="form-control" placeholder="{{ __('Price per hour') }}" value="{{ old('price') ?? $project->price }}" step=".01" />
+                                    </div>
+                                </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="price_currency" class="col-md-2 col-form-label">
+                                        <span>@lang('Currency for price')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Currency for the price per hour, if any is set') }}"></i>
+                                    </label>
+
+                                    <div class="col-md-10">
+                                        <input type="text" name="price_currency" class="form-control" placeholder="{{ __('Currency for price') }}" value="{{ old('price_currency') ?? $project->price_currency }}" maxlength="3" />
+                                    </div>
+                                </div><!--form-group-->
                             </div>
                         </x-slot>
 

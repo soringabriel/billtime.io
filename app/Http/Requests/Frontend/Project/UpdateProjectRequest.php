@@ -31,6 +31,8 @@ class UpdateProjectRequest extends FormRequest
             'client_vat_number' => ['max:255'],
             'client_address' => ['max:255'],
             'client_bank_account' => ['max:255'],
+            'price' => ['sometimes', 'min:0'],
+            'price_currency' => ['required_with:price', 'max:3'],
         ];
     }
 }

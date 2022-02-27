@@ -45,6 +45,8 @@ class ProjectService extends BaseService
                     'organization_id' => $data['organization_id'] ?? auth()->user()->organization()->first()->id,
                     'client_id' => $data['client_id'],
                     'name' => $data['name'],
+                    'price' => $data['price'],
+                    'price_currency' => $data['price_currency'],
                 ]
             );
         } catch (Exception $e) {
@@ -76,6 +78,8 @@ class ProjectService extends BaseService
                 [
                     'client_id' => $data['client_id'],
                     'name' => $data['name'],
+                    'price' => $data['price'],
+                    'price_currency' => $data['price_currency'],
                 ]
             );
         } catch (Exception $e) {
