@@ -34,4 +34,11 @@ Route::group([
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Dashboard'), route('frontend.dashboard'));
         });
+
+    Route::get('/extension', [PagesController::class, 'extension'])
+        ->name('extension')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->parent('frontend.dashboard')
+                ->push(__('Extension'), route('frontend.extension'));
+        });
 });

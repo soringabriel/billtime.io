@@ -73,4 +73,12 @@ class PagesController extends Controller
     {
         return view('frontend.api.index');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function extension()
+    {
+        return view('frontend.pages.extension');
+    }
 }
