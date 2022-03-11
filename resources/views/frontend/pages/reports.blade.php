@@ -60,18 +60,12 @@
 @push('after-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
     <script>
-        function generateChart(chartId, labels, values, colors){
+        function generateChart(chartId, type, labels, datasets){
             const options = {
-                type: 'bar',
+                type: type,
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: "{{ __('Daily Tracked Time') }}",
-                        data: values,
-                        backgroundColor: colors.backgroundColor,
-                        borderColor: colors.borderColor,
-                        borderWidth: 1
-                    }]
+                    datasets: datasets
                 },
                 options: {
                     scales: {
@@ -98,9 +92,9 @@
             for (let index in charts) {
                 generateChart(
                     charts[index].html_id,
+                    charts[index].type,
                     charts[index].labels,
-                    charts[index].values,
-                    charts[index].charts_js_opts,
+                    charts[index].datasets,
                 )
             }
         })();

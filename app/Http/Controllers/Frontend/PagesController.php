@@ -80,42 +80,60 @@ class PagesController extends Controller
     public function reports()
     {
         $time_charts_data = auth()->user()->organization()->first()->getTimesChartData();
+        $invoice_charts_data = auth()->user()->organization()->first()->getInvoicesChartData();
         $charts = [
             [
                 'html_id' => 'organizationTimePerDay',
+                'type' => 'line',
                 'labels' => array_keys($time_charts_data['daily']),
-                'values' => array_values($time_charts_data['daily']),
-                'charts_js_opts' => [
-                    'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
-                    'borderColor' => 'rgb(153, 102, 255)'
+                'datasets' => [
+                    [
+                        'label' => __('Daily Tracked Time'),
+                        'data' => array_values($time_charts_data['daily']),
+                        'backgroundColor' => chartBackgroundColors(),
+                        'borderColor' => chartBorderColors(),
+                        'borderWidth' => 1,
+                    ]
                 ]
             ],
             [
                 'html_id' => 'organizationTimePerMonth',
+                'type' => 'line',
                 'labels' => array_keys($time_charts_data['monthly']),
-                'values' => array_values($time_charts_data['monthly']),
-                'charts_js_opts' => [
-                    'backgroundColor' => [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    'borderColor' => [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
+                'datasets' => [
+                    [
+                        'label' => __('Monthly Tracked Time'),
+                        'data' => array_values($time_charts_data['monthly']),
+                        'backgroundColor' => chartBackgroundColors(),
+                        'borderColor' => chartBorderColors(),
+                        'borderWidth' => 1,
                     ]
                 ]
-            ]
+            ],
         ];
+
+        foreach ($invoice_charts_data as $html_id => $data) {
+            $labels = [];
+            $datasets = [];
+            $index = 0;
+            foreach ($data as $currency => $dataset_data) {
+                $labels = array_merge($labels, array_keys($dataset_data));
+                $datasets[] = [
+                    'label' => $currency,
+                    'data' => array_values($dataset_data),
+                    'backgroundColor' => chartBackgroundColors('single', $index),
+                    'borderWidth' => chartBorderColors('single', $index),
+                ];
+                $index++;
+            }
+            $labels = array_unique($labels);
+            $charts[] = [
+                'html_id' => $html_id,
+                'type' => 'bar',
+                'labels' => $labels,
+                'datasets' => $datasets
+            ];
+        }
 
         return view('frontend.pages.reports')
             ->withOrganization(auth()->user()->organization()->first())

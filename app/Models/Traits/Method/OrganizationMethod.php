@@ -34,9 +34,15 @@ trait OrganizationMethod
         $invoices = Invoice::whereIn('user_id', $this->users()->pluck('id'))->get();
         $daily = [];
         $monthly = [];
+        $all_labels_daily = [];
+        $all_labels_monthly = [];
         foreach ($invoices as $invoice) {
             $date = Carbon::createFromFormat('Y-m-d', $invoice->date);
             $currency = $invoice->currency;
+
+            $all_labels_daily[] = $date->format('M j');
+            $all_labels_monthly[] = $date->format('M Y');
+            
             if (isset($daily[$currency]) && isset($daily[$currency][$date->format('M j')])) {
                 $daily[$currency][$date->format('M j')] += $invoice->price;
             } else {
@@ -55,9 +61,25 @@ trait OrganizationMethod
             }
         }
 
+        foreach ($daily as $currency => $dates) {
+            $new_val = [];
+            foreach ($all_labels_daily as $label) {
+                $new_val[$label] = isset($dates[$label]) ? $dates[$label] : 0;
+            }
+            $daily[$currency] = $new_val;
+        }
+
+        foreach ($monthly as $currency => $dates) {
+            $new_val = [];
+            foreach ($all_labels_monthly as $label) {
+                $new_val[$label] = isset($dates[$label]) ? $dates[$label] : 0;
+            }
+            $monthly[$currency] = $new_val;
+        }
+
         return [
-            'daily' => $daily,
-            'monthly' => $monthly,
+            'organizationInvoicesPerDay' => $daily,
+            'organizationInvoicesPerMonth' => $monthly,
         ];
     }
 
