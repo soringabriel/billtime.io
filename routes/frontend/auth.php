@@ -4,7 +4,6 @@ use App\Domains\Auth\Http\Controllers\Frontend\Auth\ConfirmPasswordController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\DisableTwoFactorAuthenticationController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\LoginController;
-use App\Domains\Auth\Http\Controllers\Frontend\Auth\LoginControllerExtension;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\PasswordExpiredController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\ResetPasswordController;
@@ -22,7 +21,6 @@ Route::group(['as' => 'auth.'], function () {
     Route::group(['middleware' => 'auth'], function () {
         // Authentication
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-        Route::post('logout-extension', [LoginControllerExtension::class, 'logout'])->name('logout-extension');
 
         // Password expired routes
         Route::get('password/expired', [PasswordExpiredController::class, 'expired'])->name('password.expired');
@@ -82,8 +80,6 @@ Route::group(['as' => 'auth.'], function () {
         // Authentication
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('login', [LoginController::class, 'login']);
-        Route::get('login-extension', [LoginControllerExtension::class, 'showLoginForm'])->name('login-extension');
-        Route::post('login', [LoginControllerExtension::class, 'login']);
 
         // Registration
         Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
