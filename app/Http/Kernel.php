@@ -91,6 +91,7 @@ class Kernel extends HttpKernel
         'model_belongs_to_user' => \App\Http\Middleware\ModelBelongsToUser::class,
         'model_belongs_to_user_organization' => \App\Http\Middleware\ModelBelongsToUserOrganization::class,
         'not_organization_owner' => \App\Http\Middleware\UserIsNotOrganizationOwner::class,
+        'cors' => \App\Http\Middleware\CorsMiddleware::class,
     ];
 
     /**

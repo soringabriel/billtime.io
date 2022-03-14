@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\User\SubuserController;
 //});
 
 Route::group(['as' => 'user.api.time.', 'middleware' => [
+        'cors',
         'permission:user.access.times.access', 
         'permission:user.access.users.api', 
         'auth:api', 
@@ -42,6 +43,7 @@ Route::group(['as' => 'user.api.time.', 'middleware' => [
 }); 
 
 Route::group(['as' => 'user.api.clients.', 'middleware' => [
+    'cors',
     'permission:user.access.clients.access', 
     'permission:user.access.users.api', 
     'auth:api', 
@@ -60,6 +62,7 @@ Route::group(['as' => 'user.api.clients.', 'middleware' => [
 }); 
 
 Route::group(['as' => 'user.api.projects.', 'middleware' => [
+    'cors',
     'permission:user.access.projects.access', 
     'permission:user.access.users.api', 
     'auth:api', 
@@ -78,6 +81,7 @@ Route::group(['as' => 'user.api.projects.', 'middleware' => [
 }); 
 
 Route::group(['as' => 'user.api.invoices.', 'middleware' => [
+    'cors',
     'permission:user.access.invoices.access', 
     'permission:user.access.users.api', 
     'auth:api', 
