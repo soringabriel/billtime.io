@@ -203,6 +203,16 @@ $(function () {
         }
     })
 
+    $("#uncheckAllRows").on('click', function(){
+        $(".bulk-checkbox").each(function(){
+            $(this).prop('checked', false);
+        })
+        $(".bulk-checkbox-values").each(function(){
+            $(this).val("[]");
+            $(this)[0].dispatchEvent(new Event('change'));
+        })
+    })
+
     $(".bulk-checkbox-values").on('change', function(){
         setTimeout(() => {
             $("#checkedTimesValues")[0].dispatchEvent(new Event('change'));

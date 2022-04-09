@@ -3,8 +3,9 @@
     <input type="hidden" id="checkedTimesValues" value="{{ isset($this->checkedValuesTime) ? $this->checkedValuesTime : 0 }}">
     <div x-show="selected > 0">
         <div class="row" x-show="selected > 0">
-            <div class="col text-left text-muted">
+            <div class="col text-left text-muted mb-3">
                 <label>@lang('Selected') (<span x-text="selected"></span>)</label>
+                <button id="uncheckAllRows" class="btn btn-primary" type="button" x-show="selected > 0" x-on:click="selected = 0">Unselect all</button>
             </div>
         </div>
         @if (isset($this->bulkActions) && $this->bulkActions)
