@@ -23,7 +23,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? ($lastTime ? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') : stringDateFormat(now()->timezone(auth()->user()->timezone), 'Y-m-d H:i')) }}" autocomplete="off" required />
+                                        <input type="datetime" class="datetimepicker form-control" name="start_time" placeholder="{{ __('Start Time') }}" value="{{ old('start_time') ?? ($lastTime && carbon($lastTime->end_time)->isToday() ? stringDateFormat($lastTime->end_time, 'Y-m-d H:i') : stringDateFormat(now()->timezone(auth()->user()->timezone), 'Y-m-d H:i')) }}" autocomplete="off" required />
                                         <span class="btn btn-link datetimepicker-action">@lang('Now')</span>
                                     </div>
                                 </div><!--form-group-->
