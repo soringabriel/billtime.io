@@ -79,7 +79,6 @@ class CreateScheduleTest extends TestCase
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
             'tax' => 0,
-            'notes' => '',
         ]);
 
         $this->assertDatabaseHas('schedules', [
@@ -88,7 +87,6 @@ class CreateScheduleTest extends TestCase
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
             'tax' => 0,
-            'notes' => '',
         ]);
 
         Event::assertDispatched(ScheduleCreated::class);

@@ -127,7 +127,7 @@ class ScheduleController extends Controller
      */
     public function getSchedules()
     {
-        $schedules = Schedule::query()->where('organization_id', auth()->user()->organization()->first()->id)->get();
+        $schedules = Schedule::query()->whereIn('user_id', auth()->user()->organization()->first()->users()->pluck('id')->toArray())->get();
         $result = [];
         foreach ($schedules as $schedule) {
             $result[] = $schedule->apiProperties();

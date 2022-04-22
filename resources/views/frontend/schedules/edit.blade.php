@@ -8,7 +8,7 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <x-forms.post :action="route('frontend.schedules.update')">
+                <x-forms.patch :action="route('frontend.schedules.update', $schedule)">
                     <x-frontend.card>
                         <x-slot name="header">
                             @lang('Update Schedule')
@@ -71,7 +71,7 @@
 
                                 <div class="form-group row">
                                     <label for="tax" class="col-md-2 col-form-label">
-                                        <span>@lang('Tax Percentage')</span>
+                                        <span class="required-field">@lang('Tax Percentage')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
                                     </label>
 
@@ -116,11 +116,11 @@
                         </x-slot>
 
                         <x-slot name="footer">
-                            <button class="btn btn-outline-primary float-right" type="submit">@lang('Create Schedule')</button>
+                            <button class="btn btn-outline-primary float-right" type="submit">@lang('Update Schedule')</button>
                             <x-utils.link class="btn btn-outline-danger float-right mr-3" :href="route('frontend.schedules.index')" :text="__('Cancel')" permission="user.access.users.schedule" />
                         </x-slot>
                     </x-frontend.card>
-                </x-forms.post>
+                </x-forms.patch>
             </div><!--col-md-10-->
         </div><!--row-->
     </div><!--container-->

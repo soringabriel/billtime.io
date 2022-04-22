@@ -18,7 +18,7 @@ class SchedulesTable extends TableComponentExtended
     /**
      * @var string
      */
-    public $sortField = 'name';
+    public $sortField = 'created_at';
 
     /**
      * @var array
@@ -41,7 +41,7 @@ class SchedulesTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        return Schedule::query()->where('organization_id', auth()->user()->organization()->first()->id);
+        return Schedule::query()->whereIn('id', auth()->user()->organization()->first()->schedules()->pluck('id')->toArray());
     }
 
     /**
@@ -74,9 +74,21 @@ class SchedulesTable extends TableComponentExtended
 
                     return $this->html($html);
                 })
-                ->format(function (Time $model) {
+                ->format(function (Schedule $model) {
                     return $model->project->name;
                 }),
+            ColumnExtended::make(__('Date Of Month'), 'schedule_trigger')
+                ->searchable()
+                ->sortable()
+                ->withFilter(),
+            ColumnExtended::make(__('Price Per Hour'), 'price_per_hour')
+                ->searchable()
+                ->sortable()
+                ->withFilter(),
+            ColumnExtended::make(__('Tax'), 'tax')
+                ->searchable()
+                ->sortable()
+                ->withFilter(),
             ColumnExtended::make(__('Actions'))
                 ->format(function (Schedule $model) {
                     return view('frontend.schedules.includes.actions', ['model' => $model]);

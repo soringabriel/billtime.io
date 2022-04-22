@@ -27,7 +27,10 @@ class UpdateScheduleTest extends TestCase
         $organization = Organization::factory()->create(['owner_id' => $user->id]);
         $user->update(['organization_id' => $organization->id]);
 
-        $schedule = Schedule::factory()->create(['organization_id' => $organization->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+        
+        $schedule = Schedule::factory()->create(['user_id' => $user->id, 'project_id' => $project->id]);
         
         $this->get("/schedules/{$schedule->id}/edit")->assertRedirect('/login');
 
@@ -58,7 +61,10 @@ class UpdateScheduleTest extends TestCase
         $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
         $another_user->update(['organization_id' => $another_organization->id]);
 
-        $schedule = Schedule::factory()->create(['organization_id' => $another_organization->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
+
+        $schedule = Schedule::factory()->create(['user_id' => $another_user->id, 'project_id' => $project->id]);
         
         $this->get("/schedules/{$schedule->id}/edit")->assertRedirect(route(homeRoute()));
     }
@@ -75,11 +81,14 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs($user);
 
-        $schedule = Schedule::factory()->create(['organization_id' => $organization->id]);
+        $client = Client::factory()->create(['organization_id' => $organization->id]);
+        $project = Project::factory()->create(['organization_id' => $organization->id, 'client_id' => $client->id]);
+
+        $schedule = Schedule::factory()->create(['user_id' => $user->id, 'project_id' => $project->id]);
 
         $response = $this->patch("/schedules/{$schedule->id}");
 
-        $response->assertSessionHasErrors(['name']);
+        $response->assertSessionHasErrors(['project_id']);
     }
 
     /** @test */
@@ -99,14 +108,13 @@ class UpdateScheduleTest extends TestCase
 
         $this->actingAs($user);
 
-        $schedule = Schedule::factory()->create(['organization_id' => $organization->id]);
+        $schedule = Schedule::factory()->create(['user_id' => $user->id, 'project_id' => $project->id]);
 
         $this->patch("/schedules/{$schedule->id}", [
             'project_id' => $project->id,
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
             'tax' => 0,
-            'notes' => '',
         ]);
 
         $this->assertDatabaseHas('schedules', [
@@ -114,7 +122,6 @@ class UpdateScheduleTest extends TestCase
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
             'tax' => 0,
-            'notes' => '',
         ]);
 
         Event::assertDispatched(ScheduleUpdated::class);
@@ -136,14 +143,16 @@ class UpdateScheduleTest extends TestCase
         $another_organization = Organization::factory()->create(['owner_id' => $another_user->id]);
         $another_user->update(['organization_id' => $another_organization->id]);
 
-        $schedule = Schedule::factory()->create(['organization_id' => $another_organization->id]);
+        $client = Client::factory()->create(['organization_id' => $another_organization->id]);
+        $project = Project::factory()->create(['organization_id' => $another_organization->id, 'client_id' => $client->id]);
+
+        $schedule = Schedule::factory()->create(['user_id' => $another_user->id, 'project_id' => $project->id]);
 
         $response = $this->patch("/schedules/{$schedule->id}", [
             'project_id' => $project->id,
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
             'tax' => 0,
-            'notes' => '',
         ]);
 
         $response->assertSessionHas('flash_danger', __("You don't have access to this model."));
@@ -153,7 +162,6 @@ class UpdateScheduleTest extends TestCase
             'schedule_trigger' => $schedule->schedule_trigger,
             'price_per_hour' => $schedule->price_per_hour,
             'tax' => $schedule->tax,
-            'notes' => $schedule->notes,
         ]);
     }
 }

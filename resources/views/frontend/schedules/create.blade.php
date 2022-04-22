@@ -71,7 +71,7 @@
 
                                 <div class="form-group row">
                                     <label for="tax" class="col-md-2 col-form-label">
-                                        <span>@lang('Tax Percentage')</span>
+                                        <span class="required-field">@lang('Tax Percentage')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
                                     </label>
 
