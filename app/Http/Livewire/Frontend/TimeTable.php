@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Frontend;
 use App\Domains\Auth\Models\User;
 use App\Models\Time;
 use App\Models\Project;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use App\Custom\LaravelLivewireTables\TableComponentExtended;
@@ -121,8 +122,8 @@ class TimeTable extends TableComponentExtended
      * @var array
      */
     public $exportCustomCells = [
-        'I3' => 'Total time',
-        'J3' => '=sum(G2:G1000)',
+        'J3' => 'Total time',
+        'K3' => '=sum(H2:H1000)',
     ];
 
     /**
@@ -131,8 +132,8 @@ class TimeTable extends TableComponentExtended
     public $exportColumnFormats = [
         'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        'G' => "[h]:mm",
-        'J' => "[h]:mm",
+        'H' => "[h]:mm",
+        'K' => "[h]:mm",
     ];
 
     /**
@@ -153,7 +154,7 @@ class TimeTable extends TableComponentExtended
                 ],
             ],
         ],
-        'I3' => ['font' => ['bold' => true]],
+        'J3' => ['font' => ['bold' => true]],
     ];
 
     /**
@@ -321,8 +322,11 @@ class TimeTable extends TableComponentExtended
                 }),
             ColumnExtended::make(__('Project'))
                 ->withFilter(function ($builder, $term) {
-                    $projects = Project::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
-                    return $builder->whereIn('project_id', $projects);
+                    if (strlen($term)) {
+                        $projects = Project::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
+                        return $builder->whereIn('project_id', $projects);
+                    }
+                    return $builder;
                 })
                 ->filterHtml(function ($column) {
                     $html = '<select class="form-control"
@@ -343,17 +347,35 @@ class TimeTable extends TableComponentExtended
                 ->format(function (Time $model) {
                     return $model->project->name;
                 }),
-            ColumnExtended::make(__('Task'))
-                ->sortable()
-                ->withFilter()
-                ->format(function (Time $model) {
-                    $task_array = explode("/", $model->task);
-                    $task_title = end($task_array);
-                    return $this->html('<a class="task" href="' . $model->task . '" target="_blank">' . $task_title . '</a>');
+            ColumnExtended::make(__('Client'))
+                ->withFilter(function ($builder, $term) {
+                    if (strlen($term) > 0) {
+                        $projects = auth()->user()->clients()->where('name', 'like', '%' . $term . '%')->first()->projects()->pluck('id')->toArray();
+                        return $builder->whereIn('project_id', $projects);
+                    }
+                    return $builder;
                 })
-                ->exportFormat(function (Time $model) {
-                    return $model->task;
+                ->filterHtml(function ($column) {
+                    $html = '<select class="form-control"
+                        wire:model.lazy="filters.' . $column->getText() . '"
+                        wire:loading.attr="disabled"
+                    ><option value="">' . __('All') . '</option>';
+
+                    $clients = auth()->user()->clients()->get();
+
+                    foreach ($clients as $client) {
+                        $html .= '<option value="' . $client->name . '">' . $client->name . '</option>';
+                    }
+
+                    $html .= '</select>';
+
+                    return $this->html($html);
+                })
+                ->format(function (Time $model) {
+                    return $model->project->client()->first()->name;
                 }),
+            ColumnExtended::make(__('Task'))
+                ->exportOnly(),
             ColumnExtended::make(__('Billed'))
                 ->sortable()
                 ->format(function (Time $model) {

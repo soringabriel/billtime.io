@@ -42,6 +42,12 @@
         @endif
         */
     @endphp
+    <x-utils.link
+        class="btn btn-outline-info btn-sm view-time"
+        icon="fas fa-eye"
+        :data-info="json_encode($model)"
+        :title="__('View')"
+    />
     @if ($model->billed)
         <x-utils.form-button
             :action="route('frontend.time.toggleBilled', $model)"
@@ -71,3 +77,29 @@
         <x-utils.delete-button :href="route('frontend.time.destroy', $model)" permission="user.access.times.delete-all" :title="__('Delete')" text="" />
     @endif
 </div>
+<script>
+    (() => {
+        let viewElements = document.querySelectorAll(".view-time");
+        for (let index = 0; index < viewElements.length; index++) {
+            viewElements[index].addEventListener('click', function(e) {
+                let info = JSON.parse(viewElements[index].getAttribute("data-info"));
+                console.log(info);
+                Swal.fire({
+                    title: "{{ __('Time Record Details') }}",
+                    html: '<div class="row align-center pt-1 pb-1 border-bottom"><div class="col-md-4 text-left">@lang("Start Time")</div><div class="col-md-8 text-right">' + info.start_time + '</div></div>' + 
+                        '<div class="row align-center pt-1 pb-1 border-bottom"><div class="col-md-4 text-left">@lang("End Time")</div><div class="col-md-8 text-right">' + info.end_time + '</div></div>' + 
+                        '<div class="row align-center pt-1 pb-1 border-bottom"><div class="col-md-4 text-left">@lang("Project")</div><div class="col-md-8 text-right">' + (info.project.name ?? 'Unknown') + '</div></div>' + 
+                        '<div class="row align-center pt-1 pb-1 border-bottom"><div class="col-md-4 text-left">@lang("Task")</div><div class="col-md-8 text-right">' + (info.task ? '<a target="_blank" href="' + info.task + '">Link</a>' : 'Unknown') + '</div></div>' + 
+                        '<div class="row align-center pt-2 pb-2 border-bottom"><div class="col-md-4 text-left">@lang("Billed")</div><div class="col-md-8 text-right">' + 
+                            (info.billed ? '<span class="bg-success text-white text-nowrap rounded p-1">@lang("Billed")' : '<span class="bg-dark text-white text-nowrap rounded p-1">@lang("Not Billed")</span>') + 
+                        '</div></div>' + 
+                        '<div class="row align-center pt-1"><div class="col-md-4 text-left">@lang("Details")</div><div class="col-md-8 text-right">' + (info.details ?? 'Unknown') + '</div></div></span>',
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                    icon: 'info'
+                });
+            })
+        }
+    })();
+</script>
