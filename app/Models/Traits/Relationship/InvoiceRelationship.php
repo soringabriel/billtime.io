@@ -5,6 +5,7 @@ namespace App\Models\Traits\Relationship;
 use App\Models\Time;
 use App\Models\Project;
 use App\Models\Email;
+use App\Models\Schedule;
 use App\Domains\Auth\Models\User;
 
 /**
@@ -42,5 +43,16 @@ trait InvoiceRelationship
     public function emails()
     {
         return $this->hasMany(Email::class, 'invoice_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function schedule()
+    {
+        if ($this->schedule_id) {
+            return Schedule::find($this->schedule_id);
+        }
+        return null;
     }
 }

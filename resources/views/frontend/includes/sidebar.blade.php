@@ -195,13 +195,34 @@
             </ul>
         </li>
 
-        <li class="c-sidebar-nav-item">
+        <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('frontend.projects.*'), 'c-open c-show') }}">
             <x-utils.link
-                class="c-sidebar-nav-link"
-                :href="route('frontend.api-docs')"
-                :active="activeClass(Route::is('frontend.api-docs'), 'c-active')"
+                href="#"
+                :active="activeClass(Route::is('frontend.api-docs') || Route::is('frontend.schedules.*'), 'c-active')"
+                :text="__('Automation')"
                 icon="c-sidebar-nav-icon fas fa-code"
-                :text="__('API')" />
+                class="c-sidebar-nav-dropdown-toggle"
+                permission="user.access.users.schedule" />
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.schedules.index')"
+                        :active="activeClass(Route::is('frontend.schedules.*'), 'c-active')"
+                        icon="c-sidebar-nav-icon fas fa-clipboard-list"
+                        :text="__('Schedules')" />
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                        class="c-sidebar-nav-link"
+                        :href="route('frontend.api-docs')"
+                        :active="activeClass(Route::is('frontend.api-docs'), 'c-active')"
+                        icon="c-sidebar-nav-icon fas fa-code"
+                        :text="__('API')"
+                        permission="user.access.users.api" />
+                </li>
+            </ul>
         </li>
 
         <li class="c-sidebar-nav-item">

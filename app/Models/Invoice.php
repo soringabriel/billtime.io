@@ -61,6 +61,7 @@ class Invoice extends Model
         'notes',
         'status',
         'service_fee',
+        'schedule_id',
     ];
 
     /**
