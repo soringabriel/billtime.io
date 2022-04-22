@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\Time;
 use App\Models\Plan;
+use App\Models\Invoice;
 use App\Models\Schedule;
 
 /**
@@ -68,6 +69,14 @@ trait OrganizationRelationship
     public function times()
     {
         return $this->hasManyThrough(Time::class, User::class, 'organization_id', 'user_id', 'id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function invoices()
+    {
+        return Invoice::whereIn('user_id', $this->users()->pluck('id')->toArray());
     }
 
     /**

@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
         if (!App::environment('local')) {
             $schedule->command('emails:send')->daily()->at('18:00');
         }
+        $schedule->command('schedules:run')->daily();
         $schedule->command('backup:clean')->daily()->at('01:00');
         $schedule->command('backup:run')->daily()->at('01:30');
     }

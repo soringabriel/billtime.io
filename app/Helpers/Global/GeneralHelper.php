@@ -268,3 +268,31 @@ if (! function_exists('currencyCode')) {
         return explode(')', explode('(', $currency)[1])[0];
     }
 }
+
+if (! function_exists('generateInvoiceNumber')) {
+    /**
+     * Generates a new invoice number based on the last invoice number
+     *
+     * @param $previous_invoice_number
+     *
+     * @return string
+     */
+    function generateInvoiceNumber($previous_invoice_number = "1")
+    {
+        $original_number = preg_replace('/[^0-9]/', '', $previous_invoice_number);
+        $number = $original_number;
+        $intnumber = intval($number);
+        $newintnumber = $intnumber + 1;
+
+        if (strlen($number) > strlen($intnumber) && strlen($newintnumber) > strlen($intnumber)) {
+            $pos = strpos($number, "0");
+            if ($pos !== false) {
+                $number = substr_replace($number, "", $pos, 1);
+            }
+        }
+
+        $newnumber = str_replace($intnumber, $newintnumber, $number);
+        $invoice_number = str_replace($original_number, $newnumber, $previous_invoice_number);
+        return $invoice_number;
+    }
+}
