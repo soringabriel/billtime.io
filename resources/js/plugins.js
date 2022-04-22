@@ -122,7 +122,7 @@ $(function () {
 
     $('.datetimepicker').each(function(){
         $(this).datetimepicker({
-            step: 5,
+            step: 15,
             format: 'Y-m-d H:i',
             defaultDate: date,
             maxDate: date
