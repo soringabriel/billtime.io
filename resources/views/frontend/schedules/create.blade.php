@@ -17,9 +17,12 @@
                         <x-slot name="body">
                             <div x-data="init()">
                                 <div class="alert alert-info" role="alert">
-                                    @lang('With schedules you can schedule recurrent monthly invoices for each project on a specific date of the month.')
-                                    @lang('On the specifed date our systems will take all the non billed times for that specific project, and generate an invoice using them.')
-                                    @lang('This invoice with the associated times excel will be send to your email and to the organization owner\'s email.')
+                                    <ul class="m-0">
+                                        <li>@lang('With schedules you can schedule recurrent monthly invoices for each project on a specific date of the month.')</li>
+                                        <li>@lang('On the specifed date our systems will take all the non billed times for that specific project, and generate an invoice using them.')</li>
+                                        <li>@lang('This invoice with the associated times excel will be send to your email and to the organization owner\'s email.')</li>
+                                        <li>@lang('The client\'s details will be asociated with the ones of the client, and the seller details will be associated with the ones from your organization.')</li>
+                                    </ul>
                                 </div>
                                 <div class="form-group row">
                                     <label for="project_id" class="col-md-2 col-form-label">
