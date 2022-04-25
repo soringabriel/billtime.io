@@ -8,6 +8,7 @@ use App\Models\Time;
 use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Schedule;
 use App\Models\Organization;
 
 /**
@@ -61,6 +62,14 @@ trait UserRelationship
     public function projects()
     {
         return $this->hasManyThrough(Project::class, Organization::class, 'owner_id', 'organization_id', 'id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'user_id');
     }
 
     /**
