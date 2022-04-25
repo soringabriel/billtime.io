@@ -13,3 +13,13 @@
         </div><!--row-->
     </div><!--container-->
 @endsection
+
+@push('after-scripts')
+<script>
+    gtag('event', 'conversion', {
+        'send_to': 'AW-848044905/68r6CJb7h9ICEOnGsJQD',
+        'value': {{ $plan->price }},
+        'currency': '{{ $plan->currency }}'
+    });
+</script>
+@endpush

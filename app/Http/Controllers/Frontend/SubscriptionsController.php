@@ -29,9 +29,9 @@ class SubscriptionsController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirmation()
+    public function confirmation(Plan $plan)
     {
-        return view('frontend.subscription.confirmation');
+        return view('frontend.subscription.confirmation')->withPlan($plan);
     }
 
     /**

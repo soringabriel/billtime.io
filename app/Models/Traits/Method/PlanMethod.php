@@ -40,7 +40,7 @@ trait PlanMethod
             if ($this->price > $plan->price) {   
                 if (is_null($organization_subscription) || $organization_subscription->cancelled()) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
-                        ->returnTo(route('frontend.subscription.confirmation'))
+                        ->returnTo(route('frontend.subscription.confirmation', $this))
                         ->withMetadata(['plan_id' => $this->id])
                         ->create(
                             [
@@ -77,7 +77,7 @@ trait PlanMethod
             if ($this->id == $plan->id) {   
                 if (is_null($organization_subscription) || $organization_subscription->cancelled()) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
-                        ->returnTo(route('frontend.subscription.confirmation'))
+                        ->returnTo(route('frontend.subscription.confirmation', $this))
                         ->withMetadata(['plan_id' => $this->id])
                         ->create(
                             [
@@ -110,7 +110,7 @@ trait PlanMethod
             if (($this->price < $nextPlan->price) || ($this->price > $nextPlan->price && $this->price < $plan->price)) {   
                 if (is_null($organization_subscription) || $organization_subscription->cancelled()) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
-                        ->returnTo(route('frontend.subscription.confirmation'))
+                        ->returnTo(route('frontend.subscription.confirmation', $this))
                         ->withMetadata(['plan_id' => $this->id])
                         ->create(
                             [
@@ -140,7 +140,7 @@ trait PlanMethod
             if ($this->price > $plan->price) {  
                 if (is_null($organization_subscription) || $organization_subscription->cancelled()) {
                     $paylink = $organization->newSubscription('default', $premium = billingTypeToPaddleId($this->billing_type))
-                        ->returnTo(route('frontend.subscription.confirmation'))
+                        ->returnTo(route('frontend.subscription.confirmation', $this))
                         ->withMetadata(['plan_id' => $this->id])
                         ->create(
                             [
