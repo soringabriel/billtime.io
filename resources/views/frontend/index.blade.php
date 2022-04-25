@@ -78,6 +78,9 @@
                                         <a class="page-scroll" href="#service">@lang('Services')</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="page-scroll" href="#pricing">@lang('Pricing')</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="page-scroll" href="#about">@lang('About')</a>
                                     </li>
                                     <li class="nav-item">
@@ -294,6 +297,120 @@
     </section>
 
     <!--====== SCREENSHOTS PART ENDS ======-->
+
+    <!--====== PRICING PART START ======-->
+
+    <section id="pricing" class="pricing-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-title text-center pb-10">
+                        <h4 class="title">@lang('Pricing')</h4>
+                        <p class="text">@lang('Check out our plans and choose according to your needs')</p>
+                    </div> <!-- section title -->
+                </div>
+            </div> <!-- row -->
+            <div class="row justify-content-center">
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Free')</h5>
+                            <span class="price">@lang('Free')</span>
+                            <p class="year">@lang('of costs')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni lni-ban"></i> @lang('No Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('Least amount of benefits')</p>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Freelancer')</h5>
+                            <span class="price">$ 3,99</span>
+                            <p class="year">@lang('per user, per month')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('One user only')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$3,99 in total, per month')</p>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Startup')</h5>
+                            <span class="price">$ 0,99</span>
+                            <p class="year">@lang('per user, per month')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Up to 20 users')</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$19,99 in total, per month')</p>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+                
+                <div class="col-xxl-3 col-lg-5 col-md-7 col-sm-9">
+                    <div class="single-pricing mt-40">
+                        <div class="pricing-header text-center">
+                            <h5 class="sub-title">@lang('Company')</h5>
+                            <span class="price">$ 0,01</span>
+                            <p class="year">@lang('per user, per month')</p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Time Tracking')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Data Exports')</li>
+                                <li><i class="lni-check-mark-circle"></i> @lang('Invoicing')</li>
+                                <li><i class="lni-check-mark-circle"></i> <strong>@lang('Unlimited users')</strong></li>
+                            </ul>
+                        </div>
+                        <div class="pricing-btn text-center">
+                            <p class="mb-4 text-secondary">@lang('$49,99 in total, per month')</p>
+                        </div>
+                        <div class="buttom-shape">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-3{fill:#4da422;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-3" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-3" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-3" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-3" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
+                        </div>
+                    </div> <!-- single pricing -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- conteiner -->
+    </section>
+
+    <!--====== PRICING PART ENDS ======-->
 
     <!--====== ABOUT US START ======-->
 
