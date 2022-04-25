@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="body">
-                            <div x-data="{price: 0, currency: 'USD'}">
+                            <div x-data="init()">
                                 <div class="alert alert-info" role="alert">
                                     @lang('With schedules you can schedule recurrent monthly invoices for each project on a specific date of the month.')
                                     @lang('On the specifed date our systems will take all the non billed times for that specific project, and generate an invoice using them.')
@@ -28,7 +28,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select name="project_id" @change="price = $event.target.getAttribute('data-price'); currency = $event.target.getAttribute('data-currency');" class="form-control select2-project mb-2">
+                                        <select id="project_id" name="project_id" @change="projectChange" class="form-control select2-project mb-2">
                                             @foreach ($projects as $project) 
                                                 <option data-price="{{ $project->price }}" data-currency="{{ $project->price_currency }}" value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'checked' : '' }}>{{ $project->name }}</option>    
                                             @endforeach
@@ -65,7 +65,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select name="price_currency" class="form-control select2" x-model="currency" required>
+                                        <select id="price_currency" name="price_currency" class="form-control select2" x-model="currency" required>
                                             @foreach ($currencies as $currency => $symbol)
                                                 <option value="{{ currencyCode($currency) }}">{{ $currency }}</option>
                                             @endforeach
@@ -140,3 +140,19 @@
         </div><!--row-->
     </div><!--container-->
 @endsection
+
+<script>
+    function init() {
+        return {
+            price: 0, 
+            currency: 'USD',
+            projectChange() {
+                let project_id = document.getElementById('project_id');
+                this.price = project_id.options[project_id.selectedIndex].getAttribute('data-price');
+                this.currency = project_id.options[project_id.selectedIndex].getAttribute('data-currency');
+                console.log(this.price);
+                setTimeout(() => { $('#price_currency').trigger('change.select2'); }, 100);
+            }
+        };
+    }
+</script>
