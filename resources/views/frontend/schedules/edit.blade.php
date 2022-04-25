@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="body">
-                            <div>
+                            <div x-data="{price: {{ $schedule->price_per_hour }}, currency: {{ $schedule->price_currency }}}">
                                 <div class="alert alert-info" role="alert">
                                     @lang('With schedules you can schedule recurrent monthly invoices for each project on a specific date of the month.')
                                     @lang('On the specifed date our systems will take all the non billed times for that specific project, and generate an invoice using them.')
@@ -28,9 +28,9 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select name="project_id" class="form-control select2-project mb-2">
+                                        <select name="project_id" @change="price = $event.target.getAttribute('data-price'); currency = $event.target.getAttribute('data-currency');" class="form-control select2-project mb-2">
                                             @foreach ($projects as $project) 
-                                                <option value="{{ $project->id }}" {{ old('project_id') ? (old('project_id') == $project->id ? 'checked' : '') : ($schedule->project_id == $project->id ? 'checked' : '') }}>{{ $project->name }}</option>    
+                                                <option data-price="{{ $project->price }}" data-currency="{{ $project->price_currency }}" value="{{ $project->id }}" {{ old('project_id') ? (old('project_id') == $project->id ? 'checked' : '') : ($schedule->project_id == $project->id ? 'checked' : '') }}>{{ $project->name }}</option>    
                                             @endforeach
                                         </select>
                                     </div>
@@ -54,7 +54,22 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <input type="number" name="price_per_hour" class="form-control" value="{{ old('price_per_hour') ?? $schedule->price_per_hour }}" placeholder="{{ __('Price per hour') }}" step=".01" />
+                                        <input type="number" name="price_per_hour" x-model="price" class="form-control" value="{{ old('price_per_hour') ?? $schedule->price_per_hour }}" placeholder="{{ __('Price per hour') }}" step=".01" />
+                                    </div>
+                                </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="price_currency" class="col-md-2 col-form-label">
+                                        <span class="required-field">@lang('Price Currency')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Currency for the price per hour') }}"></i>
+                                    </label>
+
+                                    <div class="col-md-10">
+                                        <select name="price_currency" class="form-control select2" x-model="currency" required>
+                                            @foreach ($currencies as $currency => $symbol)
+                                                <option value="{{ currencyCode($currency) }}">{{ $currency }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div><!--form-group-->
 

@@ -30,6 +30,7 @@ class ScheduleFactory extends Factory
             'period' => Schedule::MONTHLY,
             'schedule_trigger' => 1,
             'price_per_hour' => $this->faker->randomFloat(2, 1, 100),
+            'price_currency' => $this->faker->currencyCode,
             'discount' => $this->faker->randomFloat(2, 1, 100),
             'tax' => $this->faker->numberBetween(0, 100),
             'shipping' => $this->faker->randomFloat(2, 1, 100),

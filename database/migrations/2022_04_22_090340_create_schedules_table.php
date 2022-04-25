@@ -21,6 +21,7 @@ class CreateSchedulesTable extends Migration
             $table->enum('period', Schedule::PERIODS)->default(Schedule::MONTHLY);
             $table->string('schedule_trigger')->default(1);
             $table->double('price_per_hour')->default(0);
+            $table->string('price_currency')->default('USD');
             $table->double('discount')->nullable();
             $table->double('tax')->default(0);
             $table->double('shipping')->nullable();

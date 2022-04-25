@@ -42,6 +42,7 @@ class Schedule extends Model
         'period',
         'schedule_trigger',
         'price_per_hour',
+        'price_currency',
         'discount',
         'tax',
         'shipping',

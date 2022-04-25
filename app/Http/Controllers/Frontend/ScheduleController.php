@@ -44,7 +44,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        return view('frontend.schedules.create');
+        return view('frontend.schedules.create')->withCurrencies(currencyToSymbol());
     }
 
     /**
@@ -77,7 +77,8 @@ class ScheduleController extends Controller
     public function edit(EditScheduleRequest $request, Schedule $schedule)
     {
         return view('frontend.schedules.edit')
-            ->withSchedule($schedule);
+            ->withSchedule($schedule)
+            ->withCurrencies(currencyToSymbol());
     }
 
     /**

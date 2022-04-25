@@ -114,6 +114,7 @@ class UpdateScheduleTest extends TestCase
             'project_id' => $project->id,
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
+            'price_currency' => 'USD',
             'tax' => 0,
         ]);
 
@@ -121,6 +122,7 @@ class UpdateScheduleTest extends TestCase
             'project_id' => $project->id,
             'schedule_trigger' => 1,
             'price_per_hour' => 30,
+            'price_currency' => 'USD',
             'tax' => 0,
         ]);
 

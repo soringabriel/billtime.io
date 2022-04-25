@@ -85,7 +85,11 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <input type="text" name="price_currency" class="form-control" placeholder="{{ __('Currency for price') }}" value="{{ old('price_currency') ?? $project->price_currency }}" maxlength="3" />
+                                        <select name="price_currency" class="form-control select2" required>
+                                            @foreach ($currencies as $currency => $symbol)
+                                                <option value="{{ currencyCode($currency) }}" {{ old('price_currency') ? (old('price_currency') == currencyCode($currency) ? 'checked' : '') : ($project->price_currency == currencyCode($currency) ? 'checked' : '') }}>{{ $currency }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div><!--form-group-->
                             </div>
