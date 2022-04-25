@@ -60,6 +60,8 @@ class OrganizationService extends BaseService
             $this->updateOrganizationPermissions($organization);
         } catch (Exception $e) {
             DB::rollBack();
+            echo $e->getMessage();
+            exit();
             throw new GeneralException(__('There was a problem creating the Organization.'));
         }
 

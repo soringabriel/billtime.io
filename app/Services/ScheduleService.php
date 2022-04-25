@@ -95,6 +95,8 @@ class ScheduleService extends BaseService
             );
         } catch (Exception $e) {
             DB::rollBack();
+            echo $e->getMessage();
+            exit();
             throw new GeneralException(__('There was a problem updating the Schedule.'));
         }
 

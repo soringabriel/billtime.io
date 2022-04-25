@@ -74,17 +74,6 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="discount" class="col-md-2 col-form-label">
-                                        <span>@lang('Discount')</span>
-                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Discount for each invoice') }}"></i>
-                                    </label>
-
-                                    <div class="col-md-10">
-                                        <input type="number" name="discount" class="form-control" placeholder="{{ __('Discount') }}" min="0" step=".01" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
                                     <label for="tax" class="col-md-2 col-form-label">
                                         <span class="required-field">@lang('Tax Percentage')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
@@ -92,6 +81,17 @@
 
                                     <div class="col-md-10">
                                         <input type="number" name="tax" class="form-control" min="0" max="100" placeholder="{{ __('Tax') }}" step=".01" />
+                                    </div>
+                                </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="discount" class="col-md-2 col-form-label">
+                                        <span>@lang('Discount')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Discount for each invoice') }}"></i>
+                                    </label>
+
+                                    <div class="col-md-10">
+                                        <input type="number" name="discount" class="form-control" placeholder="{{ __('Discount') }}" min="0" step=".01" />
                                     </div>
                                 </div><!--form-group-->
                                 

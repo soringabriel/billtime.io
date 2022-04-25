@@ -204,6 +204,8 @@
                                             filtersEnabled="1" 
                                             isInvoice="1"
                                             customFiltersEnabled="1" 
+                                            customFilters="[]"
+                                            filters="[]"
                                             bulkActions="0"
                                             bulk="1"
                                             exports="0"

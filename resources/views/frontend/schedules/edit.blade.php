@@ -28,7 +28,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select id="project_id" name="project_id" @change="projectChange" class="form-control select2-project mb-2">
+                                        <select id="project_id" name="project_id" @change="projectChange" x-model="project_id" class="form-control select2-project mb-2">
                                             @foreach ($projects as $project) 
                                                 <option data-price="{{ $project->price }}" data-currency="{{ $project->price_currency }}" value="{{ $project->id }}" {{ old('project_id') ? (old('project_id') == $project->id ? 'checked' : '') : ($schedule->project_id == $project->id ? 'checked' : '') }}>{{ $project->name }}</option>    
                                             @endforeach
@@ -74,17 +74,6 @@
                                 </div><!--form-group-->
 
                                 <div class="form-group row">
-                                    <label for="discount" class="col-md-2 col-form-label">
-                                        <span>@lang('Discount')</span>
-                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Discount for each invoice') }}"></i>
-                                    </label>
-
-                                    <div class="col-md-10">
-                                        <input type="number" name="discount" class="form-control" value="{{ old('discount') ?? $schedule->discount }}" placeholder="{{ __('Discount') }}" min="0" step=".01" />
-                                    </div>
-                                </div><!--form-group-->
-
-                                <div class="form-group row">
                                     <label for="tax" class="col-md-2 col-form-label">
                                         <span class="required-field">@lang('Tax Percentage')</span>
                                         <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('The tax percentage for the invoice. Must be a percentage between 0 to 100') }}"></i>
@@ -92,6 +81,17 @@
 
                                     <div class="col-md-10">
                                         <input type="number" name="tax" class="form-control" min="0" max="100" value="{{ old('tax') ?? $schedule->tax }}" placeholder="{{ __('Tax') }}" step=".01" />
+                                    </div>
+                                </div><!--form-group-->
+
+                                <div class="form-group row">
+                                    <label for="discount" class="col-md-2 col-form-label">
+                                        <span>@lang('Discount')</span>
+                                        <i class="ml-2 far fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ __('Discount for each invoice') }}"></i>
+                                    </label>
+
+                                    <div class="col-md-10">
+                                        <input type="number" name="discount" class="form-control" value="{{ old('discount') ?? $schedule->discount }}" placeholder="{{ __('Discount') }}" min="0" step=".01" />
                                     </div>
                                 </div><!--form-group-->
                                 
@@ -144,6 +144,7 @@
 <script>
     function init() {
         return {
+            project_id: {{ $schedule->project_id }},
             price: {{ $schedule->price_per_hour }}, 
             currency: '{{ $schedule->price_currency }}',
             projectChange() {

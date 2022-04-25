@@ -22,17 +22,19 @@ class ScheduleEmail extends Notification
      *
      * @param  InvoiceService  $invoiceService
      * @param  Invoice  $invoice
+     * @param  file  $xls
      * @param  array $data
      *
      * @return void
      */
-    public function __construct(InvoiceService $invoiceService, Invoice $invoice, $data)
+    public function __construct(InvoiceService $invoiceService, Invoice $invoice, $xls, $data)
     {
         $this->invoiceService = $invoiceService;
         $this->invoice = $invoice;
         $this->locale = $data['locale'];
         $this->reply_email = $data['from'];
         $this->name = $data['name'];
+        $this->xls = $xls;
     }
 
     /**
@@ -64,6 +66,9 @@ class ScheduleEmail extends Notification
             ->line(__('For further questions, please reply to the following email: ') . $this->reply_email)
             ->attachData($pdf, "invoice_" . $this->invoice->number . "_" . $this->locale . ".pdf", [
                 'mime' => 'application/pdf',
+            ])
+            ->attachData($this->xls, "time_records.xls", [
+                'mime' => 'application/vnd.ms-excel',
             ]);
     }
 }

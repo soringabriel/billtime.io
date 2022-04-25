@@ -195,7 +195,7 @@
             </ul>
         </li>
 
-        <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('frontend.projects.*'), 'c-open c-show') }}">
+        <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('frontend.api-docs') || Route::is('frontend.schedules.*'), 'c-open c-show') }}">
             <x-utils.link
                 href="#"
                 :active="activeClass(Route::is('frontend.api-docs') || Route::is('frontend.schedules.*'), 'c-active')"

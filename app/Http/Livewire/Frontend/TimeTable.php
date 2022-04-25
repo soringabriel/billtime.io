@@ -178,22 +178,28 @@ class TimeTable extends TableComponentExtended
      */
     public function mount(
         $filtersEnabled = true, 
-        $customFiltersEnabled = true, 
+        $customFiltersEnabled = true,
+        $customFilters = "[]",
+        $filters = "[]",
         $isInvoice = false, 
         $bulkActions = true,
         $bulk = true,
         $exports = true,
-        $preCheckedValues = "[]"
+        $preCheckedValues = "[]",
+        $user = null
     ) {
+        $this->user = $user ?? auth()->user();
         $this->filtersEnabled = $filtersEnabled;
         $this->customFiltersEnabled = $customFiltersEnabled;
+        $this->customFilters = json_decode($customFilters, true);
+        $this->filters = json_decode($filters, true);
         $this->isInvoice = $isInvoice;
         $this->bulkActions = $bulkActions;
         $this->bulk = $bulk;
         $this->preCheckedValues = json_decode($preCheckedValues) ?? [];
         $this->hiddenDataBulk[0]['value'] = json_encode($this->preCheckedValues ?? []);
         $this->setCheckedValuesTime($this->preCheckedValues);
-        if (!$exports || !auth()->user()->can('user.access.times.export')) {
+        if (!$exports || !$this->user->can('user.access.times.export')) {
             $this->exports = [];
         }
     }
@@ -248,8 +254,9 @@ class TimeTable extends TableComponentExtended
      */
     public function query(): Builder
     {
-        $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
-        $users = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+        $this->user = isset($this->user) ? $this->user : auth()->user();
+        $organization_users = is_null($this->user->organization()->first()) ? [] : $this->user->organization()->first()->users()->pluck('id')->toArray();
+        $users = $this->user->can('user.access.times.show-all') ? $organization_users : [$this->user->id];
         return Time::query()->whereIn('user_id', $users);
     }
 
@@ -299,14 +306,14 @@ class TimeTable extends TableComponentExtended
                     $users = User::where('name', 'like', '%' . $term . '%')->pluck('id')->toArray();
                     return $builder->whereIn('user_id', $users);
                 })
-                ->filterHtml(function ($column) {
+                ->filterHtml(function ($column) use ($timeTable) {
                     $html = '<select class="form-control"
                         wire:model.lazy="filters.' . $column->getText() . '"
                         wire:loading.attr="disabled"
                     ><option value="">' . __('All') . '</option>';
 
-                    $organization_users = is_null(auth()->user()->organization()->first()) ? [] : auth()->user()->organization()->first()->users()->pluck('id')->toArray();
-                    $user_ids = auth()->user()->can('user.access.times.show-all') ? $organization_users : [auth()->user()->id];
+                    $organization_users = is_null($this->user->organization()->first()) ? [] : $this->user->organization()->first()->users()->pluck('id')->toArray();
+                    $user_ids = $this->user->can('user.access.times.show-all') ? $organization_users : [$this->user->id];
                     $users = User::whereIn('id', $user_ids)->get();
 
                     foreach ($users as $user) {
@@ -328,13 +335,13 @@ class TimeTable extends TableComponentExtended
                     }
                     return $builder;
                 })
-                ->filterHtml(function ($column) {
+                ->filterHtml(function ($column) use ($timeTable) {
                     $html = '<select class="form-control"
                         wire:model.lazy="filters.' . $column->getText() . '"
                         wire:loading.attr="disabled"
                     ><option value="">' . __('All') . '</option>';
 
-                    $projects = auth()->user()->projects()->get();
+                    $projects = $this->user->projects()->get();
 
                     foreach ($projects as $project) {
                         $html .= '<option value="' . $project->name . '">' . $project->name . '</option>';
@@ -348,20 +355,20 @@ class TimeTable extends TableComponentExtended
                     return $model->project->name;
                 }),
             ColumnExtended::make(__('Client'))
-                ->withFilter(function ($builder, $term) {
+                ->withFilter(function ($builder, $term) use ($timeTable) {
                     if (strlen($term) > 0) {
-                        $projects = auth()->user()->clients()->where('name', 'like', '%' . $term . '%')->first()->projects()->pluck('id')->toArray();
+                        $projects = $this->user->clients()->where('name', 'like', '%' . $term . '%')->first()->projects()->pluck('id')->toArray();
                         return $builder->whereIn('project_id', $projects);
                     }
                     return $builder;
                 })
-                ->filterHtml(function ($column) {
+                ->filterHtml(function ($column) use ($timeTable) {
                     $html = '<select class="form-control"
                         wire:model.lazy="filters.' . $column->getText() . '"
                         wire:loading.attr="disabled"
                     ><option value="">' . __('All') . '</option>';
 
-                    $clients = auth()->user()->clients()->get();
+                    $clients = $this->user->clients()->get();
 
                     foreach ($clients as $client) {
                         $html .= '<option value="' . $client->name . '">' . $client->name . '</option>';
