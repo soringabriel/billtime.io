@@ -15,7 +15,7 @@
                         </x-slot>
 
                         <x-slot name="body">
-                            <div>
+                            <div x-data="{price_currency:'{{ old('price_currency') ? old('price_currency') : $project->price_currency }}'}">
                                 <div class="form-group row">
                                     <label for="name" class="col-md-2 col-form-label">
                                         <span class="required-field">@lang('Name')</span>
@@ -85,7 +85,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <select name="price_currency" class="form-control select2" required>
+                                        <select name="price_currency" class="form-control select2" x-model="price_currency" required>
                                             @foreach ($currencies as $currency => $symbol)
                                                 <option value="{{ currencyCode($currency) }}" {{ old('price_currency') ? (old('price_currency') == currencyCode($currency) ? 'checked' : '') : ($project->price_currency == currencyCode($currency) ? 'checked' : '') }}>{{ $currency }}</option>
                                             @endforeach
