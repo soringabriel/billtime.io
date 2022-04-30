@@ -31,36 +31,36 @@
                             <div class="card">
                                 <div class="card-header" id="accordion-tab-1-heading-1">
                                     <h5>
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-1" aria-expanded="false" aria-controls="accordion-tab-1-content-1">@lang('What is Timo-Track?')</button>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-1" aria-expanded="false" aria-controls="accordion-tab-1-content-1">@lang('What is BillTime.io?')</button>
                                     </h5>
                                 </div>
                                 <div class="collapse show" id="accordion-tab-1-content-1" aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
                                     <div class="card-body">
-                                        <p>@lang('Timo-Track is a cloud tool that allows time tracking and billing for companies of all sizes')</p>
+                                        <p>@lang('BillTime.io is a cloud tool that allows time tracking and billing for companies of all sizes')</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-header" id="accordion-tab-1-heading-2">
                                     <h5>
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-2" aria-expanded="false" aria-controls="accordion-tab-1-content-2">@lang('Who is Timo-Track for?')</button>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-2" aria-expanded="false" aria-controls="accordion-tab-1-content-2">@lang('Who is BillTime.io for?')</button>
                                     </h5>
                                 </div>
                                 <div class="collapse" id="accordion-tab-1-content-2" aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
                                     <div class="card-body">
-                                        <p>@lang('Timo-Track it\'s recommended for any company that bills their customer by hour, or any company that wants to have a bigger picture on how time is consumed in their organization')</p>
+                                        <p>@lang('BillTime.io it\'s recommended for any company that bills their customer by hour, or any company that wants to have a bigger picture on how time is consumed in their organization')</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-header" id="accordion-tab-1-heading-3">
                                     <h5>
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-3" aria-expanded="false" aria-controls="accordion-tab-1-content-3">@lang('Is Timo-Track free?')</button>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-3" aria-expanded="false" aria-controls="accordion-tab-1-content-3">@lang('Is BillTime.io free?')</button>
                                     </h5>
                                 </div>
                                 <div class="collapse" id="accordion-tab-1-content-3" aria-labelledby="accordion-tab-1-heading-3" data-parent="#accordion-tab-1">
                                     <div class="card-body">
-                                        <p>@lang('Timo-Track it\'s a free tool that can be used without any card information necessary.')</p>
+                                        <p>@lang('BillTime.io it\'s a free tool that can be used without any card information necessary.')</p>
                                         <p>@lang('By deafult on registration each user gets a free trial of 14 days, while they can use all of the features.')</p>
                                         <p>@lang('After this period they can still use their account, but some of the features will be taken away, unless you opt in for a paid plan')</p>
                                     </div>
@@ -83,13 +83,13 @@
                             <div class="card">
                                 <div class="card-header" id="accordion-tab-1-heading-5">
                                     <h5>
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-5" aria-expanded="false" aria-controls="accordion-tab-1-content-5">@lang('What plans does Timo-Track offer?')</button>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-5" aria-expanded="false" aria-controls="accordion-tab-1-content-5">@lang('What plans does BillTime.io offer?')</button>
                                     </h5>
                                 </div>
                                 <div class="collapse" id="accordion-tab-1-content-5" aria-labelledby="accordion-tab-1-heading-5" data-parent="#accordion-tab-1">
                                     <div class="card-body">
-                                        <p>@lang('The list with all of the plans offered by Timo-Track is visible on the page Plan, from the top right corner (for logged in users only)')</p>
-                                        <p>@lang('Timo-Track offers plans from 0 to 99$ per month designed to satisfy the needs of companies of any sizes')</p>
+                                        <p>@lang('The list with all of the plans offered by BillTime.io is visible on the page Plan, from the top right corner (for logged in users only)')</p>
+                                        <p>@lang('BillTime.io offers plans from 0 to 99$ per month designed to satisfy the needs of companies of any sizes')</p>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="collapse" id="accordion-tab-2-content-2" aria-labelledby="accordion-tab-2-heading-2" data-parent="#accordion-tab-2">
                                     <div class="card-body">
-                                        <p>@lang('Automatic time tracking it\'s a widget offered by Timo-Track that it\'s making time tracking easier.')</p>
+                                        <p>@lang('Automatic time tracking it\'s a widget offered by BillTime.io that it\'s making time tracking easier.')</p>
                                         <p>@lang('Instead of manually adding the start and the end time for a record, you just start the counter and save the record once you are done working on your task.')</p>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="collapse" id="accordion-tab-2-content-5" aria-labelledby="accordion-tab-2-heading-5" data-parent="#accordion-tab-2">
                                     <div class="card-body">
-                                        <p>@lang('Timo-Track accepts exporting the time records as XLSX, XLS and CSV.')</p>
+                                        <p>@lang('BillTime.io accepts exporting the time records as XLSX, XLS and CSV.')</p>
                                         <p>@lang('To export the time records, go on the Time Records List page and on the top right side of the table you will see a button called Export.')
                                     </div>
                                 </div>

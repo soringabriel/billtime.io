@@ -122,7 +122,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h2 class="header-title">@lang('Timo-Track')</h2>
+                            <h2 class="header-title">@lang('Bill Your Company\'s Time')</h2>
                             <h1 class="text font-weight-normal">@lang('Time tracking and invoicing software')</h1>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one page-scroll" rel="nofollow" href="{{ route('frontend.auth.register') }}">@lang('Try now for free')</a></li>
@@ -243,7 +243,7 @@
                             </picture>
                         </div>
                         <div class="carousel-item">
-                            <p class="text-center mb-5 lead">@lang('After activation, check out your dashboard, which will lead you through your first steps on Timo-Track')</p>
+                            <p class="text-center mb-5 lead">@lang('After activation, check out your dashboard, which will lead you through your first steps on BillTime.io')</p>
                             <picture class="d-block w-100 border border-dark">
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/dashboard.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/dashboard.png#full') }}">
@@ -424,7 +424,7 @@
                 </div>
             </div> 
             <div class="row text-center paragraphs">
-                <p>@lang('Timo-Track it\'s a tool that wants to take away all the troubles and discomfort that comes from time tracking and invoicing.')</p>
+                <p>@lang('BillTime.io it\'s a tool that wants to take away all the troubles and discomfort that comes from time tracking and invoicing.')</p>
                 <p>@lang('Our product will be successful once our customers will use it with pleasure, and they will notice the value that it brings.')
                 <p>@lang('Any feedback will be welcomed, and we will always put customer experience at the top of our priorities!')</p>
             </div> 
@@ -462,8 +462,8 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Other Details')</h6>
                             <ul>
-                                <li><a href="https://blog.timotrack.com/">@lang('Blog')</a></li>
-                                <li><a class="page-scroll" href="mailto:info@timotrack.com">@lang('Send Us An Email')</a></li>
+                                <li><a href="https://blog.billtime.io/">@lang('Blog')</a></li>
+                                <li><a class="page-scroll" href="mailto:info@billtime.io">@lang('Send Us An Email')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>

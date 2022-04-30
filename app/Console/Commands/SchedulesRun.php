@@ -134,9 +134,9 @@ class SchedulesRun extends Command
                 $organization_owner->email => $organization_owner->name,
                 $user->email => $user->name
             ])->notify(new ScheduleEmail($this->invoiceService, $invoice, $time_xls, [
-                'from' => 'info@timotrack.com',
+                'from' => 'info@billtime.io',
                 'locale' => 'en',
-                'name' => 'Timo-Track',
+                'name' => 'BillTime.io',
             ]));
         }
         return 0;

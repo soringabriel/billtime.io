@@ -51,6 +51,6 @@ MIT: [http://anthony.mit-license.org](http://anthony.mit-license.org)
 
 ### Backups
 
-The project automatically creates and saves backups in /storage/app/TimoTrack/
+The project automatically creates and saves backups in /storage/app/BillTime.io/
 
 Also the import of a db-backup might not work with heidisql! Try mysql workbench instead!

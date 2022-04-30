@@ -36,7 +36,7 @@ class OneWeekFeedback extends Notification
             ->subject(__('Share With Us Your Feedback'))
             ->line(__('Let me start by telling you that we\'re happy to have you on board! It\'s been already a week since you registered, and I would like to know what\'s the general feeling you have about our tool.'))
             ->line(__('We would really love if you could share with us your feedback by filling out this small form:'))
-            ->action(__('Feedback'), 'https://www.trustpilot.com/evaluate/timotrack.com')
+            ->action(__('Feedback'), 'https://www.trustpilot.com/evaluate/billtime.io')
             ->line(__('We know how precious your time is, so we want to keep it simple. Your feedback it\'s important to us because it tells us if we\'re heading into a good direction, or if not, what we can do to get back on the good path.'))
             ->line(__('If you encounter any problems with the form, let me know and I will answer back as soon as I see the message!'))
             ->salutation(__('Best regards, Peter'));

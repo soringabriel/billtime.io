@@ -34,10 +34,10 @@ class TrialCancelation extends Notification
     {
         return (new MailMessage)
             ->subject(__('Today Is Your Last Day Of Free Trial'))
-            ->line(__('As a new user you benefit of 2 weeks of free trial, while being able to use all of our services at https://timotrack.com'))
+            ->line(__('As a new user you benefit of 2 weeks of free trial, while being able to use all of our services at https://billtime.io'))
             ->line(__('However, it looks like this period is coming to an end for your account. This will mean that you will no longer have access to invoices and your account will only have one user associated to it.'))
             ->line(__('To prevent losing these features, you can upgrade to one of our plans:'))
-            ->action(__('Plans'), 'https://timotrack.com/plan')
+            ->action(__('Plans'), 'https://billtime.io/plan')
             ->line(__('In case you don\'t know what plan to pick, I\'m here to help you! Just send a reply to this email or contact our team via the chat from the website.'))
             ->salutation(__('Best regards, Peter'));
     }
