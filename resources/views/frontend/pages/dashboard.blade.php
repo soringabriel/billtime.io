@@ -38,7 +38,7 @@
                                 class="list-group-item list-group-item-action font-weight-bold"
                                 permission="user.access.projects.create"
                             />
-                            @if (!$organization->hasCompanyDetails() && $logged_in_user->isOrganizationOwner())
+                            @if ($logged_in_user->isOrganizationOwner())
                                 <x-utils.link
                                     class="list-group-item list-group-item-action font-weight-bold"
                                     :href="route('frontend.user.account') . '#organization'"

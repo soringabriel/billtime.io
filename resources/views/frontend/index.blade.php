@@ -180,11 +180,11 @@
                         <div class="col-md-6">
                             <div class="services-content mt-40 d-sm-flex">
                                 <div class="services-icon">
-                                    <i class="lni-users"></i>
+                                    <i class="lni-code-alt"></i>
                                 </div>
                                 <div class="services-content media-body">
-                                    <h4 class="services-title">@lang('Employees')</h4>
-                                    <h3 class="text font-weight-normal">@lang('Create and edit multiple employees accounts and their permissions, according to your needs')</h3>
+                                    <h4 class="services-title">@lang('Auotmation')</h4>
+                                    <h3 class="text font-weight-normal">@lang('Use our vast API endpoints, or schedule new invoices as you need')</h3>
                                 </div>
                             </div> <!-- services content -->
                         </div>
@@ -414,7 +414,7 @@
 
     <!--====== ABOUT US START ======-->
 
-    <section id="about" class="about-area" style="background-image: url('{{ asset('img/presentation/about-us.png#full') }}'); background-image: -webkit-image-set(url('{{ asset('img/presentation/about-us.webp#full') }}') 1x);">
+    <section id="about" class="about-area">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
