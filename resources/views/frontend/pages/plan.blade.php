@@ -88,7 +88,7 @@
                         <div class="single-pricing mt-40">
                             <div class="pricing-header text-center">
                                 <h5 class="sub-title">@lang('Startup')</h5>
-                                <span class="price">$ 0,99</span>
+                                <span class="price">$ 2,49</span>
                                 <p class="year">@lang('per user, per month')</p>
                             </div>
                             <div class="pricing-list">
@@ -100,7 +100,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$19,99 in total, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$49,99 in total, per month')</p>
                                 {{ $associatedPlans['Startup']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
@@ -125,7 +125,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-btn text-center">
-                                <p class="mb-4 text-secondary">@lang('$49,99 in total, per month')</p>
+                                <p class="mb-4 text-secondary">@lang('$149,99 in total, per month')</p>
                                 {{ $associatedPlans['Company']->getButton($userPlan, $userNextPlan) }}
                             </div>
                             <div class="buttom-shape">
