@@ -920,3 +920,20 @@ p.form-message.error {
   border-radius: 100%;
   background-size: 50%;
 }
+
+#companies {
+  .companies-images {
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    img {
+      max-width: 100px;
+      margin: 16px;
+  
+      @media (min-width: 768px) {
+        max-width: 150px;
+      }
+    }
+  }
+}

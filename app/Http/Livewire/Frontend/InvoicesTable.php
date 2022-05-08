@@ -71,10 +71,6 @@ class InvoicesTable extends TableComponentExtended
                 ->searchable()
                 ->sortable()
                 ->withFilter(),
-            ColumnExtended::make(__('Seller'), 'seller_company_name')
-                ->searchable()
-                ->sortable()
-                ->withFilter(),
             ColumnExtended::make(__('Status'))
                 ->searchable()
                 ->sortable()

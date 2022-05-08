@@ -140,6 +140,22 @@
 
     <!--====== HEADER PART ENDS ======-->
 
+    <!--====== COMPANIES PART START ======-->
+
+    <section id="companies" class="companies-area">
+        <div class="container">
+            <div class="d-flex companies-images">
+                <img class="w-80" src="{{ asset('img/presentation/companies/google.png#full') }}" alt="google">
+                <img class="w-80" src="{{ asset('img/presentation/companies/hootsuite.png#full') }}" alt="hootsuite">
+                <img class="w-80" src="{{ asset('img/presentation/companies/meta.png#full') }}" alt="meta">
+                <img class="w-80" src="{{ asset('img/presentation/companies/palantir.png#full') }}" alt="palantir">
+                <img class="w-80" src="{{ asset('img/presentation/companies/pwc.png#full') }}" alt="pwc">
+            </div>
+        </div>
+    </section>
+    
+    <!--====== COMPANIES PART ENDS ======-->
+
     <!--====== SERVICES PART START ======-->
 
     <section id="service" class="services-area">
@@ -428,9 +444,9 @@
                 </div>
             </div> 
             <div class="row text-center paragraphs">
-                <p>@lang('BillTime.io it\'s a tool that wants to take away all the troubles and discomfort that comes from time tracking and invoicing.')</p>
-                <p>@lang('Our product will be successful once our customers will use it with pleasure, and they will notice the value that it brings.')
-                <p>@lang('Any feedback will be welcomed, and we will always put customer experience at the top of our priorities!')</p>
+                <p>@lang('BillTime.io it\'s a tool that wants to take away all the troubles and discomfort that comes from time tracking and invoicing, so that you can focus on other things more important for your company.')</p>
+                <p>@lang('We\'re constantly looking for ways to improve our features and to make our user\'s life easier.')</p>
+                <p>@lang('Your feedback and sugestions are very important to us, as we believe this is vital for our product to acheive its goals')</p>
             </div> 
         </div> 
     </section>

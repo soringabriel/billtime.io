@@ -5,6 +5,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-past-due"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-danger btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
             >
@@ -16,6 +17,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-paid"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-success btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
             >
@@ -27,6 +29,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-pending"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-dark btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
             >
@@ -108,6 +111,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-past-due"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-danger btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAST_DUE]]) !!}"
                 permission="user.access.invoices.update-status-all"
@@ -120,6 +124,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-paid"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-success btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PAID]]) !!}"
                 permission="user.access.invoices.update-status-all"
@@ -132,6 +137,7 @@
                 :action="route('frontend.invoices.updateStatus', $model)"
                 method="patch"
                 name="set-status-pending"
+                icon="fas fa-file-invoice-dollar"
                 button-class="btn btn-outline-dark btn-sm"
                 hiddenData="{!! json_encode([['name' => 'status', 'value' => $model::STATUS_PENDING]]) !!}"
                 permission="user.access.invoices.update-status-all"

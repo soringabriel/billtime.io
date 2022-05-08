@@ -13,7 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-light"
                             :href="route('frontend.clients.create')"
                             :text="__('Add Client')"
                             permission="user.access.clients.create"

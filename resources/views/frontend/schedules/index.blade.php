@@ -13,7 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-light"
                             :href="route('frontend.schedules.create')"
                             :text="__('Add Schedule')"
                             permission="user.access.users.schedule"

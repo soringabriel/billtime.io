@@ -13,7 +13,7 @@
 
                     <x-slot name="headerActions">
                         <x-utils.link
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-light"
                             :href="route('frontend.invoices.index')"
                             :text="__('See Invoices List')"
                             permission="user.access.invoices.index"
