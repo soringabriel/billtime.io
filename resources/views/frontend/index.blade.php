@@ -5,14 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ appName() }} | @lang('Time tracking and billing software')</title>
+    <title>BillTime | @lang('Time tracking and billing software')</title>
     <meta name="description" content="{{ __('Easy to use software, that allows you and your employees to track and bill your working hours easily.') }}">
     <meta name="author" content="@yield('meta_author', 'Sorin-Gabriel Marica')">
     <meta name="theme-color" content="#1B99A9">
     <meta name="keywords" content="timetracker,time tracking,time tracker,business managment,invoice creator,billing tool,invoice tool,invoicing tool">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
-    <meta name="twitter:title" content="{{ appName() }} | @lang('Time tracking and billing software')" />
+    <meta property="og:title" content="BillTime | @lang('Time tracking and billing software')" />
+    <meta name="twitter:title" content="BillTime | @lang('Time tracking and billing software')" />
     <meta name="twitter:description" content="{{ __('Easy to use software, that allows you and your employees to track and bill your working hours easily.') }}">
     <meta name="twitter:site" content="{{ env('APP_URL') }}">
     <meta name="twitter:image" content="{{ asset('img/presentation/social-image.png#full') }}">
@@ -517,6 +517,8 @@
     </footer>
 
     <!--====== FOOTER PART ENDS ======-->
+
+    @include('includes.partials.schemas')
 
     @stack('before-scripts')
     @include('frontend.includes.presentation-js')
