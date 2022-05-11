@@ -24,6 +24,17 @@ class PagesController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function analytics()
+    {
+        return view('frontend.pages.analytics')
+            ->withOrganization(auth()->user()->organization()->first())
+            ->withTimesChartData(auth()->user()->getTimesChartData())
+            ->withOrganizationTimesChartData(auth()->user()->organization()->first()->getTimesChartData());
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function plan()
     {
         $plans = Plan::all();

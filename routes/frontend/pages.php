@@ -12,6 +12,12 @@ Route::group([
             $trail->push(__('Dashboard'), route('frontend.dashboard'));
         });
 
+    Route::get('/analytics', [PagesController::class, 'analytics'])
+        ->name('analytics')
+        ->breadcrumbs(function (Trail $trail) {
+            $trail->push(__('Analytics'), route('frontend.analytics'));
+        });
+
     Route::get('/api-docs', [PagesController::class, 'api'])
         ->name('api-docs')
         ->middleware('permission:user.access.users.api')
