@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\ClientController;
 use App\Http\Controllers\Frontend\ProjectController;
 use App\Http\Controllers\Frontend\InvoiceController;
 use App\Http\Controllers\Frontend\User\SubuserController;
+use App\Domains\Auth\Http\Controllers\Frontend\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,10 @@ use App\Http\Controllers\Frontend\User\SubuserController;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
+Route::group(['as' => 'user.api.'], function () {
+    Route::post('/login', [LoginController::class, 'apiLogin'])->name('login');
+}); 
 
 Route::group(['as' => 'user.api.time.', 'middleware' => [
         'cors',
