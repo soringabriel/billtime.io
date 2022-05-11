@@ -60,7 +60,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="#">
-                                <img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo">
+                                <img src="{{ asset('img/presentation/logo.svg#full') }}" loading="lazy" alt="Logo">
                             </a>
 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarOne" aria-controls="navbarOne" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +133,7 @@
                 </div> <!-- row -->
             </div> <!-- container -->
             <div class="header-shape">
-                <img src="{{ asset('img/presentation/header-shape.svg#full') }}" alt="shape">
+                <img src="{{ asset('img/presentation/header-shape.svg#full') }}" loading="lazy" alt="shape">
             </div>
         </div> <!-- header content -->
     </header>
@@ -145,11 +145,11 @@
     <section id="companies" class="companies-area">
         <div class="container">
             <div class="d-flex companies-images">
-                <img class="w-80" src="{{ asset('img/presentation/companies/google.png#full') }}" alt="google">
-                <img class="w-80" src="{{ asset('img/presentation/companies/hootsuite.png#full') }}" alt="hootsuite">
-                <img class="w-80" src="{{ asset('img/presentation/companies/meta.png#full') }}" alt="meta">
-                <img class="w-80" src="{{ asset('img/presentation/companies/palantir.png#full') }}" alt="palantir">
-                <img class="w-80" src="{{ asset('img/presentation/companies/pwc.png#full') }}" alt="pwc">
+                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/google.png#full') }}" alt="google">
+                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/hootsuite.png#full') }}" alt="hootsuite">
+                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/meta.png#full') }}" alt="meta">
+                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/palantir.png#full') }}" alt="palantir">
+                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/pwc.png#full') }}" alt="pwc">
             </div>
         </div>
     </section>
@@ -224,7 +224,7 @@
                 <picture>
                     <source type="image/webp" srcset="{{ asset('img/presentation/services.webp#full') }}">
                     <source type="image/jpg" srcset="{{ asset('img/presentation/services.jpg#full') }}">
-                    <img src="{{ asset('img/presentation/services.jpg#full') }}" alt="Services">
+                    <img loading="lazy"  src="{{ asset('img/presentation/services.jpg#full') }}" alt="Services">
                 </picture>
             </div>
         </div> <!-- services image -->
@@ -296,6 +296,22 @@
                                 <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/team-members.webp#full') }}">
                                 <source type="image/png" srcset="{{ asset('img/presentation/screenshots/team-members.png#full') }}">
                                 <img src="{{ asset('img/presentation/screenshots/team-members.png#full') }}" alt="{{ __('Team Members') }}">
+                            </picture>
+                        </div>
+                        <div class="carousel-item">
+                            <p class="text-center mb-5 lead">@lang('Schedule Invoices')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/add-schedule.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/add-schedule.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/add-schedule.png#full') }}" alt="{{ __('Add Schedule') }}">
+                            </picture>
+                        </div>
+                        <div class="carousel-item">
+                            <p class="text-center mb-5 lead">@lang('Use our API to automate your team processes')</p>
+                            <picture class="d-block w-100 border border-dark">
+                                <source type="image/webp" srcset="{{ asset('img/presentation/screenshots/api.webp#full') }}">
+                                <source type="image/png" srcset="{{ asset('img/presentation/screenshots/api.png#full') }}">
+                                <img src="{{ asset('img/presentation/screenshots/api.png#full') }}" alt="{{ __('API') }}">
                             </picture>
                         </div>
                     </div>
@@ -490,7 +506,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-7">
                         <div class="footer-logo-support d-md-flex align-items-end justify-content-between">
                             <div class="footer-logo d-flex align-items-end">
-                                <a class="mt-30" href="#"><img src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
+                                <a class="mt-30" href="#"><img loading="lazy"  src="{{ asset('img/presentation/logo.svg#full') }}" alt="Logo"></a>
                             </div> <!-- footer logo -->
                             
                         </div> <!-- footer logo support -->

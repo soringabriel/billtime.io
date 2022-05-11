@@ -934,6 +934,10 @@ p.form-message.error {
       @media (min-width: 768px) {
         max-width: 150px;
       }
+
+      @media (min-width: 1300px) {
+        margin: 16px 32px;
+      }
     }
   }
 }

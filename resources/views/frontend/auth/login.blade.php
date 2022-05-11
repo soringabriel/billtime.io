@@ -8,7 +8,7 @@
             <div class="col-md-6 col-lg-4">
                 <x-frontend.card class="transparent-header">
                     <x-slot name="header">
-                        <h4 class="pt-3 m-auto">@lang('Login')</h4>
+                        <h4 class="pt-1 pb-1 m-auto">@lang('Login')</h4>
                     </x-slot>
 
                     <x-slot name="body">

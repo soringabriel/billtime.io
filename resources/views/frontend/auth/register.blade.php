@@ -16,7 +16,7 @@
             <div class="col-md-6 col-lg-4 pt-3">
                 <x-frontend.card class="transparent-header">
                     <x-slot name="header">
-                        <h4 class="pt-3 m-auto">@lang('Sign Up')</h4>
+                        <h4 class="pt-1 pb-1 m-auto">@lang('Sign Up')</h4>
                     </x-slot>
 
                     <x-slot name="body">
