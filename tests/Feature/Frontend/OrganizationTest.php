@@ -31,6 +31,8 @@ class OrganizationTest extends TestCase
             'address' => $organization->address,
             'bank_name' => $organization->bank_name,
             'bank_account' => $organization->bank_account,
+            'working_days' => $organization->working_days,
+            'start_hour' => $organization->start_hour,
         ]);
 
         $response = $this->actingAs($user)
@@ -41,7 +43,9 @@ class OrganizationTest extends TestCase
                 'address' => 'address',
                 'bank_name' => 'bank_name',
                 'bank_account' => 'bank_account',
-            ])->assertRedirect('/account?#information');
+                'working_days' => [1],
+                'start_hour' => 9,
+            ])->assertRedirect('/account?#organization');
 
         $response->assertSessionHas('flash_success', __('Company details successfully updated.'));
 
@@ -59,6 +63,8 @@ class OrganizationTest extends TestCase
             'address' => 'address',
             'bank_name' => 'bank_name',
             'bank_account' => 'bank_account',
+            'working_days' => '[1]',
+            'start_hour' => 9,
         ]);
     }
 
@@ -79,6 +85,8 @@ class OrganizationTest extends TestCase
                 'address' => 'address',
                 'bank_name' => 'bank_name',
                 'bank_account' => 'bank_account',
+                'working_days' => [1],
+                'start_hour' => 9,
             ])->assertRedirect('/');
 
         $response->assertSessionHas('flash_danger', __('You don\'t have access to this page.'));
@@ -90,6 +98,8 @@ class OrganizationTest extends TestCase
             'address' => $organization->address,
             'bank_name' => $organization->bank_name,
             'bank_account' => $organization->bank_account,
+            'working_days' => $organization->working_days,
+            'start_hour' => $organization->start_hour,
         ]);
     }
 }

@@ -24,6 +24,8 @@ class UpdateOrganizationDetailsRequest extends FormRequest
             'address' => ['nullable', 'max:255'],
             'bank_name' => ['nullable', 'max:255'],
             'bank_account' => ['nullable', 'max:255'],
+            'working_days' => ['required', 'array'],
+            'start_hour' => ['required', 'integer', 'min:0', 'max:23'],
         ];
     }
 }

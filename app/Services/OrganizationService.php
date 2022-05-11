@@ -55,6 +55,8 @@ class OrganizationService extends BaseService
                     'subusers_quota' => ($data['subusers_quota'] ?? 0),
                     'plan_expire' => ($data['plan_expire'] ?? null),
                     'start_period' => ($data['start_period'] ?? true),
+                    'working_days' => ($data['working_days'] ?? '[1, 2, 3, 4, 5]'),
+                    'start_hour' => ($data['start_hour'] ?? 9),
                 ]
             );
             $this->updateOrganizationPermissions($organization);
@@ -97,6 +99,8 @@ class OrganizationService extends BaseService
                     'subusers_quota' => $data['subusers_quota'] ?? $organization->subusers_quota,
                     'plan_expire' => array_key_exists('plan_expire', $data) ? $data['plan_expire'] : $organization->plan_expire,
                     'start_period' => array_key_exists('start_period', $data) ? $data['start_period'] : $organization->start_period,
+                    'working_days' => $data['working_days'] ?? $organization->working_days,
+                    'start_hour' => $data['start_hour'] ?? $organization->start_hour,
                 ]
             );
             $this->updateOrganizationPermissions($organization);

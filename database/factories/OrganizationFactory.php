@@ -37,6 +37,8 @@ class OrganizationFactory extends Factory
             'bank_account' => $this->faker->asciify('********'),
             'plan_expire' => Carbon::instance($this->faker->dateTime())->toDateTimeString(),
             'start_period' => false,
+            'working_days' => "[1, 2, 3, 4, 5]",
+            'start_hour' => 0,
         ];
     }
 }

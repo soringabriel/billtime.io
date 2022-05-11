@@ -38,8 +38,12 @@ class ProfileController extends Controller
      */
     public function updateOrganizationDetails(UpdateOrganizationDetailsRequest $request, OrganizationService $organizationService)
     {
-        $organizationService->update($request->user()->organization()->first(), $request->validated());
+        $payload = $request->validated();
 
-        return redirect()->route('frontend.user.account', ['#information'])->withFlashSuccess(__('Company details successfully updated.'));
+        $payload['working_days'] = json_encode($payload['working_days']);
+
+        $organizationService->update($request->user()->organization()->first(), $payload);
+
+        return redirect()->route('frontend.user.account', ['#organization'])->withFlashSuccess(__('Company details successfully updated.'));
     }
 }

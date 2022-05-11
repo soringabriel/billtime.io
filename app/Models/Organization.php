@@ -48,6 +48,8 @@ class Organization extends Model
         'subusers_quota',
         'plan_expire',
         'start_period',
+        'working_days',
+        'start_hour',
     ];
                 
     /**
