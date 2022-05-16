@@ -23,6 +23,7 @@ class SendEmailRequest extends FormRequest
             'from' => ['required', 'string', 'email', 'max:255'],
             'to' => ['required', 'string', 'email', 'max:255'],
             'locale' => ['sometimes', 'nullable', Rule::in(array_keys(config('boilerplate.locale.invoices_languages')))],
+            'attach_xls' => ['sometimes'],
         ];
     }
 }
