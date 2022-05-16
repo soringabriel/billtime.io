@@ -18,6 +18,8 @@ use LaravelDaily\Invoices\Invoice as LaravelInvoice;
 use Illuminate\Support\Facades\Auth;
 use Notification;
 use App\Domains\Auth\Notifications\Frontend\InvoiceEmail;
+use App\Http\Livewire\Frontend\TimeTable;
+use Maatwebsite\Excel\Excel;
 
 /**
  * Class InvoiceController.
@@ -245,13 +247,13 @@ class InvoiceController extends Controller
         $data['name'] = $organization->company_name ?? $user->name;
         $data['invoice_id'] = $invoice->id;
         $data['locale'] = $data['locale'] ?? config('app.locale');
-        if ($data['attach_xls']) {
+        if (isset($data['attach_xls']) && $data['attach_xls']) {
             $time_xls = new TimeTable();
             $time_xls->mount(
                 $filtersEnabled = true, 
                 $customFiltersEnabled = true, 
                 $customFilters = json_encode([
-                    'invoices' => $invoice->id,
+                    'invoice' => $invoice->id,
                 ]),
                 $filters = "[]",
                 $isInvoice = false, 

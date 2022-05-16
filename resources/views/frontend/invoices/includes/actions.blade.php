@@ -93,6 +93,12 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="field-group field-group-required mt-3">
+                                <label class="font-weight-bold">
+                                    <input type="checkbox" name="attach_xls" value="true" class="mr-1">
+                                    @lang('Attach XLS file with associated times of the invoice')
+                                </label>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary w-auto" data-dismiss="modal">@lang('Close')</button>

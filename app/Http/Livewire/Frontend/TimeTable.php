@@ -226,11 +226,7 @@ class TimeTable extends TableComponentExtended
                     >
                         <option value="">' . __("Any") . '</option>';
             foreach ($this->invoices as $invoice) {
-                $selected = "";
-                if ($this->customFilters && $this->customFilters["invoice"] && $this->customFilters["invoice"] == $invoice->id) {
-                    $selected = "selected";
-                }
-                $invoices_html .= "<option value=" . $invoice->id . " " . $selected . ">" . $invoice->number . "</option>";
+                $invoices_html .= "<option value=" . $invoice->id . ">" . $invoice->number . "</option>";
             }
             $invoices_html .= "</select></div></div>";
         }
