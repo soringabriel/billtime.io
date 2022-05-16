@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Frontend;
 
 use App\Domains\Auth\Models\User;
 use App\Models\Time;
+use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
@@ -209,8 +210,33 @@ class TimeTable extends TableComponentExtended
      */
     public function customFilters()
     {
-        return $this->html('
-        <div class="col col-md-3">
+        $invoices_html = "";
+        if ($this->invoices) {
+            $invoices_html = '
+            <div class="col col-md-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text">' . __('Invoice') . '</label>
+                    </div>
+                    <select class="form-control"
+                        wire:model.debounce.' . $this->customFiltersDebounce . 'ms="customFilters.invoice"
+                        wire:model.lazy="customFilters.invoice"
+                        wire:loading.attr="disabled"
+                        placeholder="' . __("Invoice") . '"
+                    >
+                        <option value="">' . __("Any") . '</option>';
+            foreach ($this->invoices as $invoice) {
+                $selected = "";
+                if ($this->customFilters && $this->customFilters["invoice"] && $this->customFilters["invoice"] == $invoice->id) {
+                    $selected = "selected";
+                }
+                $invoices_html .= "<option value=" . $invoice->id . " " . $selected . ">" . $invoice->number . "</option>";
+            }
+            $invoices_html .= "</select></div></div>";
+        }
+        return $this->html($invoices_html . '
+        
+        <div class="col col-md-2">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <label class="input-group-text">' . __('Billed') . '</label>
@@ -257,6 +283,13 @@ class TimeTable extends TableComponentExtended
         $this->user = isset($this->user) ? $this->user : auth()->user();
         $organization_users = is_null($this->user->organization()->first()) ? [] : $this->user->organization()->first()->users()->pluck('id')->toArray();
         $users = $this->user->can('user.access.times.show-all') ? $organization_users : [$this->user->id];
+        $this->invoices = null;
+        if ($this->user->can('user.access.invoices.access')) {
+            if ($this->user->can('user.access.invoices.show-all')) {
+                $this->invoices = Invoice::whereIn('user_id', $this->user->organization()->first()->users()->pluck('id'))->get();
+            }
+            $this->invoices = Invoice::where('user_id', $this->user->id)->get();
+        }
         return Time::query()->whereIn('user_id', $users);
     }
 
@@ -430,6 +463,11 @@ class TimeTable extends TableComponentExtended
     public function models(): Builder
     {
         $builder = parent::models();
+
+        if (isset($this->customFilters['invoice']) && $this->customFilters['invoice'] != "") {
+            $invoice = Invoice::find($this->customFilters['invoice']);
+            $builder->whereIn('id', $invoice->times()->pluck('id')->toArray());
+        }
 
         if (isset($this->customFilters['start']) && $this->customFilters['start'] != "") {
             $builder->where('end_time', '>=', Carbon::parse($this->customFilters['start'])->format('Y-m-d'));

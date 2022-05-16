@@ -193,7 +193,7 @@
                                                 filtersEnabled="1" 
                                                 isInvoice="1"
                                                 customFiltersEnabled="1"
-                                                customFilters="[]"
+                                                customFilters='{!! json_encode(["invoice" => $invoice->id]) !!}'
                                                 filters="[]"
                                                 bulkActions="0"
                                                 bulk="1"

@@ -245,6 +245,32 @@ class InvoiceController extends Controller
         $data['name'] = $organization->company_name ?? $user->name;
         $data['invoice_id'] = $invoice->id;
         $data['locale'] = $data['locale'] ?? config('app.locale');
+        if ($data['attach_xls']) {
+            $time_xls = new TimeTable();
+            $time_xls->mount(
+                $filtersEnabled = true, 
+                $customFiltersEnabled = true, 
+                $customFilters = json_encode([
+                    'invoices' => $invoice->id,
+                ]),
+                $filters = "[]",
+                $isInvoice = false, 
+                $bulkActions = true,
+                $bulk = true,
+                $exports = true,
+                $preCheckedValues = "[]",
+                $user = auth()->user(),
+            );
+    
+            $class = config('laravel-livewire-tables.exports');
+            $data['xls'] = (new $class(
+                $time_xls->models(),
+                $time_xls->columns(),
+                $time_xls->exportCustomCells(),
+                $time_xls->exportColumnFormats(),
+                $time_xls->exportStyles(),
+            ))->raw(Excel::XLS);
+        }
 
         Notification::route('mail', $data['to'])->notify(new InvoiceEmail($this->invoiceService, $invoice, $data));
 
