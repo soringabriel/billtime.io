@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Console\Command;
 use App\Domains\Auth\Models\User;
 use Illuminate\Support\Facades\Http;
@@ -12,6 +13,9 @@ use App\Domains\Auth\Notifications\Frontend\OneMonthInactivity;
 use App\Domains\Auth\Notifications\Frontend\OneWeekFeedback;
 use App\Domains\Auth\Notifications\Frontend\TrialCancelation;
 use App\Domains\Auth\Notifications\Frontend\TrialCancelationWarning;
+use App\Domains\Auth\Notifications\Frontend\TimeReport;
+use App\Http\Livewire\Frontend\TimeTable;
+use Maatwebsite\Excel\Excel;
 
 class EmailIntegration extends Command
 {
@@ -73,6 +77,46 @@ class EmailIntegration extends Command
             }
             if (!is_null($created_at) && $created_at->addDays(3)->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
                 $user->notify(new Activity());
+            }
+            if (!is_null($created_at) && $created_at->addDays(7)->format('Y-m-d') <= Carbon::now()->format('Y-m-d') && Carbon::now()->dayOfWeek == Carbon::FRIDAY) {
+                $times = $user->times()->where('start_time', '>=', Carbon::now()->subDays(7))->orderBy('start_time')->get();
+                $total_time = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
+                foreach ($times as $time) {
+                    $total_time->add(Carbon::createFromFormat('Y-m-d H:i:s', $time->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $time->start_time)));
+                }
+                $total_hours = $total_time->cascade()->hours + ($total_time->cascade()->minutes > 0 ? 1 : 0);    
+                
+                $time_xls = null;
+                if ($total_hours > 0) {
+                    $time_xls = new TimeTable();
+                    $time_xls->mount(
+                        $filtersEnabled = true, 
+                        $customFiltersEnabled = true, 
+                        $customFilters = json_encode([
+                            'start' => Carbon::now()->subDays(7)
+                        ]),
+                        $filters = json_encode([
+                            'User' => $user->name,
+                        ]),
+                        $isInvoice = false, 
+                        $bulkActions = true,
+                        $bulk = true,
+                        $exports = true,
+                        $preCheckedValues = "[]",
+                        $user = $user
+                    );
+        
+                    $class = config('laravel-livewire-tables.exports');
+                    $time_xls = (new $class(
+                        $time_xls->models(),
+                        $time_xls->columns(),
+                        $time_xls->exportCustomCells(),
+                        $time_xls->exportColumnFormats(),
+                        $time_xls->exportStyles(),
+                    ))->raw(Excel::XLS);
+                }
+
+                $user->notify(new TimeReport($time_xls, ['total_hours' => $total_hours]));
             }
         }
         return 0;
