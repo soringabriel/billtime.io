@@ -51,6 +51,10 @@ class EmailIntegration extends Command
     public function handle()
     {
         $users = User::users()->get();
+        CarbonInterval::setCascadeFactors([
+            'minute' => [60, 'seconds'],
+            'hour' => [60, 'minutes'],
+        ]);
         foreach ($users as $user) {
             $organization = $user->organization()->first();
             $created_at = is_null($user->created_at) ? null : Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at);
@@ -78,7 +82,7 @@ class EmailIntegration extends Command
             if (!is_null($created_at) && $created_at->addDays(3)->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
                 $user->notify(new Activity());
             }
-            if (!is_null($created_at) && $created_at->addDays(7)->format('Y-m-d') <= Carbon::now()->format('Y-m-d') && Carbon::now()->dayOfWeek == Carbon::FRIDAY) {
+            if (!is_null($created_at) && $created_at->addDays(7)->format('Y-m-d') <= Carbon::now()->format('Y-m-d') && Carbon::now()->dayOfWeek == Carbon::SUNDAY) {
                 $times = $user->times()->where('start_time', '>=', Carbon::now()->subDays(7))->orderBy('start_time')->get();
                 $total_time = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
                 foreach ($times as $time) {
