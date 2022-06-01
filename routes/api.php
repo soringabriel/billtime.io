@@ -23,7 +23,7 @@ use App\Domains\Auth\Http\Controllers\Frontend\Auth\LoginController;
 //    return $request->user();
 //});
 
-Route::group(['as' => 'user.api.'], function () {
+Route::group(['as' => 'user.api.', 'middleware' => ['cors']], function () {
     Route::post('/login', [LoginController::class, 'apiLogin'])->name('login');
 }); 
 
