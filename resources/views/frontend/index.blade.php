@@ -145,7 +145,6 @@
     <section id="companies" class="companies-area">
         <div class="container">
             <div class="d-flex companies-images">
-                <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/google.png#full') }}" alt="google">
                 <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/hootsuite.png#full') }}" alt="hootsuite">
                 <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/meta.png#full') }}" alt="meta">
                 <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/palantir.png#full') }}" alt="palantir">
