@@ -270,7 +270,7 @@
                     @endif
                     <td class="text-center">{{ $item->quantity }}</td>
                     <td class="text-right">
-                        {{ $invoice->formatCurrency($item->price_per_unit) }}
+                        {{ $invoice->formatCurrency($item->price_per_unit ?? 0) }}
                     </td>
                     @if($invoice->hasItemDiscount)
                         <td class="text-right">
@@ -284,7 +284,7 @@
                     @endif
 
                     <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                        {{ $invoice->formatCurrency($item->sub_total_price ?? 0) }}
                     </td>
                 </tr>
                 @endforeach

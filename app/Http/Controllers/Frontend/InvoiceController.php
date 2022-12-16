@@ -9,6 +9,7 @@ use App\Http\Requests\Frontend\Invoice\UpdateInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\UpdateInvoiceStatusRequest;
 use App\Http\Requests\Frontend\Invoice\DeleteInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\DownloadInvoiceRequest;
+use App\Http\Requests\Frontend\Invoice\GenerateInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\CloneInvoiceRequest;
 use App\Http\Requests\Frontend\Invoice\SendEmailRequest;
 use App\Services\InvoiceService;
@@ -159,6 +160,40 @@ class InvoiceController extends Controller
     public function download(DownloadInvoiceRequest $request, Invoice $invoice)
     {
         return $this->invoiceService->generateInvoice($invoice->toArray(), $request->validated()['locale'])->download();
+    }
+
+    /**
+     * @param  GenerateInvoiceRequest  $request
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     * @throws \Throwable
+     */
+    public function generateInvoice(GenerateInvoiceRequest $request)
+    {
+        if ($request->header('X-RapidAPI-Proxy-Secret') != env('RAPID_API_KEY')) {
+            return [
+                'success' => false,
+                'error' => 'Unauthorized'
+            ];
+        }
+
+        $payload = $request->mappedValidated();
+
+        $invoice = $this->invoiceService->generateInvoice($payload, $payload['locale']);
+
+        $filename_parts = explode(".", $invoice->filename);
+        $extension = array_pop($filename_parts);
+        $filename_parts[] = uniqid();
+        $filename_parts[] = $extension;
+        $invoice->filename = implode(".", $filename_parts);
+
+        $invoice->save('public');
+        
+        return [
+            'success' => true,
+            'url' => $invoice->url(),
+        ];
     }
 
     /**

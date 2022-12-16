@@ -19,9 +19,9 @@ use App\Domains\Auth\Http\Controllers\Frontend\Auth\LoginController;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::group(['as' => 'invoice.api.'], function () {
+    Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');
+}); 
 
 Route::group(['as' => 'user.api.', 'middleware' => ['cors']], function () {
     Route::post('/login', [LoginController::class, 'apiLogin'])->name('login');
