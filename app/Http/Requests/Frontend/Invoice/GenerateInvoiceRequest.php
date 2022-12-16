@@ -37,7 +37,6 @@ class GenerateInvoiceRequest extends FormRequest
             'date' => ['required', 'date_format:Y-m-d'],
             'due_date' => ['nullable', 'date_format:Y-m-d'],
             'notes' => ['max:255'],
-            'price' => ['required', 'numeric'],
             'service_fee' => ['sometimes', 'nullable', 'numeric', 'min:0'],
             'locale' => ['sometimes', 'nullable', Rule::in(array_keys(config('boilerplate.locale.invoices_languages')))],
         ];
