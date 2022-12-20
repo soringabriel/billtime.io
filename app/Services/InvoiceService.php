@@ -273,6 +273,10 @@ class InvoiceService extends BaseService
                     ->notes($notes)
                     ->filename("invoice_" . $invoice_data['number'] . "_" . $locale);
 
+        if (isset($invoice_data['logo']) && !is_null($invoice_data['logo'])) {
+            $invoice->logo($invoice_data['logo']);
+        }
+
         if (isset($invoice_data['due_date']) && !is_null($invoice_data['due_date'])) {
             $invoice->hasDueDate = true;
             $invoice->payUntilDays(Carbon::createFromFormat('Y-m-d', $invoice_data['due_date'])->diffInDays(Carbon::createFromFormat('Y-m-d', $invoice_data['date'])));
