@@ -4,6 +4,16 @@
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'granted',     // strictly necessary
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+    });
     gtag('js', new Date());
 
     gtag('config', '{{ config('boilerplate.google_analytics') }}');

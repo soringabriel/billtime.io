@@ -29,8 +29,92 @@
     @stack('before-styles')
     <link rel="shortcut icon" href="{{ asset('img/presentation/favicon.png#full') }}" type="image/png">
     <link href="{{ url(mix('css/presentation.css')) }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('cookie-banner/consent-manager.css') }}">
+    <script src="{{ asset('cookie-banner/consent-manager.js') }}"></script>
     <livewire:styles />
     @stack('after-styles')
+
+    <script>
+        silktideCookieBannerManager.updateCookieBannerConfig({
+        background: {
+            showBackground: true
+        },
+        cookieIcon: {
+            position: "bottomLeft"
+        },
+        cookieTypes: [
+            {
+            id: "necessary",
+            name: "Necessary",
+            description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
+            required: true,
+            onAccept: function() {
+                console.log('Add logic for the required Necessary here');
+            }
+            },
+            {
+            id: "analytics",
+            name: "Analytics",
+            description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
+            required: false,
+            onAccept: function() {
+                gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                });
+                dataLayer.push({
+                'event': 'consent_accepted_analytics',
+                });
+            },
+            onReject: function() {
+                gtag('consent', 'update', {
+                analytics_storage: 'denied',
+                });
+            }
+            },
+            {
+            id: "advertising",
+            name: "Advertising",
+            description: "<p>These cookies provide extra features and personalization to improve your experience. They may be set by us or by partners whose services we use.</p>",
+            required: false,
+            onAccept: function() {
+                gtag('consent', 'update', {
+                ad_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted',
+                });
+                dataLayer.push({
+                'event': 'consent_accepted_advertising',
+                });
+            },
+            onReject: function() {
+                gtag('consent', 'update', {
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                });
+            }
+            }
+        ],
+        text: {
+            banner: {
+            description: "<p>We use cookies on our site to enhance your user experience, provide personalized content, and analyze our traffic.</p>",
+            acceptAllButtonText: "Accept all",
+            acceptAllButtonAccessibleLabel: "Accept all cookies",
+            rejectNonEssentialButtonText: "Reject non-essential",
+            rejectNonEssentialButtonAccessibleLabel: "Reject non-essential",
+            preferencesButtonText: "Preferences",
+            preferencesButtonAccessibleLabel: "Toggle preferences"
+            },
+            preferences: {
+            title: "Customize your cookie preferences",
+            description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>"
+            },
+        },
+        position: {
+            banner: "bottomCenter"
+        }
+        });
+    </script>
 
     @include('includes.partials.ga')
 
@@ -142,7 +226,7 @@
 
     <!--====== COMPANIES PART START ======-->
 
-    <section id="companies" class="companies-area">
+    <!-- <section id="companies" class="companies-area">
         <div class="container">
             <div class="d-flex companies-images">
                 <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/hootsuite.png#full') }}" alt="hootsuite">
@@ -151,7 +235,7 @@
                 <img loading="lazy"  class="w-80" src="{{ asset('img/presentation/companies/pwc.png#full') }}" alt="pwc">
             </div>
         </div>
-    </section>
+    </section> -->
     
     <!--====== COMPANIES PART ENDS ======-->
 

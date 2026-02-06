@@ -27,10 +27,10 @@ class TimeTable extends TableComponentExtended
 {
     use HtmlComponents;
 
-    /**
-     * @var bool
-     */
-    public $total = true;
+    // /**
+    //  * @var bool
+    //  */
+    // public $total = true;
 
     /**
      * @var string
@@ -285,6 +285,9 @@ class TimeTable extends TableComponentExtended
                 $this->invoices = Invoice::whereIn('user_id', $this->user->organization()->first()->users()->pluck('id'))->get();
             }
             $this->invoices = Invoice::where('user_id', $this->user->id)->get();
+        }
+        if (count($users) == 1) {
+            return Time::query()->where('user_id', $users[0]);
         }
         return Time::query()->whereIn('user_id', $users);
     }
