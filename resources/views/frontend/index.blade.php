@@ -581,8 +581,8 @@
                         <div class="footer-link">
                             <h6 class="footer-title">@lang('Other Details')</h6>
                             <ul>
-                                <li><a href="https://blog.billtime.io/">@lang('Blog')</a></li>
-                                <li><a class="page-scroll" href="mailto:info@billtime.io">@lang('Send Us An Email')</a></li>
+                                <li><a href="https://blogbilltime.webxecute.com/">@lang('Blog')</a></li>
+                                <li><a class="page-scroll" href="mailto:sorinmarica4@gmail.com">@lang('Send Us An Email')</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>

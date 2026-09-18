@@ -2,9 +2,9 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "url": "https://billtime.io/",
+        "url": "https://billtime.webxecute.com/",
         "name": "BillTime.io",
-        "logo": "https://billtime.io/img/presentation/logo-square.png#full"},
+        "logo": "https://billtime.webxecute.com/img/presentation/logo-square.png#full"},
         "sameAs" : ["https://www.facebook.com/billtime.io"]
     }
 </script>
@@ -24,7 +24,7 @@
           "priceCurrency": "USD"
       },
       "image": [
-        "https://billtime.io/img/presentation/logo-square.png"
+        "https://billtime.webxecute.com/img/presentation/logo-square.png"
        ],
       "brand": {
          "@type": "Thing",
@@ -33,10 +33,10 @@
       "author":{  
           "@type":"Organization",
           "name":"BillTime.io",
-          "url":"https://billtime.io/",
+          "url":"https://billtime.webxecute.com/",
           "logo":{
             "@type":"ImageObject",
-            "url":"https://billtime.io/img/presentation/logo-square.png",
+            "url":"https://billtime.webxecute.com/img/presentation/logo-square.png",
             "width":"512px",
             "height":"512px"
           }
