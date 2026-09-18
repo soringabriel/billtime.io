@@ -20,7 +20,7 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <livewire:frontend.time-table />
+                        <livewire:frontend.time-table :bulk="false" :bulk-actions="false" />
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

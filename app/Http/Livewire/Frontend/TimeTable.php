@@ -281,10 +281,7 @@ class TimeTable extends TableComponentExtended
         $users = $this->user->can('user.access.times.show-all') ? $organization_users : [$this->user->id];
         $this->invoices = null;
         if ($this->user->can('user.access.invoices.access')) {
-            if ($this->user->can('user.access.invoices.show-all')) {
-                $this->invoices = Invoice::whereIn('user_id', $this->user->organization()->first()->users()->pluck('id'))->get();
-            }
-            $this->invoices = Invoice::where('user_id', $this->user->id)->get();
+            $this->invoices = Invoice::without(['user', 'times'])->where('user_id', $this->user->id)->get(['id', 'number']);
         }
         if (count($users) == 1) {
             return Time::query()->where('user_id', $users[0]);
@@ -427,18 +424,6 @@ class TimeTable extends TableComponentExtended
             ColumnExtended::make(__('Details'))
                 ->exportOnly(),
             ColumnExtended::make(__('Time'))
-                ->totalable(function() use ($timeTable) {
-                    $models = $timeTable->models()->get();
-                    CarbonInterval::setCascadeFactors([
-                        'minute' => [60, 'seconds'],
-                        'hour' => [60, 'minutes'],
-                    ]);
-                    $total = CarbonInterval::create(0, 0, 0, 0, 0, 0, 0, 0);
-                    foreach ($models as $model) {
-                        $total->add(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)));
-                    }
-                    return $total->cascade()->forHumans();
-                })
                 ->format(function (Time $model) {
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->diffAsCarbonInterval(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time));
                 })
