@@ -39,7 +39,7 @@ class StoreTimeRequest extends FormRequest
             'end_time' => ['required', 'date_format:Y-m-d H:i', 'before_or_equal:' . Carbon::now()->timezone(auth()->user()->timezone)],
             'project_id' => ['required_if:new_project,0,null', Rule::exists('projects', 'id')->where('organization_id', auth()->user()->organization()->first()->id)],
             'task' => ['max:255'],
-            'details' => ['max:255'],
+            'details' => ['nullable', 'string', 'max:10000'],
             'new_project' => ['sometimes', 'boolean'],
             'project_name' => ['required_if:new_project,1', 'max:255'],
             'project_client_id' => $project_client_id_rules,

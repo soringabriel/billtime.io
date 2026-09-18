@@ -98,7 +98,7 @@
                                     </label>
 
                                     <div class="col-md-10">
-                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" />{{ old('details') ?? $time->details }}</textarea>
+                                        <textarea name="details" class="form-control" placeholder="{{ __('Details') }}" maxlength="10000" rows="6">{{ old('details') ?? $time->details }}</textarea>
                                     </div>
                                 </div><!--form-group-->
                             </div>
