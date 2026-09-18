@@ -131,8 +131,8 @@ class TimeTable extends TableComponentExtended
      * @var array
      */
     public $exportColumnFormats = [
-        'A' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+        'A' => 'dd/mm/yyyy hh:mm',
+        'B' => 'dd/mm/yyyy hh:mm',
         'H' => "[h]:mm",
         'K' => "[h]:mm",
     ];
@@ -311,7 +311,7 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('jS M Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time)->format('m-d-Y H:i');
+                    return Date::dateTimeToExcel(Carbon::createFromFormat('Y-m-d H:i:s', $model->start_time));
                 }),
             ColumnExtended::make(__('End Time'))
                 ->sortable()
@@ -328,7 +328,7 @@ class TimeTable extends TableComponentExtended
                     return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('jS M Y H:i');
                 })
                 ->exportFormat(function (Time $model) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time)->format('m-d-Y H:i');
+                    return Date::dateTimeToExcel(Carbon::createFromFormat('Y-m-d H:i:s', $model->end_time));
                 }),
             ColumnExtended::make(__('User'))
                 ->withFilter(function ($builder, $term) {
